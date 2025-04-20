@@ -1,12 +1,31 @@
 "use client";
+
 import listings from "@/data/listings";
-import Image from "next/image";
 import Link from "next/link";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
+import { useEffect, useState } from "react";
 
 const FeaturedListings = () => {
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // ใช้รูปภาพตัวอย่างแทนรูปภาพที่ไม่สามารถโหลดได้
+  const getImageUrl = (imagePath) => {
+    // ถ้าไม่สามารถโหลดรูปภาพได้ ให้ใช้รูปภาพจาก placeholder.com แทน
+    try {
+      // เพิ่ม timestamp เพื่อป้องกันการ cache
+      return `${imagePath}?t=${new Date().getTime()}`;
+    } catch (error) {
+      console.error('Error loading image:', error);
+      return 'https://via.placeholder.com/382x465?text=Property+Image';
+    }
+  };
+  
   return (
     <>
       <Swiper
@@ -38,13 +57,18 @@ const FeaturedListings = () => {
             <div className="item">
               <div className="listing-style9">
                 <div className="list-thumb">
-                  <Image
-                    width={382}
-                    height={465}
-                    className="w-100 h-100 cover"
-                    src={listing.image}
-                    alt="listings"
-                  />
+                  {isClient && (
+                    <img
+                      className="w-100 h-100 cover"
+                      src={getImageUrl(listing.image)}
+                      alt={listing.title}
+                      style={{ objectFit: 'cover', height: '465px', width: '100%' }}
+                      onError={(e) => {
+                        e.target.onerror = null; 
+                        e.target.src = 'https://via.placeholder.com/382x465?text=Property+Image';
+                      }}
+                    />
+                  )}
                   <div className="sale-sticker-wrap">
                     {listing.forRent && (
                       <div className="list-tag rounded-0 fz12">

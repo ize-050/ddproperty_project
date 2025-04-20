@@ -1,3 +1,4 @@
+"use client";
 import AdvanceFilterModal from "@/components/common/advance-filter";
 import HeroContent from "./HeroContent";
 

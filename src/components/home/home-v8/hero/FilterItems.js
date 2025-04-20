@@ -1,8 +1,9 @@
 "use client";
-import Select from "react-select";
+import SelectWithInstanceId from "@/components/common/SelectWithInstanceId";
 import Slider, { Range } from "rc-slider";
 import { useState } from "react";
 
+import Select from "react-select";
 const FilterItems = () => {
   const [price, setPrice] = useState([20, 70987]);
 
@@ -51,13 +52,14 @@ const FilterItems = () => {
     <>
       <div className="col-md-12">
         <div className="bootselect-multiselect mb20">
-          <Select
+          <SelectWithInstanceId
             defaultValue={[catOptions[0]]}
             name="colors"
             options={catOptions}
             styles={customStyles}
             className="text-start with_border"
             classNamePrefix="select"
+            instanceId="property-type-select"
             required
             isSearchable={false}
           />

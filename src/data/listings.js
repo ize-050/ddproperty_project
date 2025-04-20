@@ -2,7 +2,7 @@ module.exports = [
   {
 
     id: 1,
-    image: "/images/listings/g1-1.jpg",
+    image: "../images/listings/g1-1.jpg",
     title: "Equestrian Family Home",
     city:'New York',location: "New York City, CA, USA",
     bed: "1",

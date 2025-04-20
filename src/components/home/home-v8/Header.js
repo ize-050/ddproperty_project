@@ -3,6 +3,12 @@
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
+import dynamic from 'next/dynamic';
+
+// ใช้ dynamic import เพื่อแก้ปัญหา hydration
+const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitcher"), {
+  ssr: false,
+});
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -65,6 +71,10 @@ const Header = () => {
 
               <div className="col-auto">
                 <div className="d-flex align-items-center">
+                  {/* Language Switcher */}
+                  <div className="me-4">
+                    <LanguageSwitcher />
+                  </div>
                   <a
                     href="#"
                     className="login-info d-flex align-items-cente"
