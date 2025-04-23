@@ -1,7 +1,7 @@
 
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import '../loading-animation.css';
+import './loading-animation.css';
 
 // ใช้ dynamic import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
 const Page = dynamic(() => import("@/components/home/page"), { ssr: false });
