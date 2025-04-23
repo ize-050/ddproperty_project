@@ -51,7 +51,6 @@ export default function MainRoot() {
         <Footer />
         {/* End Footer */}
 
-        {/* Scroll To Top */}
         <ScrollToTop />
         {/* End Scroll To Top */}
       </Suspense>
