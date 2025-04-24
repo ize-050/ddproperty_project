@@ -1,0 +1,33 @@
+{
+  "header": {
+    "home": "首页",
+    "properties": "房产",
+    "agents": "经纪人",
+    "blog": "博客",
+    "contact": "联系我们",
+    "login": "登录 / 注册",
+    "addProperty": "添加房产"
+  },
+  "hero": {
+    "title": "找到您的梦想家园",
+    "subtitle": "限时优惠折扣，每天低至10美元起"
+  },
+  "featured": {
+    "title": "探索我们的精选房源",
+    "subtitle": "Aliquam lacinia diam quis lacus euismod",
+    "seeAll": "查看所有房产"
+  },
+  "footer": {
+    "about": "关于我们",
+    "contact": "联系我们",
+    "terms": "条款和条件",
+    "privacy": "隐私政策",
+    "copyright": "© 2025 DDProperty 版权所有"
+  },
+  "language": {
+    "en": "英语",
+    "th": "泰语",
+    "zh": "中文",
+    "ru": "俄语"
+  }
+}

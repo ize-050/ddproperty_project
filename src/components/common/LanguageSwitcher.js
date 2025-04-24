@@ -1,84 +1,83 @@
 "use client";
 
-import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { locales, languageNames, defaultLocale } from '../../navigation';
+import { usePathname } from 'next/navigation';
 
-// ข้อมูลภาษา
-const locales = ['th', 'en', 'zh', 'ru'];
-const languageNames = {
-  th: 'ไทย',
-  en: 'English',
-  zh: '中文',
-  ru: 'Русский'
-};
-
-const LanguageSwitcher = () => {
-  const router = useRouter();
+export default function LanguageSwitcher() {
   const pathname = usePathname();
-  const [currentLocale, setCurrentLocale] = useState('th');
+  const router = useRouter();
+  const [currentLocale, setCurrentLocale] = useState(defaultLocale);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // ตรวจสอบภาษาปัจจุบันจาก URL และ localStorage
+  // ใช้ useEffect เพื่อตรวจสอบภาษาปัจจุบันจาก URL และ localStorage
+  // เพื่อหลีกเลี่ยง hydration error
   useEffect(() => {
-    // ตรวจสอบภาษาจาก localStorage ก่อน
-    const savedLocale = typeof window !== 'undefined' ? localStorage.getItem('selectedLocale') : null;
+    setIsMounted(true);
     
-    if (savedLocale && locales.includes(savedLocale)) {
-      setCurrentLocale(savedLocale);
-      return;
-    }
-    
-    // ถ้าไม่มีภาษาใน localStorage ให้ตรวจสอบจาก URL
+    // ตรวจสอบภาษาจาก URL ก่อน
     const path = pathname || '';
     const localeMatch = path.match(/^\/([a-z]{2})(?:\/|$)/);
-    
+
     if (localeMatch && locales.includes(localeMatch[1])) {
       setCurrentLocale(localeMatch[1]);
-      // เก็บค่าภาษาใน localStorage เพื่อใช้ในครั้งต่อไป
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('selectedLocale', localeMatch[1]);
-      }
-    } else {
-      setCurrentLocale('th'); // ภาษาเริ่มต้น
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('selectedLocale', 'th');
-      }
+      return;
     }
+
+    // ถ้าไม่มีภาษาใน URL ให้ใช้ภาษาเริ่มต้น
+    setCurrentLocale(defaultLocale);
   }, [pathname]);
 
-  // สลับภาษาแบบ Client-Side Routing ไม่ต้อง refresh หน้าเว็บ
+  // ฟังก์ชันสำหรับเปลี่ยนภาษา
   const handleLanguageChange = (locale) => {
-    // เก็บค่าภาษาที่เลือกใน localStorage เพื่อให้สามารถใช้ได้ในหน้าอื่นๆ
-    localStorage.setItem('selectedLocale', locale);
+    // คำนวณ URL ใหม่ตามภาษาที่เลือก
+    let newPath = '';
     
-    // ใช้ shallow routing เพื่อไม่ให้มีการโหลดหน้าใหม่ทั้งหมด
-    try {
-      if (locale === 'th') {
-        // ถ้าเป็นภาษาไทย ให้ไปที่ root path
-        router.push('/', undefined, { shallow: true, scroll: false });
-      } else {
-        // สำหรับภาษาอื่นๆ ให้เพิ่มรหัสภาษาใน URL
-        router.push(`/${locale}`, undefined, { shallow: true, scroll: false });
+    // ถ้าเป็นภาษาเริ่มต้น (ไทย) และอยู่ที่หน้าแรก
+    if (locale === defaultLocale && (pathname === '/' || pathname === `/${currentLocale}`)) {
+      newPath = '/';
+    } 
+    // ถ้าเป็นภาษาเริ่มต้น (ไทย) แต่ไม่ได้อยู่ที่หน้าแรก
+    else if (locale === defaultLocale) {
+      // ลบ prefix ภาษาออกจาก URL
+      newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
+    } 
+    // ถ้าเป็นภาษาอื่น
+    else {
+      // ถ้ามี prefix ภาษาอยู่แล้ว ให้แทนที่
+      if (pathname.match(/^\/[a-z]{2}(\/|$)/)) {
+        newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, `/${locale}$1`);
+      } 
+      // ถ้าไม่มี prefix ภาษา ให้เพิ่มเข้าไป
+      else {
+        newPath = `/${locale}${pathname}`;
       }
+    }
+
+    // นำทางไปยัง URL ใหม่
+    try {
+      router.push(newPath);
     } catch (error) {
       console.error('Error changing language:', error);
-      // ถ้ามีข้อผิดพลาดให้ใช้วิธีเดิม
-      if (locale === 'th') {
-        window.location.href = '/';
-      } else {
-        window.location.href = `/${locale}`;
-      }
+      // ถ้าเกิดข้อผิดพลาด ให้โหลดหน้าใหม่ทั้งหมด
+      window.location.href = newPath;
     }
   };
 
-  // กำหนดธงชาติสำหรับแต่ละภาษา
+  // ถ้ายังไม่ได้ mount ให้แสดงปุ่มว่างๆ เพื่อหลีกเลี่ยง hydration error
+  if (!isMounted) {
+    return <div className="language-switcher-placeholder" style={{ width: '60px', height: '32px' }}></div>;
+  }
+
+  // สัญลักษณ์ธงสำหรับแต่ละภาษา
   const flagCodes = {
     th: '🇹🇭', // ธงไทย (TH)
     en: '🇬🇧', // ธงอังกฤษ (GB)
     zh: '🇨🇳', // ธงจีน (CN)
     ru: '🇷🇺'  // ธงรัสเซีย (RU)
   };
-  
+
   // รหัสภาษาแบบย่อ
   const localeShortCodes = {
     th: 'TH',
@@ -90,17 +89,16 @@ const LanguageSwitcher = () => {
   return (
     <div className="language-switcher">
       <div className="dropdown">
-        <button 
-          className="btn btn-sm language-dropdown-btn dropdown-toggle" 
-          type="button" 
-          data-bs-toggle="dropdown" 
+        <button
+          className="btn btn-sm language-dropdown-btn dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
           aria-expanded="false"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            background: 'transparent',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
+            gap: '4px',
+            backgroundColor: '#007bff',
             borderRadius: '4px',
             padding: '4px 8px',
             color: '#fff'
@@ -112,7 +110,7 @@ const LanguageSwitcher = () => {
         <ul className="dropdown-menu dropdown-menu-end">
           {locales.map((locale) => (
             <li key={locale}>
-              <a 
+              <a
                 className={`dropdown-item ${locale === currentLocale ? 'active' : ''}`}
                 href="#"
                 onClick={(e) => {
@@ -134,4 +132,4 @@ const LanguageSwitcher = () => {
   );
 };
 
-export default LanguageSwitcher;
+// ลบ export default ซ้ำออก

@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+const createNextIntlPlugin = require('next-intl/plugin');
+
+const withNextIntl = createNextIntlPlugin('./src/i18n.js');
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     domains: ['localhost', 'via.placeholder.com'],
@@ -9,4 +14,4 @@ const nextConfig = {
   reactStrictMode: false, // ปิด strict mode เพื่อป้องกันการ render ซ้ำ
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);
