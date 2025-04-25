@@ -5,17 +5,17 @@ import dynamic from 'next/dynamic';
 import Link from "next/link";
 
 // ใช้ dynamic import เพื่อแก้ไขปัญหา hydration error
-const SidebarStickyBar = dynamic(() => import("@/components/home/home-v8/SidebarStickyBar"), { ssr: false });
-const Hero = dynamic(() => import("@/components/home/home-v8/hero"), { ssr: false });
+const SidebarStickyBar = dynamic(() => import("@/components/home/home/SidebarStickyBar"), { ssr: false });
+const Hero = dynamic(() => import("@/components/home/home/hero"), { ssr: false });
 const Blog = dynamic(() => import("@/components/common/Blog"), { ssr: false });
-const Contact = dynamic(() => import("@/components/home/home-v8/Contact"), { ssr: false });
-const Agents = dynamic(() => import("@/components/home/home-v8/Agents"), { ssr: false });
-const FeatureProperties = dynamic(() => import("@/components/home/home-v8/FeatureProperties"), { ssr: false });
+const Contact = dynamic(() => import("@/components/home/home/Contact"), { ssr: false });
+const Agents = dynamic(() => import("@/components/home/home/Agents"), { ssr: false });
+const FeatureProperties = dynamic(() => import("@/components/home/home/FeatureProperties"), { ssr: false });
 const Explore = dynamic(() => import("@/components/common/Explore"), { ssr: false });
-const ExploreCities = dynamic(() => import("@/components/home/home-v8/ExploreCities"), { ssr: false });
-const Service = dynamic(() => import("@/components/home/home-v8/Service"), { ssr: false });
-const FeaturedHomes = dynamic(() => import("@/components/home/home-v8/FeaturedHomes"), { ssr: false });
-const FeaturedListings = dynamic(() => import("@/components/home/home-v8/FeatuerdListings"), { ssr: false });
+const ExploreCities = dynamic(() => import("@/components/home/home/ExploreCities"), { ssr: false });
+const Service = dynamic(() => import("@/components/home/home/Service"), { ssr: false });
+const FeaturedHomes = dynamic(() => import("@/components/home/home/FeaturedHomes"), { ssr: false });
+const FeaturedListings = dynamic(() => import("@/components/home/home/FeatuerdListings"), { ssr: false });
 const PartnerDark = dynamic(() => import("@/components/common/PartnerDark"), { ssr: false });
 
 
@@ -34,6 +34,8 @@ const Page = () => {
   
   return (
     <>
+      {/* Sidebar Sticky Bar */}
+      <SidebarStickyBar />
 
       {/* Home Banner Style V1 */}
       <section className="home-banner-style8 p0">

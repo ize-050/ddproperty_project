@@ -5,9 +5,9 @@ import { useTranslations } from 'next-intl';
 
 // ใช้ dynamic import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
 const Page = dynamic(() => import("@/components/home/page"), { ssr: false });
-const Header = dynamic(() => import("@/components/home/home-v8/Header"), { ssr: false });
+const Header = dynamic(() => import("@/components/home/home/Header"), { ssr: false });
 const MobileMenu = dynamic(() => import("@/components/common/mobile-menu"), { ssr: false });
-const Footer = dynamic(() => import("@/components/home/home-v8/footer"), { ssr: false });
+const Footer = dynamic(() => import("@/components/home/home/footer"), { ssr: false });
 const ScrollToTop = dynamic(() => import("@/components/common/ScrollTop"), { ssr: false });
 const LoadingAnimation = dynamic(() => import("@/components/common/LoadingAnimation"), { ssr: false });
 

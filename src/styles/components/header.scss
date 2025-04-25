@@ -1,0 +1,266 @@
+.dluck-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 80px;
+  display: flex;
+  align-items: center;
+
+  .container-fluid {
+    padding: 0 30px;
+    width: 100%;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .hamburger-menu-left {
+    margin-right: 15px;
+  }
+
+  &.sticky {
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .logo-wrapper {
+    flex: 0 0 auto;
+  }
+
+  .main-nav {
+    flex: 1 1 auto;
+    margin: 0 20px 0 10px; /* ลดระยะห่างจากโลโก้ */
+    justify-content: center;
+
+    .main-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px; /* ลดระยะห่างระหว่างเมนู */
+
+      li a {
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s;
+        position: relative;
+        padding: 5px 0;
+
+        &:hover,
+        &.active {
+          color: #D22630;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          background: #D22630;
+          left: 0;
+          bottom: 0;
+          transition: width 0.3s ease;
+        }
+
+        &:hover:after,
+        &.active:after {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .language-switch-wrapper {
+    margin-right: 10px;
+  }
+
+  .login-btn {
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 15px;
+
+    &:hover {
+      color: #0066CC;
+    }
+  }
+
+  .add-property-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #0066CC;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 15px;
+
+    &:hover {
+      background-color: #0055AA;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+    }
+  }
+}
+
+/* Mobile Menu Styles */
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    transition: all 0.3s ease;
+  }
+
+  &.active {
+    span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+    }
+
+    span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  z-index: 999;
+
+  &.open {
+    display: block;
+  }
+
+  &-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .mobile-menu-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 15px;
+
+        a {
+          color: #333;
+          font-size: 16px;
+          text-decoration: none;
+          display: block;
+          padding: 8px 0;
+          border-bottom: 1px solid #eee;
+        }
+      }
+    }
+  }
+
+  .mobile-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .mobile-add-property-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #0066CC;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-size: 15px;
+
+    &:hover {
+      background-color: #0055AA;
+    }
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 1199px) {
+  .dluck-header {
+    .main-nav {
+      margin: 0 20px;
+
+      ul {
+        gap: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .dluck-header {
+    height: 70px;
+
+    .container-fluid {
+      padding: 0 20px;
+    }
+  }
+
+  .mobile-menu {
+    top: 70px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dluck-header {
+    height: 60px;
+
+    .container-fluid {
+      padding: 0 15px;
+    }
+  }
+
+  .mobile-menu {
+    top: 60px;
+  }
+}
