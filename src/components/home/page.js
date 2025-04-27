@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import useZoneStore from '@/store/useZoneStore';
 import dynamic from 'next/dynamic';
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 // ใช้ dynamic import เพื่อแก้ไขปัญหา hydration error
 const SidebarStickyBar = dynamic(() => import("@/components/home/home/SidebarStickyBar"), { ssr: false });
@@ -17,15 +19,26 @@ const Service = dynamic(() => import("@/components/home/home/Service"), { ssr: f
 const FeaturedHomes = dynamic(() => import("@/components/home/home/FeaturedHomes"), { ssr: false });
 const FeaturedListings = dynamic(() => import("@/components/home/home/FeatuerdListings"), { ssr: false });
 const PartnerDark = dynamic(() => import("@/components/common/PartnerDark"), { ssr: false });
+const RandomProperties = dynamic(() => import("@/components/home/home/RandomProperties"), { ssr: false });
 
 
-const Page = () => {
+const Page = ({ randomProperties, zones }) => {
   // ใช้ useState และ useEffect เพื่อแก้ไขปัญหา hydration error
   const [isClient, setIsClient] = useState(false);
+  const t = useTranslations('home');
+  
+  // นำข้อมูล zones ไปเก็บใน Zustand store
+  const setZones = useZoneStore(state => state.setZones);
   
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    
+    console.log("zoneszones",zones)
+    if (zones && zones.length > 0) {
+      setZones(zones);
+      console.log('Zones data stored in Zustand store:', zones);
+    }
+  }, [zones, setZones]);
   
   // ถ้ายังไม่อยู่ใน client side ให้แสดง loading หรือ skeleton
 //   if (!isClient) {
@@ -79,16 +92,16 @@ const Page = () => {
           <div className="row align-items-center" data-aos="fade-up">
             <div className="col-lg-9">
               <div className="main-title2">
-                <h2 className="title">Discover Our Featured Listings</h2>
+                <h2 className="title">{t('featured.title')}</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  {t('featured.subtitle')}
                 </p>
               </div>
             </div>
             <div className="col-lg-3">
               <div className="text-start text-lg-end mb-3">
                 <Link className="ud-btn2" href="/map-v1">
-                  See All Properties
+                  {t('featured.seeAll')}
                   <i className="fal fa-arrow-right-long" />
                 </Link>
               </div>
@@ -99,13 +112,18 @@ const Page = () => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
               <div className="feature-listing-slider">
-                <FeaturedListings />
+                {/* <FeaturedListings /> */}
+              <RandomProperties randomProperties={randomProperties} />
               </div>
             </div>
           </div>
         </div>
       </section>
       {/* End Featured Listings */}
+
+      {/* Random Properties */}
+     
+      {/* End Random Properties */}
 
       {/* Featured Homes */}
       <section className="pt-0 pb90 pb30-md">

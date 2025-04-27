@@ -29,5 +29,17 @@
     "th": "Thai",
     "zh": "Chinese",
     "ru": "Russian"
+  },
+  "home": {
+    "randomProperties": {
+      "title": "Featured Properties",
+      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "loading": "Loading properties...",
+      "error": "Error loading properties",
+      "retry": "Retry",
+      "bed": "bed",
+      "bath": "bath",
+      "sqm": "sqm"
+    }
   }
 }

@@ -4,7 +4,7 @@
  */
 
 // Base API URL - change this to match your backend URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
 // API Endpoints
 const ENDPOINTS = {

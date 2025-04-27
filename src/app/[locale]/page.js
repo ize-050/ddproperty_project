@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import './loading-animation.css';
-import { useTranslations } from 'next-intl';
+import serverApi from '@/utils/serverApi';
 
 // ใช้ dynamic import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
 const Page = dynamic(() => import("@/components/home/page"), { ssr: false });
@@ -18,6 +18,7 @@ export async function generateMetadata() {
   
   const baseUrl = 'https://ddproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
+  
   
   // ข้อความสำหรับแต่ละภาษา
   const titles = {
@@ -50,12 +51,62 @@ export async function generateMetadata() {
   };
 }
 
+// ฟังก์ชันสำหรับดึงข้อมูล properties แบบสุ่มจาก API (Server-Side)
+async function getRandomProperties() {
+  try {
+    // เรียกใช้ serverApi เพื่อดึงข้อมูลจาก API
+    const response = await serverApi.get('/properties/random', { 
+      params: { count: 4 },
+      headers: { 'x-api-key': 'dd-property-api-key-2025' } // ใส่ API key สำหรับการเรียก API
+    });
+    console.log('Random Properties:', response.data);
+    // ตรวจสอบข้อมูลที่ได้รับจาก API
+    if (response && response.data) {
+      console.log('Random Properties:', response.data);
+      return Array.isArray(response.data) ? response.data : (response.data.data || []);
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Error fetching random properties (SSR):', error);
+    // ส่งค่า fallback data ในกรณีที่เกิดข้อผิดพลาด
+    return [];
+  }
+}
+
+// ฟังก์ชันสำหรับดึงข้อมูล Zone ทั้งหมดจาก API (Server-Side)
+async function getAllZones() {
+  try {
+    // เรียกใช้ serverApi เพื่อดึงข้อมูลจาก API
+    const response = await serverApi.get('/zones', {
+      headers: { 'x-api-key': 'dd-property-api-key-2025' } // ใส่ API key สำหรับการเรียก API
+    });
+    
+    // ตรวจสอบข้อมูลที่ได้รับจาก API
+    if (response && response.data) {
+      
+      return response.data;
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Error fetching zones (SSR):', error);
+    // ส่งค่า fallback data ในกรณีที่เกิดข้อผิดพลาด
+    return [];
+  }
+}
 
 
-export default function MainRoot() {
+
+export default async function MainRoot() {
   // ใช้ useTranslations เพื่อเข้าถึงข้อความแปลภาษา
-  const t = useTranslations('header');
-  // ไม่ต้องใช้ params เพราะ next-intl จะจัดการภาษาให้โดยอัตโนมัติ
+
+  // ดึงข้อมูล properties แบบสุ่มจาก API
+  const randomProperties = await getRandomProperties();
+  // ดึงข้อมูล Zone ทั้งหมดจาก API
+  const zones = await getAllZones();
+  
+  console.log("zoneszones",zones)
   
   return (
     <div className="main-wrapper">
@@ -68,7 +119,7 @@ export default function MainRoot() {
         {/* End Mobile Nav */}
         
         {/* Main Content */}
-        <Page />
+        <Page randomProperties={randomProperties} zones={zones} />
         {/* End Main Content */}
 
         {/* Footer */}

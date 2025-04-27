@@ -5,69 +5,7 @@
 
 import { AXIOS_SSR_CONFIG } from '@/config/api.config';
 import { cookies } from 'next/headers';
-
-// This is a placeholder for axios import
-// You need to install axios with: npm install axios --save
-// or: npm install axios --legacy-peer-deps
-// Then uncomment the line below:
-// import axios from 'axios';
-
-// Create a temporary axios implementation until the package is installed
-const axios = {
-  create: (config) => {
-    const instance = {
-      defaults: { ...config },
-      interceptors: {
-        request: { use: () => {} },
-        response: { use: () => {} }
-      },
-      get: (url, config) => {
-        console.warn('Using placeholder axios. Please install axios package.');
-        return fetch(`${config?.baseURL || ''}${url}`, {
-          method: 'GET',
-          headers: config?.headers || {},
-          cache: 'no-store'
-        }).then(res => res.json());
-      },
-      post: (url, data, config) => {
-        console.warn('Using placeholder axios. Please install axios package.');
-        return fetch(`${config?.baseURL || ''}${url}`, {
-          method: 'POST',
-          headers: config?.headers || {},
-          body: JSON.stringify(data),
-          cache: 'no-store'
-        }).then(res => res.json());
-      },
-      put: (url, data, config) => {
-        console.warn('Using placeholder axios. Please install axios package.');
-        return fetch(`${config?.baseURL || ''}${url}`, {
-          method: 'PUT',
-          headers: config?.headers || {},
-          body: JSON.stringify(data),
-          cache: 'no-store'
-        }).then(res => res.json());
-      },
-      patch: (url, data, config) => {
-        console.warn('Using placeholder axios. Please install axios package.');
-        return fetch(`${config?.baseURL || ''}${url}`, {
-          method: 'PATCH',
-          headers: config?.headers || {},
-          body: JSON.stringify(data),
-          cache: 'no-store'
-        }).then(res => res.json());
-      },
-      delete: (url, config) => {
-        console.warn('Using placeholder axios. Please install axios package.');
-        return fetch(`${config?.baseURL || ''}${url}`, {
-          method: 'DELETE',
-          headers: config?.headers || {},
-          cache: 'no-store'
-        }).then(res => res.json());
-      }
-    };
-    return instance;
-  }
-};
+import axios from 'axios';
 
 /**
  * Get auth token from cookies (server-side only)

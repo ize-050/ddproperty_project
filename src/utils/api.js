@@ -5,13 +5,7 @@
 
 import { AXIOS_CONFIG, ENDPOINTS } from '@/config/api.config';
 
-// This is a placeholder for axios import
-// You need to install axios with: npm install axios --save
-// or: npm install axios --legacy-peer-deps
-// Then uncomment the line below:
-// import axios from 'axios';
 
-// Create a temporary axios implementation until the package is installed
 const axios = {
   create: (config) => {
     const instance = {

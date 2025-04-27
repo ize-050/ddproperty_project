@@ -15,7 +15,7 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
 
   const locationOptions = [
     { value: "All Cities", label: "All Cities" },
-    { value: "California", label: "California" },
+    
     { value: "Los Angeles", label: "Los Angeles" },
     { value: "New Jersey", label: "New Jersey" },
     { value: "New York", label: "New York" },

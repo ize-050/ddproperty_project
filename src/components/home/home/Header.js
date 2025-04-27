@@ -76,8 +76,8 @@ const Header = () => {
               <Link className="header-logo" href="/">
                 <Image
                   width={150}
-                  height={40}
-                  src="/images/header-logo2.svg"
+                  height={50}
+                  src="/images/logo/logo.png"
                   alt="D-Luck Property"
                 />
               </Link>

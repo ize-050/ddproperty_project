@@ -12,9 +12,8 @@ const HeroContent = () => {
   };
 
   const tabs = [
-    { id: "buy", label: "Buy" },
-    { id: "rent", label: "Rent" },
-    { id: "sold", label: "Sold" },
+    { id: "buy", label: "Buy", listingType: "SALE" },
+    { id: "rent", label: "Rent", listingType: "RENT" },
   ];
 
   return (
@@ -25,6 +24,10 @@ const HeroContent = () => {
             <button
               className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
               onClick={() => handleTabClick(tab.id)}
+              style={{
+                border: 'none',
+                borderBottom: activeTab === tab.id ? '2px solid #000000' : 'none'
+              }}
             >
               {tab.label}
             </button>
@@ -40,26 +43,33 @@ const HeroContent = () => {
           >
             <div className="advance-content-style1 at-home8">
               <div className="row">
-                <FilterItems />
+                <FilterItems 
+                  listingType={tab.listingType} 
+                  ref={(filterItemsRef) => {
+                    // เก็บ ref ของ FilterItems ไว้ใน tab object
+                    if (filterItemsRef) {
+                      tab.filterItemsRef = filterItemsRef;
+                    }
+                  }}
+                />
 
                 <div className="col-md-12">
-                  <div className="d-bloc mt-3 mt-md-0 mb15">
-                    <button
-                      className="advance-search-btn"
-                      type="button"
-                      data-bs-toggle="modal"
-                      data-bs-target="#advanceSeachModal"
-                    >
-                      <span className="flaticon-settings" /> Advanced
-                    </button>{" "}
-                  </div>
+                 
                   <div className="d-grid">
                     <button
-                      className="ud-btn btn-dark"
+                      className="ud-btn btn-thm"
                       type="button"
-                      onClick={() => router.push("/grid-full-4-col")}
+                      onClick={() => {
+                        // เรียกใช้ฟังก์ชัน handleSearch โดยตรงจาก FilterItems
+                        if (tab.filterItemsRef && typeof tab.filterItemsRef.handleSearch === 'function') {
+                          tab.filterItemsRef.handleSearch();
+                        } else {
+                          // ถ้าไม่มี ref หรือไม่มีฟังก์ชัน handleSearch ให้นำทางไปยังหน้า properties/list โดยตรง
+                          router.push(`/properties/list?listingType=${tab.listingType}`);
+                        }
+                      }}
                     >
-                      <span className="flaticon-search" />
+                      <span className="flaticon-search" /> 
                     </button>
                   </div>
                 </div>

@@ -34,11 +34,12 @@
 
   .logo-wrapper {
     flex: 0 0 auto;
+    margin-right: 5px; /* ลดระยะห่างระหว่างโลโก้กับเมนู */
   }
 
   .main-nav {
     flex: 1 1 auto;
-    margin: 0 20px 0 10px; /* ลดระยะห่างจากโลโก้ */
+    margin: 0 20px 0 5px; /* ลดระยะห่างจากโลโก้ */
     justify-content: center;
 
     .main-menu {
@@ -46,7 +47,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      gap: 20px; /* ลดระยะห่างระหว่างเมนู */
+      gap: 50px; /* ลดระยะห่างระหว่างเมนู */
 
       li a {
         color: #333;

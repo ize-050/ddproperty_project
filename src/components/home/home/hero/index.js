@@ -7,7 +7,15 @@ const Hero = () => {
   return (
     <>
       {/* Background Banner Image */}
-     
+      <div className="hero-banner-wrapper">
+        <Image 
+          src="/images/banner/banner.png" 
+          alt="D-Luck Property Banner" 
+          fill 
+          priority
+          className="hero-banner-image" 
+        />
+      </div>
 
       <div className="col-lg-6 col-xl-6">
         <div className="inner-banner-style8">
@@ -79,12 +87,6 @@ const Hero = () => {
           margin-bottom: 15px;
         }
 
-        .advance-search-tab {
-          background-color: rgba(255, 255, 255, 0.95);
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
       `}</style>
     </>
   );
