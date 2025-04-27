@@ -1,15 +1,19 @@
 import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import { lazy } from 'react';
 import './loading-animation.css';
 import serverApi from '@/utils/serverApi';
 
-// ใช้ dynamic import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
-const Page = dynamic(() => import("@/components/home/page"), { ssr: false });
-const Header = dynamic(() => import("@/components/home/home/Header"), { ssr: false });
-const MobileMenu = dynamic(() => import("@/components/common/mobile-menu"), { ssr: false });
-const Footer = dynamic(() => import("@/components/home/home/footer"), { ssr: false });
-const ScrollToTop = dynamic(() => import("@/components/common/ScrollTop"), { ssr: false });
-const LoadingAnimation = dynamic(() => import("@/components/common/LoadingAnimation"), { ssr: false });
+// บังคับให้โหลดข้อมูลใหม่ทุกครั้งที่เข้าหน้า รวมถึงตอนกดปุ่ม Back
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
+
+// ใช้ lazy import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
+const Page = lazy(() => import("@/components/home/page"));
+const Header = lazy(() => import("@/components/home/home/Header"));
+const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
+const Footer = lazy(() => import("@/components/home/home/footer"));
+const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
+const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 
 // สร้าง metadata แบบ dynamic ตามภาษา
 export async function generateMetadata() {
@@ -18,7 +22,6 @@ export async function generateMetadata() {
   
   const baseUrl = 'https://ddproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
-  
   
   // ข้อความสำหรับแต่ละภาษา
   const titles = {
@@ -96,38 +99,42 @@ async function getAllZones() {
   }
 }
 
-
-
-export default async function MainRoot() {
-  // ใช้ useTranslations เพื่อเข้าถึงข้อความแปลภาษา
-
+// แยก component สำหรับดึงข้อมูลและแสดงผล
+// ทำให้มั่นใจว่าจะเรียกข้อมูลใหม่ทุกครั้งที่เข้าหน้า
+async function HomeContent() {
   // ดึงข้อมูล properties แบบสุ่มจาก API
   const randomProperties = await getRandomProperties();
   // ดึงข้อมูล Zone ทั้งหมดจาก API
   const zones = await getAllZones();
   
-  console.log("zoneszones",zones)
+  console.log("Loading fresh data for home page", new Date().toISOString());
   
   return (
+    <>
+      {/* Main Header Nav */}
+      <Header />
+
+      {/* Mobile Menu */}
+      <MobileMenu />
+
+      {/* แสดงหน้าหลัก */}
+      <Page randomProperties={randomProperties} zones={zones} />
+
+      {/* Main Footer */}
+      <Footer />
+
+      {/* Scroll To Top */}
+      <ScrollToTop />
+    </>
+  );
+}
+
+// หน้าหลักที่ใช้ Suspense และ dynamic content
+export default function MainRoot() {
+  return (
     <div className="main-wrapper">
-      {/* Loading indicator ที่สวยงาม */}
       <Suspense fallback={<LoadingAnimation />}>
-        {/* Main Header Nav */}
-        <Header />
-
-        <MobileMenu />
-        {/* End Mobile Nav */}
-        
-        {/* Main Content */}
-        <Page randomProperties={randomProperties} zones={zones} />
-        {/* End Main Content */}
-
-        {/* Footer */}
-        <Footer />
-        {/* End Footer */}
-
-        <ScrollToTop />
-        {/* End Scroll To Top */}
+        <HomeContent />
       </Suspense>
     </div>
   );

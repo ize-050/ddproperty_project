@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { locales, languageNames, defaultLocale } from '../../navigation';
 import { usePathname } from 'next/navigation';
@@ -36,7 +36,32 @@ export default function LanguageSwitcher() {
   const [currentLocale, setCurrentLocale] = useState(defaultLocale);
   const [isMounted, setIsMounted] = useState(false);
   const [currentCurrency, setCurrentCurrency] = useState(currencies[defaultLocale]);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false);
+  
+  // สร้าง ref สำหรับ dropdown
+  const languageDropdownRef = useRef(null);
+  const currencyDropdownRef = useRef(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target) &&
+          !event.target.closest('.lang-btn')) {
+        setIsLanguageDropdownOpen(false);
+      }
+      
+      if (currencyDropdownRef.current && !currencyDropdownRef.current.contains(event.target) &&
+          !event.target.closest('.currency-btn')) {
+        setIsCurrencyDropdownOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   // ใช้ useEffect เพื่อตรวจสอบภาษาปัจจุบันจาก URL และ localStorage
   // เพื่อหลีกเลี่ยง hydration error
   useEffect(() => {
@@ -102,90 +127,140 @@ export default function LanguageSwitcher() {
     // ตรงนี้สามารถเพิ่มโค้ดสำหรับจัดการเปลี่ยนสกุลเงินได้
   };
 
+  // ฟังก์ชันสำหรับเปิด/ปิด dropdown ภาษา
+  const toggleLanguageDropdown = () => {
+    console.log('Toggle language dropdown', isLanguageDropdownOpen);
+    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+    setIsCurrencyDropdownOpen(false); // ปิด dropdown สกุลเงินเมื่อเปิด dropdown ภาษา
+  };
+  
+  // ฟังก์ชันสำหรับเปิด/ปิด dropdown สกุลเงิน
+  const toggleCurrencyDropdown = () => {
+    console.log('Toggle currency dropdown', isCurrencyDropdownOpen);
+    setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen);
+    setIsLanguageDropdownOpen(false); // ปิด dropdown ภาษาเมื่อเปิด dropdown สกุลเงิน
+  };
+
+
+  // สร้าง CSS สำหรับ dropdown แบบ inline
+  const dropdownStyles = {
+    wrapper: {
+      position: 'relative',
+      marginRight: '10px'
+    },
+    button: {
+      display: 'flex',
+      alignItems: 'center',
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '5px 8px',
+      borderRadius: '4px',
+      transition: 'all 0.3s ease'
+    },
+    flagIcon: {
+      fontSize: '16px',
+      marginRight: '5px'
+    },
+    text: {
+      fontSize: '13px',
+      fontWeight: '500',
+      color: '#333',
+      margin: '0 3px'
+    },
+    dropdownIcon: {
+      fontSize: '8px',
+      color: '#999',
+      marginLeft: '3px'
+    },
+    dropdownMenu: {
+      position: 'absolute',
+      top: '100%',
+      right: '0',
+      background: 'white',
+      borderRadius: '4px',
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+      minWidth: '120px',
+      zIndex: '1050',
+      marginTop: '5px',
+      overflow: 'hidden',
+      padding: '5px 0'
+    },
+    dropdownItem: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '8px 12px',
+      fontSize: '13px',
+      color: '#333',
+      background: 'transparent',
+      border: 'none',
+      width: '100%',
+      textAlign: 'left',
+      cursor: 'pointer'
+    }
+  };
+
   return (
-    <div className="language-currency-switcher d-flex align-items-center">
-      {/* Currency Switcher */}
-      <div className="dropdown me-2">
-        <button
-          className="btn btn-sm currency-dropdown-btn dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-            backgroundColor: 'transparent',
-            border: '1px solid #e0e0e0',
-            borderRadius: '4px',
-            padding: '4px 8px',
-            color: '#333',
-            fontSize: '12px'
-          }}
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      {/* Language Switcher - เหมือนในรูป */}
+      <div style={dropdownStyles.wrapper}>
+        <button 
+          style={dropdownStyles.button}
+          onClick={toggleLanguageDropdown}
         >
-          {currentCurrency}
+          <span style={dropdownStyles.flagIcon}>{flagCodes[currentLocale]}</span>
+          <span style={dropdownStyles.text}>{localeShortCodes[currentLocale]}</span>
+          <span style={dropdownStyles.dropdownIcon}>▼</span>
         </button>
-        <ul className="dropdown-menu dropdown-menu-end">
-          {Object.values(currencies).map((currency) => (
-            <li key={currency}>
-              <a
-                className={`dropdown-item ${currency === currentCurrency ? 'text-primary' : ''}`}
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (currency !== currentCurrency) {
-                    handleCurrencyChange(currency);
-                  }
+        {isLanguageDropdownOpen && (
+          <div ref={languageDropdownRef} style={dropdownStyles.dropdownMenu}>
+            {locales.map((locale) => (
+              <button 
+                key={locale}
+                style={{
+                  ...dropdownStyles.dropdownItem,
+                  backgroundColor: locale === currentLocale ? '#f5f5f5' : 'transparent'
+                }}
+                onClick={() => {
+                  handleLanguageChange(locale);
+                  setIsLanguageDropdownOpen(false);
+                }}
+              >
+                <span style={{ marginRight: '8px' }}>{flagCodes[locale]}</span> {languageNames[locale]}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Currency Dropdown - เหมือนในรูป */}
+      <div style={dropdownStyles.wrapper}>
+        <button 
+          style={dropdownStyles.button}
+          onClick={toggleCurrencyDropdown}
+        >
+          <span style={dropdownStyles.text}>{currentCurrency}</span>
+          <span style={dropdownStyles.dropdownIcon}>▼</span>
+        </button>
+        {isCurrencyDropdownOpen && (
+          <div ref={currencyDropdownRef} style={dropdownStyles.dropdownMenu}>
+            {Object.values(currencies).map((currency) => (
+              <button 
+                key={currency}
+                style={{
+                  ...dropdownStyles.dropdownItem,
+                  backgroundColor: currency === currentCurrency ? '#f5f5f5' : 'transparent'
+                }}
+                onClick={() => {
+                  handleCurrencyChange(currency);
+                  setIsCurrencyDropdownOpen(false);
                 }}
               >
                 {currency}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Language Switcher */}
-      <div className="dropdown">
-        <button
-          className="btn btn-sm language-dropdown-btn dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-            backgroundColor: 'transparent',
-            border: '1px solid #e0e0e0',
-            borderRadius: '4px',
-            padding: '4px 8px',
-            color: '#333'
-          }}
-        >
-          <span style={{ fontSize: '16px' }}>{flagCodes[currentLocale]}</span>
-          <span style={{ fontWeight: '500' }}>{localeShortCodes[currentLocale]}</span>
-        </button>
-        <ul className="dropdown-menu dropdown-menu-end">
-          {locales.map((locale) => (
-            <li key={locale}>
-              <a
-                className={`dropdown-item ${locale === currentLocale ? 'text-primary' : ''}`}
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (locale !== currentLocale) {
-                    handleLanguageChange(locale);
-                  }
-                }}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-              >
-                <span>{flagCodes[locale]}</span>
-                <span>{languageNames[locale]}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

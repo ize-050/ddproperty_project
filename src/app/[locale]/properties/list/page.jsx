@@ -1,6 +1,10 @@
 import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
 import ListingPropertiesPage from '@/components/properties/listing/ListingPropertiesPage';
 import serverApi from '@/utils/serverApi';
+
+// บังคับให้โหลดข้อมูลใหม่ทุกครั้งที่เข้าหน้า
+export const dynamic = 'force-dynamic';
 
 // ฟังก์ชันสำหรับดึงข้อมูลอสังหาริมทรัพย์ตามเงื่อนไขการค้นหา
 async function searchProperties(searchParams) {
@@ -57,12 +61,11 @@ async function searchProperties(searchParams) {
       headers: { 'x-api-key': 'dd-property-api-key-2025' }
     });
 
-    console.log('Search Results:', response.data);
 
     // ตรวจสอบข้อมูลที่ได้รับจาก API
     if (response && response.data) {
-      console.log('Search Results:', response.data);
-      return response.data;
+      console.log('Search Resultspagination:', response.data);
+      return { data: response.data, pagination: response.pagination };
     }
 
     return { data: [], pagination: { total: 0, page: 1, limit: 9, pages: 0 } };
@@ -102,25 +105,46 @@ export async function generateMetadata({ params: { locale } }) {
   };
 }
 
-export default async function PropertyListPage({ params, searchParams }) {
+// Loading component สำหรับแสดงระหว่างรอข้อมูล
+function PropertyListingLoading() {
+  return (
+    <div className="property-listing-loading">
+      <div className="loading-content">
+        <div className="loading-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity="0.25"/>
+            <path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z" className="spinner"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Component สำหรับแสดงรายการอสังหาริมทรัพย์
+async function PropertyListContent({ searchParams }) {
   // ดึงข้อมูลอสังหาริมทรัพย์ตามเงื่อนไขการค้นหา
   const searchResults = await searchProperties(searchParams);
 
   // ดึงข้อมูล Zone ทั้งหมด  
   const zones = await getAllZones();
+  
+  return (
+    <ListingPropertiesPage
+      properties={searchResults.data || []}
+      pagination={searchResults.pagination || {}}
+      zones={zones || []}
+      searchParams={searchParams || {}}
+    />
+  );
+}
 
+export default function PropertyListPage({ params, searchParams }) {
   return (
     <div className="main-wrapper">
-      {/* Loading indicator ที่สวยงาม */}
-      <div className="preloader"></div>
-
-      {/* แสดงหน้ารายการอสังหาริมทรัพย์ */}
-      <ListingPropertiesPage
-        properties={searchResults.data || []}
-        pagination={searchResults.pagination || {}}
-        zones={zones || []}
-        searchParams={searchParams || {}}
-      />
+      <Suspense fallback={<PropertyListingLoading />}>
+        <PropertyListContent searchParams={searchParams} />
+      </Suspense>
     </div>
   );
 }

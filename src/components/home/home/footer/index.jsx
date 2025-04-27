@@ -10,8 +10,9 @@ import Copyright from "./Copyright";
 const Footer = () => {
   return (
     <>
-      <div className="container">
-        <div className="row bb-white-light pb30 mb60">
+      <div className="" style={{ backgroundColor: '#000' }}>
+        <div className="container">
+        <div className=" row  pb30 mb60">
           <div className="col-sm-5">
             <div className="footer-widget text-center text-sm-start">
               <Link className="footer-logo" href="/">
@@ -19,7 +20,7 @@ const Footer = () => {
                   width={138}
                   height={44}
                   className="mb40"
-                  src="/images/header-logo.svg"
+                  src="/images/logo/logo.png"
                   alt=""
                 />
               </Link>
@@ -63,9 +64,11 @@ const Footer = () => {
         </div>
         {/* End .row */}
       </div>
+      <Copyright />
+      </div>
       {/* End .container */}
 
-      <Copyright />
+      
       {/* End copyright */}
     </>
   );
