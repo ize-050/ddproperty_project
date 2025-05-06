@@ -6,6 +6,28 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
 const Agents = () => {
+
+  const  dataAgentMockup = [
+    {
+    id: 1,
+    name: "Oat - Supakorn",
+    position : "CEO",
+    image: "/images/agent/staff-01.png",
+    },
+    {
+    id: 2,
+    name: "Amy - Thannaree",
+    position : "Sale Director",
+    image: "/images/agent/staff-02.png",
+    },
+    {
+    id: 3,
+    name: "ize - Chanyapak",
+    position : "Sale Manager",
+    image: "/images/agent/staff-03.png",
+    },
+]
+
   return (
     <>
       <Swiper
@@ -31,10 +53,10 @@ const Agents = () => {
           disableOnInteraction: false, // Keep autoplaying even when user interacts with the swiper
         }}
       >
-        {agents.slice(0, 7).map((agent, index) => (
+        {dataAgentMockup.map((agent, index) => (
           <SwiperSlide key={index}>
             <div className="item" key={index}>
-              <Link  href={`/agent-single/${agent.id}`}>
+              <Link  href={`#`}>
                 <div className="team-style1 mb30">
                   <div className="team-img">
                     <Image
@@ -47,7 +69,7 @@ const Agents = () => {
                   </div>
                   <div className="team-content pt20">
                     <h6 className="name mb-1">{agent.name}</h6>
-                    <p className="text fz15 mb-0">Broker</p>
+                    <p className="text fz15 mb-0">{agent.position}</p>
                   </div>
                 </div>
               </Link>

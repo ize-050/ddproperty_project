@@ -194,7 +194,7 @@
         background-color: #333;
       }
     }
-  
+  }
   
   
   // Responsive adjustments
@@ -359,7 +359,8 @@
           }
         }
       }
-    
+    }
+  }
 }
 
 // Property Grid

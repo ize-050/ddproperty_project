@@ -8,6 +8,24 @@
     "login": "เข้าสู่ระบบ / สมัครสมาชิก",
     "addProperty": "ลงประกาศ"
   },
+  "home": {
+    "developer": "",
+    "featured":{
+      "title": "Discover Our Featured Listings",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "See All Properties"
+    },
+    "randomProperties": {
+      "title": "Featured Properties",
+      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "loading": "Loading properties...",
+      "error": "Error loading properties",
+      "retry": "Retry",
+      "bed": "bed",
+      "bath": "bath",
+      "sqm": "sqm"
+    }
+  },
   "hero": {
     "title": "ค้นหาบ้านในฝันของคุณ",
     "subtitle": "เริ่มต้นเพียงวันละ 10 ดอลลาร์ พร้อมส่วนลดพิเศษในช่วงเวลาจำกัด"

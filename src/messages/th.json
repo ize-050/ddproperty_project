@@ -17,12 +17,34 @@
     "subtitle": "Aliquam lacinia diam quis lacus euismod",
     "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด"
   },
-  "footer": {
+  "Footer": {
     "about": "เกี่ยวกับเรา",
     "contact": "ติดต่อเรา",
     "terms": "ข้อกำหนดและเงื่อนไข",
     "privacy": "นโยบายความเป็นส่วนตัว",
-    "copyright": "© 2025 DDProperty สงวนลิขสิทธิ์"
+    "copyright": "© 2019 by D'LUCK PROPERTY",
+    "popularSearch": "ค้นหายอดนิยม",
+    "condoForSale": "คอนโดมิเนียมเพื่อขาย",
+    "condoForRent": "คอนโดมิเนียมเพื่อเช่า",
+    "poolVillaForSale": "พูลวิลล่าเพื่อขาย",
+    "poolVillaForRent": "พูลวิลล่าเพื่อเช่า",
+    "houseForSale": "บ้านเพื่อขาย",
+    "quickLinks": "ลิงก์ด่วน",
+    "propertyForSale": "อสังหาริมทรัพย์เพื่อขาย",
+    "aboutUs": "เกี่ยวกับเรา",
+    "contactUs": "ติดต่อเรา",
+    "discoverByArea": "ค้นหาตามพื้นที่",
+    "jomtien": "จอมเทียน",
+    "wongamat": "วงศ์อมาตย์",
+    "naklua": "นาเกลือ",
+    "pratumnak": "เขาพระตำหนัก",
+    "banglamung": "บางละมุง",
+    "callUsNow": "โทรหาเราเลย",
+    "dropEmail": "ส่งอีเมล",
+    "getPromoWithNewsletter": "รับโปรโมชั่นพร้อมจดหมายข่าว",
+    "enterEmail": "กรอกอีเมลของคุณ",
+    "subscribe": "สมัครรับข่าวสาร",
+    "sitemap": "แผนผังเว็บไซต์"
   },
   "language": {
     "en": "อังกฤษ",
@@ -31,6 +53,12 @@
     "ru": "รัสเซีย"
   },
   "home": {
+    "developer": "Developer",
+    "featured":{
+      "title": "ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด"
+    },
     "randomProperties": {
       "title": "อสังหาริมทรัพย์แนะนำ",
       "subtitle": "อสังหาริมทรัพย์คุณภาพในพัทยา ที่คัดสรรมาเพื่อคุณโดยเฉพาะ",
@@ -41,5 +69,51 @@
       "bath": "ห้องน้ำ",
       "sqm": "ตร.ม."
     }
+  },
+  "PropertyDetail": {
+    "home": "หน้าหลัก",
+    "properties": "อสังหาริมทรัพย์",
+    "overview": "ภาพรวม",
+    "details": "รายละเอียด",
+    "location": "ตำแหน่งที่ตั้ง",
+    "description": "รายละเอียด",
+    "features": "คุณสมบัติ",
+    "highlights": "จุดเด่น",
+    "propertyDetails": "รายละเอียดอสังหาริมทรัพย์",
+    "propertyId": "รหัสอสังหาริมทรัพย์",
+    "propertyType": "ประเภทอสังหาริมทรัพย์",
+    "projectName": "ชื่อโครงการ",
+    "totalArea": "พื้นที่ทั้งหมด",
+    "usableArea": "พื้นที่ใช้สอย",
+    "landSize": "ขนาดที่ดิน",
+    "bedrooms": "ห้องนอน",
+    "bathrooms": "ห้องน้ำ",
+    "floors": "จำนวนชั้น",
+    "furnishing": "เฟอร์นิเจอร์",
+    "constructionYear": "ปีที่สร้าง",
+    "communityFee": "ค่าส่วนกลาง",
+    "district": "เขต/อำเภอ",
+    "city": "เมือง",
+    "province": "จังหวัด",
+    "zipCode": "รหัสไปรษณีย์",
+    "mapPlaceholder": "คลิกเพื่อดูแผนที่",
+    "contactAgent": "ติดต่อตัวแทน",
+    "yourName": "ชื่อของคุณ",
+    "yourEmail": "อีเมลของคุณ",
+    "yourPhone": "เบอร์โทรศัพท์ของคุณ",
+    "message": "ข้อความ",
+    "sendMessage": "ส่งข้อความ",
+    "similarProperties": "อสังหาริมทรัพย์ที่คล้ายกัน",
+    "similarPropertiesNotAvailable": "ไม่มีอสังหาริมทรัพย์ที่คล้ายกันในขณะนี้",
+    "errorLoadingProperty": "เกิดข้อผิดพลาดในการโหลดข้อมูล",
+    "propertyNotFound": "ไม่พบข้อมูลอสังหาริมทรัพย์",
+    "propertyNotFoundDescription": "ไม่พบข้อมูลอสังหาริมทรัพย์ที่คุณกำลังค้นหา กรุณาลองใหม่อีกครั้ง",
+    "goBack": "กลับ",
+    "perMonth": "/ เดือน",
+    "sqm": "ตร.ม.",
+    "rai": "ไร่",
+    "ngan": "งาน",
+    "sqWah": "ตร.วา",
+    "bahtPerMonth": "บาท/เดือน"
   }
 }

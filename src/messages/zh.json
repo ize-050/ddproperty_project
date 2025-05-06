@@ -1,4 +1,22 @@
 {
+  "home": {
+    "developer": "开发商",
+    "featured":{
+      "title": "发现我们的精选房源",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "See All Properties"
+    },
+    "randomProperties": {
+      "title": "精选房源",
+      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "loading": "Loading properties...",
+      "error": "Error loading properties",
+      "retry": "Retry",
+      "bed": "bed",
+      "bath": "bath",
+      "sqm": "sqm"
+    }
+  },
   "header": {
     "home": "首页",
     "properties": "房产",

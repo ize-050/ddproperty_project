@@ -57,7 +57,11 @@ const HeroContent = () => {
                  
                   <div className="d-grid">
                     <button
-                      className="ud-btn btn-thm"
+                      className="ud-btn btn-thm "
+                      style={{
+                        backgroundColor: '#000',
+                        borderColor: '#000',
+                      }}
                       type="button"
                       onClick={() => {
                         // เรียกใช้ฟังก์ชัน handleSearch โดยตรงจาก FilterItems

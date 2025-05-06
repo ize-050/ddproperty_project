@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { locales, languageNames, defaultLocale } from '../../navigation';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { supportedLocales, defaultLocale } from '../../i18n';
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
@@ -23,6 +22,14 @@ export default function LanguageSwitcher() {
     en: 'EN',
     zh: 'ZH',
     ru: 'RU'
+  };
+  
+  // ชื่อภาษา
+  const languageNames = {
+    th: 'ไทย',
+    en: 'English',
+    zh: '中文',
+    ru: 'Русский'
   };
   
   // สกุลเงินสำหรับแต่ละภาษา
@@ -72,7 +79,7 @@ export default function LanguageSwitcher() {
     const localeMatch = path.match(/^\/([a-z]{2})(?:\/|$)/);
 
     let detectedLocale = defaultLocale;
-    if (localeMatch && locales.includes(localeMatch[1])) {
+    if (localeMatch && supportedLocales.includes(localeMatch[1])) {
       detectedLocale = localeMatch[1];
     }
     
@@ -82,29 +89,35 @@ export default function LanguageSwitcher() {
 
   // ฟังก์ชันสำหรับเปลี่ยนภาษา
   const handleLanguageChange = (locale) => {
+    console.log('Changing language to:', locale);
+    console.log('Current pathname:', pathname);
+    
     // คำนวณ URL ใหม่ตามภาษาที่เลือก
     let newPath = '';
     
-    // ถ้าเป็นภาษาเริ่มต้น (ไทย) และอยู่ที่หน้าแรก
-    if (locale === defaultLocale && (pathname === '/' || pathname === `/${currentLocale}`)) {
-      newPath = '/';
+    // ถ้าเป็นภาษาเริ่มต้น (ไทย)
+    if (locale === defaultLocale) {
+      // ถ้าอยู่ที่หน้าแรกของภาษาอื่น (เช่น /en, /zh)
+      if (pathname.match(/^\/(en|zh|ru)$/)) {
+        newPath = '/';
+      } else {
+        // ลบ prefix ภาษาออกจาก URL
+        newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
+      }
     } 
-    // ถ้าเป็นภาษาเริ่มต้น (ไทย) แต่ไม่ได้อยู่ที่หน้าแรก
-    else if (locale === defaultLocale) {
-      // ลบ prefix ภาษาออกจาก URL
-      newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
-    } 
-    // ถ้าเป็นภาษาอื่น
+    // ถ้าเป็นภาษาอื่น (en, zh, ru)
     else {
       // ถ้ามี prefix ภาษาอยู่แล้ว ให้แทนที่
       if (pathname.match(/^\/[a-z]{2}(\/|$)/)) {
         newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, `/${locale}$1`);
       } 
-      // ถ้าไม่มี prefix ภาษา ให้เพิ่มเข้าไป
+      // ถ้าไม่มี prefix ภาษา (เช่น หน้าแรกภาษาไทย)
       else {
-        newPath = `/${locale}${pathname}`;
+        newPath = `/${locale}${pathname === '/' ? '' : pathname}`;
       }
     }
+    
+    console.log('New path:', newPath);
 
     // นำทางไปยัง URL ใหม่
     try {
@@ -208,13 +221,13 @@ export default function LanguageSwitcher() {
           style={dropdownStyles.button}
           onClick={toggleLanguageDropdown}
         >
-          <span style={dropdownStyles.flagIcon}>{flagCodes[currentLocale]}</span>
-          <span style={dropdownStyles.text}>{localeShortCodes[currentLocale]}</span>
+          <span style={dropdownStyles.flagIcon}>{currentLocale && flagCodes[currentLocale] ? flagCodes[currentLocale] : ''}</span>
+          <span style={dropdownStyles.text}>{currentLocale && localeShortCodes[currentLocale] ? localeShortCodes[currentLocale] : ''}</span>
           <span style={dropdownStyles.dropdownIcon}>▼</span>
         </button>
         {isLanguageDropdownOpen && (
           <div ref={languageDropdownRef} style={dropdownStyles.dropdownMenu}>
-            {locales.map((locale) => (
+            {supportedLocales.map((locale) => (
               <button 
                 key={locale}
                 style={{
@@ -226,7 +239,7 @@ export default function LanguageSwitcher() {
                   setIsLanguageDropdownOpen(false);
                 }}
               >
-                <span style={{ marginRight: '8px' }}>{flagCodes[locale]}</span> {languageNames[locale]}
+                <span style={{ marginRight: '8px' }}>{flagCodes[locale] || ''}</span> {languageNames[locale] || locale}
               </button>
             ))}
           </div>

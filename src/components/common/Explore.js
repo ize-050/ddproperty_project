@@ -14,7 +14,7 @@ const Explore = () => {
     {
       id: 2,
       icon: "/images/icon/property-sell.svg",
-      title: "Sell a property",
+      title: "Rental Management",
       text: "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
       linkText: "Place an ad",
     },
@@ -43,10 +43,12 @@ const Explore = () => {
             <div className="iconbox-content">
               <h4 className="title">{item.title}</h4>
               <p className="text">{item.text}</p>
-              <Link href="/grid-default" className="ud-btn btn-white2">
-                {item.linkText}
-                <i className="fal fa-arrow-right-long" />
-              </Link>
+              {item.linkText =="Place an ad" && (
+                <p href="/grid-default" className="ud-btn btn-white2">
+                  More
+                  <i className="fal fa-arrow-right-long" />
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -2,14 +2,16 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from "next-intl/server";
 import { locales } from "../../navigation";
 import Script from 'next/script';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import "../../../node_modules/react-modal-video/scss/modal-video.scss";
 import "../../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
-
+import { supportedLocales } from '../../i18n';
 // ฟังก์ชันสำหรับสร้าง static params สำหรับแต่ละภาษา
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return supportedLocales.map((locale) => ({ locale }));
 }
 
 
@@ -29,10 +31,10 @@ const poppins = Poppins({
 
 export default async function LocaleLayout({ children, params }) {
   // โหลดข้อความแปลภาษา
-  const locale = await getLocale();
+  const locale = params.locale || defaultLocale;
   
   // ใช้ getMessages แทน useMessages เพราะเราอยู่ในคอมโพเนนต์ async
-  const messages = await getMessages();
+  const messages = await getMessages({locale})
 
   return (
     <html lang={locale}>
@@ -57,7 +59,23 @@ export default async function LocaleLayout({ children, params }) {
       >
         
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="wrapper ovh">{children}</div>
+          <div className="wrapper ovh">
+            {children}
+            {/* นำเข้า Footer */}
+            <div id="footer-container" suppressHydrationWarning>
+              {typeof window !== 'undefined' && (
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  {/* ใช้ dynamic import เพื่อหลีกเลี่ยง hydration error */}
+                  {(() => {
+                    const Footer = dynamic(() => import('../../components/common/Footer'), {
+                      ssr: false
+                    });
+                    return <Footer />;
+                  })()}
+                </React.Suspense>
+              )}
+            </div>
+          </div>
         </NextIntlClientProvider>
 
          {/* โหลด JavaScript หลังจาก hydration เสร็จสิ้น */}

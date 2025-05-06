@@ -17,12 +17,34 @@
     "subtitle": "Aliquam lacinia diam quis lacus euismod",
     "seeAll": "See All Properties"
   },
-  "footer": {
+  "Footer": {
     "about": "About Us",
     "contact": "Contact Us",
-    "terms": "Terms & Conditions",
+    "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
-    "copyright": "© 2025 DDProperty. All rights reserved."
+    "copyright": " 2019 by D'LUCK PROPERTY",
+    "popularSearch": "Popular Search",
+    "condoForSale": "Condominium for Sale",
+    "condoForRent": "Condominium for Rent",
+    "poolVillaForSale": "Pool Villa for Sale",
+    "poolVillaForRent": "Pool Villa for Rent",
+    "houseForSale": "House for Sale",
+    "quickLinks": "Quick Links",
+    "propertyForSale": "Property for Sale",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "discoverByArea": "Discover by Area",
+    "jomtien": "Jomtien",
+    "wongamat": "Wongamat",
+    "naklua": "Naklua",
+    "pratumnak": "Pratumnak",
+    "banglamung": "Bang Lamung",
+    "callUsNow": "Call Us Now",
+    "dropEmail": "Drop a mail",
+    "getPromoWithNewsletter": "Get Promo with Newsletter",
+    "enterEmail": "Enter your email",
+    "subscribe": "Subscribe",
+    "sitemap": "Sitemap"
   },
   "language": {
     "en": "English",
@@ -31,6 +53,12 @@
     "ru": "Russian"
   },
   "home": {
+    "developer": "Developer",
+    "featured":{
+      "title": "Discover Our Featured Listings",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "See All Properties"
+    },
     "randomProperties": {
       "title": "Featured Properties",
       "subtitle": "Quality properties in Pattaya, specially selected for you",
@@ -41,5 +69,51 @@
       "bath": "bath",
       "sqm": "sqm"
     }
+  },
+  "PropertyDetail": {
+    "home": "Home",
+    "properties": "Properties",
+    "overview": "Overview",
+    "details": "Details",
+    "location": "Location",
+    "description": "Description",
+    "features": "Features",
+    "highlights": "Highlights",
+    "propertyDetails": "Property Details",
+    "propertyId": "Property ID",
+    "propertyType": "Property Type",
+    "projectName": "Project Name",
+    "totalArea": "Total Area",
+    "usableArea": "Usable Area",
+    "landSize": "Land Size",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "floors": "Floors",
+    "furnishing": "Furnishing",
+    "constructionYear": "Construction Year",
+    "communityFee": "Community Fee",
+    "district": "District",
+    "city": "City",
+    "province": "Province",
+    "zipCode": "Zip Code",
+    "mapPlaceholder": "Click to view map",
+    "contactAgent": "Contact Agent",
+    "yourName": "Your Name",
+    "yourEmail": "Your Email",
+    "yourPhone": "Your Phone",
+    "message": "Message",
+    "sendMessage": "Send Message",
+    "similarProperties": "Similar Properties",
+    "similarPropertiesNotAvailable": "No similar properties available at the moment",
+    "errorLoadingProperty": "Error Loading Property",
+    "propertyNotFound": "Property Not Found",
+    "propertyNotFoundDescription": "The property you are looking for could not be found. Please try again.",
+    "goBack": "Go Back",
+    "perMonth": "/ month",
+    "sqm": "sqm",
+    "rai": "rai",
+    "ngan": "ngan",
+    "sqWah": "sq.wah",
+    "bahtPerMonth": "baht/month"
   }
 }

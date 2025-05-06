@@ -11,7 +11,7 @@ export const revalidate = 0;
 const Page = lazy(() => import("@/components/home/page"));
 const Header = lazy(() => import("@/components/home/home/Header"));
 const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
-const Footer = lazy(() => import("@/components/home/home/footer"));
+const Footer = lazy(() => import("@/components/common/Footer"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 

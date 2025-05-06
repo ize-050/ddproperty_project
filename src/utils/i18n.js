@@ -2,13 +2,7 @@
 export const locales = ['th', 'en', 'zh', 'ru'];
 export const defaultLocale = 'th';
 
-// ชื่อภาษาสำหรับแสดงในตัวเลือกภาษา
-export const languageNames = {
-  th: 'ไทย',
-  en: 'English',
-  zh: '中文',
-  ru: 'Русский'
-};
+
 
 // ฟังก์ชันสำหรับแปลงเส้นทาง URL ระหว่างภาษา
 export function getLocalizedPath(path, locale) {

@@ -12,13 +12,14 @@ import useZoneStore from '@/store/useZoneStore';
 
 // Import custom styles
 import '@/styles/property-listing.scss';
+import '@/styles/property-listing-search.scss';
 
 // Property Cards Skeleton component for loading state
 const PropertyCardsSkeleton = ({ count = 8 }) => {
   return (
     <>
       {[...Array(count)].map((_, index) => (
-        <div className="col-sm-6 col-md-4 col-lg-3 mb-4" key={index}>
+        <div className="col-sm-6 col-md-4 col-lg-4 mb-4" key={index}>
           <div className="property-card-skeleton">
             <div className="image-skeleton"></div>
             <div className="content-skeleton">
@@ -81,14 +82,14 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   const handlePageChange = (page) => {
     // ป้องกันการเปลี่ยนหน้าที่ไม่จำเป็น
     if (page === currentPage) return;
-    
+
     setCurrentPage(page);
     setIsLoading(true); // เริ่ม loading state
-    
+
     // สร้าง URL params ใหม่
     const params = new URLSearchParams(searchParamsObj.toString());
     params.set('page', page.toString());
-    
+
     // นำทางไปยัง URL ใหม่
     router.push(`${pathname}?${params.toString()}`);
   };
@@ -111,7 +112,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   // ฟังก์ชันสำหรับอัปเดตการกรอง
   const handleFilterChange = (newFilters) => {
     setIsLoading(true); // เริ่ม loading state
-    
+
     const updatedFilters = { ...filters, ...newFilters, page: 1 }; // รีเซ็ตหน้าเป็น 1 เมื่อเปลี่ยนการกรอง
     setFilters(updatedFilters);
     updateURL(updatedFilters);
@@ -120,10 +121,10 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   // ฟังก์ชันสำหรับอัปเดต  // เมื่อมีการเปลี่ยนแปลง filters
   const handleFilterChange2 = () => {
     setIsLoading(true); // เริ่ม loading state
-    
+
     // สร้าง URL params ใหม่
     const params = new URLSearchParams();
-    
+
     // เพิ่ม params ที่มีค่า
     if (selectedZone) params.set('zoneId', selectedZone);
     if (selectedPropertyType) params.set('propertyType', selectedPropertyType);
@@ -131,11 +132,11 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
     if (minPrice) params.set('minPrice', minPrice);
     if (maxPrice) params.set('maxPrice', maxPrice);
     if (sortOrder) params.set('sort', sortOrder);
-    
+
     // รีเซ็ตหน้าเป็น 1 เมื่อมีการเปลี่ยน filter
     params.set('page', '1');
     setCurrentPage(1);
-    
+
     // นำทางไปยัง URL ใหม่
     router.push(`${pathname}?${params.toString()}`);
   };
@@ -148,7 +149,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
       {/* Mobile Menu */}
       <MobileMenu />
 
-     
+
       {/* Main Content Section */}
       <div className="main-content ">
         {/* Hero Banner Section with Search Form - Exactly like in the image */}
@@ -159,12 +160,12 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                 <h1 className="text-white">Find Your Dream Home</h1>
                 <p className="text-white">We've more than 1,000+ properties listed on our website</p>
               </div>
-              
+
               {/* Search Form - New design with tabs and input */}
               <div className="search-form-wrapper">
                 <div className="search-tabs">
                   <button
-                    className={`tab-btn ${selectedListingType === 'SALE' ? 'active' : ''}`}
+                    className="tab-btn active"
                     onClick={() => {
                       setSelectedListingType('SALE');
                       handleFilterChange2();
@@ -173,7 +174,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                     Buy
                   </button>
                   <button
-                    className={`tab-btn ${selectedListingType === 'RENT' ? 'active' : ''}`}
+                    className="tab-btn"
                     onClick={() => {
                       setSelectedListingType('RENT');
                       handleFilterChange2();
@@ -182,21 +183,21 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                     Rent
                   </button>
                 </div>
-                
-                <div className="search-input-container">
-                  <input 
-                    type="text" 
-                    className="search-input" 
-                    placeholder="Condominium" 
-                    readOnly
-                  />
-                  
+
+                <div className="main-search-area">
+                  <div className="search-input-container">
+                    <input
+                      type="text"
+                      className="search-input"
+                      placeholder="Condominium"
+                    />
+                  </div>
+
                   <div className="search-actions">
                     <button className="advanced-btn">
-                      <i className="fas fa-sliders-h"></i>
+                      <i className="fas fa-bars"></i>
                       <span>Advanced</span>
                     </button>
-                    
                     <button className="search-btn">
                       <i className="fas fa-search"></i>
                     </button>
@@ -210,7 +211,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
 
       {/* Featured Listings Section */}
       <section className="our-listing pb30-991 pt50"
-       style={{ backgroundColor: '#f9f6f9' }}
+        style={{ backgroundColor: '#f9f6f9' }}
       >
         <div className="container">
           <div className="row">
@@ -220,9 +221,9 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
               </div>
             </div>
           </div>
-          
 
-          
+
+
           <div className="row">
             {/* Property Listings - Full Width 4 Columns */}
             <div className="col-lg-12">
@@ -248,29 +249,29 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                     )}
                   </div>
                 </div>
-                
+
                 {/* Pagination at bottom - exactly like in the image */}
                 <div className="col-12 text-center mt-4 mb-5">
                   <div className="results-count">
                     <p>1-{properties.length} of {pagination?.total || 0} property available</p>
                   </div>
-                  
+
                   {/* แสดง pagination เฉพาะเมื่อมีมากกว่า 1 หน้า หรือแสดงตลอดเพื่อให้เหมือนในรูป */}
                   <div className="simple-pagination">
-                    <button 
-                      className="page-nav prev" 
+                    <button
+                      className="page-nav prev"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePageChange(parseInt(pagination?.page || 1) - 1);
-                      }} 
+                      }}
                       disabled={parseInt(pagination?.page || 1) <= 1 || pagination?.pages <= 1}
                     >
                       <i className="fas fa-chevron-left"></i>
                     </button>
-                    
+
                     {/* แสดงปุ่มหมายเลขหน้าตามจำนวนหน้าที่มีจริง */}
                     {[...Array(Math.max(1, pagination?.pages || 1))].map((_, i) => (
-                      <button 
+                      <button
                         key={i}
                         className={`page-number ${parseInt(pagination?.page || 1) === i + 1 ? 'active' : ''}`}
                         onClick={(e) => {
@@ -281,13 +282,13 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                         {i + 1}
                       </button>
                     ))}
-                    
-                    <button 
-                      className="page-nav next" 
+
+                    <button
+                      className="page-nav next"
                       onClick={(e) => {
                         e.preventDefault();
                         handlePageChange(parseInt(pagination?.page || 1) + 1);
-                      }} 
+                      }}
                       disabled={parseInt(pagination?.page || 1) >= pagination?.pages || pagination?.pages <= 1}
                     >
                       <i className="fas fa-chevron-right"></i>
@@ -299,7 +300,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
           </div>
         </div>
       </section>
-      
+
 
       {/* Footer */}
       <Footer />

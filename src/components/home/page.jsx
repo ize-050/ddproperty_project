@@ -69,12 +69,12 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up">
               <div className="main-title text-center">
-                <h6 className="text-white">Trusted by the world’s best</h6>
+                <h6 className="text-white">Developer</h6>
               </div>
             </div>
             <div className="col-lg-12 text-center">
               <div
-                className="dots_none nav_none"
+                className="dots_none nav_none "
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
@@ -113,7 +113,7 @@ const Page = ({ randomProperties, zones }) => {
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
               <div className="feature-listing-slider">
                 {/* <FeaturedListings /> */}
-              <RandomProperties randomProperties={randomProperties} />
+                <RandomProperties randomProperties={randomProperties} />
               </div>
             </div>
           </div>
@@ -206,9 +206,7 @@ const Page = ({ randomProperties, zones }) => {
           </div>
         </div>
       </section>
-      {/* End CTA Banner */}
 
-      {/* Explore Cities */}
       <section className="pb80 pb30-md">
         <div className="container">
           <div className="row">
@@ -218,18 +216,18 @@ const Page = ({ randomProperties, zones }) => {
               data-aos-delay="100"
             >
               <div className="main-title mb30">
-                <h2 className="title mb20">Explore Cities</h2>
+                <h2 className="title mb20">Explore Locations</h2>
                 <p className="text">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros elementum{" "}
-                  <br className="d-none d-lg-block" />
-                  tristique.
+                  Pattaya's divese landscape extends beyong its 
+                  beaches and nightlife, offering a variety of locations {" "}
+                  with unique characteristics that cater to different { " "} real 
+                  estate needs and investment strategies.
                 </p>
               </div>
-              <Link href="/agency" className="ud-btn btn-transparent mb30-md">
-                Our Team
+              <p href="/agency" className="ud-btn btn-transparent mb30-md">
+                More
                 <i className="fal fa-arrow-right-long" />
-              </Link>
+              </p>
             </div>
             {/* End .col */}
 
@@ -308,15 +306,14 @@ const Page = ({ randomProperties, zones }) => {
               data-aos-delay="100"
             >
               <div className="main-title mb30">
-                <h2 className="title mb20">Our Exclusive Agetns</h2>
+                <h2 className="title mb20">Meet Our Team</h2>
                 <p className="text">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros elementum{" "}
+                  Our Professional Consulttancies ready to help you to 
                   <br className="d-none d-lg-block" />
-                  tristique.
+                  get your dream property.
                 </p>
               </div>
-              <Link href="/agents" className="ud-btn btn-transparent mb30-md">
+              <Link href="#" className="ud-btn btn-transparent mb30-md">
                 Our Team
                 <i className="fal fa-arrow-right-long" />
               </Link>
@@ -357,11 +354,11 @@ const Page = ({ randomProperties, zones }) => {
       {/* End Explore Blog */}
 
       {/* Our Contact With Map */}
-      <section className="pt70 pb40">
+      <section className="pt70 pb25">
         <iframe
           className="home8-map"
           loading="lazy"
-          src="https://maps.google.com/maps?q=London%20Eye%2C%20London%2C%20United%20Kingdom&t=m&z=14&output=embed&iwloc=near"
+          src="/images/home/bg-photo-home-01.png"
           title="London Eye, London, United Kingdom"
           aria-label="London Eye, London, United Kingdom"
         />
@@ -370,9 +367,9 @@ const Page = ({ randomProperties, zones }) => {
         <div className="container">
           <div className="row">
             <div className="col-md-6 offset-md-6 position-relative">
-              <div className="home8-contact-form bdrs12 p40 p30-md bgc-white mb30">
+              <div className="home8-contact-form bdrs12 p40 p30-md bgc-white">
                 <h2 className="form-title">Get In Touch</h2>
-                <p className="text mb25">
+                <p className="text ">
                   Aliquam lacinia diam quis lacus euismod
                 </p>
                 <Contact />

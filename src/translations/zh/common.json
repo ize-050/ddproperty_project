@@ -8,14 +8,27 @@
     "login": "登录 / 注册",
     "addProperty": "添加房产"
   },
+  "home": {
+    "developer": "开发商",
+    "featured": {
+      "title": "探索我们的精选房源",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "查看所有房产"
+    },
+    "randomProperties": {
+      "title": "Featured Properties",
+      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "loading": "Loading properties...",
+      "error": "Error loading properties",
+      "retry": "Retry",
+      "bed": "bed",
+      "bath": "bath",
+      "sqm": "sqm"
+    }
+  },
   "hero": {
     "title": "找到您的梦想家园",
     "subtitle": "限时优惠折扣，每天低至10美元起"
-  },
-  "featured": {
-    "title": "探索我们的精选房源",
-    "subtitle": "Aliquam lacinia diam quis lacus euismod",
-    "seeAll": "查看所有房产"
   },
   "footer": {
     "about": "关于我们",

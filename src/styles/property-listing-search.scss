@@ -1,0 +1,204 @@
+// Search Form Styles for Property Listing
+
+// Hero Banner Section
+.hero-banner {
+  position: relative;
+  
+  // Search Form - Styled exactly like the image
+  .search-form-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    top:250px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    z-index: 10;
+    background: transparent;
+    overflow: visible;
+    height: auto;
+    
+    .search-tabs {
+      display: flex;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      top: -30px;
+      z-index: 5;
+      background-color: #fff;
+      .tab-btn {
+        border: none;
+        padding: 0 25px;
+        font-weight: 500;
+        font-size: 16px;
+        
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        height: 30px;
+        line-height: 30px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        margin-right: 5px;
+        
+        &:first-child {
+          color: #000;
+          font-weight: 600;
+          background-color: #fff;
+          box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+          
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #fff;
+            z-index: 2;
+          }
+        }
+      }
+    }
+    
+    .main-search-area {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 60px;
+      padding: 10px 15px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .search-input-container {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding: 0 20px;
+      background-color: #f8f8f8;
+      height: 45px;
+      border-radius: 30px;
+      margin-right: 20px;
+      margin-left: 15px;
+      
+      &:focus-within {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+      }
+      
+      .search-input {
+        flex: 1;
+        border: none;
+        padding: 15px;
+        font-size: 16px;
+        color: #333;
+        background-color: transparent;
+        
+        &:focus {
+          outline: none;
+        }
+        
+        &::placeholder {
+          color: #333;
+          font-weight: 500;
+        }
+      }
+    }
+    
+    .search-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-right: 15px;
+    }
+    
+    .advanced-btn {
+      background: none;
+      border: none;
+      color: #333;
+      padding: 0 15px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      
+      i {
+        margin-right: 8px;
+        font-size: 14px;
+      }
+      
+      span {
+        display: inline-block;
+      }
+      
+      &:hover {
+        color: #000;
+      }
+    }
+    
+    .search-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      
+      i {
+        font-size: 18px;
+      }
+      
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .search-form-wrapper {
+      border-radius: 20px;
+      max-width: 90%;
+      padding-top: 20px;
+      
+      .search-tabs {
+        top: -20px;
+        
+        .tab-btn {
+          padding: 0 15px;
+          font-size: 14px;
+          height: 25px;
+          line-height: 25px;
+        }
+      }
+      
+      .main-search-area {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+      }
+      
+      .search-input-container {
+        width: 100%;
+        margin: 10px 0;
+      }
+      
+      .search-actions {
+        width: 100%;
+        margin: 10px 0;
+        justify-content: space-between;
+      }
+    }
+  }
+}

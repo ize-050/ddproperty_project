@@ -8,14 +8,27 @@
     "login": "Login / Register",
     "addProperty": "Add Property"
   },
+  "home": {
+    "developer": "Developer",
+    "featured":{
+      "title": "Discover Our Featured Listings",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "See All Properties"
+    },
+    "randomProperties": {
+      "title": "Featured Properties",
+      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "loading": "Loading properties...",
+      "error": "Error loading properties",
+      "retry": "Retry",
+      "bed": "bed",
+      "bath": "bath",
+      "sqm": "sqm"
+    }
+  },
   "hero": {
     "title": "Find Your Dream Home",
     "subtitle": "From as low as $10 per day with limited time offer discounts"
-  },
-  "featured": {
-    "title": "Discover Our Featured Listings",
-    "subtitle": "Aliquam lacinia diam quis lacus euismod",
-    "seeAll": "See All Properties"
   },
   "footer": {
     "about": "About Us",

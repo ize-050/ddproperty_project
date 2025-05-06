@@ -8,6 +8,24 @@
     "login": "Вход / Регистрация",
     "addProperty": "Добавить объект"
   },
+  "home": {
+    "developer": "Разработчик",
+    "featured":{
+      "title": "Откройте для себя наши избранные объявления",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "Посмотреть все объекты"
+    },
+    "randomProperties": {
+      "title": "Выбор объектов",
+      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "loading": "Loading properties...",
+      "error": "Error loading properties",
+      "retry": "Retry",
+      "bed": "bed",
+      "bath": "bath",
+      "sqm": "sqm"
+    }
+  },
   "hero": {
     "title": "Найдите дом своей мечты",
     "subtitle": "От 10 долларов в день с ограниченными по времени скидками"

@@ -4882,8 +4882,9 @@ section {
 }
 
 .cta-banner5:before {
-    background-image: url(../images/about/cta-side-bg-2.jpg);
+    background-image: url(../images/home/home-photo.png);
     background-size: cover;
+    background-position: center center;
     content: "";
     position: absolute;
     right: 0;
@@ -4891,6 +4892,9 @@ section {
     bottom: 0;
     height: 100%;
     width: 51%;
+   
+    transition: all 0.4s ease;
+    filter: brightness(1.05) contrast(1.05);
 }
 @media (max-width: 767.98px) {
     .cta-banner5:before {
