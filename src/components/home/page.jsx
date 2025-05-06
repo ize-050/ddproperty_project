@@ -222,6 +222,8 @@ const Page = ({ randomProperties, zones }) => {
                   beaches and nightlife, offering a variety of locations {" "}
                   with unique characteristics that cater to different { " "} real 
                   estate needs and investment strategies.
+                  <br className="d-none d-lg-block" />
+                  tristique.
                 </p>
               </div>
               <p href="/agency" className="ud-btn btn-transparent mb30-md">
@@ -269,7 +271,7 @@ const Page = ({ randomProperties, zones }) => {
       {/* End Explore Apartment */}
 
       {/* Featured Properties */}
-      <section className="pt30 pb-0">
+      {/* <section className="pt30 pb-0">
         <div className="cta-banner6 bgc-thm-light ms-auto maxw1850 pt100 pt60-lg pb100 pb30-lg position-relative overflow-hidden mx20-lg">
           <div className="container">
             <div className="row">
@@ -278,7 +280,7 @@ const Page = ({ randomProperties, zones }) => {
                 daa-aos="fade-left"
                 data-aos-delay="100"
               ></div>
-              {/* End .col */}
+              
               <div
                 className="col-xl-5 offset-xl-1"
                 daa-aos="fade-right"
@@ -289,11 +291,11 @@ const Page = ({ randomProperties, zones }) => {
                 </div>
               </div>
             </div>
-            {/* End .col-12 */}
+       
           </div>
-          {/* End .container */}
+   
         </div>
-      </section>
+      </section> */}
       {/* End Featured Properties */}
 
       {/* Our Exclusive Agetns */}

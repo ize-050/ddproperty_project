@@ -9,11 +9,7 @@ export const revalidate = 0;
 
 // ใช้ lazy import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
 const Page = lazy(() => import("@/components/home/page"));
-const Header = lazy(() => import("@/components/home/home/Header"));
-const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
-const Footer = lazy(() => import("@/components/common/Footer"));
-const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
-const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
+
 
 // สร้าง metadata แบบ dynamic ตามภาษา
 export async function generateMetadata() {
@@ -111,20 +107,9 @@ async function HomeContent() {
   
   return (
     <>
-      {/* Main Header Nav */}
-      <Header />
 
-      {/* Mobile Menu */}
-      <MobileMenu />
-
-      {/* แสดงหน้าหลัก */}
       <Page randomProperties={randomProperties} zones={zones} />
 
-      {/* Main Footer */}
-      <Footer />
-
-      {/* Scroll To Top */}
-      <ScrollToTop />
     </>
   );
 }
@@ -133,9 +118,7 @@ async function HomeContent() {
 export default function MainRoot() {
   return (
     <div className="main-wrapper">
-      <Suspense fallback={<LoadingAnimation />}>
         <HomeContent />
-      </Suspense>
     </div>
   );
 }

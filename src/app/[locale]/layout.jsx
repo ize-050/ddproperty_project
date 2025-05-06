@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from "next-intl/server";
-import { locales } from "../../navigation";
+import { Suspense } from 'react';
+import { lazy } from 'react';
 import Script from 'next/script';
 import React from 'react';
 import dynamic from 'next/dynamic';
@@ -9,6 +10,12 @@ import "../../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { supportedLocales } from '../../i18n';
+const Header = lazy(() => import("@/components/home/home/Header"));
+const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
+const Footer = lazy(() => import("@/components/common/Footer"));
+const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
+const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
+
 // ฟังก์ชันสำหรับสร้าง static params สำหรับแต่ละภาษา
 export function generateStaticParams() {
   return supportedLocales.map((locale) => ({ locale }));
@@ -60,8 +67,18 @@ export default async function LocaleLayout({ children, params }) {
         
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="wrapper ovh">
+              <Suspense fallback={<LoadingAnimation />}>
+            <Header />
+
+            <MobileMenu />
+
+            
             {children}
-            {/* นำเข้า Footer */}
+
+            <Footer />
+
+            <ScrollToTop />
+            </Suspense>
             <div id="footer-container" suppressHydrationWarning>
               {typeof window !== 'undefined' && (
                 <React.Suspense fallback={<div>Loading...</div>}>
@@ -74,7 +91,9 @@ export default async function LocaleLayout({ children, params }) {
                   })()}
                 </React.Suspense>
               )}
+             
             </div>
+           
           </div>
         </NextIntlClientProvider>
 
