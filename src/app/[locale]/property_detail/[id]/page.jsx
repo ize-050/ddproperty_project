@@ -11,10 +11,6 @@ export const dynamic = 'force-dynamic';
 
 // ใช้ lazy import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
 const PropertyDetailPage = lazy(() => import("@/components/properties/detail/PropertyDetailPage"));
-const Header = lazy(() => import("@/components/home/home/Header"));
-const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
-const Footer = lazy(() => import("@/components/home/home/footer"));
-const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 
 // สร้าง metadata แบบ dynamic ตามภาษาและข้อมูล property
@@ -179,11 +175,8 @@ export default function PropertyDetail({ params }) {
   return (
     <main>
       <Suspense fallback={<LoadingAnimation />}>
-        <Header />
-        <MobileMenu />
         <PropertyDetailContent params={params} />
-        <Footer />
-        <ScrollToTop />
+
       </Suspense>
     </main>
   );

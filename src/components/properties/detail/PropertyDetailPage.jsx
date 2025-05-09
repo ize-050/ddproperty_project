@@ -189,9 +189,9 @@ const PropertyDetailPage = ({ property }) => {
   };
   
   // ดึงข้อมูล listing แรก (ถ้ามี)
-  const primaryListing = property.listings && property.listings.length > 0 
-    ? property.listings[0] 
-    : null;
+  const primaryListing = property?.listings || null;
+
+  console.log("primaryListingprimaryListing",primaryListing)
   
   return (
     <>

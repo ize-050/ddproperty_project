@@ -6,40 +6,46 @@ import { useLocale } from 'next-intl'
 
 export default function PropertyFiltering({ property }) {
   const locale = useLocale();
-  // ตรวจสอบว่ามี property ที่ส่งมาหรือไม่
   if (!property) {
     return <div className="alert alert-warning">No property data available</div>;
   }
-  
-  // สร้าง state สำหรับเก็บ index ของรูปภาพปัจจุบัน
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  // สมมติว่ามีรูปภาพหลายรูป (ในกรณีจริงควรใช้ property.images)
-  const images = [
-    property.images?.[0]?.url || '/images/property/fp1.jpg',
-    '/images/property/fp2.jpg',
-    '/images/property/fp3.jpg',
-  ];
-  
-  // ฟังก์ชันสำหรับเลื่อนไปรูปถัดไป
+
+  // Debug: log property.images
+  console.log('Property images:', property.images);
+
+  // Robust fallback: if images is array and has at least 1 item with url, use them, otherwise use placeholder
+  let images = [];
+  if (Array.isArray(property.images) && property.images.length > 0 && property.images[0].url) {
+    images = property.images.map(img => img.url);
+  }
+  if (images.length === 0) {
+    images = [
+      '/images/property/fp1.jpg',
+      '/images/property/fp2.jpg',
+      '/images/property/fp3.jpg',
+    ];
+  }
+
+
   const nextImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
-  
-  // ฟังก์ชันสำหรับเลื่อนไปรูปก่อนหน้า
+
   const prevImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
-  // สุ่มว่าเป็น Hot Offer หรือ New Listing
+
   const isHotOffer = property.id % 2 === 0;
   const isNewListing = property.id % 3 === 0;
 
-  // สร้าง URL สำหรับหน้า property detail
+
   const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${property.id}`;
 
   return (
@@ -52,8 +58,7 @@ export default function PropertyFiltering({ property }) {
               src={images[currentImageIndex]}
               alt={property.projectName || 'Property'}
             />
-            
-            {/* Navigation arrows */}
+
             <button className="slider-nav prev" onClick={prevImage}>
               <i className="fas fa-chevron-left"></i>
             </button>
@@ -61,7 +66,7 @@ export default function PropertyFiltering({ property }) {
               <i className="fas fa-chevron-right"></i>
             </button>
           </div>
-          
+
           {/* Special tags - Hot Offer or New Listing */}
           <div className="special-tags">
             {isHotOffer && (
@@ -71,8 +76,7 @@ export default function PropertyFiltering({ property }) {
               <div className="tag new-listing">NEW LISTING</div>
             )}
           </div>
-          
-          {/* Property type tag */}
+
           <div className="property-type">
             {property.listings && property.listings[0]?.listingType === 'RENT' ? (
               <div className="for-rent">For Rent</div>
@@ -108,8 +112,8 @@ export default function PropertyFiltering({ property }) {
           <div className="property-price">
             ฿{property.listings && property.listings[0]?.price ? new Intl.NumberFormat('th-TH', { maximumFractionDigits: 0 }).format(property.listings[0].price) : '15,000'}
             {property.listings && property.listings[0]?.listingType === 'RENT' ? ' / mo' : ''}
-            <a 
-              href={`tel:+66123456789`} 
+            <a
+              href={`tel:+66123456789`}
               className="call-button"
               onClick={(e) => e.stopPropagation()}
             >

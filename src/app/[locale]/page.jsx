@@ -67,7 +67,7 @@ async function getRandomProperties() {
     
     return [];
   } catch (error) {
-    console.error('Error fetching random properties (SSR):', error);
+    console.error('Error fetching random properties (CSR):', error);
     // ส่งค่า fallback data ในกรณีที่เกิดข้อผิดพลาด
     return [];
   }
@@ -76,14 +76,16 @@ async function getRandomProperties() {
 // ฟังก์ชันสำหรับดึงข้อมูล Zone ทั้งหมดจาก API (Server-Side)
 async function getAllZones() {
   try {
-    // เรียกใช้ serverApi เพื่อดึงข้อมูลจาก API
+    // เรียกใช้ serverApi เพื่อดึงข้อมูลจาก API`
     const response = await serverApi.get('/zones', {
       headers: { 'x-api-key': 'dd-property-api-key-2025' } // ใส่ API key สำหรับการเรียก API
     });
+
+    
     
     // ตรวจสอบข้อมูลที่ได้รับจาก API
     if (response && response.data) {
-      
+      console.log('Zones:', response.data);
       return response.data;
     }
     
@@ -103,7 +105,7 @@ async function HomeContent() {
   // ดึงข้อมูล Zone ทั้งหมดจาก API
   const zones = await getAllZones();
   
-  console.log("Loading fresh data for home page", new Date().toISOString());
+
   
   return (
     <>

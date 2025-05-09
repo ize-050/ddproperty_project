@@ -12,6 +12,11 @@
     "title": "Find Your Dream Home",
     "subtitle": "From as low as $10 per day with limited time offer discounts"
   },
+  "PropertyList":{
+    "discoverOurFeaturedListings":"Discover Our Featured Listings",
+    "noPropertiesFound":"No Properties Found",
+    "tryDifferentFilters":"Try Different Filters"
+  },
   "featured": {
     "title": "Discover Our Featured Listings",
     "subtitle": "Aliquam lacinia diam quis lacus euismod",

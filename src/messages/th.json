@@ -70,6 +70,11 @@
       "sqm": "ตร.ม."
     }
   },
+  "PropertyList":{
+    "discoverOurFeaturedListings":"ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
+    "noPropertiesFound":"ไม่พบอสังหาริมทรัพย์",
+    "tryDifferentFilters":"ลองใช้ตัวกรองอื่นๆ"
+  },
   "PropertyDetail": {
     "home": "หน้าหลัก",
     "properties": "อสังหาริมทรัพย์",

@@ -61,6 +61,8 @@ async function searchProperties(searchParams) {
       headers: { 'x-api-key': 'dd-property-api-key-2025' }
     });
 
+  
+
 
     // ตรวจสอบข้อมูลที่ได้รับจาก API
     if (response && response.data) {
@@ -121,12 +123,12 @@ function PropertyListingLoading() {
   );
 }
 
-// Component สำหรับแสดงรายการอสังหาริมทรัพย์
+
 async function PropertyListContent({ searchParams }) {
-  // ดึงข้อมูลอสังหาริมทรัพย์ตามเงื่อนไขการค้นหา
+
   const searchResults = await searchProperties(searchParams);
 
-  // ดึงข้อมูล Zone ทั้งหมด  
+  
   const zones = await getAllZones();
   
   return (

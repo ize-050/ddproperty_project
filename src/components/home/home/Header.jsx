@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import "@/styles/components/header.scss";
 import "@/styles/components/side-elements.scss";
 
-// ใช้ dynamic import เพื่อแก้ปัญหา hydration
 const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitcher"), {
   ssr: false,
 });

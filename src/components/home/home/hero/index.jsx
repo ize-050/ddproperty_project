@@ -44,9 +44,6 @@ const Hero = () => {
           <AdvanceFilterModal />
         </div>
       </div>
-      {/* <!-- Advance Feature Modal End --> */}
-
-      {/* Add CSS for the hero banner */}
       <style jsx global>{`
         .home-banner-style8 {
           position: relative;

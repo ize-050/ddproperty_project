@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPropertyTypeText, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
   const locale = useLocale();
-  
+
   return (
     <section className="property-header-section">
       <div className="container">
@@ -39,31 +39,24 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
               </div>
             </div>
           </div>
-          
+
           <div className="col-lg-4">
             <div className="single-property-content">
               <div className="property-action dark-version text-lg-end">
-                <div className="d-flex mb20 mb10-md align-items-center justify-content-lg-end">
-                  <a className="icon mr10" href="#">
-                    <span className="fas fa-heart"></span>
-                  </a>
-                  <a className="icon mr10" href="#">
-                    <span className="fas fa-share-alt"></span>
-                  </a>
-                  <a className="icon" href="#">
-                    <span className="fas fa-print"></span>
-                  </a>
-                </div>
-                {primaryListing && (
-                  <>
-                    <h3 className="price mb-0 text-white">฿{formatPrice(primaryListing.price)}</h3>
-                    {primaryListing.listingType === 'RENT' ? (
-                      <p className="text space fz15 text-white">{t('bahtPerMonth')}</p>
-                    ) : (
-                      <p className="text space fz15 text-white">฿{Math.round(primaryListing.price / (property.area || 1)).toLocaleString()}/{t('sqm')}</p>
-                    )}
-                  </>
-                )}
+                {primaryListing && primaryListing.map((listing) => {
+                  return (
+                    <>
+                      <h3 className="price mb-0"
+                      style={{
+                        color: listing.listingType === 'RENT' ? 'orange' : '#fff'
+                      }}
+                      >฿{formatPrice(listing.price)}</h3>
+                      {listing.listingType === 'RENT' && (  
+                       <p className="text space fz15 text-white">{t('bahtPerMonth')}</p>
+                      )}
+                    </>
+                  )
+                })}
               </div>
             </div>
           </div>
