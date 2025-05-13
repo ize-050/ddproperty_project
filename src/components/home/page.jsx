@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import useZoneStore from '@/store/useZoneStore';
 import dynamic from 'next/dynamic';
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from 'next-intl';
 
 // ใช้ dynamic import เพื่อแก้ไขปัญหา hydration error
@@ -218,7 +219,7 @@ const Page = ({ randomProperties, zones }) => {
               <div className="main-title mb30">
                 <h2 className="title mb20">Explore Locations</h2>
                 <p className="text">
-                  Pattaya's divese landscape extends beyong its 
+                  Pattaya&apos;s divese landscape extends beyong its 
                   beaches and nightlife, offering a variety of locations {" "}
                   with unique characteristics that cater to different { " "} real 
                   estate needs and investment strategies.
@@ -360,6 +361,8 @@ const Page = ({ randomProperties, zones }) => {
         <iframe
           className="home8-map"
           loading="lazy"
+          width={1920}
+          height={900}
           src="/images/home/bg-photo-home-01.png"
           title="London Eye, London, United Kingdom"
           aria-label="London Eye, London, United Kingdom"

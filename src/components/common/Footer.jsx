@@ -150,7 +150,7 @@ const Footer = () => {
         <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '20px', marginTop: '10px' }}>
           <div className="row">
             <div className="col-md-6">
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0 }}>© 2019 by D'LUCK PROPERTY</p>
+              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0 }}>© 2019 by D&apos;LUCK PROPERTY</p>
             </div>
             <div className="col-md-6">
               <ul style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px', margin: 0, padding: 0, listStyle: 'none' }}>

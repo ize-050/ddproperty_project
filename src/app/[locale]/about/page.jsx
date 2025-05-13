@@ -109,7 +109,7 @@ const About = () => {
                     </div>
                     <div className="flex-grow-1">
                       <h5 className="mb-1 fw-bold" style={{ fontSize: '16px' }}>Online Marketing</h5>
-                      <p className="mb-0 text-muted" style={{ fontSize: '14px' }}>Maximize your property's visibility and reach the right audience online.</p>
+                      <p className="mb-0 text-muted" style={{ fontSize: '14px' }}>Maximize your property&apos;s visibility and reach the right audience online.</p>
                     </div>
                   </div>
                 </div>

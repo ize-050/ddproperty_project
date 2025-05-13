@@ -8,7 +8,7 @@ import TopFilter from './TopFilter'
 
 
 
-import PaginationTwo from '../listing/PaginationTwo';
+//import PaginationTwo from '../listing/PaginationTwo';
 import { agentsData } from '@/data/agency';
 import AllAgents from './agency/AllAgency';
 
@@ -123,9 +123,9 @@ export default function FilteringAgency() {
           </div>
           {/* End .row */}
 
-          <div className="row justify-content-center mt20">
+          {/* <div className="row justify-content-center mt20">
             <PaginationTwo pageNumber={pageNumber} setPageNumber={setPageNumber} data={sortedFilteredData} pageCapacity={14}/>
-          </div>
+          </div> */}
         </div>
       </section>
   )

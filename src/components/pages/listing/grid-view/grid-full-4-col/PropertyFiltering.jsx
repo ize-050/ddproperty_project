@@ -6,11 +6,11 @@ import { useLocale } from 'next-intl'
 
 export default function PropertyFiltering({ property }) {
   const locale = useLocale();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
   if (!property) {
     return <div className="alert alert-warning">No property data available</div>;
   }
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Debug: log property.images
   console.log('Property images:', property.images);

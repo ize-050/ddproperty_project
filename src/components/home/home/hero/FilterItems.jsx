@@ -187,4 +187,7 @@ const FilterItems = forwardRef(({ listingType = "SALE" }, ref) => {
   );
 });
 
+// Add display name to the forwardRef component
+FilterItems.displayName = 'FilterItems';
+
 export default FilterItems;

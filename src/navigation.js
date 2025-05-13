@@ -27,12 +27,18 @@ export function getLocalizedPath(path, locale) {
   return `/${currentLocale}${path}`;
 }
 
-// ฟังก์ชันสำหรับ redirect (client-side only)
-export function redirect(path, locale) {
+// Custom Hook สำหรับ redirect (client-side only)
+export function useRedirect() {
   const router = useRouter();
-  const currentLocale = locale || useLocale();
-  const localizedPath = getLocalizedPath(path, currentLocale);
-  router.push(localizedPath);
+  const locale = useLocale();
+  
+  const redirect = (path, customLocale) => {
+    const currentLocale = customLocale || locale;
+    const localizedPath = getLocalizedPath(path, currentLocale);
+    router.push(localizedPath);
+  };
+  
+  return redirect;
 }
 
 // คอมโพเนนต์ Link ที่รองรับ locale (client-side only)

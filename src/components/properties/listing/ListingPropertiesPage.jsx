@@ -59,7 +59,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   useEffect(() => {
     setPropertyItems(properties)
     setPaginationItems(pagination)
-  }, [properties])
+  }, [properties, pagination, setPropertyItems, setPaginationItems])
 
 
 
@@ -146,7 +146,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
             <div className="hero-banner">
               <div className="banner-content">
                 <h1 className="text-white">Find Your Dream Home</h1>
-                <p className="text-white">We've more than 1,000+ properties listed on our website</p>
+                <p className="text-white">We&apos;ve more than 1,000+ properties listed on our website</p>
               </div>
 
               <HeroSearchBar onSearch={handleSearch} zones={zones} />
