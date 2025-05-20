@@ -70,6 +70,19 @@
       "sqm": "ตร.ม."
     }
   },
+  "backoffice": {
+    "dashboard": "หน้าหลัก",
+    "message": "ข้อความ",
+    "addNewProperty": "เพิ่มอสังหาริมทรัพย์ใหม่",
+    "myProperties": "อสังหาริมทรัพย์ของฉัน",
+    "allPost": "โพสต์ทั้งหมด",
+    "addNewPost": "เพิ่มโพสต์ใหม่",
+    "allUser": "ผู้ใช้ทั้งหมด",
+    "language": "ภาษา",
+    "currency": "สกุลเงิน",
+    "myProfile": "โปรไฟล์ของฉัน"
+  },
+
   "PropertyList":{
     "discoverOurFeaturedListings":"ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
     "noPropertiesFound":"ไม่พบอสังหาริมทรัพย์",

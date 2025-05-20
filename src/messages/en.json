@@ -75,6 +75,18 @@
       "sqm": "sqm"
     }
   },
+  "backoffice": {
+    "dashboard": "Dashboard",
+    "message": "Message",
+    "addNewProperty": "Add New Property",
+    "myProperties": "My Properties",
+    "allPost": "All Post",
+    "addNewPost": "Add New Post",
+    "allUser": "All User",
+    "language": "Language",
+    "currency": "Currency",
+    "myProfile": "My Profile"
+  },
   "PropertyDetail": {
     "home": "Home",
     "properties": "Properties",

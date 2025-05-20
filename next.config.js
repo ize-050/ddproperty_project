@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n.js');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', '127.0.0.1', 'via.placeholder.com'],
+    domains: ['localhost', '127.0.0.1', 'via.placeholder.com', 'localhost:5001'],
     unoptimized: true, // ปิดการ optimize รูปภาพเพื่อแก้ไขปัญหารูปภาพไม่แสดง
     remotePatterns: [
       {

@@ -1,0 +1,249 @@
+// My Profile Page Styles
+
+// Variables
+$primary-color: #d22630; // Red color from DDProperty
+$text-dark: #333;
+$text-light: #777;
+$border-color: #eaeaea;
+$hover-color: #f0f0f0;
+$card-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+$input-bg: #f8f9fa;
+
+.my-profile-page {
+  .page-header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: $card-shadow;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 500;
+      color: $text-dark;
+      margin: 0;
+    }
+  }
+
+  .profile-content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .profile-sidebar {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: $card-shadow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .profile-image-container {
+      position: relative;
+      margin-bottom: 20px;
+
+      .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .change-photo-btn {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+    }
+
+    .profile-info {
+      h3 {
+        font-size: 18px;
+        font-weight: 500;
+        color: $text-dark;
+        margin: 0 0 5px 0;
+      }
+
+      .user-role {
+        color: $text-light;
+        margin: 0 0 15px 0;
+        font-size: 14px;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .social-link {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background-color: $input-bg;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $text-dark;
+          text-decoration: none;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background-color: $primary-color;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .profile-details {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: $card-shadow;
+
+    .profile-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+
+      .edit-profile-btn {
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+
+      .edit-actions {
+        display: flex;
+        gap: 10px;
+
+        .cancel-btn {
+          background-color: $input-bg;
+          color: $text-dark;
+          border: none;
+          border-radius: 4px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: darken($input-bg, 5%);
+          }
+        }
+
+        .save-btn {
+          background-color: $primary-color;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: darken($primary-color, 10%);
+          }
+        }
+      }
+    }
+
+    .profile-form-container {
+      .profile-form {
+        .form-section {
+          margin-bottom: 30px;
+
+          .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: $text-dark;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid $border-color;
+          }
+
+          .form-row {
+            margin-bottom: 15px;
+
+            .form-group {
+              label {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                color: $text-dark;
+                margin-bottom: 8px;
+
+                .input-icon {
+                  margin-right: 8px;
+                  color: $primary-color;
+                }
+              }
+
+              input, textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid $border-color;
+                border-radius: 4px;
+                background-color: $input-bg;
+                font-size: 14px;
+                
+                &:focus {
+                  outline: none;
+                  border-color: $primary-color;
+                }
+              }
+
+              textarea {
+                resize: vertical;
+              }
+
+              .info-value {
+                font-size: 14px;
+                color: $text-dark;
+                margin: 0;
+                padding: 8px 0;
+              }
+
+              .bio-text {
+                line-height: 1.6;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import "../../../node_modules/react-modal-video/scss/modal-video.scss";
 import "../../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
+import "../../styles/main.scss"; // Import backoffice styles
 import { DM_Sans, Poppins } from "next/font/google";
 import { supportedLocales } from '../../i18n';
 const Header = lazy(() => import("@/components/home/home/Header"));
@@ -16,6 +17,7 @@ const Footer = lazy(() => import("@/components/common/Footer"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 import AOSInitializer from "@/components/common/AOSInitializer";
+import { headers } from 'next/headers';
 // ฟังก์ชันสำหรับสร้าง static params สำหรับแต่ละภาษา
 export function generateStaticParams() {
   return supportedLocales.map((locale) => ({ locale }));
@@ -39,6 +41,15 @@ const poppins = Poppins({
 export default async function LocaleLayout({ children, params }) {
   // โหลดข้อความแปลภาษา
   const locale = params.locale || defaultLocale;
+  
+  // ตรวจสอบว่าเป็น path ของ backoffice หรือไม่โดยตรงจาก params
+  const headersList = headers();
+  const referer = headersList.get('referer') || '';
+
+
+
+ const isBackoffice = referer.includes('/backoffice');
+
 
   // ใช้ getMessages แทน useMessages เพราะเราอยู่ในคอมโพเนนต์ async
   const messages = await getMessages({ locale })
@@ -76,8 +87,7 @@ export default async function LocaleLayout({ children, params }) {
 
 
               {children}
-
-              <Footer />
+            {!isBackoffice ? <Footer /> : null}
 
               <ScrollToTop />
             </Suspense>
