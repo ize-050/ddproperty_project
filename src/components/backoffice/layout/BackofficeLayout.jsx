@@ -44,49 +44,7 @@ const BackofficeLayoutContent = ({ children }) => {
         {/* Main Content */}
         <div className="backoffice-main">
           {/* Header */}
-          <header className="backoffice-header">
-            <div className="header-nav">
-              <Link href="/" className="header-logo">
-                <Image 
-                  src="/images/logo/logo.svg" 
-                  alt="D'Luck Property" 
-                  width={120} 
-                  height={40} 
-                />
-              </Link>
-              <nav className="main-nav">
-                <ul>
-                  <li><Link href="/">{t('home')}</Link></li>
-                  <li><Link href="/for-sale">{t('forSale')}</Link></li>
-                  <li><Link href="/for-rent">{t('forRent')}</Link></li>
-                  <li><Link href="/blog">{t('blog')}</Link></li>
-                  <li><Link href="/about">{t('about')}</Link></li>
-                  <li><Link href="/contact">{t('contact')}</Link></li>
-                </ul>
-              </nav>
-            </div>
-            <div className="header-actions">
-              <div className="language-selector">
-                <span className="lang-flag">
-                  <Image src="/images/flags/en.svg" alt="English" width={20} height={15} />
-                </span>
-                <span>EN</span>
-                <FaChevronDown size={12} />
-              </div>
-              <div className="thai-flag">
-                <Image src="/images/flags/th.svg" alt="Thai" width={20} height={15} />
-              </div>
-              <button className="icon-button">
-                <FaEnvelope size={18} />
-              </button>
-              <button className="icon-button">
-                <FaBell size={18} />
-              </button>
-              
-              {/* User Profile Menu with Logout */}
-              <UserProfileMenu />
-            </div>
-          </header>
+       
 
           {/* Content */}
           <main className="backoffice-content">

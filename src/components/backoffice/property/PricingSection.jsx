@@ -1,34 +1,41 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 
 const PricingSection = () => {
   const { formData, setFormData } = usePropertyFormStore();
+  const { register, formState: { errors }, setValue, watch } = useFormContext();
   const [promotionEnabled, setPromotionEnabled] = useState(false);
   const [promotionalPrice, setPromotionalPrice] = useState('');
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ [name]: value });
+  
+  // CSS class for error styling
+  const getInputClassName = (fieldName) => {
+    return `form-control ${errors[fieldName] ? 'is-invalid' : ''}`;
   };
 
+  // Watch price unit changes
+  const priceUnit = watch('priceUnit');
+
   const handlePromotionalPriceChange = (e) => {
-    setPromotionalPrice(e.target.value);
+    const value = e.target.value;
+    setPromotionalPrice(value);
+    setValue('promotionalPrice', value);
   };
 
   const handleTogglePromotion = () => {
     setPromotionEnabled(!promotionEnabled);
   };
 
-  // Update store with promotional price when it changes
+  // Update form with promotional price when it changes
   useEffect(() => {
     if (promotionEnabled) {
-      setFormData({ promotionalPrice });
+      setValue('promotionalPrice', promotionalPrice);
     } else {
-      setFormData({ promotionalPrice: '' });
+      setValue('promotionalPrice', '');
     }
-  }, [promotionEnabled, promotionalPrice, setFormData]);
+  }, [promotionEnabled, promotionalPrice, setValue]);
 
   return (
     <section className="form-section">
@@ -74,18 +81,15 @@ const PricingSection = () => {
             <input
               type="text"
               id="price"
-              name="price"
-              value={formData.price}
-              onChange={handleInputChange}
+              className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+              defaultValue={formData.price}
               placeholder="e.g. 30,000,000"
-              required
+              {...register('price', { required: 'Price is required' })}
             />
             <div className="currency-select">
               <select
                 id="priceUnit"
-                name="priceUnit"
-                value={formData.priceUnit}
-                onChange={handleInputChange}
+                {...register('priceUnit')}
               >
                 <option value="THB">THB</option>
                 <option value="USD">USD</option>
@@ -93,6 +97,9 @@ const PricingSection = () => {
               </select>
             </div>
           </div>
+          {errors.price && (
+            <div className="invalid-feedback">{errors.price.message}</div>
+          )}
         </div>
 
         {promotionEnabled && (
@@ -102,22 +109,20 @@ const PricingSection = () => {
               <input
                 type="text"
                 id="promotionalPrice"
-                name="promotionalPrice"
+                {...register('promotionalPrice')}
                 value={promotionalPrice}
                 onChange={handlePromotionalPriceChange}
-                placeholder="e.g. 26,500,000"
+                placeholder="e.g. 25,000,000"
               />
               <div className="currency-select">
-                <select
-                  id="promotionalPriceUnit"
-                  name="promotionalPriceUnit"
-                  value={formData.priceUnit}
-                  disabled
-                >
-                  <option value="THB">THB</option>
+                <select disabled>
+                  <option>{priceUnit}</option>
                 </select>
               </div>
             </div>
+            {errors.promotionalPrice && (
+              <div className="invalid-feedback">{errors.promotionalPrice.message}</div>
+            )}
           </div>
         )}
       </div>

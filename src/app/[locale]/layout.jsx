@@ -84,10 +84,8 @@ export default async function LocaleLayout({ children, params }) {
               <Header />
 
               <MobileMenu />
-
-
               {children}
-            {!isBackoffice ? <Footer /> : null}
+            {!isBackoffice ? <Footer /> : <Footer />}
 
               <ScrollToTop />
             </Suspense>

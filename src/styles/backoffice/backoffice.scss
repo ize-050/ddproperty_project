@@ -88,6 +88,7 @@ $chart-green: #82ca9d;
 // Main Content
 .backoffice-main {
   flex: 1;
+  padding: 50px;
   display: flex;
   flex-direction: column;
 }
@@ -100,7 +101,6 @@ $chart-green: #82ca9d;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
   position: sticky;
   top: 0;
   z-index: 10;

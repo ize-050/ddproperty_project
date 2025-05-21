@@ -1,14 +1,44 @@
 import { create } from 'zustand';
 
 const usePropertyFormStore = create((set) => ({
+  // Property Images
+  propertyImages: [],
+  
+  // Floor Plan Images
+  floorPlanImages: [],
+  
+  // Unit Plan Images
+  unitPlanImages: [],
   formData: {
-    propertyTypes: [],
+    propertyType: '',
     projectName: '',
     referenceId: '',
     propertyTitle: '',
     description: '',
+    paymentPlan: '',
+    // Translations
+    translatedTitles: {
+      th: '',
+      zh: '',
+      ru: ''
+    },
+    translatedDescriptions: {
+      th: '',
+      zh: '',
+      ru: ''
+    },
+    translatedPaymentPlans: {
+      th: '',
+      zh: '',
+      ru: ''
+    },
+    // Social Media URLs
+    socialMedia: {
+      youtubeUrl: '',
+      tiktokUrl: ''
+    },
     address: '',
-    city: '',
+    province: '',
     district: '',
     subdistrict: '',
     postalCode: '',
@@ -84,7 +114,18 @@ const usePropertyFormStore = create((set) => ({
       rented: false,
       sold: false,
     },
-    // Nearby
+    
+    // Contact Information
+    contactInfo: {
+      phone: '',
+      secondaryPhone: '',
+      email: '',
+      lineId: '',
+      wechatId: '',
+      whatsapp: '',
+      facebookMessenger: '',
+      instagram: ''
+    },
     nearby: {
       nearPark: false,
       nearMall: false,
@@ -214,32 +255,54 @@ const usePropertyFormStore = create((set) => ({
     }
   })),
   
-  setPropertyType: (type) => set((state) => {
-    const currentTypes = [...state.formData.propertyTypes];
-    
-    if (currentTypes.includes(type)) {
-      // Remove type if already selected
-      const updatedTypes = currentTypes.filter(t => t !== type);
-      return { 
-        formData: { 
-          ...state.formData, 
-          propertyTypes: updatedTypes 
-        } 
-      };
-    } else {
-      // Add type if not already selected
-      return { 
-        formData: { 
-          ...state.formData, 
-          propertyTypes: [...currentTypes, type] 
-        } 
-      };
+  setPropertyType: (type) => set((state) => ({
+    formData: {
+      ...state.formData,
+      propertyType: type
     }
-  }),
+  })),
   
   setStatus: (status) => set((state) => ({
     formData: { ...state.formData, status }
   })),
+  
+  setDescription: (field, value) => set((state) => ({
+    formData: { ...state.formData, [field]: value } 
+  })),
+  
+  setTranslatedDescriptions: (type, lang, value) => set((state) => {
+    if (type === 'titles') {
+      return {
+        formData: {
+          ...state.formData,
+          translatedTitles: {
+            ...state.formData.translatedTitles,
+            [lang]: value
+          }
+        }
+      };
+    } else if (type === 'paymentPlans') {
+      return {
+        formData: {
+          ...state.formData,
+          translatedPaymentPlans: {
+            ...state.formData.translatedPaymentPlans,
+            [lang]: value
+          }
+        }
+      };
+    } else {
+      return {
+        formData: {
+          ...state.formData,
+          translatedDescriptions: {
+            ...state.formData.translatedDescriptions,
+            [lang]: value
+          }
+        }
+      };
+    }
+  }),
   
   toggleMap: () => set((state) => ({ showMap: !state.showMap })),
   
@@ -251,15 +314,66 @@ const usePropertyFormStore = create((set) => ({
     propertyImages: state.propertyImages.filter(image => image.id !== id)
   })),
   
+  reorderPropertyImages: (sourceIndex, destinationIndex) => set((state) => {
+    const result = Array.from(state.propertyImages);
+    const [removed] = result.splice(sourceIndex, 1);
+    result.splice(destinationIndex, 0, removed);
+    
+    return {
+      propertyImages: result
+    };
+  }),
+  
+  // Floor Plan Images Functions
+  addFloorPlanImages: (newImages) => set((state) => ({
+    floorPlanImages: [...state.floorPlanImages, ...newImages]
+  })),
+  
+  removeFloorPlanImage: (id) => set((state) => ({
+    floorPlanImages: state.floorPlanImages.filter(image => image.id !== id)
+  })),
+  
+  reorderFloorPlanImages: (sourceIndex, destinationIndex) => set((state) => {
+    const result = Array.from(state.floorPlanImages);
+    const [removed] = result.splice(sourceIndex, 1);
+    result.splice(destinationIndex, 0, removed);
+    
+    return {
+      floorPlanImages: result
+    };
+  }),
+  
+  // Unit Plan Images Functions
+  addUnitPlanImages: (newImages) => set((state) => ({
+    unitPlanImages: [...state.unitPlanImages, ...newImages]
+  })),
+  
+  removeUnitPlanImage: (id) => set((state) => ({
+    unitPlanImages: state.unitPlanImages.filter(image => image.id !== id)
+  })),
+  
+  reorderUnitPlanImages: (sourceIndex, destinationIndex) => set((state) => {
+    const result = Array.from(state.unitPlanImages);
+    const [removed] = result.splice(sourceIndex, 1);
+    result.splice(destinationIndex, 0, removed);
+    
+    return {
+      unitPlanImages: result
+    };
+  }),
+  
   resetForm: () => set({
+    propertyImages: [],
+    floorPlanImages: [],
+    unitPlanImages: [],
     formData: {
-      propertyTypes: [],
+      propertyType: [],
       projectName: '',
       referenceId: '',
       propertyTitle: '',
       description: '',
       address: '',
-      city: '',
+      province: '',
       district: '',
       subdistrict: '',
       postalCode: '',

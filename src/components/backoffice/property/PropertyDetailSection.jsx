@@ -1,16 +1,49 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
+import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 
 const PropertyDetailSection = () => {
   const { formData, setFormData } = usePropertyFormStore();
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ [name]: value });
-  };
+  const { register, formState: { errors }, setValue, watch } = useFormContext();
+  
+  // ติดตามการเปลี่ยนแปลงค่าใน form และอัพเดท store
+  const watchedFields = watch();
+  
+  useEffect(() => {
+    // อัพเดท store เมื่อมีการเปลี่ยนแปลงค่าใน form
+    const updateStore = () => {
+      const fieldsToUpdate = [
+        'propertyId', 'ownershipQuota', 'landSize', 'landSizeUnit',
+        'usableArea', 'floors', 'furnishing', 'bedrooms', 'bathrooms',
+        'constructionYear', 'communityFees'
+      ];
+      
+      const updates = {};
+      fieldsToUpdate.forEach(field => {
+        if (watchedFields[field] !== undefined && watchedFields[field] !== formData[field]) {
+          updates[field] = watchedFields[field];
+        }
+      });
+      
+      if (Object.keys(updates).length > 0) {
+        setFormData(updates);
+      }
+    };
+    
+    updateStore();
+  }, [watchedFields, setFormData, formData]);
+  
+  // ตั้งค่าเริ่มต้นจาก store ไปยัง form
+  useEffect(() => {
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== undefined) {
+        setValue(key, value);
+      }
+    });
+  }, []);
 
   return (
     <section className="form-section">
@@ -25,25 +58,22 @@ const PropertyDetailSection = () => {
           <input
             type="text"
             id="propertyId"
-            name="propertyId"
-            value={formData.propertyId || 'DP000022'}
-            onChange={handleInputChange}
+            defaultValue="DP000022"
             disabled
+            {...register('propertyId')}
           />
         </div>
         <div className="form-group">
           <label htmlFor="ownershipQuota">Ownership Quota*</label>
           <select
             id="ownershipQuota"
-            name="ownershipQuota"
-            value={formData.ownershipQuota || ''}
-            onChange={handleInputChange}
-            required
+            {...register('ownershipQuota', { required: 'This field is required' })}
           >
             <option value="">-</option>
             <option value="freehold">Freehold</option>
             <option value="leasehold">Leasehold</option>
           </select>
+          {errors.ownershipQuota && <p className="error-message">{errors.ownershipQuota.message}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="landSize">Land Size*</label>
@@ -51,17 +81,27 @@ const PropertyDetailSection = () => {
             <input
               type="text"
               id="landSize"
-              name="landSize"
-              value={formData.landSize || ''}
-              onChange={handleInputChange}
-              required
+              {...register('landSize', { required: 'This field is required' })}
             />
             <div className="unit-options">
-              <span className={formData.landSizeUnit === 'rai' ? 'active' : ''} onClick={() => setFormData({ landSizeUnit: 'rai' })}>Rai</span>
-              <span className={formData.landSizeUnit === 'ngan' ? 'active' : ''} onClick={() => setFormData({ landSizeUnit: 'ngan' })}>Ngan</span>
-              <span className={formData.landSizeUnit === 'sqwah' ? 'active' : ''} onClick={() => setFormData({ landSizeUnit: 'sqwah' })}>Sq.wah</span>
+              <span 
+                className={watch('landSizeUnit') === 'rai' ? 'active' : ''} 
+                onClick={() => setValue('landSizeUnit', 'rai', { shouldDirty: true })}>
+                Rai
+              </span>
+              <span 
+                className={watch('landSizeUnit') === 'ngan' ? 'active' : ''} 
+                onClick={() => setValue('landSizeUnit', 'ngan', { shouldDirty: true })}>
+                Ngan
+              </span>
+              <span 
+                className={watch('landSizeUnit') === 'sqwah' ? 'active' : ''} 
+                onClick={() => setValue('landSizeUnit', 'sqwah', { shouldDirty: true })}>
+                Sq.wah
+              </span>
             </div>
           </div>
+          {errors.landSize && <p className="error-message">{errors.landSize.message}</p>}
         </div>
       </div>
       
@@ -72,41 +112,35 @@ const PropertyDetailSection = () => {
             <input
               type="text"
               id="usableArea"
-              name="usableArea"
-              value={formData.usableArea || ''}
-              onChange={handleInputChange}
-              required
+              {...register('usableArea', { required: 'This field is required' })}
             />
             <span className="unit">Sq.m.</span>
           </div>
+          {errors.usableArea && <p className="error-message">{errors.usableArea.message}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="floors">Floors*</label>
           <select
             id="floors"
-            name="floors"
-            value={formData.floors || ''}
-            onChange={handleInputChange}
-            required
+            {...register('floors', { required: 'This field is required' })}
           >
             <option value="">-</option>
             {[...Array(50)].map((_, i) => (
               <option key={i+1} value={i+1}>{i+1}</option>
             ))}
           </select>
+          {errors.floors && <p className="error-message">{errors.floors.message}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="furnishing">Furnishing</label>
           <select
             id="furnishing"
-            name="furnishing"
-            value={formData.furnishing || ''}
-            onChange={handleInputChange}
+            {...register('furnishing')}
           >
             <option value="">-</option>
-            <option value="fully_furnished">Fully Furnished</option>
-            <option value="partially_furnished">Partially Furnished</option>
-            <option value="unfurnished">Unfurnished</option>
+            <option value="FULLY_FURNISHED">Fully Furnished</option>
+            <option value="PARTIALLY_FURNISHED">Partially Furnished</option>
+            <option value="UNFURNISHED">Unfurnished</option>
           </select>
         </div>
       </div>
@@ -116,10 +150,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="bedrooms">Bedrooms*</label>
           <select
             id="bedrooms"
-            name="bedrooms"
-            value={formData.bedrooms || ''}
-            onChange={handleInputChange}
-            required
+            {...register('bedrooms', { required: 'This field is required' })}
           >
             <option value="">-</option>
             {[...Array(10)].map((_, i) => (
@@ -127,15 +158,13 @@ const PropertyDetailSection = () => {
             ))}
             <option value="10+">10+</option>
           </select>
+          {errors.bedrooms && <p className="error-message">{errors.bedrooms.message}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="bathrooms">Bathrooms*</label>
           <select
             id="bathrooms"
-            name="bathrooms"
-            value={formData.bathrooms || ''}
-            onChange={handleInputChange}
-            required
+            {...register('bathrooms', { required: 'This field is required' })}
           >
             <option value="">-</option>
             {[...Array(10)].map((_, i) => (
@@ -143,14 +172,13 @@ const PropertyDetailSection = () => {
             ))}
             <option value="10+">10+</option>
           </select>
+          {errors.bathrooms && <p className="error-message">{errors.bathrooms.message}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="constructionYear">Construction Year</label>
           <select
             id="constructionYear"
-            name="constructionYear"
-            value={formData.constructionYear || ''}
-            onChange={handleInputChange}
+            {...register('constructionYear')}
           >
             <option value="">-</option>
             {[...Array(50)].map((_, i) => {
@@ -168,9 +196,7 @@ const PropertyDetailSection = () => {
             <input
               type="text"
               id="communityFees"
-              name="communityFees"
-              value={formData.communityFees || ''}
-              onChange={handleInputChange}
+              {...register('communityFees')}
             />
             <span className="unit">/ Year</span>
           </div>
