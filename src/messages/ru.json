@@ -27,6 +27,7 @@
     }
   },
   "backoffice": {
+    "adminLogin":"Login",
     "dashboard": "Dashboard",
     "message": "Message",
     "addNewProperty": "Add New Property",

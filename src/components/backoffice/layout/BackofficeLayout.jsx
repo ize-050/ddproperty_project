@@ -8,7 +8,8 @@ import { useAuth, AuthProvider } from '@/components/backoffice/auth/AuthContext'
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaEnvelope, FaBell, FaChevronDown, FaSignOutAlt, FaUser } from 'react-icons/fa';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Import UserProfileMenu component
 import UserProfileMenu from './UserProfileMenu';
 
@@ -40,11 +41,9 @@ const BackofficeLayoutContent = ({ children }) => {
       <div className="backoffice-container">
         {/* Sidebar */}
         <BackofficeSidebar />
-
+        <ToastContainer position="top-right" autoClose={3000} />
         {/* Main Content */}
         <div className="backoffice-main">
-          {/* Header */}
-       
 
           {/* Content */}
           <main className="backoffice-content">

@@ -64,14 +64,14 @@ const BackofficeSidebar = () => {
       <div className="sidebar-section">
         <h3 className="sidebar-title">BLOG</h3>
         <ul className="sidebar-menu">
-          <li className={isActive('/backoffice/all-post') ? 'active' : ''}>
-            <Link href="/backoffice/all-post">
+          <li className={isActive('/backoffice/blog') ? 'active' : ''}>
+            <Link href="/backoffice/blog">
               <FaBlog />
               <span>{t('allPost')}</span>
             </Link>
           </li>
-          <li className={isActive('/backoffice/add-post') ? 'active' : ''}>
-            <Link href="/backoffice/add-post">
+          <li className={isActive('/backoffice/blog/add') ? 'active' : ''}>
+            <Link href="/backoffice/blog/add">
               <FaPlus />
               <span>{t('addNewPost')}</span>
             </Link>
