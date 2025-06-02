@@ -37,7 +37,8 @@
     "allUser": "All User",
     "language": "Language",
     "currency": "Currency",
-    "myProfile": "My Profile"
+    "myProfile": "My Profile",
+    "manageYourProfile": "Управление вашим профилем"
   },
   "Footer": {
     "about": "About Us",
@@ -82,12 +83,23 @@
     "contact": "Связаться с нами",
     "terms": "Условия использования",
     "privacy": "Политика конфиденциальности",
-    "copyright": "© 2025 DDProperty. Все права защищены."
+    "copyright": " 2025 DDProperty. Все права защищены."
   },
   "language": {
     "en": "Английский",
     "th": "Тайский",
     "zh": "Китайский",
     "ru": "Русский"
+  },
+  "Currency": {
+    "currency": "Курсы валют",
+    "currencySubtitle": "Управление курсами валют для сайта",
+    "loading": "Загрузка данных...",
+    "update": "Обновить",
+    "updating": "Обновление...",
+    "ratesUpdated": "Курсы валют успешно обновлены",
+    "updateFailed": "Не удалось обновить курсы валют",
+    "errorFetching": "Ошибка при получении курсов валют",
+    "notAuthenticated": "Пожалуйста, войдите в систему, прежде чем продолжить"
   }
 }

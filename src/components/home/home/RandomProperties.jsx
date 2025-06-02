@@ -5,21 +5,50 @@ import Link from "next/link";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { convertAndFormatPrice, convertAndFormatPriceSync, localeToCurrencySymbol } from '@/utils/currencyUtils';
 
-// นำเข้า API utility
-import api from "@/utils/api";
+
 
 const RandomProperties = ({ randomProperties }) => {
   const t = useTranslations('home');
+  const locale = useLocale();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [formattedPrices, setFormattedPrices] = useState({});
+  
+  // สัญลักษณ์สกุลเงินตามภาษา
+  const currencySymbol = localeToCurrencySymbol(locale);
 
   // ฟังก์ชันสำหรับแปลงราคาเป็นรูปแบบที่อ่านง่าย
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('th-TH').format(price);
+    return convertAndFormatPriceSync(price, locale, false);
   };
+  
+  // โหลดราคาที่แปลงแล้วสำหรับแต่ละทรัพย์สิน
+  useEffect(() => {
+    const loadFormattedPrices = async () => {
+      if (properties.length > 0) {
+        const pricesObj = {};
+        
+        for (const property of properties) {
+          if (property.listings && property.listings.length > 0) {
+            for (const listing of property.listings) {
+              if (listing.price) {
+                const key = `${property.id}-${listing.id}`;
+                pricesObj[key] = await convertAndFormatPrice(listing.price, locale, false);
+              }
+            }
+          }
+        }
+        
+        setFormattedPrices(pricesObj);
+      }
+    };
+    
+    loadFormattedPrices();
+  }, [properties, locale]);
 
   // ใช้ข้อมูลจาก props ที่ได้จาก SSR
   useEffect(() => {
@@ -28,54 +57,6 @@ const RandomProperties = ({ randomProperties }) => {
         console.log('Random Properties:', randomProperties);
         setProperties(randomProperties);
         setLoading(false);
-      } else {
-        // กรณีที่ไม่มีข้อมูลจาก SSR ให้ใช้ข้อมูลจำลอง
-        // setProperties([
-        //   {
-        //     id: 1,
-        //     projectName: "The Vineyard Pattaya",
-        //     propertyType: "HOUSE",
-        //     area: 350,
-        //     bedrooms: 4,
-        //     bathrooms: 3,
-        //     city: "Pattaya",
-        //     images: [{ url: "/images/listings/g1-1.jpg" }],
-        //     listings: [{ price: 12500000, listingType: "SALE" }]
-        //   },
-        //   {
-        //     id: 2,
-        //     projectName: "Baan Dusit Pattaya",
-        //     propertyType: "HOUSE",
-        //     area: 280,
-        //     bedrooms: 3,
-        //     bathrooms: 3,
-        //     city: "Pattaya",
-        //     images: [{ url: "/images/listings/g1-2.jpg" }],
-        //     listings: [{ price: 8900000, listingType: "SALE" }]
-        //   },
-        //   {
-        //     id: 3,
-        //     projectName: "Hilton Pattaya",
-        //     propertyType: "HOTEL",
-        //     area: 10000,
-        //     bedrooms: 50,
-        //     bathrooms: 50,
-        //     city: "Pattaya",
-        //     images: [{ url: "/images/listings/g1-3.jpg" }],
-        //     listings: [{ price: 150000000, listingType: "SALE" }]
-        //   },
-        //   {
-        //     id: 4,
-        //     projectName: "Dusit Thani Pattaya",
-        //     propertyType: "HOTEL",
-        //     area: 12000,
-        //     bedrooms: 60,
-        //     bathrooms: 60,
-        //     city: "Pattaya",
-        //     images: [{ url: "/images/listings/g1-4.jpg" }],
-        //     listings: [{ price: 180000000, listingType: "SALE" }]
-        //   }
-        // ]);
       }
     } catch (err) {
       console.error('Error setting properties from props:', err);
@@ -160,7 +141,8 @@ const RandomProperties = ({ randomProperties }) => {
               <div className="listing-style9">
                 <div className="list-thumb">  
                   <img
-                    className="w-100 h-100 cover"
+                    className="cover"
+
                     src={property.images && property.images[0] && property.images[0].url ? 
                       (property.images[0].url.startsWith('http') ? 
                         property.images[0].url : property.images[0].url 
@@ -168,39 +150,41 @@ const RandomProperties = ({ randomProperties }) => {
                       "/images/listings/default-property.jpg"
                     }
                     alt={property.projectName}
-                    style={{ objectFit: 'cover', height: '465px', width: '100%' }}
+                    style={{ objectFit: 'cover', height: '520px', width: '100%' }}
                   />
                   <div className="sale-sticker-wrap">
                     <div className="list-tag rounded-0 fz12">
                       <span className="flaticon-electricity" />
                       FEATURED
                     </div>
-                    <div className="list-tag2 rounded-0 fz12">{property.listings?.[0]?.listingType || 'FOR SALE'}</div>
+                    <div className="list-tag2 rounded-0 fz12">{property.listings?.map((listing) => listing.listingType).join(', ')}</div>
                   </div>
 
                   <div className="list-meta">
-                    <a href="#">
+                    <Link href={`/property_detail/${property.id}`} className="list-meta-link">
                       <span className="flaticon-fullscreen" />
-                    </a>
-                    <a href="#">
-                      <span className="flaticon-new-tab" />
-                    </a>
-                    <a href="#">
-                      <span className="flaticon-like" />
-                    </a>
+                    </Link>
+                    {/*<a href="#">*/}
+                    {/*  <span className="flaticon-new-tab" />*/}
+                    {/*</a>*/}
+                    {/*<a href="#">*/}
+                    {/*  <span className="flaticon-like" />*/}
+                    {/*</a>*/}
                   </div>
                 </div>
 
                 <div className="list-content">
                   <div className="list-price">
                     {property.listings?.[0]?.price 
-                      ? `฿${formatPrice(property.listings[0].price)}` 
+                      ? `${currencySymbol}${formattedPrices[`${property.id}-${property.listings[0].id}`] || formatPrice(property.listings[0].price)}` 
                       : 'Contact for price'}
                   </div>
                   <h6 className="list-title my-1">
-                    <Link href={`/property/${property.id}`}>{property.projectName}</Link>
+                    <Link href={`/property_detail/${property.id}`}>{property.projectName}</Link>
                   </h6>
-                  <p className="list-text">{property.address || property.city}</p>
+                  <p className="list-text"
+                    style={{ fontSize: '14px', color: '#fff' }}
+                  >{property.address || property.city}</p>
                   <div className="list-meta2 d-flex align-items-center">
                     <a className="mr10" href="#">
                       <span className="flaticon-bed" /> {property.bedrooms || 0} {t('randomProperties.bed')}

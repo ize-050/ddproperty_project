@@ -1,18 +1,78 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { FaHome, FaChartLine, FaEnvelope } from 'react-icons/fa';
+import { FaHome, FaChartLine, FaEnvelope, FaSpinner } from 'react-icons/fa';
 
 const DashboardStats = () => {
-  const t = useTranslations('Backoffice');
+  const t = useTranslations('backoffice');
+  const [stats, setStats] = useState({
+    allProperties: 0,
+    totalViews: 0,
+    totalEnquiries: 0
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data for statistics
-  const stats = {
-    allProperties: 567,
-    totalViews: 1263,
-    totalEnquiries: 85
-  };
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Get token from localStorage or sessionStorage
+        const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+        
+        // Make API request
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          setStats({
+            allProperties: data.data.totalProperties || 0,
+            totalViews: data.data.propertiesViews || 0,
+            totalEnquiries: data.data.totalMessages || 0
+          });
+        } else {
+          throw new Error(data.message || 'Failed to fetch dashboard stats');
+        }
+      } catch (err) {
+        console.error('Error fetching dashboard stats:', err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchDashboardStats();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="dashboard-stats loading">
+        <FaSpinner className="spinner" />
+        <p>{t('loadingStats')}</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-stats error">
+        <p>{t('errorLoadingStats')}: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-stats">

@@ -22,7 +22,7 @@
     "contact": "ติดต่อเรา",
     "terms": "ข้อกำหนดและเงื่อนไข",
     "privacy": "นโยบายความเป็นส่วนตัว",
-    "copyright": "© 2019 by D'LUCK PROPERTY",
+    "copyright": " 2019 by D'LUCK PROPERTY",
     "popularSearch": "ค้นหายอดนิยม",
     "condoForSale": "คอนโดมิเนียมเพื่อขาย",
     "condoForRent": "คอนโดมิเนียมเพื่อเช่า",
@@ -110,6 +110,21 @@
       "bed": "ห้องนอน",
       "bath": "ห้องน้ำ",
       "sqm": "ตร.ม."
+    },
+    "blogs": {
+      "section": {
+        "title": "จากบล็อกของเรา",
+        "subtitle": "ข่าวสารและการอัปเดตล่าสุดจากผู้เชี่ยวชาญด้านอสังหาริมทรัพย์ของเรา",
+        "viewAll": "ดูบทความทั้งหมด"
+      },
+      "error": {
+        "fetch": "ไม่สามารถโหลดบทความได้ โปรดลองอีกครั้ง"
+      }
+    },
+    "propertyTypes": {
+      "title": "ประเภทอสังหาริมทรัพย์",
+      "subtitle": "ค้นหาอสังหาริมทรัพย์หลากหลายประเภทที่มีให้เลือก",
+      "noPropertyTypesFound": "ไม่พบประเภทอสังหาริมทรัพย์"
     }
   },
   "backoffice": {
@@ -123,9 +138,37 @@
     "allUser": "ผู้ใช้ทั้งหมด",
     "language": "ภาษา",
     "currency": "สกุลเงิน",
-    "myProfile": "โปรไฟล์ของฉัน"
-  },
+    "myProfile": "โปรไฟล์ของฉัน",
+    "manageYourProfile": "จัดการโปรไฟล์ของคุณ",
+    "allProperties": "อสังหาริมทรัพย์ทั้งหมด",
+    "totalViews": "จํานวนการดู",
+    "totalEnquiries": "จํานวนการสอบถาม",
+    "propertyViews": "จํานวนการดูอสังหาริมทรัพย์",
+    "hourly": "ต่อชั่วโมง",
+    "weekly": "ต่อสัปดาห์",
+    "monthly": "ต่อเดือน",
+    "recentActivities": "กิจกรรมล่าสุด",
+    "views": "การดู",
+    "inquiries": "การสอบถาม",
+    "viewMore": "ดูเพิ่มเติม",
+    "editProfile": "แก้ไขโปรไฟล์",
+    "property": "อสังหาริมทรัพย์",
+    "properties": "อสังหาริมทรัพย์",
 
+    "message": "ข้อความ",
+    "messages": "ข้อความ",
+    "yearly": "ต่อปี",
+    "recentMessages": "ข้อความล่าสุด",
+    "viewAllMessages": "ดูข้อความทั้งหมด",
+    "addNewProperty": "เพิ่มอสังหาริมทรัพย์ใหม่",
+    "addNewPost": "เพิ่มโพสต์ใหม่",
+    "addNewUser": "เพิ่มผู้ใช้ใหม่",
+    "addNewLanguage": "เพิ่มภาษาใหม่",
+    "addNewCurrency": "เพิ่มสกุลเงินใหม่",
+    "addNewPropertyType": "เพิ่มประเภทอสังหาริมทรัพย์ใหม่",
+    "addNewPropertyStatus": "เพิ่มสถานะอสังหาริมทรัพย์ใหม่",
+    "addNewPropertyFeature": "เพิ่มคุณสมบัติอสังหาริมทรัพย์ใหม่"
+  },
   "PropertyList":{
     "discoverOurFeaturedListings":"ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
     "noPropertiesFound":"ไม่พบอสังหาริมทรัพย์",
@@ -176,5 +219,61 @@
     "ngan": "งาน",
     "sqWah": "ตร.วา",
     "bahtPerMonth": "บาท/เดือน"
+  },
+  "ExploreLocations": {
+    "title": "สำรวจทำเลที่ตั้ง",
+    "description": "ภูมิประเทศที่หลากหลายของพัทยานั้นขยายไปไกลกว่าชายหาดและไนท์ไลฟ์ นำเสนอทำเลที่ตั้งที่หลากหลายพร้อมลักษณะเฉพาะที่ตอบสนองความต้องการด้านอสังหาริมทรัพย์และกลยุทธ์การลงทุนที่แตกต่างกัน",
+    "more": "ดูเพิ่มเติม",
+    "properties": "รายการ",
+    "errorFetching": "เกิดข้อผิดพลาดในการโหลดข้อมูลทำเล โปรดลองอีกครั้งในภายหลัง"
+  },
+  "exploreLocations": {
+    "title": "สำรวจทำเลที่ตั้ง",
+    "description": "ค้นพบพื้นที่ที่ดีที่สุดในการลงทุนอสังหาริมทรัพย์",
+    "more": "ดูทำเลทั้งหมด",
+    "properties": "อสังหาริมทรัพย์",
+    "error": {
+      "fetch": "ไม่สามารถโหลดข้อมูลทำเลได้ โปรดลองอีกครั้ง"
+    }
+  },
+  "Currency": {
+    "currency": "จัดการสกุลเงิน",
+    "currencyTitle": "อัตราแลกเปลี่ยนสกุลเงิน",
+    "currencySubtitle": "จัดการอัตราแลกเปลี่ยนสกุลเงินสำหรับเว็บไซต์",
+    "loading": "กำลังโหลดข้อมูล...",
+    "update": "อัปเดต",
+    "updating": "กำลังอัปเดต...",
+    "ratesUpdated": "อัปเดตอัตราแลกเปลี่ยนเรียบร้อยแล้ว",
+    "updateFailed": "ไม่สามารถอัปเดตอัตราแลกเปลี่ยนได้",
+    "errorFetching": "เกิดข้อผิดพลาดในการดึงข้อมูลอัตราแลกเปลี่ยน",
+    "notAuthenticated": "กรุณาเข้าสู่ระบบก่อนดำเนินการต่อ"
+  },
+  "AddProperty": {
+    "addNewProperty": "เพิ่มอสังหาริมทรัพย์ใหม่",
+    "createPropertyDetails": "สร้างรายละเอียดอสังหาริมทรัพย์",
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "savingData": "กำลังบันทึกข้อมูล...",
+    "dataSavedSuccessfully": "บันทึกข้อมูลเรียบร้อยแล้ว",
+    "invalidData": "ข้อมูลไม่ถูกต้อง",
+    "notAuthorized": "ไม่ได้รับอนุญาตให้เข้าถึง API กรุณาเข้าสู่ระบบใหม่",
+    "errorSavingData": "เกิดข้อผิดพลาดในการบันทึกข้อมูล",
+    "cannotConnectToAPI": "ไม่สามารถเชื่อมต่อกับ API ได้ กรุณาตรวจสอบว่า backend server ทำงานอยู่หรือไม่",
+    "pleaseFillInAllRequiredFields": "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน",
+    "pleaseCorrectTheFollowingErrors": "กรุณาแก้ไขข้อผิดพลาดต่อไปนี้",
+    "youMustAgreeToTheTerms": "คุณต้องยอมรับข้อกำหนดและเงื่อนไข",
+    "iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty": "ฉันยืนยันว่าข้อมูลทั้งหมดที่ให้ไว้ถูกต้องและฉันมีสิทธิ์ในการลงประกาศอสังหาริมทรัพย์นี้"
+  },
+  "common": {
+    "welcomeMessage": "ยินดีต้อนรับสู่แพลตฟอร์มอสังหาริมทรัพย์ของเรา",
+    "propertyCount_one": "{{count}} รายการ",
+    "propertyCount_other": "{{count}} รายการ",
+    "property_one": "รายการ",
+    "property_other": "รายการ"
+  },
+  "propertyTypes": {
+    "title": "ประเภทอสังหาริมทรัพย์",
+    "subtitle": "ค้นหาอสังหาริมทรัพย์หลากหลายประเภทที่มีให้เลือก",
+    "noPropertyTypesFound": "ไม่พบประเภทอสังหาริมทรัพย์"
   }
 }

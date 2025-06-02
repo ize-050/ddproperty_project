@@ -1,10 +1,7 @@
 import { create } from 'zustand';
 
 const usePropertyFormStore = create((set) => ({
-  // Property Images
-  propertyImages: [],
-  
-  // Floor Plan Images
+
   floorPlanImages: [],
   
   // Unit Plan Images
@@ -49,9 +46,13 @@ const usePropertyFormStore = create((set) => ({
     area: '',
     price: '',
     priceUnit: 'THB',
-    status: 'SALE',
+    rentalPrice: '',
+    shortTerm3Months: '',
+    shortTerm6Months: '',
+    shortTerm1Year: '',
+    status: '', // SALE, RENT, SALE_RENT
     // Property Detail fields
-    propertyId: 'DP000022',
+    propertyId: '',
     ownershipQuota: '',
     landSize: '',
     landSizeUnit: 'rai',
@@ -384,6 +385,10 @@ const usePropertyFormStore = create((set) => ({
       area: '',
       price: '',
       priceUnit: 'THB',
+      rentalPrice: '',
+      shortTerm3Months: '',
+      shortTerm6Months: '',
+      shortTerm1Year: '',
       status: 'SALE',
       features: {
         airConditioning: false,

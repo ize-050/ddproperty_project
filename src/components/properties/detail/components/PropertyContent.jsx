@@ -12,22 +12,17 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
       {/* Highlights Section */}
       <div className="property-section mb-5">
         <h3 className="section-title mb-3">Highlights</h3>
-        <div className="highlights-container">
-          {property.companyRegistration && (
-            <div className="highlight-badge">
-              <span>Company Registration</span>
-            </div>
-          )}
-          {property.freehold && (
-            <div className="highlight-badge">
-              <span>Freehold</span>
-            </div>
-          )}
-          {property.petFriendly && (
-            <div className="highlight-badge">
-              <span>Pet Friendly</span>
-            </div>
-          )}
+        <div className="property-highlights">
+          <ul className="row g-3">
+            {property?.highlights?.map((item, index) => (
+                <div className="col-6 col-md-4" key={`nearby-${index}`}>
+                  <div className="nearby-item">
+                    <i className={`fas fa-${item.path || 'map-marker-alt'} me-2`}></i>
+                    <span>{item.highlightType}</span>
+                  </div>
+                </div>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -36,11 +31,6 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-3">Description</h3>
         <div className="property-description">
           <p>{description || 'No description available for this property.'}</p>
-          {description && description.length > 200 && (
-            <p className="mt-3">
-              Discover your gateway to the most luxurious offerings this vibrant city has to offer, where exceptional service and sophisticated comfort elevate your Pattaya escape to new heights.
-            </p>
-          )}
         </div>
       </div>
 
@@ -107,55 +97,20 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
             <PropertyMap property={property} />
         </div>
       </div>
-
-      {/* Near By Section */}
+      
       <div className="property-section mb-5">
         <h3 className="section-title mb-4">Near By</h3>
         <div className="nearby-items">
           <div className="row g-3">
-            {property.nearby ? (
-              property.nearby.map((item, index) => (
+
+            { property.nearbyPlaces.map((item, index) => (
                 <div className="col-6 col-md-4" key={`nearby-${index}`}>
                   <div className="nearby-item">
                     <i className={`fas fa-${item.icon || 'map-marker-alt'} me-2`}></i>
                     <span>{item.name}</span>
                   </div>
                 </div>
-              ))
-            ) : (
-              <>
-                <div className="col-6 col-md-4">
-                  <div className="nearby-item">
-                    <i className="fas fa-shopping-mall me-2"></i>
-                    <span>Near Shopping Mall</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="nearby-item">
-                    <i className="fas fa-train me-2"></i>
-                    <span>Near Train Station</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="nearby-item">
-                    <i className="fas fa-hospital me-2"></i>
-                    <span>Near Hospital</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="nearby-item">
-                    <i className="fas fa-school me-2"></i>
-                    <span>Near School</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="nearby-item">
-                    <i className="fas fa-store me-2"></i>
-                    <span>Near Market</span>
-                  </div>
-                </div>
-              </>
-            )}
+              ))}
           </div>
         </div>
       </div>
@@ -171,7 +126,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <div className="col-6 col-md-4" key={`view-${index}`}>
                   <div className="view-item">
                     <i className={`fas fa-${item.icon || 'eye'} me-2`}></i>
-                    <span>{item.name}</span>
+                    <span>{item.viewType}</span>
                   </div>
                 </div>
               ))
@@ -193,51 +148,15 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-4">Facilities</h3>
         <div className="facility-items">
           <div className="row g-3">
-            {property.facilities ? (
-              // ถ้ามีข้อมูล facilities จาก API
+            {
               property.facilities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`facility-${index}`}>
                   <div className="facility-item">
                     <i className={`fas fa-${item.icon || 'building'} me-2`}></i>
-                    <span>{item.name}</span>
+                    <span>{item.facilityType}</span>
                   </div>
                 </div>
-              ))
-            ) : (
-              // ถ้าไม่มีข้อมูลจาก API ให้แสดงข้อมูลจำลอง
-              <>
-                <div className="col-6 col-md-4">
-                  <div className="facility-item">
-                    <i className="fas fa-dumbbell me-2"></i>
-                    <span>Fitness</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="facility-item">
-                    <i className="fas fa-briefcase me-2"></i>
-                    <span>Co-working Space</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="facility-item">
-                    <i className="fas fa-tree me-2"></i>
-                    <span>Garden</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="facility-item">
-                    <i className="fas fa-swimming-pool me-2"></i>
-                    <span>Swimming Pool</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="facility-item">
-                    <i className="fas fa-shield-alt me-2"></i>
-                    <span>Security</span>
-                  </div>
-                </div>
-              </>
-            )}
+              ))}
           </div>
         </div>
       </div>
@@ -247,57 +166,15 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-4">Amenity</h3>
         <div className="amenity-items">
           <div className="row g-3">
-            {property.amenities ? (
-              // ถ้ามีข้อมูล amenities จาก API
+            {
               property.amenities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`amenity-${index}`}>
                   <div className="amenity-item">
                     <i className={`fas fa-${item.icon || 'check-circle'} me-2`}></i>
-                    <span>{item.name}</span>
+                    <span>{item.amenityType}</span>
                   </div>
                 </div>
-              ))
-            ) : (
-              // ถ้าไม่มีข้อมูลจาก API ให้แสดงข้อมูลจำลอง
-              <>
-                <div className="col-6 col-md-4">
-                  <div className="amenity-item">
-                    <i className="fas fa-blender me-2"></i>
-                    <span>Kitchen Appliances</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="amenity-item">
-                    <i className="fas fa-tv me-2"></i>
-                    <span>TV</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="amenity-item">
-                    <i className="fas fa-snowflake me-2"></i>
-                    <span>Refrigerator</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="amenity-item">
-                    <i className="fas fa-tshirt me-2"></i>
-                    <span>Washing Machine</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="amenity-item">
-                    <i className="fas fa-fire me-2"></i>
-                    <span>Water Heater</span>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <div className="amenity-item">
-                    <i className="fas fa-wind me-2"></i>
-                    <span>Air Conditioner</span>
-                  </div>
-                </div>
-              </>
-            )}
+              ))}
           </div>
         </div>
       </div>

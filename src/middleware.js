@@ -1,10 +1,14 @@
 import createMiddleware from "next-intl/middleware";
 import { localePrefix, locales } from "./navigation";
 
+if (!locales.includes("th")) {
+  throw new Error("Invalid default locale. Please check your locales setup.");
+}
+
 export default createMiddleware({
   locales,
   localePrefix,
-  localeDetection: false,
+  localeDetection: true,
   defaultLocale: "th",
 });
 

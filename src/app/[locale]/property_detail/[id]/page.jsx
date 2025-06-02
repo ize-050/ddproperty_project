@@ -24,13 +24,9 @@ export async function generateMetadata({ params }) {
     
     // ดึงข้อความจาก description ตามภาษา
     let description = '';
-    try {
-      const descriptionObj = JSON.parse(property.description);
-      description = descriptionObj[locale] || descriptionObj.en || '';
-    } catch (e) {
-      description = property.description || '';
-    }
-    
+      const descriptionObj = JSON.parse(property.translatedDescriptions || '{}');
+      description = descriptionObj[locale];
+
     const baseUrl = 'https://ddproperty.com';
     const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
     const propertyUrl = `${localizedUrl}/property_detail/${id}`;

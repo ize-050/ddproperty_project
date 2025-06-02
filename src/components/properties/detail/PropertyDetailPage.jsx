@@ -3,6 +3,7 @@
 import React, { useState , useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
+import { convertAndFormatPriceSync } from '@/utils/currencyUtils';
 
 // Import components
 import PropertyBreadcrumb from './components/PropertyBreadcrumb';
@@ -31,16 +32,16 @@ const PropertyDetailPage = ({ property }) => {
       console.log('PropertyDetail:', property);
       console.log('PropertyDetail Structure:', JSON.stringify(property, null, 2));
       
-      // แปลง description จาก JSON string เป็น object
-     
-      let desc = '';
-      try {
-        const descriptionObj = JSON.parse(property.description);
-        desc = descriptionObj[locale] || descriptionObj.en || '';
-        console.log('Parsed description:', desc);
-      } catch (e) {
-        desc = property.description || '';
-      }
+
+       let desc = '';
+       if(locale != 'en'){
+         const descriptionObj = property.translatedDescriptions[locale];
+         desc = descriptionObj;
+       }
+       else{
+         desc = property.description || '';
+       }
+
       
       // รูปภาพทั้งหมดของ property
       const imgs = property.images && property.images.length > 0 
@@ -50,7 +51,7 @@ const PropertyDetailPage = ({ property }) => {
       console.log("images", imgs);
       setCurrentImageIndex(0);
       setPropertyImages(imgs);
-      setPropertyDescription(desc);
+       setPropertyDescription(desc);
     }
   }, [property, locale]);
   
@@ -185,13 +186,13 @@ const PropertyDetailPage = ({ property }) => {
   
   // ฟอร์แมตราคา
   const formatPrice = (price) => {
-    return new Intl.NumberFormat(locale === 'th' ? 'th-TH' : 'en-US').format(price);
+    // ใช้ utility function ที่สร้างไว้สำหรับการแปลงราคาตามภาษา
+    return convertAndFormatPriceSync(price, locale, false); // ไม่แสดงสัญลักษณ์สกุลเงินเพราะจะใส่แยก
   };
-  
-  // ดึงข้อมูล listing แรก (ถ้ามี)
+
   const primaryListing = property?.listings || null;
 
-  console.log("primaryListingprimaryListing",primaryListing)
+
   
   return (
     <>
@@ -229,7 +230,7 @@ const PropertyDetailPage = ({ property }) => {
             
             {/* Right Sidebar */}
             <div className="col-lg-4">
-              <PropertySidebar 
+              <PropertySidebar
                 property={property} 
                 primaryListing={primaryListing} 
                 formatPrice={formatPrice} 

@@ -98,21 +98,41 @@ const CreateBlogPage = () => {
       return;
     }
 
-
     const formData = new FormData();
-    formData.append('title', JSON.stringify({
+    
+    // ใช้ title ภาษาอังกฤษเป็นหลัก
+    formData.append('title', data.en.title);
+    
+    // สร้าง translated_titles ที่รวมภาษาอังกฤษด้วย
+    const translatedTitles = {
       en: data.en.title,
       th: data.th.title,
       zh: data.zh.title,
       ru: data.ru.title
-    }));
-
-    formData.append('content', JSON.stringify({
+    };
+    formData.append('translated_titles', JSON.stringify(translatedTitles));
+    
+    // สร้าง translated_contents
+    const translatedContents = {
       en: data.en.content,
       th: data.th.content,
       zh: data.zh.content,
       ru: data.ru.content
-    }));
+    };
+    formData.append('translated_contents', JSON.stringify(translatedContents));
+    
+    // ใช้ content ภาษาอังกฤษเป็นหลัก
+    formData.append('content', data.en.content);
+    
+    // ข้อมูลภาษาอื่นๆ ส่งตามรูปแบบที่ backend คาดหวัง
+    formData.append('th[title]', data.th.title);
+    formData.append('th[content]', data.th.content);
+    
+    formData.append('zh[title]', data.zh.title);
+    formData.append('zh[content]', data.zh.content);
+    
+    formData.append('ru[title]', data.ru.title);
+    formData.append('ru[content]', data.ru.content);
 
     formData.append('category', data.category);
     formData.append('tags', JSON.stringify(data.tags));
@@ -120,22 +140,28 @@ const CreateBlogPage = () => {
 
     try {
       // ส่งข้อมูลไปยัง API
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/blogs`, formData,{
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        toast.error('You must be logged in to create a blog post');
+        router.push('/backoffice/login');
+        return;
+      }
+      
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/blogs`, formData, {
         headers: {
           'content-type': 'multipart/form-data',
-          "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
+          "Authorization": `Bearer ${token}`
         }
       });
 
       console.log("response", response);
 
-      if (!response.ok) {
+      if (response.status !== 200 && response.status !== 201) {
         throw new Error('Failed to create blog post');
-        return;
       }
 
       toast.success('Blog post created successfully!');
-      //router.push('/backoffice/blog');
+      router.push('/backoffice/blog');
     } catch (error) {
       console.error('Error creating blog post:', error);
       toast.error('Failed to create blog post. Please try again.');
@@ -198,48 +224,63 @@ const CreateBlogPage = () => {
               )}
               </div>
   
-
-
             {/* Rich Text Editor */}
-           {/* Rich Text Editor */}
-<div className="form-group editor-container">
-  <label htmlFor="content">Content*</label>
-  {languages.map((lang) => (
-    <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
-      <Controller
-        name={`${lang.code}.content`}
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange, ...restField } }) => (
-          <ReactQuill
-            theme="snow"
-            {...restField}
-            onChange={(value) => {
-              onChange(value)
-            }}
-            modules={modules}
-            placeholder={`Enter content in ${lang.name}`}
-          />
-        )}
-      />
-    </div>
-  ))}
-  {errors[activeLanguage]?.content && (
-    <div className="invalid-feedback">{languages.find(l => l.code === activeLanguage).name} content is required</div>
-  )}
-</div>
+            <div className="form-group editor-container">
+              <label htmlFor="content">Content*</label>
+              {languages.map((lang) => (
+                <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
+                  <Controller
+                    name={`${lang.code}.content`}
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { onChange, ...restField } }) => (
+                      <ReactQuill
+                        theme="snow"
+                        {...restField}
+                        onChange={(value) => {
+                          onChange(value)
+                        }}
+                        modules={modules}
+                        placeholder={`Enter content in ${lang.name}`}
+                      />
+                    )}
+                  />
+                </div>
+              ))}
+              {errors[activeLanguage]?.content && (
+                <div className="invalid-feedback">{languages.find(l => l.code === activeLanguage).name} content is required</div>
+              )}
+            </div>
+
+            {/* Category */}
+            <div className="form-group">
+              <label htmlFor="category">Category</label>
+              <Controller
+                name="category"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    type="text"
+                    id="category"
+                    {...field}
+                    placeholder="Enter category"
+                    className="form-control"
+                  />
+                )}
+              />
+            </div>
+
             {/* Featured Image */}
             <div className="form-group">
-              <label>Feature Image</label>
+              <label>Feature Image*</label>
               <Controller
                 name="featuredImage"
                 control={control}
-                rules={{ required: true }}
                 render={({ field }) => (
                   <ImageUploader
                     image={field.value}
                     onImageChange={handleImageUpload}
-                    placeholderText="Upload/Drag photos of your property"
+                    placeholderText="Upload/Drag photos of your blog"
                     hintText="Recommended width is at least 1080px"
                   />
                 )}
@@ -255,7 +296,7 @@ const CreateBlogPage = () => {
                 Cancel
               </button>
               <button type="submit" className="submit-button">
-                Create Post
+                Create Blog
               </button>
             </div>
           </form>

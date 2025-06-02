@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ตารางผู้ใช้งาน
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          String    @default("user") // admin, user
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  properties    Property[]
+  blogs         Blog[]
+}
+
+// ตารางอสังหาริมทรัพย์
+model Property {
+  id              String   @id @default(cuid())
+  title           String
+  description     String   @db.Text
+  price           Float
+  currency        String   @default("THB")
+  location        String
+  bedrooms        Int
+  bathrooms       Int
+  area            Float
+  images          String?  @db.Text // JSON array of image URLs
+  propertyType    String   // house, condo, land
+  status          String   @default("active") // active, pending, sold
+  featured        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Multilingual content
+  translatedTitles       String? @db.Text // JSON object with locale keys
+  translatedDescriptions String? @db.Text // JSON object with locale keys
+  
+  // Relations
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+// ตารางบทความ
+model Blog {
+  id              String   @id @default(cuid())
+  title           String
+  content         String   @db.LongText
+  image           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Multilingual content
+  translated_titles    String? @db.Text // JSON object with locale keys
+  translated_contents  String? @db.Text // JSON object with locale keys
+  
+  // Relations
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+// ตารางอัตราแลกเปลี่ยนสกุลเงิน
+model Currency {
+  code      String   @id // THB, USD, CNY, RUB
+  rate      Float    // อัตราแลกเปลี่ยนเทียบกับ THB (THB = 1.0)
+  name      String   // ชื่อเต็มของสกุลเงิน
+  isBase    Boolean  @default(false) // true สำหรับ THB
+  updatedAt DateTime @default(now()) @updatedAt
+}

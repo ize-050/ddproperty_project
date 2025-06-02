@@ -1,10 +1,33 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import { useFormContext } from 'react-hook-form';
 
 const ListingTypeSection = () => {
   const { formData, setStatus } = usePropertyFormStore();
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
+  
+  // ตั้งค่าเริ่มต้นเป็น SALE ถ้ายังไม่มีการเลือก
+  useEffect(() => {
+    if (!formData.status) {
+      setStatus('SALE');
+      setValue('status', 'SALE');
+    }
+  }, [formData.status, setStatus, setValue]);
+
+  // อัพเดท React Hook Form เมื่อ Zustand store เปลี่ยน
+  useEffect(() => {
+    if (formData.status) {
+      setValue('status', formData.status);
+    }
+  }, [formData.status, setValue]);
+
+  const handleStatusChange = (status) => {
+    setStatus(status);
+    setValue('status', status, { shouldValidate: true });
+    console.log("Status changed to:", status);
+  };
 
   return (
     <section className="form-section">
@@ -12,23 +35,55 @@ const ListingTypeSection = () => {
       <div className="listing-type-options">
         <div
           className={`listing-option ${formData.status === 'SALE' ? 'active' : ''}`}
-          onClick={() => setStatus('SALE')}
+          onClick={() => handleStatusChange('SALE')}
         >
-          For Sale
+          <input 
+            type="radio" 
+            {...register('status', { required: 'Please select a listing type' })} 
+            value="SALE"
+            id="status-sale"
+            className="hidden"
+            style={{ display: 'none' }}
+            checked={formData.status === 'SALE'}
+            onChange={() => handleStatusChange('SALE')}
+          />
+          <label htmlFor="status-sale">For Sale</label>
         </div>
         <div
           className={`listing-option ${formData.status === 'RENT' ? 'active' : ''}`}
-          onClick={() => setStatus('RENT')}
+          onClick={() => handleStatusChange('RENT')}
         >
-          For Rent
+          <input 
+            type="radio" 
+            {...register('status', { required: 'Please select a listing type' })} 
+            value="RENT"
+            id="status-rent"
+            className="hidden"
+            style={{ display: 'none' }}
+            checked={formData.status === 'RENT'}
+            onChange={() => handleStatusChange('RENT')}
+          />
+          <label htmlFor="status-rent">For Rent</label>
         </div>
         <div
           className={`listing-option ${formData.status === 'SALE_RENT' ? 'active' : ''}`}
-          onClick={() => setStatus('SALE_RENT')}
+          onClick={() => handleStatusChange('SALE_RENT')}
         >
-          For Sale &amp; Rent
+          <input 
+            type="radio" 
+            {...register('status', { required: 'Please select a listing type' })} 
+            value="SALE_RENT"
+            id="status-sale-rent"
+            className="hidden"
+            style={{ display: 'none' }}
+            checked={formData.status === 'SALE_RENT'}
+            onChange={() => handleStatusChange('SALE_RENT')}
+          />
+          <label htmlFor="status-sale-rent">For Sale &amp; Rent</label>
         </div>
       </div>
+      {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
+      <p className="text-gray-500 text-sm mt-1">Current selection: {watch('status') || 'None'}</p>
     </section>
   );
 };

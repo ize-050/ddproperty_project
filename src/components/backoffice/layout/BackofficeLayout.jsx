@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Import UserProfileMenu component
 import UserProfileMenu from './UserProfileMenu';
 
-const BackofficeLayoutContent = ({ children }) => {
+const BackofficeLayoutContent = ({ children  }) => {
   const t = useTranslations('Backoffice');
   const { user } = useAuth();
 
@@ -59,7 +59,9 @@ const BackofficeLayoutContent = ({ children }) => {
 const BackofficeLayout = ({ children }) => {
   return (
     <AuthProvider>
-      <BackofficeLayoutContent children={children} />
+      <BackofficeLayoutContent>
+        {children}
+      </BackofficeLayoutContent>
     </AuthProvider>
   );
 };

@@ -18,18 +18,42 @@ $success-color: #2ecc71; // Green color for success
   
   .page-header {
     margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
-    h1 {
-      font-size: 24px;
-      font-weight: 600;
-      margin: 0 0 8px 0;
-      color: $text-dark;
+    .title-section {
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        color: $text-dark;
+      }
+      
+      p {
+        font-size: 14px;
+        color: $text-light;
+        margin: 0;
+      }
     }
-    
-    p {
+
+    .add-user-button {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
       font-size: 14px;
-      color: $text-light;
-      margin: 0;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
     }
   }
   
@@ -98,6 +122,20 @@ $success-color: #2ecc71; // Green color for success
     box-shadow: $card-shadow;
     overflow: hidden;
     
+    .loading-indicator {
+      text-align: center;
+      padding: 40px;
+      color: $text-light;
+      font-size: 16px;
+    }
+    
+    .no-data-message {
+      text-align: center;
+      padding: 40px;
+      color: $text-light;
+      font-size: 16px;
+    }
+    
     .users-table {
       width: 100%;
       border-collapse: collapse;
@@ -134,32 +172,52 @@ $success-color: #2ecc71; // Green color for success
         }
       }
       
-      .username-column {
-        min-width: 180px;
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
         
-        .user-info {
+        .user-avatar {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background-color: $active-bg;
           display: flex;
           align-items: center;
-          gap: 12px;
+          justify-content: center;
+          color: $text-light;
           
-          .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: $active-bg;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: $text-light;
-            
-            svg {
-              font-size: 18px;
-            }
+          svg {
+            font-size: 18px;
           }
-          
-          span {
-            font-weight: 500;
-          }
+        }
+        
+        span {
+          font-weight: 500;
+        }
+      }
+      
+      .role-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        
+        &.role-admin {
+          background-color: #ffeaea;
+          color: $primary-color;
+        }
+        
+        &.role-user {
+          background-color: #e3f2fd;
+          color: $secondary-color;
+        }
+        
+        &.role-agent {
+          background-color: #e8f5e9;
+          color: $success-color;
         }
       }
       
@@ -190,23 +248,199 @@ $success-color: #2ecc71; // Green color for success
           }
         }
       }
+    }
+    
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+      border-top: 1px solid $border-color;
       
-      .view-column {
-        width: 80px;
-        text-align: center;
+      .pagination-button {
+        min-width: 36px;
+        height: 36px;
+        margin: 0 4px;
+        border: 1px solid $border-color;
+        background-color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
         
-        .view-button {
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 6px 12px;
-          border-radius: 4px;
-          color: $secondary-color;
-          font-weight: 500;
-          transition: all 0.2s;
+        &:hover:not(:disabled) {
+          background-color: $hover-color;
+          border-color: $text-light;
+        }
+        
+        &.active {
+          background-color: $primary-color;
+          color: white;
+          border-color: $primary-color;
+        }
+        
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+// Modal Styles
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  
+  .modal-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid $border-color;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: $text-dark;
+      }
+      
+      .close-button {
+        background: none;
+        border: none;
+        color: $text-light;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 4px;
+        
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+    
+    .form-body {
+      padding: 24px;
+      overflow-y: auto;
+      max-height: calc(90vh - 130px);
+      
+      .form-section {
+        margin-bottom: 24px;
+        
+        h3 {
+          font-size: 16px;
+          font-weight: 600;
+          margin: 0 0 16px 0;
+          color: $text-dark;
+          padding-bottom: 8px;
+          border-bottom: 1px solid $border-color;
+        }
+        
+        .form-group {
+          margin-bottom: 16px;
+          
+          label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: $text-dark;
+          }
+          
+          input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            font-size: 14px;
+            
+            &:focus {
+              outline: none;
+              border-color: $secondary-color;
+            }
+            
+            &.error {
+              border-color: $primary-color;
+            }
+          }
+          
+          .error-message {
+            color: $primary-color;
+            font-size: 12px;
+            margin-top: 4px;
+            display: block;
+          }
+        }
+        
+        .form-row {
+          display: flex;
+          gap: 16px;
+          
+          @media (max-width: 640px) {
+            flex-direction: column;
+          }
+          
+          .form-group {
+            flex: 1;
+          }
+        }
+      }
+    }
+    
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid $border-color;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      
+      button {
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        
+        &.cancel-button {
+          background-color: white;
+          border: 1px solid $border-color;
+          color: $text-dark;
           
           &:hover {
-            background-color: rgba($secondary-color, 0.1);
+            background-color: $hover-color;
+          }
+        }
+        
+        &.submit-button {
+          background-color: $primary-color;
+          border: none;
+          color: white;
+          
+          &:hover {
+            background-color: darken($primary-color, 10%);
           }
         }
       }

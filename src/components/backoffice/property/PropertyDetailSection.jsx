@@ -58,7 +58,7 @@ const PropertyDetailSection = () => {
           <input
             type="text"
             id="propertyId"
-            defaultValue="DP000022"
+
             disabled
             {...register('propertyId')}
           />

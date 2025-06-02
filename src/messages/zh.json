@@ -28,7 +28,8 @@
     "allUser": "All User",
     "language": "Language",
     "currency": "Currency",
-    "myProfile": "My Profile"
+    "myProfile": "My Profile",
+    "manageYourProfile": "管理您的个人资料"
   },
   "Footer": {
     "about": "About Us",
@@ -82,12 +83,23 @@
     "contact": "联系我们",
     "terms": "条款和条件",
     "privacy": "隐私政策",
-    "copyright": "© 2025 DDProperty 版权所有"
+    "copyright": " 2025 DDProperty 版权所有"
   },
   "language": {
     "en": "英语",
     "th": "泰语",
     "zh": "中文",
     "ru": "俄语"
+  },
+  "Currency": {
+    "currency": "货币汇率",
+    "currencySubtitle": "管理网站的货币汇率",
+    "loading": "正在加载数据...",
+    "update": "更新",
+    "updating": "正在更新...",
+    "ratesUpdated": "汇率更新成功",
+    "updateFailed": "更新汇率失败",
+    "errorFetching": "获取汇率时出错",
+    "notAuthenticated": "请先登录再继续"
   }
 }

@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
-import { FaPlus, FaSearch, FaEye, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight, FaCopy } from 'react-icons/fa';
+
 
 export default function MyPropertiesPage() {
   const t = useTranslations('Backoffice');
@@ -110,6 +111,43 @@ export default function MyPropertiesPage() {
       : formatter.format(price);
   };
 
+  // Function to duplicate property
+  const handleDuplicateProperty = async (propertyId) => {
+    try {
+      // Show loading toast
+      const loadingToast = toast.loading(t('duplicatingProperty') || 'Duplicating property...');
+      
+      // Get token from storage
+      const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
+      
+      // Call API to duplicate property
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}/duplicate`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to duplicate property');
+      }
+      
+      // Parse response
+      const result = await response.json();
+      
+      // Close loading toast and show success message
+      toast.dismiss(loadingToast);
+      toast.success(t('propertyDuplicated') || 'Property duplicated successfully');
+      
+      // Refresh property list
+      fetchProperties();
+    } catch (error) {
+      console.error('Error duplicating property:', error);
+      toast.error(t('errorDuplicatingProperty') || 'Failed to duplicate property');
+    }
+  };
+
   return (
     <BackofficeLayout>
       <div className="my-properties-page">
@@ -172,7 +210,9 @@ export default function MyPropertiesPage() {
           </div>
         ) : (
           <>
-            <div className="properties-table-container">
+            <div className="properties-table-container"
+                 style={{ overflowX: 'auto' }}
+            >
               <table className="properties-table">
                 <thead>
                   <tr>
@@ -200,22 +240,26 @@ export default function MyPropertiesPage() {
                         </td>
                         <td className="property-col">
                           <div className="property-image-container">
-                            <Image
-                              src={process.env.NEXT_PUBLIC_IMAGE_URL + property.images?.[0]?.url}
-                              alt={property.projectName}
-                              width={60}
-                              height={45}
-                              className="property-thumbnail"
-                            />
+                            {property.images?.[0] ? (
+                              <Image
+                                  src={process.env.NEXT_PUBLIC_IMAGE_URL + property.images?.[0]?.url}
+                                alt={property.projectName || 'Property Image'}
+                                width={50}
+                                height={50}
+                                className="property-image"
+                              />
+                            ) : (
+                              <div className="placeholder-image">No Image</div>
+                            )}
                           </div>
                           <div className="property-info">
-                            <p className="property-type">{property.listings?.[0]?.listingType}</p>
+                            <p className="property-type">{property.listings?.map((listing) => listing.listingType).join(', ')}</p>
                             <p className="property-title">{property.projectName}</p>
                           </div>
                         </td>
                         <td className="reference-col">{property.reference}</td>
-                        <td className="operation-col">{property.listings?.[0]?.listingType}</td>
-                        <td className="price-col">{property?.listings?.[0]?.price && formatPrice(property?.listings?.[0]?.price, property?.listings?.[0]?.listingType === 'RENT')}</td>
+                        <td className="operation-col">{property.listings?.map((listing) => listing.listingType).join(', ')}</td>
+                        <td className="price-col">{property.listings?.map((listing) => formatPrice(listing.price, listing.isRent)).join(', ')}</td>
                         <td className="displays-col">{property.viewCount || 0}</td>
                         <td className="visits-col">{property.viewCount || 0}</td>
                         <td className="enquiries-col">{property.inquiryCount || 0}</td>
@@ -224,6 +268,13 @@ export default function MyPropertiesPage() {
                           <div className="action-buttons">
                             <button className="action-btn edit">
                               <FaEdit />
+                            </button>
+                            <button 
+                              className="action-btn duplicate"
+                              title="Duplicate property"
+                              onClick={() => handleDuplicateProperty(property.id)}
+                            >
+                              <FaCopy />
                             </button>
                             <button className="action-btn delete">
                               <FaTrash />

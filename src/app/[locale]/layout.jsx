@@ -80,13 +80,11 @@ export default async function LocaleLayout({ children, params }) {
         <AOSInitializer />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="wrapper ovh">
-            <Suspense>
+            <Suspense fallback={<LoadingAnimation />}>
               <Header />
-
               <MobileMenu />
               {children}
-            {!isBackoffice ? <Footer /> : <Footer />}
-
+              {!isBackoffice && <Footer />}
               <ScrollToTop />
             </Suspense>
             <AOSInitializer />
@@ -125,4 +123,3 @@ export default async function LocaleLayout({ children, params }) {
 
 
 // Add this component to your layout (e.g. inside <body> or <NextIntlClientProvider>)
-

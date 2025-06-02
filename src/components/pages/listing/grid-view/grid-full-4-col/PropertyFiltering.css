@@ -1,0 +1,62 @@
+/* Price styles */
+.property-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sale-price, .rent-price {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 2px 0;
+}
+
+.sale-price {
+  color: #e74c3c;
+}
+
+.rent-price {
+  color: #3498db;
+}
+
+.price-label {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.price-value {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.single-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.call-button {
+  background-color: #27ae60;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.call-button:hover {
+  background-color: #219653;
+  transform: scale(1.1);
+}

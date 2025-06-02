@@ -108,13 +108,31 @@ const PropertyDescriptionSection = () => {
     } else {
       // Update translated description
       if (fieldId === 'propertyTitle') {
-        setValue(`translatedTitles.${activeLanguage}`, value);
+        // Update the nested object structure for React Hook Form
+        const currentTranslatedTitles = getValues('translatedTitles') || {};
+        setValue('translatedTitles', {
+          ...currentTranslatedTitles,
+          [activeLanguage]: value
+        });
+        // Also update the store
         setTranslatedDescriptions('titles', activeLanguage, value);
       } else if (fieldId === 'paymentPlan') {
-        setValue(`translatedPaymentPlans.${activeLanguage}`, value);
+        // Update the nested object structure for React Hook Form
+        const currentTranslatedPaymentPlans = getValues('translatedPaymentPlans') || {};
+        setValue('translatedPaymentPlans', {
+          ...currentTranslatedPaymentPlans,
+          [activeLanguage]: value
+        });
+        // Also update the store
         setTranslatedDescriptions('paymentPlans', activeLanguage, value);
       } else {
-        setValue(`translatedDescriptions.${activeLanguage}`, value);
+        // Update the nested object structure for React Hook Form
+        const currentTranslatedDescriptions = getValues('translatedDescriptions') || {};
+        setValue('translatedDescriptions', {
+          ...currentTranslatedDescriptions,
+          [activeLanguage]: value
+        });
+        // Also update the store
         setTranslatedDescriptions('descriptions', activeLanguage, value);
       }
     }
@@ -254,6 +272,13 @@ const PropertyDescriptionSection = () => {
             
             // Update store
             setTranslatedDescriptions('titles', lang.code, translatedText);
+            
+            // Update React Hook Form
+            const currentTranslatedTitles = getValues('translatedTitles') || {};
+            setValue('translatedTitles', {
+              ...currentTranslatedTitles,
+              [lang.code]: translatedText
+            });
           } else {
             console.error(`Title translation to ${lang.name} failed:`, data);
           }
@@ -297,6 +322,13 @@ const PropertyDescriptionSection = () => {
             
             // Update store
             setTranslatedDescriptions('descriptions', lang.code, translatedText);
+            
+            // Update React Hook Form
+            const currentTranslatedDescriptions = getValues('translatedDescriptions') || {};
+            setValue('translatedDescriptions', {
+              ...currentTranslatedDescriptions,
+              [lang.code]: translatedText
+            });
           } else {
             console.error(`Description translation to ${lang.name} failed:`, data);
           }
@@ -340,6 +372,13 @@ const PropertyDescriptionSection = () => {
             
             // Update store
             setTranslatedDescriptions('paymentPlans', lang.code, translatedText);
+            
+            // Update React Hook Form
+            const currentTranslatedPaymentPlans = getValues('translatedPaymentPlans') || {};
+            setValue('translatedPaymentPlans', {
+              ...currentTranslatedPaymentPlans,
+              [lang.code]: translatedText
+            });
           } else {
             console.error(`Payment plan translation to ${lang.name} failed:`, data);
           }

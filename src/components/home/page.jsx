@@ -21,7 +21,9 @@ const FeaturedHomes = dynamic(() => import("@/components/home/home/FeaturedHomes
 const FeaturedListings = dynamic(() => import("@/components/home/home/FeatuerdListings"), { ssr: false });
 const PartnerDark = dynamic(() => import("@/components/common/PartnerDark"), { ssr: false });
 const RandomProperties = dynamic(() => import("@/components/home/home/RandomProperties"), { ssr: false });
-
+const ExploreLocations = dynamic(() => import("@/components/ExploreLocations/ExploreLocations"), { ssr: false });
+const LatestBlogs = dynamic(() => import("@/components/LatestBlogs/LatestBlogs"), { ssr: false });
+const PropertyTypes = dynamic(() => import("@/components/PropertyTypes/PropertyTypes"), { ssr: false });
 
 const Page = ({ randomProperties, zones }) => {
   // ใช้ useState และ useEffect เพื่อแก้ไขปัญหา hydration error
@@ -99,14 +101,6 @@ const Page = ({ randomProperties, zones }) => {
                 </p>
               </div>
             </div>
-            <div className="col-lg-3">
-              <div className="text-start text-lg-end mb-3">
-                <Link className="ud-btn2" href="/map-v1">
-                  {t('featured.seeAll')}
-                  <i className="fal fa-arrow-right-long" />
-                </Link>
-              </div>
-            </div>
           </div>
           {/* End header */}
 
@@ -126,19 +120,19 @@ const Page = ({ randomProperties, zones }) => {
      
       {/* End Random Properties */}
 
-      {/* Featured Homes */}
+      {/* Property Types */}
       <section className="pt-0 pb90 pb30-md">
         <div className="container">
-          <div className="row  justify-content-between align-items-center">
+          <div className="row justify-content-between align-items-center">
             <div className="col-auto">
               <div
                 className="main-title"
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">Featured Homes</h2>
+                <h2 className="title">{t('propertyTypes.title')}</h2>
                 <p className="paragraph">
-                  Get some Inspirations from 800+ Properties
+                  {t('propertyTypes.subtitle')}
                 </p>
               </div>
             </div>
@@ -173,14 +167,14 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
               <div className="explore-apartment-5col-slider">
-                <FeaturedHomes />
+                <PropertyTypes />
               </div>
             </div>
           </div>
           {/* End .row */}
         </div>
       </section>
-      {/* End Featured Homes */}
+      {/* End Property Types */}
 
       {/* CTA Banner */}
       <section className="pt30 pb-0">
@@ -219,9 +213,9 @@ const Page = ({ randomProperties, zones }) => {
               <div className="main-title mb30">
                 <h2 className="title mb20">Explore Locations</h2>
                 <p className="text">
-                  Pattaya&apos;s divese landscape extends beyong its 
+                  Pattaya&apos;s divese landscape extends beyong its
                   beaches and nightlife, offering a variety of locations {" "}
-                  with unique characteristics that cater to different { " "} real 
+                  with unique characteristics that cater to different { " "} real
                   estate needs and investment strategies.
                   <br className="d-none d-lg-block" />
                   tristique.
@@ -239,12 +233,15 @@ const Page = ({ randomProperties, zones }) => {
               data-aos="fade-up"
               data-aos-delay="300"
             >
-              <ExploreCities />
+              <ExploreLocations />
             </div>
           </div>
           {/* End row */}
         </div>
       </section>
+
+
+
 
       {/* Explore Apartment */}
       <section className="pt0 pb60 pb10-md">
@@ -271,33 +268,8 @@ const Page = ({ randomProperties, zones }) => {
       </section>
       {/* End Explore Apartment */}
 
-      {/* Featured Properties */}
-      {/* <section className="pt30 pb-0">
-        <div className="cta-banner6 bgc-thm-light ms-auto maxw1850 pt100 pt60-lg pb100 pb30-lg position-relative overflow-hidden mx20-lg">
-          <div className="container">
-            <div className="row">
-              <div
-                className="col-xl-6"
-                daa-aos="fade-left"
-                data-aos-delay="100"
-              ></div>
-              
-              <div
-                className="col-xl-5 offset-xl-1"
-                daa-aos="fade-right"
-                data-aos-delay="300"
-              >
-                <div className="home8-property-slider">
-                  <FeatureProperties />
-                </div>
-              </div>
-            </div>
-       
-          </div>
-   
-        </div>
-      </section> */}
-      {/* End Featured Properties */}
+      {/* Blog Section */}
+
 
       {/* Our Exclusive Agetns */}
       <section className="pb80 pb30-md">
@@ -316,10 +288,6 @@ const Page = ({ randomProperties, zones }) => {
                   get your dream property.
                 </p>
               </div>
-              <Link href="#" className="ud-btn btn-transparent mb30-md">
-                Our Team
-                <i className="fal fa-arrow-right-long" />
-              </Link>
             </div>
             {/* End .col */}
 
@@ -333,28 +301,29 @@ const Page = ({ randomProperties, zones }) => {
       </section>
       {/* End  Our Exclusive Agetns */}
 
-      {/* Explore Blog */}
-      <section className="pt-0 mb0-md pb90 pb30-md">
+
+      <section className="pb90 pb30-md bgc-f7">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-6 m-auto" data-aos="fade-up">
-              <div className="main-title text-start text-md-center">
-                <h2 className="title">From Our Blog</h2>
+          <div className="row justify-content-center">
+            <div className="col-lg-12 text-center">
+              <div className="main-title2">
+                <h2 className="title">{t('blogs.section.title')}</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  {t('blogs.section.subtitle')}
                 </p>
               </div>
             </div>
           </div>
-          {/* End .row */}
+          {/* End header */}
 
-          <div className="row" data-aos="fade-up" data-aos-delay="300">
-            <Blog />
+          <div className="row" data-aos="fade-up" data-aos-delay="200">
+            <div className="col-lg-12">
+              <LatestBlogs />
+            </div>
           </div>
-          {/* End .row */}
         </div>
       </section>
-      {/* End Explore Blog */}
+      {/* End Blog Section */}
 
       {/* Our Contact With Map */}
       <section className="pt70 pb25">

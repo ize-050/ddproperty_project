@@ -1,25 +1,21 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import ContactModal from '../../../common/ContactModal/ContactModal';
 
 const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
-  
-  // ดึงข้อมูลตัวแทนจาก property
-  const agent = property?.user || {
-    name: 'John Doe',
-    phone: '095 143 2345',
-    email: 'info@d-luckproperty.com',
-    line: '@dluck',
-    wechat: 'dluckproperty',
-    whatsapp: '+66951432345',
-    facebook: 'facebook.com/dluckproperty',
-    instagram: '@dluckproperty',
-    avatar: '/images/team/agent.jpg'
-  };
+  const propertyAgent = property.contactInfo;
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
+  console.log("PropertySidebar:", property);
+  // ดึงข้อมูลตัวแทนจาก property
+  let  agent = {
+    ...propertyAgent,
+    name :property?.user?.name,
+  };
   // ฟังก์ชันสำหรับเปิด URL ของ social media
   const openSocialMedia = (url) => {
     if (typeof window !== 'undefined') {
@@ -36,8 +32,8 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
         <div className="agent-profile">
           <div className="agent-avatar">
             <img 
-              src={agent.avatar || '/images/team/agent.jpg'} 
-              alt={agent.name}
+              src={agent?.avatar || '/images/listings/agent-1.png'}
+              alt={agent?.name}
               className="img-fluid rounded-circle"
             />
           </div>
@@ -125,9 +121,19 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
           </div>
         </div>
         
-        <button className="btn btn-danger w-100 mt-3">
+        <button 
+          className="btn btn-danger w-100 mt-3"
+          onClick={() => setIsContactModalOpen(true)}
+        >
           Send a Message Now
         </button>
+
+        {/* Contact Modal */}
+        <ContactModal 
+          isOpen={isContactModalOpen} 
+          onClose={() => setIsContactModalOpen(false)}
+          property={property}
+        />
       </div>
     </div>
   );

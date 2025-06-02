@@ -6,6 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { useTranslations } from 'next-intl';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
 import ListingTypeSection from '@/components/backoffice/property/ListingTypeSection';
 import PropertyTypeSection from '@/components/backoffice/property/PropertyTypeSection';
@@ -32,10 +33,12 @@ import '@/styles/backoffice/form-validation.css';
 
 const AddNewProperty = () => {
   const router = useRouter();
+  const t = useTranslations('AddProperty');
   const { formData, propertyImages, floorPlanImages, unitPlanImages, setFormData, resetForm } = usePropertyFormStore();
   const [validationSummary, setValidationSummary] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
-
+  const [isLoadingNextCode, setIsLoadingNextCode] = useState(true);
+  
   // Initialize React Hook Form with Yup schema validation
   const methods = useForm({
     resolver: yupResolver(propertyFormSchemaBasic),
@@ -48,10 +51,10 @@ const AddNewProperty = () => {
 
   // Sync form values with Zustand store when form values change
   useEffect(() => {
-    const subscription = watch((value) => {
-      // Only update the store if values have changed
-      if (JSON.stringify(value) !== JSON.stringify(formData)) {
-        setFormData(value);
+    const subscription = watch((value, { name, type }) => {
+      // Only update specific field that changed to avoid full form reset
+      if (name && type === 'change') {
+        setFormData({ ...formData, [name]: value[name] });
       }
     });
     return () => subscription.unsubscribe();
@@ -79,13 +82,55 @@ const AddNewProperty = () => {
     }
   }, [formSubmitted, trigger]);
 
+  // Fetch next property code when page loads
+  useEffect(() => {
+    const fetchNextPropertyCode = async () => {
+      try {
+        setIsLoadingNextCode(true);
+        
+        // Get token
+        const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
+        
+        // Call API to get next property code
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/next-property-code`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch next property code');
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && data.propertyCode) {
+          // Set the property ID in the form and store
+          setFormData({ ...formData, propertyId: data.propertyCode });
+          methods.setValue('propertyId', data.propertyCode);
+          console.log('Next property code set:', data.propertyCode);
+        }
+      } catch (error) {
+        console.error('Error fetching next property code:', error);
+        toast.error(t('errorFetchingPropertyCode'));
+      } finally {
+        setIsLoadingNextCode(false);
+      }
+    };
+    
+    fetchNextPropertyCode();
+  }, []);
+
   const onSubmit = async (data) => {
     try {
       setValidationSummary([]);
       setFormSubmitted(false);
+
       
       // แสดงข้อความกำลังบันทึกข้อมูล
-      const loadingToast = toast.loading('กำลังบันทึกข้อมูล...');
+      const loadingToast = toast.loading(t('savingData'));
       
       // สร้าง FormData object สำหรับส่งข้อมูลและรูปภาพ
       const formDataObj = new FormData();
@@ -104,6 +149,34 @@ const AddNewProperty = () => {
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
       
+      // สร้าง listings array ตามประเภทการขาย/เช่า
+      const listings = [];
+      
+      if (data.status === 'SALE' || data.status === 'SALE_RENT') {
+        listings.push({
+          listingType: 'SALE',
+          price: data.price,
+          pricePerSqm: data.pricePerSqm,
+          promotionalPrice: data.promotionalPrice,
+          currency: data.currency || 'THB'
+        });
+      }
+      
+      if (data.status === 'RENT' || data.status === 'SALE_RENT') {
+        listings.push({
+          listingType: 'RENT',
+          price: data.rentalPrice,
+          shortTerm3Months: data.shortTerm3Months,
+          shortTerm6Months: data.shortTerm6Months,
+          shortTerm1Year: data.shortTerm1Year,
+          minimumStay: data.minimumStay,
+          currency: data.currency || 'THB'
+        });
+      }
+      
+      // เพิ่ม listings array เข้าไปใน formData
+      formDataObj.append('listings', JSON.stringify(listings));
+
       // เพิ่มรูปภาพหลักลงใน FormData
       propertyImages.forEach((image, index) => {
         if (image.file) {
@@ -125,59 +198,7 @@ const AddNewProperty = () => {
         }
       });
       
-      // แปลง features, highlights, nearby, views, facilities เป็นรูปแบบที่ backend ต้องการ
-      // Features
-      const featuresArray = [];
-      for (const [key, value] of Object.entries(data.features)) {
-        if (value === true) {
-          featuresArray.push({ name: key, value: 'true' });
-        }
-      }
-      formDataObj.append('features', JSON.stringify(featuresArray));
-      
-      // Highlights
-      const highlightsArray = [];
-      for (const [key, value] of Object.entries(data.highlights)) {
-        if (value === true) {
-          highlightsArray.push(key.toUpperCase());
-        }
-      }
-      formDataObj.append('highlights', JSON.stringify(highlightsArray));
-      
-      // Nearby
-      const nearbyArray = [];
-      for (const [key, value] of Object.entries(data.nearby)) {
-        if (value === true) {
-          nearbyArray.push({ type: key.toUpperCase(), distance: null });
-        }
-      }
-      formDataObj.append('nearby', JSON.stringify(nearbyArray));
-      
-      // Views
-      const viewsArray = [];
-      for (const [key, value] of Object.entries(data.views)) {
-        if (value === true) {
-          viewsArray.push(key.toUpperCase());
-        }
-      }
-      formDataObj.append('views', JSON.stringify(viewsArray));
-      
-      // Facilities
-      const facilitiesArray = [];
-      for (const category of ['fitnessSports', 'commonAreas', 'poolsSpaRelaxation', 'diningEntertainmentLeisure', 'other']) {
-        if (data.facilities && data.facilities[category]) {
-          for (const [key, value] of Object.entries(data.facilities[category])) {
-            if (value === true) {
-              facilitiesArray.push({
-                type: key.toUpperCase(),
-                category: category.toUpperCase()
-              });
-            }
-          }
-        }
-      }
-      formDataObj.append('facilities', JSON.stringify(facilitiesArray));
-      
+
       // ส่งข้อมูลไปยัง API endpoint
       // ดึง token จาก localStorage หรือ cookie
       const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
@@ -185,15 +206,13 @@ const AddNewProperty = () => {
       console.log('Sending data to API...', { formDataSize: [...formDataObj.entries()].length });
       
       // ใช้ URL ที่ถูกต้องสำหรับ backend API
-      // อาจต้องเปลี่ยนเป็น URL ที่ถูกต้องของ backend
-      // ตรวจสอบว่า backend ทำงานอยู่ที่ port 5001 หรือไม่
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const response = await axios.post(`${apiUrl}/properties`, formDataObj, {
         headers: {
           // ไม่ต้องกำหนด Content-Type เพราะ browser จะกำหนดให้อัตโนมัติเมื่อใช้ FormData
-          'Authorization': `Bearer ${token}` 
-        },
-        credentials: 'include' // ส่ง cookies ไปด้วย (ถ้าใช้ cookie-based authentication)
+          'Authorization': `Bearer ${token}`,
+          'x-api-key': process.env.NEXT_PUBLIC_API_KEY
+        }
       });
       
       // ปิด loading toast
@@ -204,7 +223,7 @@ const AddNewProperty = () => {
       const result = response.data;
       
       // แสดงข้อความสำเร็จ
-      toast.success('บันทึกข้อมูลเรียบร้อยแล้ว');
+      toast.success(t('dataSavedSuccessfully'));
       
       // รีเซ็ตฟอร์ม
       // resetForm();
@@ -232,7 +251,7 @@ const AddNewProperty = () => {
           const validationErrors = error.response.data.errors;
           
           // แสดงข้อความ error ทั้งหมด
-          let errorMessage = 'ข้อมูลไม่ถูกต้อง:\n';
+          let errorMessage = t('invalidData') + ':\n';
           
           // ถ้าเป็น array ของ errors
           if (Array.isArray(validationErrors)) {
@@ -258,26 +277,26 @@ const AddNewProperty = () => {
           // แสดงข้อมูล validation errors ใน console เพื่อ debug
           console.log('Validation errors:', validationErrors);
         } else if (error.response.status === 401) {
-          toast.error('ไม่ได้รับอนุญาตให้เข้าถึง API กรุณาเข้าสู่ระบบใหม่');
+          toast.error(t('notAuthorized'));
         } else {
           // ข้อผิดพลาดอื่นๆ จาก API
-          toast.error(error.response.data.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+          toast.error(error.response.data.message || t('errorSavingData'));
         }
       } else if (error.request) {
         // ส่งคำขอไปแล้วแต่ไม่ได้รับการตอบสนอง
         console.log('Request was made but no response was received:', error.request);
-        toast.error('ไม่สามารถเชื่อมต่อกับ API ได้ กรุณาตรวจสอบว่า backend server ทำงานอยู่หรือไม่');
+        toast.error(t('cannotConnectToAPI'));
       } else {
         // ข้อผิดพลาดอื่นๆ
         console.log('Error:', error.message);
-        toast.error(error.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+        toast.error(error.message || t('errorSavingData'));
       }
       
       // เพิ่มข้อมูลเพื่อ debug
-      console.log('API URL:', process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'); 
+      console.log('API URL:', process.env.NEXT_PUBLIC_API_URL); 
     }
   };
-  
+
   // Handle form errors and scroll to the first error
   const onError = (errors) => {
     console.log('Form validation errors:', errors);
@@ -296,7 +315,7 @@ const AddNewProperty = () => {
     trigger();
     
     // Show error message
-    alert('Please fill in all required fields');
+    alert(t('pleaseFillInAllRequiredFields'));
     
     // Scroll to validation summary
     const validationSummaryElement = document.getElementById('validation-summary');
@@ -311,8 +330,8 @@ const AddNewProperty = () => {
         <div className="page-header">
           <div className="header-content">
             <div>
-              <h1>Add/New Property</h1>
-              <p>create property details</p>
+              <h1>{t('addNewProperty')}</h1>
+              <p>{t('createPropertyDetails')}</p>
             </div>
           </div>
         </div>
@@ -320,7 +339,7 @@ const AddNewProperty = () => {
         <FormProvider {...methods}>
           {validationSummary.length > 0 && (
             <div id="validation-summary" className="validation-summary">
-              <h4>Please correct the following errors:</h4>
+              <h4>{t('pleaseCorrectTheFollowingErrors')}:</h4>
               <ul>
                 {validationSummary.map((message, index) => (
                   <li key={index}>{message}</li>
@@ -356,9 +375,9 @@ const AddNewProperty = () => {
               <input 
                 type="checkbox" 
                 id="termsAgree" 
-                {...methods.register('termsAgree', { required: 'You must agree to the terms' })} 
+                {...methods.register('termsAgree', { required: t('youMustAgreeToTheTerms') })} 
               />
-              <label htmlFor="termsAgree">I confirm that all information provided is accurate and I have rights to list this property</label>
+              <label htmlFor="termsAgree">{t('iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty')}</label>
               {methods.formState.errors.termsAgree && (
                 <p className="error-message">{methods.formState.errors.termsAgree.message}</p>
               )}
@@ -368,7 +387,7 @@ const AddNewProperty = () => {
           {/* Form Validation Errors Summary */}
           {Object.keys(methods.formState.errors).length > 0 && (
             <section className="form-section error-summary">
-              <h3>Please correct the following errors:</h3>
+              <h3>{t('pleaseCorrectTheFollowingErrors')}:</h3>
               <ul>
                 {Object.entries(methods.formState.errors).map(([field, error]) => (
                   <li key={field}>{error.message}</li>
@@ -380,7 +399,7 @@ const AddNewProperty = () => {
           {/* Form Buttons */}
           <div className="form-buttons">
             <button type="button" className="btn btn-secondary" onClick={() => router.back()}>
-              Cancel
+              {t('cancel')}
             </button>
             <button 
               type="button" 
@@ -395,7 +414,7 @@ const AddNewProperty = () => {
                     handleSubmit(onSubmit)();
                   } else {
                     // Show error message
-                    alert('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน');
+                    alert(t('pleaseFillInAllRequiredFields'));
                     
                     // Add red border to all required fields that are empty
                     // ProjectInfoSection
@@ -447,7 +466,7 @@ const AddNewProperty = () => {
                 });
               }}
             >
-              Save
+              {t('save')}
             </button>
           </div>
         </form>

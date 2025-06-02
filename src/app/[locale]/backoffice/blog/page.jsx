@@ -4,13 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
-import { FaEdit, FaTrash, FaSearch, FaPlus, FaChevronDown, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaSearch, FaPlus, FaChevronDown, FaTimes, FaAngleLeft, FaAngleRight, FaChevronLeft, FaChevronRight, FaEye, FaPencilAlt, FaTrash as FaTrashIcon } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import axios from 'axios';
 import {format} from 'date-fns';
-import { FaAngleLeft, FaAngleRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
+import Swal from 'sweetalert2';
 
 // Import SCSS
 import '@/styles/backoffice/blog.scss';
@@ -249,17 +248,65 @@ const BlogPage = () => {
     router.push('/backoffice/blog/add');
   };
 
+  // ฟังก์ชันสำหรับแก้ไขบทความ
   const handleEdit = (id) => {
-    router.push(`/backoffice/blog/edit/${id}`);
+    router.push(`/backoffice/blog/edit?id=${id}`);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this post?')) {
-      // In a real application, you would call an API to delete the post
-      const updatedPosts = posts?.filter(post => post.id !== id);
-      setPosts(updatedPosts);
-      toast.success('Post deleted successfully');
-    }
+  // ฟังก์ชันสำหรับดูรายละเอียดบทความ
+  const handleView = (id) => {
+    router.push(`/backoffice/blog/view?id=${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    // ใช้ SweetAlert2 แทน window.confirm
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: "คุณต้องการลบบทความนี้ใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่, ลบเลย!',
+      cancelButtonText: 'ยกเลิก'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // เรียกใช้ API เพื่อลบบทความ
+          const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/blogs/${id}`, {
+            headers: {
+              'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
+              'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+            }
+          });
+
+          if (response.status === 200 || response.status === 204) {
+            // แสดงข้อความแจ้งเตือนว่าลบสำเร็จด้วย SweetAlert2
+            Swal.fire(
+              'ลบเรียบร้อย!',
+              'บทความถูกลบเรียบร้อยแล้ว',
+              'success'
+            );
+            
+            // โหลดข้อมูลใหม่จาก API
+            getPosts();
+          } else {
+            Swal.fire(
+              'เกิดข้อผิดพลาด!',
+              'ไม่สามารถลบบทความได้',
+              'error'
+            );
+          }
+        } catch (error) {
+          console.error('Error deleting post:', error);
+          Swal.fire(
+            'เกิดข้อผิดพลาด!',
+            error.response?.data?.message || 'ไม่สามารถลบบทความได้',
+            'error'
+          );
+        }
+      }
+    });
   };
 
   // Filter posts based on search query
@@ -331,21 +378,15 @@ const BlogPage = () => {
             <table className="blog-table">
               <thead>
                 <tr>
-                  <th className="checkbox-cell">
-                    <input type="checkbox" />
-                  </th>
                   <th>TITLE</th>
                   <th>PUBLISHED DATE</th>
                   <th>ACTIONS</th>
-                  <th>VIEW</th>
                 </tr>
               </thead>
               <tbody>
                 {sortedPosts.map((post) => (
                   <tr key={post.id}>
-                    <td className="checkbox-cell">
-                      <input type="checkbox" />
-                    </td>
+
                     <td>
                       <div className="title-cell">
                         <img 
@@ -360,27 +401,32 @@ const BlogPage = () => {
                     </td>
                     <td className="date-cell">{format(post?.createdAt,'dd/mm/yyyy')}</td>
                     <td className="actions-cell">
-                      <div className="action-buttons">
-                        <button
+                      <div className="flex space-x-2">
+                        <a
+                          onClick={() => handleView(post.id)}
+                          className="mr-5"
+                          style={{  marginRight:'5px', cursor:'pointer'}}
+                          title="View"
+                        >
+                          <FaEye class={"dark-color mr-5"} />
+                        </a>
+                        <a
                           onClick={() => handleEdit(post.id)}
-                          className="edit-button"
+                          className="mr-5"
+                          style={{  marginRight:'5px' , cursor:'pointer'}}
                           title="Edit"
                         >
-                          <FaEdit />
-                        </button>
-                        <button
+                          <FaPencilAlt class={"dark-color mr-5"} />
+                        </a>
+                        <a
                           onClick={() => handleDelete(post.id)}
-                          className="delete-button"
+                          className="mr-5 "
                           title="Delete"
+                          style={{  marginRight:'5px', cursor:'pointer'}}
                         >
-                          <FaTrash />
-                        </button>
+                          <FaTrashIcon  class={"dark-color mr-5"}/>
+                        </a>
                       </div>
-                    </td>
-                    <td className="view-cell">
-                      <Link href={`/blog/${post.id}`}>
-                        VIEW
-                      </Link>
                     </td>
                   </tr>
                 ))}

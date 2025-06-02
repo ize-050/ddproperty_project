@@ -127,7 +127,7 @@ const PropertyGallery = ({ images, property }) => {
                   <i className="fas fa-home fa-lg text-white me-3"></i>
                   <div>
                     <div className="fw-bold text-white" style={{ fontSize: '1.1rem' }}>Property Type</div>
-                    <div className="text-white-50">{property.property_type || '-'}</div>
+                    <div className="text-white-50">{property.listings.map((listing) => listing.listingType).join(', ')  ?? '-'}</div>
                   </div>
                 </div>
                 <div className="stat-item d-flex align-items-center bg-dark rounded-3 p-3" style={{ minWidth: 120 }}>

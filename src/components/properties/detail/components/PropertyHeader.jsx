@@ -3,10 +3,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import { localeToCurrencySymbol } from '@/utils/currencyUtils';
 
 const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPropertyTypeText, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
   const locale = useLocale();
+
+  // สัญลักษณ์สกุลเงินตามภาษา
+  const currencySymbols = {
+    'th': '฿',
+    'en': '$',
+    'zh': '¥',
+    'ru': '₽'
+  };
+  const currencySymbol = localeToCurrencySymbol(locale) || currencySymbols[locale] || '฿';
 
   return (
     <section className="property-header-section">
@@ -50,7 +60,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
                       style={{
                         color: listing.listingType === 'RENT' ? 'orange' : '#fff'
                       }}
-                      >฿{formatPrice(listing.price)}</h3>
+                      >{currencySymbol}{formatPrice(listing.price)}</h3>
                       {listing.listingType === 'RENT' && (  
                        <p className="text space fz15 text-white">{t('bahtPerMonth')}</p>
                       )}

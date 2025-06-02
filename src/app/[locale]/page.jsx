@@ -111,7 +111,6 @@ async function HomeContent() {
     <>
 
       <Page randomProperties={randomProperties} zones={zones} />
-
     </>
   );
 }

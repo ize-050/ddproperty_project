@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../backendDD_property/.idea/backendDD_property.iml" filepath="$PROJECT_DIR$/../backendDD_property/.idea/backendDD_property.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ddproperty_project.iml" filepath="$PROJECT_DIR$/.idea/ddproperty_project.iml" />
     </modules>
   </component>

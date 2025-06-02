@@ -1,159 +1,74 @@
 "use client";
 
+import { usePathname, useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import { useState, useEffect, useRef } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { supportedLocales, defaultLocale } from '../../i18n';
 
 export default function LanguageSwitcher() {
+  const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  
-  // สัญลักษณ์ธงสำหรับแต่ละภาษา
-  const flagCodes = {
-    th: '🇹🇭', // ธงไทย (TH)
-    en: '🇬🇧', // ธงอังกฤษ (GB)
-    zh: '🇨🇳', // ธงจีน (CN)
-    ru: '🇷🇺'  // ธงรัสเซีย (RU)
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // ฟังก์ชันสำหรับเปลี่ยนภาษา
+  const handleLanguageChange = (targetLocale) => {
+    if (targetLocale === locale) {
+      setIsOpen(false);
+      return; // ไม่ต้องเปลี่ยนถ้าเป็นภาษาเดียวกัน
+    }
+    
+    setIsOpen(false);
+    
+    // สร้าง URL ใหม่โดยตรง
+    let newPath;
+    
+    // ถ้าเป็น URL ที่มี locale อยู่แล้ว (เช่น /en/blog, /th/properties)
+    if (pathname.match(/^\/(en|th|zh|ru)\//)) {
+      newPath = pathname.replace(/^\/(en|th|zh|ru)\//, `/${targetLocale}/`);
+    } 
+    // ถ้าเป็น URL ที่เป็น locale เท่านั้น (เช่น /en, /th)
+    else if (pathname.match(/^\/(en|th|zh|ru)$/)) {
+      newPath = `/${targetLocale}`;
+    }
+    // ถ้าเป็น URL ที่ไม่มี locale
+    else {
+      newPath = `/${targetLocale}${pathname}`;
+    }
+    
+    console.log('Current locale:', locale);
+    console.log('Target locale:', targetLocale);
+    console.log('Current pathname:', pathname);
+    console.log('Navigating to:', newPath);
+    
+    // ใช้ window.location.href แทน router.push เพื่อให้มีการโหลดหน้าใหม่
+    window.location.href = newPath;
   };
 
-  // รหัสภาษาแบบย่อ
-  const localeShortCodes = {
-    th: 'TH',
-    en: 'EN',
-    zh: 'ZH',
-    ru: 'RU'
-  };
-  
-  // ชื่อภาษา
-  const languageNames = {
-    th: 'ไทย',
-    en: 'English',
-    zh: '中文',
-    ru: 'Русский'
-  };
-  
-  // สกุลเงินสำหรับแต่ละภาษา
-  const currencies = {
-    th: 'THB',
-    en: 'USD',
-    zh: 'CNY',
-    ru: 'RUB'
-  };
-  
-  const [currentLocale, setCurrentLocale] = useState(defaultLocale);
-  const [isMounted, setIsMounted] = useState(false);
-  const [currentCurrency, setCurrentCurrency] = useState(currencies[defaultLocale]);
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false);
-  
-  // สร้าง ref สำหรับ dropdown
-  const languageDropdownRef = useRef(null);
-  const currencyDropdownRef = useRef(null);
-
+  // ปิด dropdown เมื่อคลิกที่อื่น
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target) &&
-          !event.target.closest('.lang-btn')) {
-        setIsLanguageDropdownOpen(false);
-      }
-      
-      if (currencyDropdownRef.current && !currencyDropdownRef.current.contains(event.target) &&
-          !event.target.closest('.currency-btn')) {
-        setIsCurrencyDropdownOpen(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
-    
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  // ใช้ useEffect เพื่อตรวจสอบภาษาปัจจุบันจาก URL และ localStorage
-  // เพื่อหลีกเลี่ยง hydration error
-  useEffect(() => {
-    setIsMounted(true);
-    
-    // ตรวจสอบภาษาจาก URL ก่อน
-    const path = pathname || '';
-    const localeMatch = path.match(/^\/([a-z]{2})(?:\/|$)/);
 
-    let detectedLocale = defaultLocale;
-    if (localeMatch && supportedLocales.includes(localeMatch[1])) {
-      detectedLocale = localeMatch[1];
-    }
-    
-    setCurrentLocale(detectedLocale);
-    setCurrentCurrency(currencies[detectedLocale]);
-  }, [pathname]);
+  // ข้อมูลภาษาที่รองรับ
+  const languages = [
+    { code: 'th', name: 'ไทย', flag: '🇹🇭' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'zh', name: '中文', flag: '🇨🇳' },
+    { code: 'ru', name: 'Русский', flag: '🇷🇺' }
+  ];
 
-  // ฟังก์ชันสำหรับเปลี่ยนภาษา
-  const handleLanguageChange = (locale) => {
-    console.log('Changing language to:', locale);
-    console.log('Current pathname:', pathname);
-    
-    // คำนวณ URL ใหม่ตามภาษาที่เลือก
-    let newPath = '';
-    
-    // ถ้าเป็นภาษาเริ่มต้น (ไทย)
-    if (locale === defaultLocale) {
-      // ถ้าอยู่ที่หน้าแรกของภาษาอื่น (เช่น /en, /zh)
-      if (pathname.match(/^\/(en|zh|ru)$/)) {
-        newPath = '/';
-      } else {
-        // ลบ prefix ภาษาออกจาก URL
-        newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
-      }
-    } 
-    // ถ้าเป็นภาษาอื่น (en, zh, ru)
-    else {
-      // ถ้ามี prefix ภาษาอยู่แล้ว ให้แทนที่
-      if (pathname.match(/^\/[a-z]{2}(\/|$)/)) {
-        newPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, `/${locale}$1`);
-      } 
-      // ถ้าไม่มี prefix ภาษา (เช่น หน้าแรกภาษาไทย)
-      else {
-        newPath = `/${locale}${pathname === '/' ? '' : pathname}`;
-      }
-    }
-    
-    console.log('New path:', newPath);
-
-    // นำทางไปยัง URL ใหม่
-    try {
-      router.push(newPath);
-    } catch (error) {
-      console.error('Error changing language:', error);
-      // ถ้าเกิดข้อผิดพลาด ให้โหลดหน้าใหม่ทั้งหมด
-      window.location.href = newPath;
-    }
-  };
-
-  // ถ้ายังไม่ได้ mount ให้แสดงปุ่มว่างๆ เพื่อหลีกเลี่ยง hydration error
-  if (!isMounted) {
-    return <div className="language-switcher-placeholder" style={{ width: '60px', height: '32px' }}></div>;
-  }
-
-  // ฟังก์ชันสำหรับเปลี่ยนสกุลเงิน
-  const handleCurrencyChange = (currency) => {
-    setCurrentCurrency(currency);
-    // ตรงนี้สามารถเพิ่มโค้ดสำหรับจัดการเปลี่ยนสกุลเงินได้
-  };
-
-  // ฟังก์ชันสำหรับเปิด/ปิด dropdown ภาษา
-  const toggleLanguageDropdown = () => {
-    console.log('Toggle language dropdown', isLanguageDropdownOpen);
-    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
-    setIsCurrencyDropdownOpen(false); // ปิด dropdown สกุลเงินเมื่อเปิด dropdown ภาษา
-  };
-  
-  // ฟังก์ชันสำหรับเปิด/ปิด dropdown สกุลเงิน
-  const toggleCurrencyDropdown = () => {
-    console.log('Toggle currency dropdown', isCurrencyDropdownOpen);
-    setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen);
-    setIsLanguageDropdownOpen(false); // ปิด dropdown ภาษาเมื่อเปิด dropdown สกุลเงิน
-  };
-
+  // หาภาษาปัจจุบัน
+  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
 
   // สร้าง CSS สำหรับ dropdown แบบ inline
   const dropdownStyles = {
@@ -214,69 +129,32 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      {/* Language Switcher - เหมือนในรูป */}
-      <div style={dropdownStyles.wrapper}>
-        <button 
-          style={dropdownStyles.button}
-          onClick={toggleLanguageDropdown}
-        >
-          <span style={dropdownStyles.flagIcon}>{currentLocale && flagCodes[currentLocale] ? flagCodes[currentLocale] : ''}</span>
-          <span style={dropdownStyles.text}>{currentLocale && localeShortCodes[currentLocale] ? localeShortCodes[currentLocale] : ''}</span>
-          <span style={dropdownStyles.dropdownIcon}>▼</span>
-        </button>
-        {isLanguageDropdownOpen && (
-          <div ref={languageDropdownRef} style={dropdownStyles.dropdownMenu}>
-            {supportedLocales.map((locale) => (
-              <button 
-                key={locale}
-                style={{
-                  ...dropdownStyles.dropdownItem,
-                  backgroundColor: locale === currentLocale ? '#f5f5f5' : 'transparent'
-                }}
-                onClick={() => {
-                  handleLanguageChange(locale);
-                  setIsLanguageDropdownOpen(false);
-                }}
-              >
-                <span style={{ marginRight: '8px' }}>{flagCodes[locale] || ''}</span> {languageNames[locale] || locale}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Currency Dropdown - เหมือนในรูป */}
-      <div style={dropdownStyles.wrapper}>
-        <button 
-          style={dropdownStyles.button}
-          onClick={toggleCurrencyDropdown}
-        >
-          <span style={dropdownStyles.text}>{currentCurrency}</span>
-          <span style={dropdownStyles.dropdownIcon}>▼</span>
-        </button>
-        {isCurrencyDropdownOpen && (
-          <div ref={currencyDropdownRef} style={dropdownStyles.dropdownMenu}>
-            {Object.values(currencies).map((currency) => (
-              <button 
-                key={currency}
-                style={{
-                  ...dropdownStyles.dropdownItem,
-                  backgroundColor: currency === currentCurrency ? '#f5f5f5' : 'transparent'
-                }}
-                onClick={() => {
-                  handleCurrencyChange(currency);
-                  setIsCurrencyDropdownOpen(false);
-                }}
-              >
-                {currency}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+    <div style={dropdownStyles.wrapper} ref={dropdownRef}>
+      <button 
+        style={dropdownStyles.button}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span style={dropdownStyles.flagIcon}>{currentLanguage.flag}</span>
+        <span style={dropdownStyles.text}>{currentLanguage.code.toUpperCase()}</span>
+        <span style={dropdownStyles.dropdownIcon}>▼</span>
+      </button>
+      
+      {isOpen && (
+        <div style={dropdownStyles.dropdownMenu}>
+          {languages.map((language) => (
+            <button 
+              key={language.code}
+              style={{
+                ...dropdownStyles.dropdownItem,
+                backgroundColor: locale === language.code ? '#f5f5f5' : 'transparent'
+              }}
+              onClick={() => handleLanguageChange(language.code)}
+            >
+              <span style={{ marginRight: '8px' }}>{language.flag}</span> {language.name}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
-};
-
-// ลบ export default ซ้ำออก
+}

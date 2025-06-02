@@ -10,7 +10,7 @@ import RecentActivities from '@/components/backoffice/dashboard/RecentActivities
 export const dynamic = "force-dynamic";
 
 const BackofficePage = () => {
-  const t = useTranslations('Backoffice');
+  const t = useTranslations('backoffice');
 
   return (
     <BackofficeLayout>
