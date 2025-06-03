@@ -76,28 +76,8 @@ const CreateBlogPage = () => {
 
   // ฟังก์ชัน onSubmit ที่ปรับปรุงแล้ว
   const onSubmit = async (data) => {
-    // ตรวจสอบว่าทุกภาษามีข้อมูลครบถ้วน
-    let missingFields = false;
-
-    for (const lang of languages) {
-      if (!data[lang.code].title || !data[lang.code].content) {
-        toast.error(`Please fill in all required fields for ${lang.name}`);
-        setActiveLanguage(lang.code);
-        missingFields = true;
-        break;
-      }
-    }
-
-    if (missingFields) {
-      toast.error(`Please fill in all required fields for ${missingFields}`);
-      return;
-    }
-
-    if (!data.featuredImage) {
-      toast.error('Featured image is required');
-      return;
-    }
-
+    console.log('Submitting form data:', data);
+    
     const formData = new FormData();
     
     // ใช้ title ภาษาอังกฤษเป็นหลัก
@@ -110,7 +90,17 @@ const CreateBlogPage = () => {
       zh: data.zh.title,
       ru: data.ru.title
     };
-    formData.append('translated_titles', JSON.stringify(translatedTitles));
+    
+    // ตรวจสอบว่า translated_titles เป็น JSON ที่ถูกต้องก่อนส่ง
+    try {
+      const translatedTitlesJson = JSON.stringify(translatedTitles);
+      console.log('Translated titles JSON:', translatedTitlesJson);
+      formData.append('translated_titles', translatedTitlesJson);
+    } catch (e) {
+      console.error('Error stringifying translated titles:', e);
+      toast.error('Error processing title translations');
+      return;
+    }
     
     // สร้าง translated_contents
     const translatedContents = {
@@ -119,24 +109,49 @@ const CreateBlogPage = () => {
       zh: data.zh.content,
       ru: data.ru.content
     };
-    formData.append('translated_contents', JSON.stringify(translatedContents));
+    
+    // ตรวจสอบว่า translated_contents เป็น JSON ที่ถูกต้องก่อนส่ง
+    try {
+      const translatedContentsJson = JSON.stringify(translatedContents);
+      console.log('Translated contents JSON:', translatedContentsJson);
+      formData.append('translated_contents', translatedContentsJson);
+    } catch (e) {
+      console.error('Error stringifying translated contents:', e);
+      toast.error('Error processing content translations');
+      return;
+    }
     
     // ใช้ content ภาษาอังกฤษเป็นหลัก
     formData.append('content', data.en.content);
     
     // ข้อมูลภาษาอื่นๆ ส่งตามรูปแบบที่ backend คาดหวัง
-    formData.append('th[title]', data.th.title);
-    formData.append('th[content]', data.th.content);
-    
-    formData.append('zh[title]', data.zh.title);
-    formData.append('zh[content]', data.zh.content);
-    
-    formData.append('ru[title]', data.ru.title);
-    formData.append('ru[content]', data.ru.content);
+    // แก้ไขเป็นการใช้ JSON.stringify เพียงอย่างเดียวแทนการส่งแบบ nested
+    // เอา nested fields ออกเพื่อลดความสับสน
+    // formData.append('th[title]', data.th.title);
+    // formData.append('th[content]', data.th.content);
+    // 
+    // formData.append('zh[title]', data.zh.title);
+    // formData.append('zh[content]', data.zh.content);
+    // 
+    // formData.append('ru[title]', data.ru.title);
+    // formData.append('ru[content]', data.ru.content);
 
     formData.append('category', data.category);
-    formData.append('tags', JSON.stringify(data.tags));
-    formData.append('featuredImage', data.featuredImage);
+    
+    // ตรวจสอบว่า tags เป็น JSON ที่ถูกต้องก่อนส่ง
+    try {
+      const tagsJson = JSON.stringify(data.tags);
+      console.log('Tags JSON:', tagsJson);
+      formData.append('tags', tagsJson);
+    } catch (e) {
+      console.error('Error stringifying tags:', e);
+      toast.error('Error processing tags');
+      return;
+    }
+    
+    if (data.featuredImage) {
+      formData.append('featuredImage', data.featuredImage);
+    }
 
     try {
       // ส่งข้อมูลไปยัง API
@@ -147,10 +162,16 @@ const CreateBlogPage = () => {
         return;
       }
       
+      // ดู formData ที่จะส่ง
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/blogs`, formData, {
         headers: {
           'content-type': 'multipart/form-data',
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY
         }
       });
 
