@@ -6,7 +6,7 @@ import LoginSignupModal from "@/components/common/login-signup-modal";
 import dynamic from 'next/dynamic';
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 // นำเข้าไฟล์ SCSS
@@ -20,9 +20,13 @@ const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitc
 const Header = () => {
   // ใช้ usePathname hook เพื่อติดตามการเปลี่ยนแปลงของ path
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [navbar, setNavbar] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // ดึงค่า type จาก query parameters
+  const typeParam = searchParams.get('type');
+  
   const changeBackground = () => {
     if (window.scrollY >= 10) {
       setNavbar(true);
@@ -42,11 +46,24 @@ const Header = () => {
     };
   }, []);
 
+  // เช็คว่าเมนูไหนกำลัง active
+  const isActive = (href) => {
+    if (pathname === href) return true;
+    
+    // ถ้าอยู่ที่หน้า properties/list ให้เช็ค type parameter
+    if (pathname.includes('/properties/list')) {
+      if (href.includes('type=sale') && typeParam === 'sale') return true;
+      if (href.includes('type=rent') && typeParam === 'rent') return true;
+    }
+    
+    return false;
+  };
+
   // เมนูหลักตามที่เห็นในรูปภาพ
   const menuItems = [
     { id: "home", label: "Home", href: "/" },
-    { id: "forSale", label: "For Sale", href: "/for-sale" },
-    { id: "forRent", label: "For Rent", href: "/for-rent" },
+    { id: "forSale", label: "For Sale", href: "/properties/list?type=sale" },
+    { id: "forRent", label: "For Rent", href: "/properties/list?type=rent" },
     { id: "blog", label: "Blog", href: "/blog" },
     { id: "about", label: "About", href: "/about" },
     { id: "contact", label: "Contact", href: "/contact" },
@@ -90,7 +107,7 @@ const Header = () => {
                   <li key={item.id}>
                     <Link 
                       href={item.href}
-                      className={pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href)) ? 'active' : ''}
+                      className={isActive(item.href) ? 'active' : ''}
                     >
                       {item.label}
                     </Link>
@@ -129,6 +146,7 @@ const Header = () => {
                     <Link 
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
+                      className={isActive(item.href) ? 'active' : ''}
                     >
                       {item.label}
                     </Link>

@@ -34,13 +34,23 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   const paginationItems = usePropertyFilterStore(state => state.paginationItems);
   const filterStore = usePropertyFilterStore();
 
+  // ดึงค่า type จาก URL parameters (sale หรือ rent)
+  const typeParam = searchParamsObj.get('type');
+
+  // แปลงค่า type จาก URL เป็น listingType ที่ใช้ใน filter
+  const getListingTypeFromParam = () => {
+    if (typeParam === 'rent') return 'RENT';
+    if (typeParam === 'sale') return 'SALE';
+    return 'SALE'; // ค่าเริ่มต้น
+  };
+
   // filters state (single source of truth)
   const [filters, setFilters] = useState({
     propertyType: filterStore.propertyType || '',
     minPrice: filterStore.minPrice || 0,
     maxPrice: filterStore.maxPrice || 15000000,
     zoneId: filterStore.zoneId || '',
-    listingType: 'SALE',
+    listingType: getListingTypeFromParam(), // ใช้ function ที่สร้างขึ้นแทนค่าคงที่
     bedrooms: filterStore.bedrooms || '',
     bathrooms: filterStore.bathrooms || '',
     page: searchParams.page || 1,
@@ -69,7 +79,27 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
       ...prev,
       ...filterValues
     }));
-    // TODO: call API fetch/filter here if needed
+    
+    // อัปเดต URL เพื่อให้สะท้อนสถานะการกรองปัจจุบัน
+    const params = new URLSearchParams(searchParamsObj.toString());
+    
+    // ถ้ามีการเปลี่ยนแปลง listingType ให้อัปเดต type parameter ใน URL
+    if (filterValues.listingType) {
+      const typeValue = filterValues.listingType === 'SALE' ? 'sale' : 'rent';
+      params.set('type', typeValue);
+    }
+    
+    // อัปเดต parameters อื่นๆ ถ้าจำเป็น
+    if (filterValues.propertyType) params.set('propertyType', filterValues.propertyType);
+    if (filterValues.zoneId) params.set('zoneId', filterValues.zoneId);
+    if (filterValues.bedrooms) params.set('bedrooms', filterValues.bedrooms);
+    if (filterValues.bathrooms) params.set('bathrooms', filterValues.bathrooms);
+    
+    // Reset หน้าเมื่อมีการเปลี่ยนแปลง filter
+    params.set('page', '1');
+    
+    // นำทางไปยัง URL ใหม่
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const handlePageChange = (page) => {

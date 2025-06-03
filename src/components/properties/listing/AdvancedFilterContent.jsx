@@ -34,7 +34,7 @@ const PROPERTY_TYPES = [
 
 
 
-export default function AdvancedFilterContent({ onClose }) {
+export default function AdvancedFilterContent({ onClose ,type }) {
   const zones = useZoneStore((s) => s.zones);
 
 
@@ -82,6 +82,10 @@ export default function AdvancedFilterContent({ onClose }) {
     if (zoneId) params.set('zoneId', zoneId);
     if (bedrooms) params.set('bedrooms', bedrooms);
     if (bathrooms) params.set('bathrooms', bathrooms);
+
+    if(type) params.set('type', type);
+
+
 
     // Update URL params WITHOUT reload
     const newUrl = `${window.location.pathname}?${params.toString()}`;

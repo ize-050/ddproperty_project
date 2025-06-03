@@ -11,9 +11,10 @@ const HeroContent = () => {
     setActiveTab(tab);
   };
 
+
   const tabs = [
-    { id: "buy", label: "Buy", listingType: "SALE" },
-    { id: "rent", label: "Rent", listingType: "RENT" },
+    { id: "buy", label: "Buy", type: "sale" },
+    { id: "rent", label: "Rent", type: "rent" },
   ];
 
   return (
@@ -26,7 +27,7 @@ const HeroContent = () => {
               onClick={() => handleTabClick(tab.id)}
               style={{
                 border: 'none',
-                borderBottom: activeTab === tab.id ? '2px solid #000000' : 'none'
+                borderBottom: activeTab === tab.id  ? '2px solid #000000' : 'none'
               }}
             >
               {tab.label}
@@ -44,7 +45,7 @@ const HeroContent = () => {
             <div className="advance-content-style1 at-home8">
               <div className="row">
                 <FilterItems 
-                  listingType={tab.listingType} 
+                  listingType={tab.type}
                   ref={(filterItemsRef) => {
                     // เก็บ ref ของ FilterItems ไว้ใน tab object
                     if (filterItemsRef) {
@@ -69,7 +70,7 @@ const HeroContent = () => {
                           tab.filterItemsRef.handleSearch();
                         } else {
                           // ถ้าไม่มี ref หรือไม่มีฟังก์ชัน handleSearch ให้นำทางไปยังหน้า properties/list โดยตรง
-                          router.push(`/properties/list?listingType=${tab.listingType}`);
+                          router.push(`/properties/list?type=${tab.type}`);
                         }
                       }}
                     >

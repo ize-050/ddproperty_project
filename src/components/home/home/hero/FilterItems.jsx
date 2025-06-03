@@ -15,7 +15,7 @@ const catOptions = [
   { value: "HOUSE", label: "House" },
 ];
 
-const FilterItems = forwardRef(({ listingType = "SALE" }, ref) => {
+const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
   const router = useRouter();
   const pathname = usePathname();
   const [price, setPrice] = useState([500000, 20000000]); // ปรับค่าเริ่มต้นเป็น 500,000 - 20,000,000 บาท
@@ -93,7 +93,7 @@ const FilterItems = forwardRef(({ listingType = "SALE" }, ref) => {
     }
     
     // เพิ่ม listingType ตามแท็บที่เลือก (SALE หรือ RENT)
-    queryParams.append('listingType', listingType);
+    queryParams.append('type', listingType);
     
     // นำทางไปยังหน้า properties/list พร้อมกับพารามิเตอร์การค้นหา
     // ใช้ locale จาก URL path ปัจจุบัน

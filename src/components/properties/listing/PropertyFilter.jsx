@@ -81,6 +81,12 @@ const PropertyFilter = ({ filters, onFilterChange }) => {
       ...localFilters,
       listingType: value
     });
+    
+    // ส่งการเปลี่ยนแปลงไปยัง parent component ทันที
+    onFilterChange({
+      ...localFilters,
+      listingType: value
+    });
   };
 
   // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงของ bedrooms

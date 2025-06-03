@@ -216,9 +216,7 @@ export default function MyPropertiesPage() {
               <table className="properties-table">
                 <thead>
                   <tr>
-                    <th className="checkbox-col">
-                      <input type="checkbox" />
-                    </th>
+
                     <th className="property-col">PROPERTY</th>
                     <th className="reference-col">REFERENCE</th>
                     <th className="operation-col">OPERATION</th>
@@ -235,9 +233,6 @@ export default function MyPropertiesPage() {
                   {properties.length > 0 ? (
                     properties.map((property, index) => (
                       <tr key={property.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                        <td className="checkbox-col">
-                          <input type="checkbox" />
-                        </td>
                         <td className="property-col">
                           <div className="property-image-container">
                             {property.images?.[0] ? (

@@ -50,6 +50,10 @@ async function searchProperties(searchParams) {
       queryParams.append('page', '1'); // ค่าเริ่มต้น
     }
 
+    if(searchParams.type){
+      queryParams.append('type', searchParams.type);
+    }
+
     if (searchParams.limit) {
       queryParams.append('limit', searchParams.limit);
     } else {
