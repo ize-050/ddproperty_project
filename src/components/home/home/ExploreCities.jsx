@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
 
 const ExploreCities = () => {
   const cities = [
@@ -33,6 +32,7 @@ const ExploreCities = () => {
       <Swiper
         spaceBetween={30}
         modules={[Navigation, Pagination]}
+        loop={false}
         navigation={{
           nextEl: ".cities_next__active",
           prevEl: ".cities_prev__active",

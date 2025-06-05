@@ -1,102 +1,164 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { 
-  FaSnowflake, 
-  FaUtensils, 
-  FaTshirt, 
-  FaWind, 
-  FaMusic, 
-  FaBoxOpen, 
-  FaBuilding, 
-  FaTint, 
-  FaWifi, 
-  FaTv, 
-  FaWarehouse,
-  FaHome
-} from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { getIconsByPrefix } from '@/services/iconService';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
+import Image from 'next/image';
+import { FaSpinner } from 'react-icons/fa';
 
 const FeaturesSection = () => {
-  const { formData, setFeature } = usePropertyFormStore();
+  const { formData, setFeature, initializeAmenities } = usePropertyFormStore();
+  const [amenityIcons, setAmenityIcons] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { register, setValue } = useFormContext();
-  const [amenityState, setAmenityState] = useState({});
 
-  // Initialize amenities data in React Hook Form and local state
+  console.log('FeaturesSection rendered, formData:', formData);
+  console.log('formData.amenities:', formData.amenities);
+
+  // Fetch amenity icons from API
   useEffect(() => {
-    // Register amenities field with React Hook Form
-    register('amenities');
-    
-    // Initialize local state from Zustand store
-    setAmenityState(formData.features || {});
-    
-    // Set initial value to the entire features object with true/false values
-    setValue('amenities', formData.features || {});
-  }, [register, setValue, formData.features]);
+    const fetchAmenityIcons = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching amenity icons...');
 
-  const handleFeatureClick = (feature) => {
-    // Toggle state
-    const newValue = !(amenityState[feature] || false);
-    
-    // Update local state for immediate UI feedback
-    setAmenityState(prev => ({
-      ...prev,
-      [feature]: newValue
-    }));
-    
-    // Update Zustand store
-    setFeature(feature, newValue);
-    
-    // Update React Hook Form with the complete features object
-    const updatedFeatures = {
-      ...formData.features,
-      [feature]: newValue
+        const response = await getIconsByPrefix('amenity');
+        console.log('Amenity API Response:', response);
+
+        if (response && response.success) {
+          setAmenityIcons(response.data || {});
+
+          console.log('Setting amenity icons in state:', response.data);
+
+          // Initialize all amenity icons in the store
+          initializeAmenities(response.data || {});
+
+        } else {
+          throw new Error('Failed to fetch amenity icons');
+        }
+      } catch (err) {
+        console.error('Error fetching amenity icons:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
-    
-    // Set the entire features object to React Hook Form
-    setValue('amenities', updatedFeatures);
 
-    // Log for debugging
-    console.log(`Clicked ${feature}. New value: ${newValue}`, updatedFeatures);
+    fetchAmenityIcons();
+  }, [initializeAmenities]);
+
+
+  useEffect(() => {
+    console.log('FeaturesSection rendering with amenity state:', formData.amenities);
+  }, [formData.amenities]);
+
+  // Handle amenity selection
+  const handleFeatureClick = (type, key, active) => {
+    console.log(`Toggle ${type} icon: ${key} from ${active} to ${!active}`);
+
+    // Convert to boolean for consistent handling
+    const newValue = !active;
+
+    // Update Zustand store with boolean
+    setFeature(type, key, newValue);
+
+
   };
 
-  const amenities = [
-    { id: 'airConditioner', label: 'Air-conditioner', icon: <FaSnowflake /> },
-    { id: 'bbq', label: 'BBQ', icon: <FaUtensils /> },
-    { id: 'dryerMachine', label: 'Dryer Machine', icon: <FaTshirt /> },
-    { id: 'hairDryer', label: 'Hair Dryer', icon: <FaWind /> },
-    { id: 'karaokeBox', label: 'Karaoke Box', icon: <FaMusic /> },
-    { id: 'kitchenware', label: 'Kitchenware', icon: <FaBoxOpen /> },
-    { id: 'microWave', label: 'Micro Wave', icon: <FaUtensils /> },
-    { id: 'oven', label: 'Oven', icon: <FaUtensils /> },
-    { id: 'privateLift', label: 'Private lift', icon: <FaHome /> },
-    { id: 'refrigerator', label: 'Refrigerator', icon: <FaBoxOpen /> },
-    { id: 'tv', label: 'TV', icon: <FaTv /> },
-    { id: 'wardrobe', label: 'Wardrobe', icon: <FaWarehouse /> },
-    { id: 'washingMachine', label: 'Washing Machine', icon: <FaTshirt /> },
-    { id: 'waterHeater', label: 'Water Heater', icon: <FaTint /> },
-    { id: 'wifi', label: 'Wi-Fi', icon: <FaWifi /> },
-    { id: 'homeSecurity', label: 'Home Security', icon: <FaHome /> },
-  ];
+  // CSS styles for active items
+  const activeStyle = {
+    backgroundColor: '#e3f2fd',
+    borderColor: '#2196f3',
+    color: '#000',
+  };
+
+  if (loading) {
+    return (
+      <section className="form-section">
+        <h2>Amenity</h2>
+        <div className="loading-spinner">
+          <FaSpinner className="spinner-icon" /> Loading amenities...
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="form-section">
+        <h2>Amenity</h2>
+        <div className="error-message">
+          Error loading amenities: {error}
+        </div>
+      </section>
+    );
+  }
+
+  console.log('Rendering features section with data:', {
+    amenityIcons,
+    formDataAmenities: formData.amenities
+  });
+
+  // เช็คว่า amenityIcons มีข้อมูลหรือไม่
+  const amenityArray = amenityIcons?.amenity || [];
+
+
+  // Debug: เพิ่มการแสดงข้อมูล state ทั้งหมดเมื่อ render
+
 
   return (
     <section className="form-section">
       <h2>Amenity</h2>
       <div className="amenities-grid">
-        {amenities.map((amenity) => (
-          <div 
-            key={amenity.id}
-            className={`amenity-item ${amenityState[amenity.id] ? 'active' : ''}`}
-            onClick={() => handleFeatureClick(amenity.id)}
-          >
-            <span className="amenity-icon">{amenity.icon}</span>
-            <span className="amenity-label">{amenity.label}</span>
-          </div>
-        ))}
+        {amenityArray.length > 0 ? (
+          amenityArray.map((icon) => {
+            // สร้าง field name สำหรับ React Hook Form
+            const fieldName = `amenities.${icon.key}`;
+
+            // ดึงค่าจาก formData โดยตรง ตรวจสอบให้เป็น boolean
+            const amenityValue = formData.amenities?.[icon.key];
+            const isActive = Boolean(amenityValue?.active);
+
+
+            return (
+              <div
+                key={icon.id}
+                className={`amenity-item`}
+                style={isActive ? activeStyle : {}}
+                onClick={() => handleFeatureClick('amenity', icon.key, isActive)}
+              >
+                {/* เพิ่ม hidden input เพื่อเก็บ iconId */}
+                <input
+                  type="hidden"
+                  {...register(`amenities.${icon.key}.iconId`)}
+                  value={icon.id}
+                />
+                {/* Hidden input to ensure all amenities are submitted */}
+                <input
+                  type="hidden"
+                  {...register(`amenities.${icon.key}.active`)}
+                  value={isActive.toString()}
+                />
+                <span className="amenity-icon">
+                  {icon.iconPath && (
+                    <Image
+                      src={icon.iconPath}
+                      alt={icon.name}
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                </span>
+                <span className="amenity-label">{icon.name}</span>
+              </div>
+            );
+          })
+        ) : (
+          <div className="no-data">ไม่พบข้อมูล Amenities</div>
+        )}
       </div>
-      {/* Hidden input to hold the amenities data for form submission */}
-      <input type="hidden" {...register('amenities')} />
     </section>
   );
 };

@@ -44,11 +44,11 @@ model Property {
   featured        Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  
+
   // Multilingual content
   translatedTitles       String? @db.Text // JSON object with locale keys
   translatedDescriptions String? @db.Text // JSON object with locale keys
-  
+
   // Relations
   userId          String
   user            User     @relation(fields: [userId], references: [id])
@@ -62,11 +62,11 @@ model Blog {
   image           String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  
+
   // Multilingual content
   translated_titles    String? @db.Text // JSON object with locale keys
   translated_contents  String? @db.Text // JSON object with locale keys
-  
+
   // Relations
   userId          String
   user            User     @relation(fields: [userId], references: [id])

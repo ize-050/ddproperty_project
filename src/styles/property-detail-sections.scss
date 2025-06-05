@@ -171,6 +171,69 @@ $border-color: #dee2e6;
   }
 }
 
+// Floor Plan Section Styles
+.property-floor-plans {
+  position: relative;
+  margin-bottom: 30px;
+  width: 100%;
+  
+  .floor-plan-slider {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 20px;
+    
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  
+  .floor-plan-slide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .floor-plan-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+  }
+  
+  .floor-plan-image {
+    width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #0073e1;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #0073e1;
+  }
+
+  @media (max-width: 768px) {
+    .floor-plan-slider {
+      height: 350px;
+    }
+    .floor-plan-image {
+      max-height: 330px;
+    }
+  }
+}
+
 // Responsive Styles
 @media (max-width: 768px) {
   .property-section {

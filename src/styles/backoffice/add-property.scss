@@ -8,6 +8,11 @@
   background-color: #fff8f8 !important;
 }
 
+.span-items {
+  font-weight: bold !important;
+  color: #000 !important;
+}
+
 .invalid-feedback {
   display: block !important;
   width: 100%;
@@ -314,6 +319,8 @@ label.required:after {
       padding: 0.75rem 1rem;
       font-size: 0.85rem;
       color: $text-secondary;
+      font-weight: 900;
+
       cursor: pointer;
       transition: all 0.2s;
       
@@ -661,6 +668,7 @@ label.required:after {
       }
     }
   }
+
   
   .amenities-grid {
     display: grid;

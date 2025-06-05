@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-
-import { FiX } from "react-icons/fi";
-
+// import { FiX } from "react-icons/fi";
 import Slider, { Range } from "rc-slider";
 import Select from "react-select";
-import { customStyles } from "@/components/common/SelectWithInstanceId";
 
 //store
 import useZoneStore from '@/store/useZoneStore';
@@ -145,7 +142,6 @@ export default function AdvancedFilterContent({ onClose ,type }) {
             defaultValue={PROPERTY_TYPES[0]}
             name="colors"
             options={PROPERTY_TYPES}
-            styles={customStyles}
             onChange={(option) => setPropertyType(option.value)}
             className="select-custom"
             classNamePrefix="select"
@@ -158,7 +154,6 @@ export default function AdvancedFilterContent({ onClose ,type }) {
             defaultValue={dataZone[1]}
             name="colors"
             options={dataZone}
-            styles={customStyles}
             onChange={(option) => setZoneId(option.value)}
             className="select-custom"
             classNamePrefix="select"

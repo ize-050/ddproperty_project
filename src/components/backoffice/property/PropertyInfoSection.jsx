@@ -119,21 +119,6 @@ const PropertyInfoSection = () => {
       
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="propertyTitle">Property Title*</label>
-          <input
-            type="text"
-            id="propertyTitle"
-            className="form-control"
-            style={errors.propertyTitle ? {border: '1px solid #dc3545', boxShadow: '0 0 0 0.2rem rgba(220, 53, 69, 0.25)'} : {}}
-            defaultValue={formData.propertyTitle}
-            placeholder="e.g. Luxury Condo in City Center"
-            {...register('propertyTitle', { required: 'Property title is required' })}
-          />
-          {errors.propertyTitle && (
-            <div className="invalid-feedback">{errors.propertyTitle.message}</div>
-          )}
-        </div>
-        <div className="form-group">
           <label htmlFor="referenceId">Reference ID</label>
           <input
             type="text"

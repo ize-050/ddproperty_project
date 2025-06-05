@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
 
+
 // ใช้ dynamic import เพื่อแก้ไขปัญหา hydration error
 const SidebarStickyBar = dynamic(() => import("@/components/home/home/SidebarStickyBar"), { ssr: false });
 const Hero = dynamic(() => import("@/components/home/home/hero"), { ssr: false });
@@ -18,7 +19,6 @@ const Explore = dynamic(() => import("@/components/common/Explore"), { ssr: fals
 const ExploreCities = dynamic(() => import("@/components/home/home/ExploreCities"), { ssr: false });
 const Service = dynamic(() => import("@/components/home/home/Service"), { ssr: false });
 const FeaturedHomes = dynamic(() => import("@/components/home/home/FeaturedHomes"), { ssr: false });
-const FeaturedListings = dynamic(() => import("@/components/home/home/FeatuerdListings"), { ssr: false });
 const PartnerDark = dynamic(() => import("@/components/common/PartnerDark"), { ssr: false });
 const RandomProperties = dynamic(() => import("@/components/home/home/RandomProperties"), { ssr: false });
 const ExploreLocations = dynamic(() => import("@/components/ExploreLocations/ExploreLocations"), { ssr: false });
@@ -107,7 +107,6 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
               <div className="feature-listing-slider">
-                {/* <FeaturedListings /> */}
                 <RandomProperties randomProperties={randomProperties} />
               </div>
             </div>

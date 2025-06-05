@@ -2,9 +2,9 @@
 
 import listings from "@/data/listings";
 import Link from "next/link";
-import { Navigation } from "swiper";
+import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
+
 import { useEffect, useState } from "react";
 
 const FeaturedListings = () => {

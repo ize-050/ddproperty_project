@@ -2,9 +2,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
 import { useTranslations, useLocale } from 'next-intl';
 import { convertAndFormatPrice, convertAndFormatPriceSync, localeToCurrencySymbol } from '@/utils/currencyUtils';
 
@@ -14,7 +13,7 @@ const RandomProperties = ({ randomProperties }) => {
   const t = useTranslations('home');
   const locale = useLocale();
   const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formattedPrices, setFormattedPrices] = useState({});
   
@@ -53,10 +52,12 @@ const RandomProperties = ({ randomProperties }) => {
   // ใช้ข้อมูลจาก props ที่ได้จาก SSR
   useEffect(() => {
     try {
-      if (randomProperties && randomProperties.length > 0) {
+      if (randomProperties && Array.isArray(randomProperties) && randomProperties.length > 0) {
         console.log('Random Properties:', randomProperties);
         setProperties(randomProperties);
-        setLoading(false);
+      } else {
+        console.log('No random properties data or invalid format:', randomProperties);
+        setProperties([]);
       }
     } catch (err) {
       console.error('Error setting properties from props:', err);
@@ -65,6 +66,8 @@ const RandomProperties = ({ randomProperties }) => {
       setLoading(false);
     }
   }, [randomProperties]);
+
+
 
   // แสดง loading state
   if (loading) {
@@ -110,6 +113,7 @@ const RandomProperties = ({ randomProperties }) => {
 
   return (
     <>
+      {properties && properties.length > 0 && (
       <Swiper
         className="overflow-visible"
         spaceBetween={30}
@@ -119,6 +123,7 @@ const RandomProperties = ({ randomProperties }) => {
           prevEl: ".featured-prev__active",
         }}
         slidesPerView={1}
+        loop={false}
         breakpoints={{
           300: {
             slidesPerView: 1,
@@ -202,7 +207,7 @@ const RandomProperties = ({ randomProperties }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-
+        )}
       <div className="row justify-content-center mt20">
         <div className="col-auto">
           <button className="featured-prev__active swiper_button">

@@ -3,7 +3,7 @@
 import React, { useState , useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { convertAndFormatPriceSync } from '@/utils/currencyUtils';
+import { convertAndFormatPrice } from '@/utils/currencyUtils';
 
 // Import components
 import PropertyBreadcrumb from './components/PropertyBreadcrumb';
@@ -11,6 +11,7 @@ import PropertyHeader from './components/PropertyHeader';
 import PropertyGallery from './components/PropertyGallery';
 import PropertyContent from './components/PropertyContent';
 import PropertySidebar from './components/PropertySidebar';
+import PropertyFloorPlan from './components/PropertyFloorPlan';
 import FooterBanner from './components/FooterBanner';
 
 // Import styles
@@ -187,7 +188,7 @@ const PropertyDetailPage = ({ property }) => {
   // ฟอร์แมตราคา
   const formatPrice = (price) => {
     // ใช้ utility function ที่สร้างไว้สำหรับการแปลงราคาตามภาษา
-    return convertAndFormatPriceSync(price, locale, false); // ไม่แสดงสัญลักษณ์สกุลเงินเพราะจะใส่แยก
+    return convertAndFormatPrice(price, locale, false); // ไม่แสดงสัญลักษณ์สกุลเงินเพราะจะใส่แยก
   };
 
   const primaryListing = property?.listings || null;
@@ -226,6 +227,12 @@ const PropertyDetailPage = ({ property }) => {
                 getPropertyTypeText={getPropertyTypeText} 
                 getFurnishingText={getFurnishingText} 
               />
+              {property.floorPlans.length > 0 && (
+                  <PropertyFloorPlan
+                      property={property}
+                  />
+              )}
+
             </div>
             
             {/* Right Sidebar */}

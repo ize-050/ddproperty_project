@@ -31,6 +31,9 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 import '@/styles/backoffice/add-property.scss';
 import '@/styles/backoffice/form-validation.css';
 
+//lib
+import  Swal from 'sweetalert2';
+
 const AddNewProperty = () => {
   const router = useRouter();
   const t = useTranslations('AddProperty');
@@ -38,6 +41,7 @@ const AddNewProperty = () => {
   const [validationSummary, setValidationSummary] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoadingNextCode, setIsLoadingNextCode] = useState(true);
+  const [saving, setSaving] = useState(false);
   
   // Initialize React Hook Form with Yup schema validation
   const methods = useForm({
@@ -59,6 +63,10 @@ const AddNewProperty = () => {
     });
     return () => subscription.unsubscribe();
   }, [watch, formData, setFormData]);
+
+
+
+
 
   // Update validation summary whenever errors change
   useEffect(() => {
@@ -127,13 +135,27 @@ const AddNewProperty = () => {
     try {
       setValidationSummary([]);
       setFormSubmitted(false);
+      setSaving(true);
 
-      
-      // แสดงข้อความกำลังบันทึกข้อมูล
+      // แสดงข้ความกำลังบันทึกข้อมูล
       const loadingToast = toast.loading(t('savingData'));
       
       // สร้าง FormData object สำหรับส่งข้อมูลและรูปภาพ
       const formDataObj = new FormData();
+
+      // ดึงข้อมูลจาก store
+
+      
+
+
+      // ลบข้อมูล amenities ฯลฯ ออกจาก data เพื่อไม่ให้ซ้ำซ้อน
+      delete data.amenities;
+      delete data.highlights;
+      delete data.nearby;
+      delete data.views;
+      delete data.facilities;
+
+      delete data.socialMedia;
       
       // เพิ่มข้อมูลพื้นฐานลงใน FormData
       for (const [key, value] of Object.entries(data)) {
@@ -144,7 +166,16 @@ const AddNewProperty = () => {
           formDataObj.append(key, value);
         }
       }
-      
+
+      formDataObj.append('facility', JSON.stringify(formData.facility || []));
+      formDataObj.append('amenities', JSON.stringify(formData.amenities || []));
+      formDataObj.append('highlights', JSON.stringify(formData.highlights || []));
+      formDataObj.append('nearby', JSON.stringify(formData.nearby || []));
+      formDataObj.append('views', JSON.stringify(formData.views || []));
+      formDataObj.append('facilities', JSON.stringify(formData.facilities || []));
+      formDataObj.append('labels', JSON.stringify(formData.propertyLabels || []));
+      formDataObj.append('socialMedia', JSON.stringify(formData.socialMedia || []));
+
       // แปลงชื่อฟิลด์ให้ตรงกับ backend
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
@@ -214,86 +245,29 @@ const AddNewProperty = () => {
           'x-api-key': process.env.NEXT_PUBLIC_API_KEY
         }
       });
-      
-      // ปิด loading toast
+
+      // ปิด toast
       toast.dismiss(loadingToast);
-      
-      // เมื่อใช้ axios ไม่ต้องตรวจสอบ response.ok และไม่ต้องเรียก response.json()
-      // axios จะจัดการการแปลงข้อมูล JSON ให้โดยอัตโนมัติ
-      const result = response.data;
-      
-      // แสดงข้อความสำเร็จ
+
       toast.success(t('dataSavedSuccessfully'));
       
       // รีเซ็ตฟอร์ม
-      // resetForm();
-      
-      // Redirect to my properties page after submission
+      reset();
+      setFormData({});
+
       setTimeout(() => {
         router.push('/backoffice/my-properties');
       }, 1500);
       
     } catch (error) {
-      console.error('Error submitting form:', error);
-      
-      // ปิด loading toast ถ้ายังแสดงอยู่
-      toast.dismiss(loadingToast);
-      
-      // จัดการ error จาก axios ซึ่งมีรูปแบบต่างจาก fetch
-      if (error.response) {
-        // ได้รับการตอบสนองจากเซิร์ฟเวอร์แต่มีข้อผิดพลาด (status code ไม่อยู่ในช่วง 2xx)
-        console.log('Response data:', error.response.data);
-        console.log('Status code:', error.response.status);
-        
-        // ตรวจสอบว่ามีข้อมูล validation errors หรือไม่
-        if (error.response.data && error.response.data.errors) {
-          // มี validation errors จาก backend
-          const validationErrors = error.response.data.errors;
-          
-          // แสดงข้อความ error ทั้งหมด
-          let errorMessage = t('invalidData') + ':\n';
-          
-          // ถ้าเป็น array ของ errors
-          if (Array.isArray(validationErrors)) {
-            validationErrors.forEach((err, index) => {
-              errorMessage += `${index + 1}. ${err.msg || err.message}\n`;
-            });
-          } else {
-            // ถ้าเป็น object ของ errors แยกตามฟิลด์
-            Object.keys(validationErrors).forEach(field => {
-              const fieldError = validationErrors[field];
-              if (typeof fieldError === 'string') {
-                errorMessage += `- ${field}: ${fieldError}\n`;
-              } else if (Array.isArray(fieldError)) {
-                fieldError.forEach(err => {
-                  errorMessage += `- ${field}: ${err.msg || err.message || err}\n`;
-                });
-              }
-            });
-          }
-          
-          toast.error(errorMessage);
-          
-          // แสดงข้อมูล validation errors ใน console เพื่อ debug
-          console.log('Validation errors:', validationErrors);
-        } else if (error.response.status === 401) {
-          toast.error(t('notAuthorized'));
-        } else {
-          // ข้อผิดพลาดอื่นๆ จาก API
-          toast.error(error.response.data.message || t('errorSavingData'));
-        }
-      } else if (error.request) {
-        // ส่งคำขอไปแล้วแต่ไม่ได้รับการตอบสนอง
-        console.log('Request was made but no response was received:', error.request);
-        toast.error(t('cannotConnectToAPI'));
-      } else {
-        // ข้อผิดพลาดอื่นๆ
-        console.log('Error:', error.message);
-        toast.error(error.message || t('errorSavingData'));
-      }
-      
-      // เพิ่มข้อมูลเพื่อ debug
-      console.log('API URL:', process.env.NEXT_PUBLIC_API_URL); 
+      Swal.fire({
+        icon: 'error',
+        title: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+        text: error.response?.data?.message || error.response?.data?.error || error.message || t('errorSavingData'),
+        footer: error.response?.data?.errors ? `<pre>${JSON.stringify(error.response.data.errors, null, 2)}</pre>` : ''
+      });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -404,6 +378,7 @@ const AddNewProperty = () => {
             <button 
               type="button" 
               className="btn btn-primary"
+              disabled={saving}
               onClick={() => {
                 // Set form as submitted to show all validation errors
                 setFormSubmitted(true);
@@ -466,7 +441,12 @@ const AddNewProperty = () => {
                 });
               }}
             >
-              {t('save')}
+              {saving ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  {t('saving')}
+                </>
+              ) : t('saveProperty')}
             </button>
           </div>
         </form>

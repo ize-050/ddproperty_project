@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper.min.css";
+
 
 const PartnerDark = () => {
   const partnerImages = [

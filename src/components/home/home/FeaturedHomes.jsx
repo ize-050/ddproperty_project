@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
+
 
 const FeaturedHomes = () => {
   const featuredHomesData = [
@@ -50,6 +50,7 @@ const FeaturedHomes = () => {
       <Swiper
         spaceBetween={30}
         modules={[Navigation, Pagination]}
+        loop={false}
         navigation={{
           nextEl: ".properties_homes-next__active",
           prevEl: ".properties_homes-prev__active",

@@ -130,7 +130,7 @@ export const propertyFormSchemaBasic = yup.object().shape({
   communityFees: yup.string(),
   
   // Pricing
-  price: yup.string().required('Price is required'),
+  price: yup.string(),
   priceUnit: yup.string(),
   promotionalPrice: yup.string(),
   rentalPrice: yup.string(),

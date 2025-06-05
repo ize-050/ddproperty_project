@@ -13,7 +13,7 @@ const localeToCurrency = {
 // Default exchange rates (fallback if API fails)
 const defaultRates = {
   'THB': 1,
-  'USD': 0.028,
+  'USD': 0.030640,
   'CNY': 0.20,
   'RUB': 2.50
 };

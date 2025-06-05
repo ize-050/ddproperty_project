@@ -14,14 +14,20 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-3">Highlights</h3>
         <div className="property-highlights">
           <ul className="row g-3">
-            {property?.highlights?.map((item, index) => (
-                <div className="col-6 col-md-4" key={`nearby-${index}`}>
+            {property?.highlights?.length > 0 ? (
+              property.highlights.map((item, index) => (
+                <div className="col-6 col-md-4" key={`highlight-${index}`}>
                   <div className="nearby-item">
-                    <i className={`fas fa-${item.path || 'map-marker-alt'} me-2`}></i>
+
                     <span>{item.highlightType}</span>
                   </div>
                 </div>
-            ))}
+              ))
+            ) : (
+              <div className="col-12">
+                <p>No highlights available for this property.</p>
+              </div>
+            )}
           </ul>
         </div>
       </div>
@@ -106,8 +112,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
             { property.nearbyPlaces.map((item, index) => (
                 <div className="col-6 col-md-4" key={`nearby-${index}`}>
                   <div className="nearby-item">
-                    <i className={`fas fa-${item.icon || 'map-marker-alt'} me-2`}></i>
-                    <span>{item.name}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
+                    <span className={"span-items"} style={{marginLeft: '10px'}}>{item.Icon.name}</span>
                   </div>
                 </div>
               ))}
@@ -120,23 +126,18 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-4">View</h3>
         <div className="view-items">
           <div className="row g-3">
-            {property.views ? (
-              // ถ้ามีข้อมูล views จาก API
+            {property?.views?.length > 0 ? (
               property.views.map((item, index) => (
                 <div className="col-6 col-md-4" key={`view-${index}`}>
                   <div className="view-item">
-                    <i className={`fas fa-${item.icon || 'eye'} me-2`}></i>
-                    <span>{item.viewType}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
+                    <span className={"span-items"} style={{marginLeft: '10px'}}>{item.Icon.name}</span>
                   </div>
                 </div>
               ))
             ) : (
-              // ถ้าไม่มีข้อมูลจาก API ให้แสดงข้อมูลจำลอง
-              <div className="col-6 col-md-4">
-                <div className="view-item">
-                  <i className="fas fa-tree me-2"></i>
-                  <span>Garden View</span>
-                </div>
+              <div className="col-12">
+                <p>No views specified for this property.</p>
               </div>
             )}
           </div>
@@ -148,15 +149,20 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-4">Facilities</h3>
         <div className="facility-items">
           <div className="row g-3">
-            {
+            {property.facilities && property.facilities.length > 0 ? (
               property.facilities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`facility-${index}`}>
                   <div className="facility-item">
-                    <i className={`fas fa-${item.icon || 'building'} me-2`}></i>
-                    <span>{item.facilityType}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
+                    <span className={"span-items"} style={{marginLeft: '10px'}}>{item.Icon.name}</span>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="col-12">
+                <p>No facilities available for this property.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -166,64 +172,25 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         <h3 className="section-title mb-4">Amenity</h3>
         <div className="amenity-items">
           <div className="row g-3">
-            {
+            {property.amenities && property.amenities.length > 0 ? (
               property.amenities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`amenity-${index}`}>
                   <div className="amenity-item">
-                    <i className={`fas fa-${item.icon || 'check-circle'} me-2`}></i>
-                    <span>{item.amenityType}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
+                    <span className="span-items" style={{marginLeft: '10px'}}>{item.Icon.name}</span>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="col-12">
+                <p>No amenities available for this property.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="property-section mb-5">
-        <h3 className="section-title mb-3">Features</h3>
-        <div className="property-features">
-          <div className="row">
-            <div className="col-md-4 col-6 mb-3">
-              <div className="feature-item">
-                <i className="fas fa-check-circle text-success me-2"></i>
-                <span>Swimming Pool</span>
-              </div>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <div className="feature-item">
-                <i className="fas fa-check-circle text-success me-2"></i>
-                <span>Garden</span>
-              </div>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <div className="feature-item">
-                <i className="fas fa-check-circle text-success me-2"></i>
-                <span>Air Conditioning</span>
-              </div>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <div className="feature-item">
-                <i className="fas fa-check-circle text-success me-2"></i>
-                <span>Parking</span>
-              </div>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <div className="feature-item">
-                <i className="fas fa-check-circle text-success me-2"></i>
-                <span>Security System</span>
-              </div>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <div className="feature-item">
-                <i className="fas fa-check-circle text-success me-2"></i>
-                <span>Fitness Center</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+
       {/* Map Section */}
     
     </div>

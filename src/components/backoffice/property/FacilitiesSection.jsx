@@ -1,173 +1,159 @@
 'use client';
 
-import React from 'react';
-import { 
-  FaBasketballBall, 
-  FaDumbbell, 
-  FaGolfBall, 
-  FaRunning,
-  FaTableTennis, 
-  FaLeaf, 
-  FaBook, 
-  FaBuilding,
-  FaHome, 
-  FaLaptop, 
-  FaChild, 
-  FaHotTub, 
-  FaSpa, 
-  FaSwimmingPool,
-  FaGlassMartini, 
-  FaUsers, 
-  FaGamepad, 
-  FaMicrophone, 
-  FaFilm,
-  FaChess, 
-  FaUtensils, 
-  FaGlassWhiskey, 
-  FaShieldAlt, 
-  FaVideo,
-  FaBolt, 
-  FaArrowUp
-} from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { getIconsByPrefix } from '@/services/iconService';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import Image from 'next/image';
+import { FaSpinner } from 'react-icons/fa';
+import { useFormContext } from 'react-hook-form';
 
 const FacilitiesSection = () => {
-  const { formData, setFacility } = usePropertyFormStore();
+  const { formData, setFacility, initializeFacilities } = usePropertyFormStore();
+  const [facilityIcons, setFacilityIcons] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { register, setValue } = useFormContext();
 
-  const handleFacilityClick = (category, facility) => {
-    setFacility(category, facility, !formData.facilities?.[category]?.[facility]);
+  // Fetch facility icons from API
+  useEffect(() => {
+    const fetchFacilityIcons = async () => {
+      try {
+        setLoading(true);
+        const response = await getIconsByPrefix('facility');
+        if (response.success) {
+          setFacilityIcons(response.data);
+          
+          // Initialize all facility icons in the store
+          initializeFacilities(response.data);
+
+        } else {
+          throw new Error('Failed to fetch facility icons');
+        }
+      } catch (err) {
+        console.error('Error fetching facility icons:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFacilityIcons();
+  }, [initializeFacilities]);
+
+  // Handle facility selection
+  const handleFacilityClick = (category, key, active) => {
+    console.log(`Toggle ${category} icon: ${key} from ${active} to ${!active}`);
+    // Convert to boolean for consistent handling
+    const newValue = !active;
+    
+    // Update Zustand store with boolean
+    setFacility(category, key, newValue);
+
   };
 
-  const facilities = {
-    fitnessAndSports: [
-      { id: 'basketballCourt', label: 'Basket ball Court', icon: <FaBasketballBall /> },
-      { id: 'fitness', label: 'Fitness', icon: <FaDumbbell /> },
-      { id: 'golfSimulator', label: 'Golf simulator', icon: <FaGolfBall /> },
-      { id: 'joggingTrack', label: 'Jogging Track', icon: <FaRunning /> },
-      { id: 'squashCourt', label: 'Squash Court', icon: <FaTableTennis /> },
-      { id: 'tennisCourt', label: 'Tennis Court', icon: <FaTableTennis /> },
-      { id: 'yogaRoom', label: 'Yoga room', icon: <FaTableTennis /> },
-    ],
-    commonAreas: [
-      { id: 'greenArea', label: 'Green Area', icon: <FaLeaf /> },
-      { id: 'library', label: 'Library', icon: <FaBook /> },
-      { id: 'lobby', label: 'Lobby', icon: <FaBuilding /> },
-      { id: 'meetingRoom', label: 'Meeting Room', icon: <FaUsers /> },
-      { id: 'skyGarden', label: 'Sky Garden', icon: <FaLeaf /> },
-      { id: 'workingSpace', label: 'Working-Space', icon: <FaLaptop /> },
-    ],
-    poolsAndRelaxation: [
-      { id: 'kidsPool', label: 'Kids pool', icon: <FaChild /> },
-      { id: 'onsen', label: 'Onsen', icon: <FaHotTub /> },
-      { id: 'sauna', label: 'Sauna', icon: <FaHotTub /> },
-      { id: 'skyPool', label: 'Sky pool', icon: <FaSwimmingPool /> },
-      { id: 'spa', label: 'Spa', icon: <FaSpa /> },
-      { id: 'salon', label: 'Salon', icon: <FaSpa /> },
-      { id: 'swimmingPool', label: 'Swimming Pool', icon: <FaSwimmingPool /> },
-    ],
-    diningAndEntertainment: [
-      { id: 'bar', label: 'Bar', icon: <FaGlassMartini /> },
-      { id: 'clubhouse', label: 'Clubhouse', icon: <FaUsers /> },
-      { id: 'gameroom', label: 'Gameroom', icon: <FaGamepad /> },
-      { id: 'karaokeRoom', label: 'Karaoke Room', icon: <FaMicrophone /> },
-      { id: 'miniTheater', label: 'Mini Theater', icon: <FaFilm /> },
-      { id: 'poolTable', label: 'Pool Table', icon: <FaChess /> },
-      { id: 'restaurant', label: 'Restaurant', icon: <FaUtensils /> },
-      { id: 'skyBar', label: 'Sky Bar', icon: <FaGlassWhiskey /> },
-    ],
-    other: [
-      { id: 'security24hr', label: '24 hr Security', icon: <FaShieldAlt /> },
-      { id: 'cctv', label: 'CCTV', icon: <FaVideo /> },
-      { id: 'conciergeServices', label: 'Concierge Services', icon: <FaUsers /> },
-      { id: 'evCharger', label: 'EV-Charger', icon: <FaBolt /> },
-      { id: 'highSpeedLift', label: 'High Speed Lift', icon: <FaArrowUp /> },
-      { id: 'kidsClub', label: 'Kids Club', icon: <FaChild /> },
-    ],
+
+
+  // Define categories order and their display names
+  const categoryOrder = ['common-area', 'dining', 'fitness', 'pool', 'other'];
+  const categoryDisplayNames = {
+    'common-area': 'Common Areas',
+    'dining': 'Dining, Entertainment & Leisure',
+    'fitness': 'Fitness & Sports',
+    'pool': 'Pools, Spa & Relaxation',
+    'other': 'Other',
   };
+
+  // CSS styles for active items
+  const activeStyle = {
+    backgroundColor: '#e3f2fd',
+    borderColor: '#2196f3',
+    color: '#000',
+  };
+
+  // Render facilities for a specific category
+  const renderFacilitiesByCategory = (category) => {
+    if (!facilityIcons || !facilityIcons[category]) {
+      return <p>No facilities available for {categoryDisplayNames[category]}</p>;
+    }
+
+    return (
+      <div className="amenities-grid">
+        {facilityIcons[category].map((icon) => {
+          // สร้าง field name สำหรับ React Hook Form - ใช้รูปแบบ facilities.category.key
+          const fieldName = `facilities.${category}.${icon.key}`;
+          
+          // ใช้ Boolean เพื่อแน่ใจว่าเป็นค่า boolean จาก nested structure
+          const isActive = Boolean(formData.facilities?.[category]?.[icon.key]?.active);
+          
+          return (
+            <div
+              key={icon.key}
+              className={`amenity-item ${isActive ? 'active' : ''}`}
+              onClick={() => handleFacilityClick(category, icon.key, isActive)}
+            >
+              {/* Hidden input to ensure all facilities are submitted */}
+              <input
+                type="hidden"
+                {...register(fieldName)}
+                value={isActive.toString()}
+              />
+              <span className="amenity-icon">
+                {icon.iconPath && (
+                  <Image
+                    src={icon.iconPath}
+                    alt={icon.name}
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </span>
+              <span className="amenity-label">{icon.name}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  if (loading) {
+    return (
+      <section className="form-section">
+        <h2>Facilities</h2>
+        <div className="loading-spinner">
+          <FaSpinner className="spinner-icon" /> Loading facilities...
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="form-section">
+        <h2>Facilities</h2>
+        <div className="error-message">
+          Error loading facilities: {error}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="form-section">
       <h2>Facilities</h2>
-      
-      <div className="facility-category">
-        <h3>Fitness & Sports</h3>
-        <div className="selection-grid">
-          {facilities.fitnessAndSports.map((item) => (
-            <div 
-              key={item.id}
-              className={`selection-item with-icon ${formData.facilities?.fitnessAndSports?.[item.id] ? 'active' : ''}`}
-              onClick={() => handleFacilityClick('fitnessAndSports', item.id)}
-            >
-              <span className="selection-icon">{item.icon}</span>
-              <span className="selection-label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <div className="facility-category">
-        <h3>Common Areas</h3>
-        <div className="selection-grid">
-          {facilities.commonAreas.map((item) => (
-            <div 
-              key={item.id}
-              className={`selection-item with-icon ${formData.facilities?.commonAreas?.[item.id] ? 'active' : ''}`}
-              onClick={() => handleFacilityClick('commonAreas', item.id)}
-            >
-              <span className="selection-icon">{item.icon}</span>
-              <span className="selection-label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <div className="facility-category">
-        <h3>Pools, Spa & Relaxation</h3>
-        <div className="selection-grid">
-          {facilities.poolsAndRelaxation.map((item) => (
-            <div 
-              key={item.id}
-              className={`selection-item with-icon ${formData.facilities?.poolsAndRelaxation?.[item.id] ? 'active' : ''}`}
-              onClick={() => handleFacilityClick('poolsAndRelaxation', item.id)}
-            >
-              <span className="selection-icon">{item.icon}</span>
-              <span className="selection-label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <div className="facility-category">
-        <h3>Dining, Entertainment & Leisure</h3>
-        <div className="selection-grid">
-          {facilities.diningAndEntertainment.map((item) => (
-            <div 
-              key={item.id}
-              className={`selection-item with-icon ${formData.facilities?.diningAndEntertainment?.[item.id] ? 'active' : ''}`}
-              onClick={() => handleFacilityClick('diningAndEntertainment', item.id)}
-            >
-              <span className="selection-icon">{item.icon}</span>
-              <span className="selection-label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <div className="facility-category">
-        <h3>Other</h3>
-        <div className="selection-grid">
-          {facilities.other.map((item) => (
-            <div 
-              key={item.id}
-              className={`selection-item with-icon ${formData.facilities?.other?.[item.id] ? 'active' : ''}`}
-              onClick={() => handleFacilityClick('other', item.id)}
-            >
-              <span className="selection-icon">{item.icon}</span>
-              <span className="selection-label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+
+      {categoryOrder.map(category => {
+        // Skip if this category doesn't have any facilities
+        if (!facilityIcons[category] || facilityIcons[category].length === 0) {
+          return null;
+        }
+
+        return (
+          <div className="facility-category" key={category}>
+            <h3>{categoryDisplayNames[category]}</h3>
+            {renderFacilitiesByCategory(category)}
+          </div>
+        );
+      })}
     </section>
   );
 };

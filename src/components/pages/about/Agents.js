@@ -2,7 +2,7 @@
 import agents from "@/data/agents";
 import Image from "next/image";
 import Link from "next/link";
-import SwiperCore, { Navigation, Pagination } from "swiper";
+import SwiperCore, { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 

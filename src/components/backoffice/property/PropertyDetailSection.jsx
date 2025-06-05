@@ -79,7 +79,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="landSize">Land Size*</label>
           <div className="input-with-unit">
             <input
-              type="text"
+              type="number"
               id="landSize"
               {...register('landSize', { required: 'This field is required' })}
             />
@@ -110,7 +110,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="usableArea">Usable Area*</label>
           <div className="input-with-unit">
             <input
-              type="text"
+              type="number"
               id="usableArea"
               {...register('usableArea', { required: 'This field is required' })}
             />
