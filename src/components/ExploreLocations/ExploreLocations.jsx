@@ -5,13 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import zoneService from '@/services/zoneService';
 import styles from './ExploreLocations.module.css';
-import { useTranslations } from 'next-intl';
+import { useTranslations,useLocale } from 'next-intl';
 
 const ExploreLocations = () => {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const t = useTranslations('ExploreLocations');
+  const t = useTranslations('home');
+  const locale = useLocale();
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -61,9 +62,10 @@ const ExploreLocations = () => {
           >
             <div className={styles.imageContainer}>
               {location.imagePath ? (
+
                 <Image
                   src={location.imagePath}
-                  alt={location.name}
+                  alt={location.name_th}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className={styles.image}
@@ -74,9 +76,9 @@ const ExploreLocations = () => {
               )}
             </div>
             <div className={styles.locationInfo}>
-              <h3 className={styles.locationName}>{location.name}</h3>
+              <h3 className={styles.locationName}>{location[`name_${locale}`]}</h3>
               <p className={styles.propertyCount}>
-                {location.propertyCount} {t('properties')}
+                {location.propertyCount}  {t('ExploreLocations.properties')}
               </p>
             </div>
           </Link>

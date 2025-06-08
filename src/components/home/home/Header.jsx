@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 
 // นำเข้าไฟล์ SCSS
@@ -19,6 +20,7 @@ const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitc
 
 const Header = () => {
   // ใช้ usePathname hook เพื่อติดตามการเปลี่ยนแปลงของ path
+  const t = useTranslations('header');
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [navbar, setNavbar] = useState(false);
@@ -61,12 +63,12 @@ const Header = () => {
 
   // เมนูหลักตามที่เห็นในรูปภาพ
   const menuItems = [
-    { id: "home", label: "Home", href: "/" },
-    { id: "forSale", label: "For Sale", href: "/properties/list?type=sale" },
-    { id: "forRent", label: "For Rent", href: "/properties/list?type=rent" },
-    { id: "blog", label: "Blog", href: "/blog" },
-    { id: "about", label: "About", href: "/about" },
-    { id: "contact", label: "Contact", href: "/contact" },
+    { id: "home", label: t("home"), href: "/" },
+    { id: "forSale", label: t('buy'), href: "/properties/list?type=sale" },
+    { id: "forRent", label: t('rent'), href: "/properties/list?type=rent" },
+    { id: "blog", label: t('blog'), href: "/blog" },
+    { id: "about", label: t('about'), href: "/about" },
+    { id: "contact", label: t('contact'), href: "/contact" },
   ];
 
   return (

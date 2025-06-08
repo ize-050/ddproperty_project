@@ -5,17 +5,11 @@ import { FaYoutube, FaTiktok } from 'react-icons/fa';
 import usePropertyFormStore from '@/store/propertyFormStore';
 
 const SocialMediaSection = () => {
-  const { formData, setFormData } = usePropertyFormStore();
+  const { formData, setSocialMedia } = usePropertyFormStore();
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      socialMedia: {
-        ...formData.socialMedia,
-        [name]: value
-      }
-    });
+    setSocialMedia(name,value);
   };
 
   return (
@@ -26,13 +20,14 @@ const SocialMediaSection = () => {
             <FaYoutube className="icon-youtube" /> YouTube URL
           </label>
           <input
-            type="url"
+            type="text"
             id="youtubeUrl"
             name="youtubeUrl"
             className="form-control"
             value={formData.socialMedia?.youtubeUrl || ''}
             onChange={handleInputChange}
             placeholder="https://www.youtube.com/watch?v=..."
+
           />
         </div>
         
@@ -41,7 +36,7 @@ const SocialMediaSection = () => {
             <FaTiktok className="icon-tiktok" /> TikTok URL
           </label>
           <input
-            type="url"
+            type="text"
             id="tiktokUrl"
             name="tiktokUrl"
             className="form-control"

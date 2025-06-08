@@ -4,6 +4,9 @@
     "properties": "Properties",
     "agents": "Agents",
     "blog": "Blog",
+    "about": "About Us",
+    "buy": "Buy",
+    "rent": "Rent",
     "contact": "Contact",
     "login": "Login / Register",
     "addProperty": "Add Property"
@@ -58,11 +61,52 @@
     "ru": "Russian"
   },
   "home": {
-    "developer": "Developer",
+    "title": "WELCOME TO",
+    "d_luck": "D-LUCK PROPERTY",
+    "buy": "Buy",
+    "rent": "Rent",
+    "price": "Price",
+    "select_area": "Select Area",
+    "advance_search": "Advance Search",
+    "subtitle": "The best property website in Thailand",
+    "developer": "Proeperty Developer",
     "featured":{
       "title": "Discover Our Featured Listings",
       "subtitle": "Aliquam lacinia diam quis lacus euismod",
       "seeAll": "See All Properties"
+    },
+    "propertyTypes": {
+      "title": "Property Types",
+      "subtitle": "Discover Pattaya Properties for Sale and Rent - Condos, Pool Villa, House & Commercial Real Estate",
+      "noPropertyTypesFound": "ไม่พบประเภทอสังหาริมทรัพย์"
+    },
+    "ExploreLocations": {
+      "title": "Explore Locations",
+      "subtitle": "Buying and renting condos, houses, and pool villas in Pattaya and surrounding areas: Jomtien, Pratumnak Hill, Bang Saray, East Pattaya, Baan Amphur, Naklua, and Sattahip.",
+      "more": "More",
+      "properties": "Properties",
+      "errorFetching": "Error loading locations. Please try again later."
+    },
+    "service": {
+      "title": "Together, We'll Find Your Perfect Selling Path",
+      "subtitle": "Ready to Buy or Sell Property in Pattaya? We're Here to Help",
+      "property_management": "Property Management",
+      "property_onine": "Professional Online Property Marketing Management",
+      "mortgate_service": "Mortgate Services",
+      "mortgate_service_description": "Thailand Bank Financing Assistance for Property Buyers",
+      "legal_service": "Legal Services - Visa",
+      "legal_service_description": "Legal Documentation Support for Property Transfer Services"
+    },
+    "meetOurTeam": {
+      "title": "Meet Our Team",
+      "subtitle": "Our experienced consultants are ready to make your property dreams come true.",
+      "out_team": "Our Team",
+      "oat":"Oat - Supakorn",
+      "oat_description": "CEO & Founder",
+      "emy": "Amy - Thannaree",
+      "emy_description": "Sale Director",
+      "ice": "Ize - Chanyapak",
+      "ice_description": "Sale Manager"
     },
     "randomProperties": {
       "title": "Featured Properties",
@@ -77,17 +121,24 @@
     "blogs": {
       "section": {
         "title": "From Our Blog",
-        "subtitle": "Our Professional  Consultancies ready to help you to get your dream property",
+        "subtitle": "Discover valuable insights to help you make smarter property decisions.",
         "viewAll": "View all articles"
       },
       "error": {
         "fetch": "Failed to load blog posts. Please try again."
       }
     },
-    "propertyTypes": {
-      "title": "Property Types",
-      "subtitle": "Explore Different Types of Properties Available",
-      "noPropertyTypesFound": "No property types found"
+    "contact": {
+      "title": "Need more information ?",
+      "subtitle": "Please don't hesitate to contact us for assistance.",
+      "name": "Your Name *",
+      "lastName": "Last Name *",
+      "email": "Email Address *",
+      "subject": "Subject *",
+      "message": "Your Message *",
+      "sendMessage": "Send Message",
+      "messageSent": "Your message has been sent successfully",
+      "messageError": "There was an error sending your message. Please try again."
     }
   },
   "Message": {
@@ -136,6 +187,7 @@
     "adminLogin":"Login",
     "dashboard": "Dashboard",
     "message": "Message",
+    "updateProperty": "อัปเดตอสังหาริมทรัพย์",
     "addNewProperty": "Add New Property",
     "myProperties": "My Properties",
     "allPost": "All Post",
@@ -274,7 +326,9 @@
     "notAuthenticated": "Please login before proceeding"
   },
   "AddProperty": {
-    "addNewProperty": "Add New Property",
+    "addNewProperty": "Submit property",
+    "updateProperty": "Submit property",
+    "saveProperty": "Save property",
     "createPropertyDetails": "Create property details",
     "save": "Save",
     "cancel": "Cancel",

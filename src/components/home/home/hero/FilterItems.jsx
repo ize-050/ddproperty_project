@@ -5,7 +5,7 @@ import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useZoneStore from "@/store/useZoneStore";
 import Select from "react-select";
-import { useLocale } from "next-intl";
+import {useTranslations} from "next-intl";
 
 const catOptions = [
   { value: "CONDO", label: "Condominium" },
@@ -18,6 +18,7 @@ const catOptions = [
 const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('home');
   const [price, setPrice] = useState([500000, 20000000]); // ปรับค่าเริ่มต้นเป็น 500,000 - 20,000,000 บาท
   const { zones } = useZoneStore();
   // ดึง locale จาก URL path โดยตรง
@@ -131,7 +132,7 @@ const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
             onClick={() => setIsPriceDropdownOpen(!isPriceDropdownOpen)}
             style={{ cursor: 'pointer' }}
           >
-            Price: {formatPrice(price[0])} - {formatPrice(price[1])} <i className="fas fa-caret-down float-end fz11" />
+            {t('price')}: {formatPrice(price[0])} - {formatPrice(price[1])} <i className="fas fa-caret-down float-end fz11" />
           </div>
           {isPriceDropdownOpen && (
             <div className="dropdown-menu show" style={{ display: 'block', position: 'absolute', width: '100%', zIndex: 1000 }}>

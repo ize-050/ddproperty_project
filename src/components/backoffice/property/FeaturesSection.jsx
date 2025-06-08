@@ -14,23 +14,18 @@ const FeaturesSection = () => {
   const [error, setError] = useState(null);
   const { register, setValue } = useFormContext();
 
-  console.log('FeaturesSection rendered, formData:', formData);
-  console.log('formData.amenities:', formData.amenities);
 
   // Fetch amenity icons from API
   useEffect(() => {
     const fetchAmenityIcons = async () => {
       try {
         setLoading(true);
-        console.log('Fetching amenity icons...');
 
         const response = await getIconsByPrefix('amenity');
-        console.log('Amenity API Response:', response);
 
         if (response && response.success) {
           setAmenityIcons(response.data || {});
 
-          console.log('Setting amenity icons in state:', response.data);
 
           // Initialize all amenity icons in the store
           initializeAmenities(response.data || {});
@@ -50,9 +45,6 @@ const FeaturesSection = () => {
   }, [initializeAmenities]);
 
 
-  useEffect(() => {
-    console.log('FeaturesSection rendering with amenity state:', formData.amenities);
-  }, [formData.amenities]);
 
   // Handle amenity selection
   const handleFeatureClick = (type, key, active) => {
@@ -96,10 +88,7 @@ const FeaturesSection = () => {
     );
   }
 
-  console.log('Rendering features section with data:', {
-    amenityIcons,
-    formDataAmenities: formData.amenities
-  });
+
 
   // เช็คว่า amenityIcons มีข้อมูลหรือไม่
   const amenityArray = amenityIcons?.amenity || [];

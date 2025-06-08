@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const LoadingScreen = () => (
+const LoadingScreen = ({ fadeOut }) => (
   <div className="loading-screen" style={{
     position: 'fixed',
     top: 0,
@@ -15,7 +15,9 @@ const LoadingScreen = () => (
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 9999,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    opacity: fadeOut ? 0 : 1,
+    transition: 'opacity 0.6s ease-in-out',
   }}>
     <div className="logo-container mb-3" style={{ marginBottom: '30px' }}>
       <Image 
@@ -85,30 +87,43 @@ const LoadingScreen = () => (
 
 const AppLoadingWrapper = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
   
   useEffect(() => {
-    // Check if the document is ready
-    if (document.readyState === 'complete') {
-      const timer = setTimeout(() => setIsLoading(false), 800);
+    const handleLoad = () => {
+      // เริ่ม fade-out animation
+      setFadeOut(true);
+      
+      // เมื่อ animation เสร็จสิ้น จึงซ่อนหน้าโหลด
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 600); // ระยะเวลาเท่ากับ transition
+      
       return () => clearTimeout(timer);
+    };
+    
+    if (document.readyState === 'complete') {
+      // เว็บโหลดเสร็จแล้ว ให้รอซักครู่ก่อนแล้วค่อย fade out
+      setTimeout(handleLoad, 800);
     } else {
-      const handleLoad = () => {
-        const timer = setTimeout(() => setIsLoading(false), 800);
-        return () => clearTimeout(timer);
-      };
+      // เว็บกำลังโหลด รอให้โหลดเสร็จ
       window.addEventListener('load', handleLoad);
-      
-      // ตรวจสอบสถานะโหลดหลังจากเวลาสูงสุด
-      const maxLoadingTimeout = setTimeout(() => setIsLoading(false), 5000);
-      
-      return () => {
-        window.removeEventListener('load', handleLoad);
-        clearTimeout(maxLoadingTimeout);
-      };
     }
+    
+    // ตั้งเวลาสูงสุดที่จะแสดงหน้าโหลด
+    const maxLoadingTimeout = setTimeout(() => {
+      setFadeOut(true);
+      setTimeout(() => setIsLoading(false), 600);
+    }, 5000);
+    
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(maxLoadingTimeout);
+    };
   }, []);
   
-  return isLoading ? <LoadingScreen /> : children;
+  // ส่ง fadeOut state ไปยัง LoadingScreen เพื่อควบคุม animation
+  return isLoading ? <LoadingScreen fadeOut={fadeOut} /> : children;
 };
 
 export default AppLoadingWrapper;

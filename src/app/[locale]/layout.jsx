@@ -114,6 +114,7 @@ export default async function LocaleLayout({ children, params }) {
                       {children}
                     </ErrorBoundary>
                     {!isBackoffice && <Footer />}
+
                     <ScrollToTop />
                   </Suspense>
                 </AppLoadingWrapper>

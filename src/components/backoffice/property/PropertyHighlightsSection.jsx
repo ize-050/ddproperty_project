@@ -15,11 +15,6 @@ const PropertyHighlightsSection = () => {
   const [error, setError] = useState(null);
   const { register, setValue } = useFormContext();
 
-  console.log('PropertyHighlightsSection rendered, formData:', formData);
-
-  useEffect(() => {
-    console.log('PropertyHighlightsSection rendered with formData:', formData);
-  }, [formData]);
 
   // Fetch highlight icons from API
   useEffect(() => {
@@ -27,13 +22,13 @@ const PropertyHighlightsSection = () => {
       try {
         setLoading(true);
         console.log('Fetching highlight icons...');
-        
-        // ดึงข้อมูล highlights 
+
+        // ดึงข้อมูล highlights
         const highlightResponse = await getIconsByPrefix('highlight');
-        
+
         // ดึงข้อมูล property-label
         const labelResponse = await getIconsByPrefix('property-label');
-        
+
         if (highlightResponse && labelResponse) {
           setHighlightIcons(highlightResponse.data || {});
           setLabelIcons(labelResponse.data || {});
@@ -61,7 +56,7 @@ const PropertyHighlightsSection = () => {
 
     // Convert to boolean for consistent handling
     const newValue = !active;
-    
+
     if (type === 'highlight') {
       // Update Zustand store with boolean
       setHighlight(key, newValue);
@@ -74,32 +69,27 @@ const PropertyHighlightsSection = () => {
 
   if (loading) {
     return (
-      <section className="form-section">
-        <h2>Property Highlights</h2>
-        <div className="loading-spinner">
-          <FaSpinner className="spinner-icon" /> Loading property highlights...
-        </div>
-      </section>
+        <section className="form-section">
+          <h2>Property Highlights</h2>
+          <div className="loading-spinner">
+            <FaSpinner className="spinner-icon" /> Loading property highlights...
+          </div>
+        </section>
     );
   }
 
   if (error) {
     return (
-      <section className="form-section">
-        <h2>Property Highlights</h2>
-        <div className="error-message">
-          Error loading property highlights: {error}
-        </div>
-      </section>
+        <section className="form-section">
+          <h2>Property Highlights</h2>
+          <div className="error-message">
+            Error loading property highlights: {error}
+          </div>
+        </section>
     );
   }
 
-  console.log('Rendering highlights section with data:', {
-    highlightIcons,
-    labelIcons,
-    formDataHighlights: formData.highlights,
-    formDataLabels: formData.propertyLabels
-  });
+
 
   // แสดงไอคอน Highlights
   const renderHighlightIcons = () => {
@@ -115,30 +105,30 @@ const PropertyHighlightsSection = () => {
     };
 
     return (
-      <div className="amenities-grid">
-        {highlightIcons.highlight.map((icon) => {
-          // สร้าง field name สำหรับ React Hook Form
-          const fieldName = `highlights.${icon.key}`;
-          // ใช้ Boolean เพื่อให้แน่ใจว่าเป็นค่า boolean และป้องกัน error
-          const isActive = Boolean(formData.highlights?.[icon.key]?.active);
+        <div className="amenities-grid">
+          {highlightIcons.highlight.map((icon) => {
+            // สร้าง field name สำหรับ React Hook Form
+            const fieldName = `highlights.${icon.key}`;
+            // ใช้ Boolean เพื่อให้แน่ใจว่าเป็นค่า boolean และป้องกัน error
+            const isActive = Boolean(formData.highlights?.[icon.key]?.active);
 
-          return (
-            <div
-              key={icon.id}
-              className="amenity-item"
-              style={isActive ? activeStyle : {}}
-              onClick={() => handleClick('highlight', icon.key, isActive)}
-            >
-              <input
-                type="hidden"
-                {...register(fieldName)}
-                value={isActive.toString()}
-              />
-              <span className="amenity-label">{icon.name}</span>
-            </div>
-          );
-        })}
-      </div>
+            return (
+                <div
+                    key={icon.id}
+                    className="amenity-item"
+                    style={isActive ? activeStyle : {}}
+                    onClick={() => handleClick('highlight', icon.key, isActive)}
+                >
+                  <input
+                      type="hidden"
+                      {...register(fieldName)}
+                      value={isActive.toString()}
+                  />
+                  <span className="amenity-label">{icon.name}</span>
+                </div>
+            );
+          })}
+        </div>
     );
   };
 
@@ -156,45 +146,45 @@ const PropertyHighlightsSection = () => {
     };
 
     return (
-      <div className="amenities-grid">
-        {labelIcons.label.map((icon) => {
-          // สร้าง field name สำหรับ React Hook Form
-          const fieldName = `propertyLabels.${icon.key}`;
-          // ใช้ Boolean เพื่อให้แน่ใจว่าเป็นค่า boolean และป้องกัน error
-          const isActive = Boolean(formData.propertyLabels?.[icon.key]?.active);
+        <div className="amenities-grid">
+          {labelIcons.label.map((icon) => {
+            // สร้าง field name สำหรับ React Hook Form
+            const fieldName = `propertyLabels.${icon.key}`;
+            // ใช้ Boolean เพื่อให้แน่ใจว่าเป็นค่า boolean และป้องกัน error
+            const isActive = Boolean(formData.propertyLabels?.[icon.key]?.active);
 
-          return (
-            <div
-              key={icon.id}
-              className="amenity-item"
-              style={isActive ? activeStyle : {}}
-              onClick={() => handleClick('label', icon.key, isActive)}
-            >
-              <input
-                type="hidden"
-                {...register(fieldName)}
-                value={isActive.toString()}
-              />
-              <span className="amenity-label">{icon.name}</span>
-            </div>
-          );
-        })}
-      </div>
+            return (
+                <div
+                    key={icon.id}
+                    className="amenity-item"
+                    style={isActive ? activeStyle : {}}
+                    onClick={() => handleClick('label', icon.key, isActive)}
+                >
+                  <input
+                      type="hidden"
+                      {...register(fieldName)}
+                      value={isActive.toString()}
+                  />
+                  <span className="amenity-label">{icon.name}</span>
+                </div>
+            );
+          })}
+        </div>
     );
   };
 
   return (
-    <>
-      <section className="form-section">
-        <h2>Property Highlights</h2>
-        {renderHighlightIcons()}
-      </section>
+      <>
+        <section className="form-section">
+          <h2>Property Highlights</h2>
+          {renderHighlightIcons()}
+        </section>
 
-      <section className="form-section">
-        <h2>Property Label</h2>
-        {renderLabelIcons()}
-      </section>
-    </>
+        <section className="form-section">
+          <h2>Property Label</h2>
+          {renderLabelIcons()}
+        </section>
+      </>
   );
 };
 

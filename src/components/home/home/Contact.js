@@ -1,24 +1,26 @@
 "use client";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 const Contact = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission
   };
-
+   const t = useTranslations('home');
   return (
+      <>
     <form className="form-style1" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-lg-6">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              First Name
+                {t('contact.name')}
             </label>
             <input
               type="text"
               className="form-control"
-              placeholder="ib"
+              placeholder=""
               required
             />
           </div>
@@ -28,12 +30,12 @@ const Contact = () => {
         <div className="col-lg-6">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Last Name
+              {t('contact.lastName')}
             </label>
             <input
               type="text"
               className="form-control"
-              placeholder="themes"
+              placeholder=""
               required
             />
           </div>
@@ -42,7 +44,7 @@ const Contact = () => {
 
         <div className="col-md-12">
           <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">Email</label>
+            <label className="heading-color ff-heading fw600 mb10">{t('contact.email')}</label>
             <input
               type="email"
               className="form-control"
@@ -56,12 +58,11 @@ const Contact = () => {
         <div className="col-md-12">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Textarea
+              {t('contact.subject')}
             </label>
             <textarea
               cols={30}
               rows={4}
-              placeholder="There are many variations of passages."
               defaultValue={""}
             />
           </div>
@@ -71,7 +72,7 @@ const Contact = () => {
         <div className="col-md-12">
           <div className="d-grid">
             <button type="submit" className="ud-btn btn-dark">
-              Submit
+              {t('contact.sendMessage')}
               <i className="fal fa-arrow-right-long" />
             </button>
           </div>
@@ -79,6 +80,7 @@ const Contact = () => {
         {/* End .col */}
       </div>
     </form>
+      </>
   );
 };
 

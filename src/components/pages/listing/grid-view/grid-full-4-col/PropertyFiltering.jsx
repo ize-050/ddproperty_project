@@ -132,9 +132,26 @@ export default function PropertyFiltering({ property }) {
             <h5 className="property-title">
               <Link href={propertyDetailUrl}></Link>
             </h5>
-            <div className="property-location">
-              <i className="fas fa-map-marker-alt"></i> {property.zone?.name || property.district || 'Jomtien'}
+            <div className="property-name">
+              <p>{property.projectName}</p>
+
             </div>
+            <div className="property-location">
+              <i className="fas fa-map-marker-alt"></i> {property.zone[`name_${locale}`]}
+            </div>
+
+            <div className="property-features">
+              <div className="feature">
+                <i className="fas fa-bed"></i> {property.bedrooms || 1} bed
+              </div>
+              <div className="feature">
+                <i className="fas fa-bath"></i> {property.bathrooms || 1} bath
+              </div>
+              <div className="feature">
+                <i className="fas fa-vector-square"></i> {property.area || 32} sq.m.
+              </div>
+            </div>
+
             <div className="property-price">
               {property.listings && property.listings.length > 1 && 
                property.listings.some(listing => listing.listingType === 'SALE') && 
@@ -186,17 +203,7 @@ export default function PropertyFiltering({ property }) {
                 <i className="fas fa-phone"></i>
               </a>
             </div>
-            <div className="property-features">
-              <div className="feature">
-                <i className="fas fa-bed"></i> {property.bedrooms || 1} bed
-              </div>
-              <div className="feature">
-                <i className="fas fa-bath"></i> {property.bathrooms || 1} bath
-              </div>
-              <div className="feature">
-                <i className="fas fa-vector-square"></i> {property.area || 32} sq.m.
-              </div>
-            </div>
+
 
             <div className="property-divider"></div>
 

@@ -1,20 +1,96 @@
 {
+
+  "header": {
+    "home": "首页",
+    "properties": "Properties",
+    "agents": "Agents",
+    "blog": "文章",
+    "about": "关于我们",
+    "buy": "购买",
+    "rent": "租赁",
+    "contact": "联系我们",
+    "login": "Login / Register",
+    "addProperty": "Add Property"
+  },
   "home": {
-    "developer": "开发商",
+    "welcome" : "欢迎来到",
+    "d_luck" : "D-LUCK PROPERTY",
+    "title": "泰国芭堤雅最佳房地产网站",
+    "buy": "购买",
+    "rent": "租赁",
+    "price": "价格",
+    "select_area": "选择区域",
+    "advance_search": "高级搜索",
+    "developer": "房地产开发商",
     "featured":{
       "title": "发现我们的精选房源",
       "subtitle": "Aliquam lacinia diam quis lacus euismod",
       "seeAll": "See All Properties"
     },
     "randomProperties": {
-      "title": "精选房源",
-      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "title": "探索我们的精选房源",
+      "subtitle": "在芭堤雅寻找您的房产",
+      "seeAll": "查看所有房源",
       "loading": "Loading properties...",
       "error": "Error loading properties",
       "retry": "Retry",
       "bed": "bed",
       "bath": "bath",
       "sqm": "sqm"
+    },
+    "ExploreLocations": {
+      "title": "芭堤雅热门地点",
+      "subtitle": "芭堤雅及周边地区公寓、别墅及泳池别墅出售及出租：乔木提恩、考帕图纳克、邦萨拉伊、东芭堤雅、班安普尔、纳克鲁亚和梭桃邑",
+      "more": "查看更多",
+      "properties": "列表",
+      "errorFetching": "Ошибка при получении списков"
+    },
+    "propertyTypes": {
+       "title": "探索芭提雅的房产类型",
+       "subtitle": "选择您的房产类型"
+    },
+    "service": {
+      "title": "携手为您找到完美的销售方案",
+      "subtitle": "准备在芭提雅买卖房产？我们随时为您提供帮助",
+      "property_management": "物业管理",
+      "property_onine": "专业在线房产营销管理服务",
+      "mortgate_service": "抵押贷款服务",
+      "mortgate_service_description": "为房产买家提供泰国银行融资协助",
+      "legal_service": "法律服务 - 签证",
+      "legal_service_description": "房产过户法律文件支持服务"
+    },
+    "meetOurTeam": {
+      "title": "认识我们的团队",
+      "subtitle": "我们经验丰富的顾问随时准备助您实现置业梦想。",
+      "out_team": "我们的团队",
+      "oat":"Oat - Supakorn",
+      "oat_description": "首席执行官兼创始人",
+      "emy": "Amy - Thannaree",
+      "emy_description": "销售总监",
+      "ice": "Ize - Chanyapak",
+      "ice_description": "销售经理м"
+    },
+    "blogs": {
+      "section": {
+        "title": "来自我们的博客",
+        "subtitle": "发现有价值的见解，帮助您做出更明智的房产决策。",
+        "viewAll": "View all articles"
+      },
+      "error": {
+        "fetch": "Failed to load blog posts. Please try again."
+      }
+    },
+    "contact": {
+      "title": "需要更多资料吗 ?",
+      "subtitle": "请与我们联系以获取更多信息",
+      "name": "姓名",
+      "lastName": "姓",
+      "email": "邮箱",
+      "subject": "主题  *",
+      "message": "您的留言 ",
+      "sendMessage": "发送留言",
+      "messageSent": "ข้อความของคุณถูกส่งเรียบร้อยแล้ว!",
+      "messageError": "เกิดข้อผิดพลาดในการส่งข้อความ โปรดลองอีกครั้ง"
     }
   },
   "backoffice": {
@@ -32,51 +108,42 @@
     "manageYourProfile": "管理您的个人资料"
   },
   "Footer": {
-    "about": "About Us",
-    "contact": "Contact Us",
-    "terms": "Terms and Conditions",
-    "privacy": "Privacy Policy",
-    "copyright": " 2019 by D'LUCK PROPERTY",
-    "popularSearch": "Popular Search",
-    "condoForSale": "Condominium for Sale",
-    "condoForRent": "Condominium for Rent",
-    "poolVillaForSale": "Pool Villa for Sale",
-    "poolVillaForRent": "Pool Villa for Rent",
-    "houseForSale": "House for Sale",
-    "quickLinks": "Quick Links",
-    "propertyForSale": "Property for Sale",
-    "aboutUs": "About Us",
-    "contactUs": "Contact Us",
-    "discoverByArea": "Discover by Area",
-    "jomtien": "Jomtien",
-    "wongamat": "Wongamat",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "terms": "条款和条件",
+    "privacy": "隐私政策",
+    "copyright": " © 2025 by D-LUCK PROPERTYY",
+    "popularSearch": "热门搜索",
+    "condoForSale": "出售公寓",
+    "condoForRent": "出租公寓",
+    "poolVillaForSale": "出售泳池别墅",
+    "poolVillaForRent": "出租泳池别墅",
+    "houseForSale": "出售别墅",
+    "quickLinks": "快速链接",
+    "propertyForSale": "出售公寓",
+    "aboutUs": "关于我们",
+    "contactUs": "联系我们",
+    "discoverByArea": "按区域探索",
+    "jomtien": "中天",
+    "wongamat": "旺阿玛海滩",
     "naklua": "Naklua",
     "pratumnak": "Pratumnak",
     "banglamung": "Bang Lamung",
-    "callUsNow": "Call Us Now",
-    "dropEmail": "Drop a mail",
-    "getPromoWithNewsletter": "Get Promo with Newsletter",
+    "callUsNow": "立即致电我们",
+    "dropEmail": "请发送邮件至",
+    "getPromoWithNewsletter": "订阅新闻简报，获取优惠信息",
     "enterEmail": "Enter your email",
-    "subscribe": "Subscribe",
-    "sitemap": "Sitemap"
-  },
-  "header": {
-    "home": "首页",
-    "properties": "房产",
-    "agents": "经纪人",
-    "blog": "博客",
-    "contact": "联系我们",
-    "login": "登录 / 注册",
-    "addProperty": "添加房产"
+    "subscribe": "订阅",
+    "sitemap": "网站地图"
   },
   "hero": {
     "title": "找到您的梦想家园",
     "subtitle": "限时优惠折扣，每天低至10美元起"
   },
-  "featured": {
+  "featured":{
     "title": "探索我们的精选房源",
-    "subtitle": "Aliquam lacinia diam quis lacus euismod",
-    "seeAll": "查看所有房产"
+    "subtitle": "在芭堤雅寻找您的房产",
+    "seeAll": "See All Properties"
   },
   "footer": {
     "about": "关于我们",

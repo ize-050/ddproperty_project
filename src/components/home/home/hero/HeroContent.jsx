@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import FilterItems from "./FilterItems";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const HeroContent = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("buy");
+    const t = useTranslations('home');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -13,8 +15,8 @@ const HeroContent = () => {
 
 
   const tabs = [
-    { id: "buy", label: "Buy", type: "sale" },
-    { id: "rent", label: "Rent", type: "rent" },
+    { id: "buy", label: t("buy"), type: "sale" },
+    { id: "rent", label: t("rent"), type: "rent" },
   ];
 
   return (

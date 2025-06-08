@@ -14,11 +14,7 @@ const NearbySection = () => {
   const [error, setError] = useState(null);
   const { register, setValue } = useFormContext();
 
-  console.log('NearbySection rendered, formData:', formData);
 
-  useEffect(() => {
-    console.log('NearbySection rendered with formData:', formData);
-  }, [formData]);
 
   // Fetch nearby icons from API
   useEffect(() => {
@@ -96,10 +92,7 @@ const NearbySection = () => {
     );
   }
 
-  console.log('Rendering nearby section with data:', {
-    nearbyIcons,
-    formDataNearby: formData.nearby
-  });
+
 
   const nearbyArray = nearbyIcons?.nearby || [];
 

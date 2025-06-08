@@ -27,6 +27,7 @@ const RandomProperties = ({ randomProperties }) => {
   
   // โหลดราคาที่แปลงแล้วสำหรับแต่ละทรัพย์สิน
   useEffect(() => {
+
     const loadFormattedPrices = async () => {
       if (properties.length > 0) {
         const pricesObj = {};
@@ -158,10 +159,10 @@ const RandomProperties = ({ randomProperties }) => {
                     style={{ objectFit: 'cover', height: '520px', width: '100%' }}
                   />
                   <div className="sale-sticker-wrap">
-                    <div className="list-tag rounded-0 fz12">
-                      <span className="flaticon-electricity" />
-                      FEATURED
-                    </div>
+                    {/*<div className="list-tag rounded-0 fz12">*/}
+                    {/*  <span className="flaticon-electricity" />*/}
+                    {/*  FEATURED*/}
+                    {/*</div>*/}
                     <div className="list-tag2 rounded-0 fz12">{property.listings?.map((listing) => listing.listingType).join(', ')}</div>
                   </div>
 
@@ -169,12 +170,6 @@ const RandomProperties = ({ randomProperties }) => {
                     <Link href={`/property_detail/${property.id}`} className="list-meta-link">
                       <span className="flaticon-fullscreen" />
                     </Link>
-                    {/*<a href="#">*/}
-                    {/*  <span className="flaticon-new-tab" />*/}
-                    {/*</a>*/}
-                    {/*<a href="#">*/}
-                    {/*  <span className="flaticon-like" />*/}
-                    {/*</a>*/}
                   </div>
                 </div>
 

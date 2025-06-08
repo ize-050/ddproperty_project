@@ -15,13 +15,14 @@ const PhotosSection = () => {
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     const newImages = files.map(file => ({
-      id: Math.random().toString(36).substr(2, 9),
+      id: String(Math.random().toString(36).substr(2, 9)),
       file,
       url: URL.createObjectURL(file),
       name: file.name
     }));
     
     addPropertyImages(newImages);
+    e.target.value = '';
   };
   
   // Handle drag end event

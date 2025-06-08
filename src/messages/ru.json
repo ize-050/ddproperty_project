@@ -1,29 +1,95 @@
 {
   "header": {
-    "home": "Главная",
+    "home": "домашняя страница",
     "properties": "Недвижимость",
     "agents": "Агенты",
-    "blog": "Блог",
-    "contact": "Контакты",
+    "buy": "Купить",
+    "rent": "Аренда",
+    "blog": "Статьи",
+    "about": "О нас",
+    "contact": "Связаться с нами",
     "login": "Вход / Регистрация",
     "addProperty": "Добавить объект"
   },
   "home": {
-    "developer": "Разработчик",
+    "welcome": "ДОБРО ПОЖАЛОВАТЬ НА",
+    "d_luck": "D-LUCK PROPERTY",
+    "buy": "Купить",
+    "rent": "Аренда",
+    "price": "цена",
+    "select_area": "Выберите область",
+    "advance_search": "Расширенный поиск",
+    "title": "ЛУЧШИЙ САЙТ НЕДВИЖИМОСТИ В ПАТТАЙЕ, ТАИЛАНД",
+    "developer": "Застройщик недвижимости",
     "featured":{
       "title": "Откройте для себя наши избранные объявления",
       "subtitle": "Aliquam lacinia diam quis lacus euismod",
       "seeAll": "Посмотреть все объекты"
     },
     "randomProperties": {
-      "title": "Выбор объектов",
-      "subtitle": "Quality properties in Pattaya, specially selected for you",
+      "title": "Откройте для себя наши избранные списки",
+      "subtitle": "НАЙДИТЕ СВОЮ НЕДВИЖИМОСТЬ В ПАТТАЙЕ",
+      "seeAll": "Посмотреть все объекты недвижимости",
       "loading": "Loading properties...",
       "error": "Error loading properties",
       "retry": "Retry",
       "bed": "bed",
       "bath": "bath",
       "sqm": "sqm"
+    },
+    "ExploreLocations": {
+      "title": "Популярные места в Паттайе",
+      "subtitle": "Кондоминиумы, дома и виллы с бассейном на продажу и в аренду в Паттайе и окрестностях: Джомтьен, Кхао Пратамнак, Банг Сарай, Восточная Паттайя, Бан Ампур, На Клуа и Саттахип",
+      "more": "Подробнее",
+      "properties": "списки",
+      "errorFetching": "Ошибка при получении списков"
+    },
+    "propertyTypes": {
+      "title": "Типы недвижимости",
+      "subtitle": "Откройте для себя недвижимость в Паттайе на продажу и в аренду — квартиры, виллы с бассейном, дома и коммерческая недвижимость"
+    },
+    "service": {
+      "title": "Вместе мы найдем идеальную стратегию продажи для вас",
+      "subtitle": "Готовы купить или продать недвижимость в Паттайе? Мы здесь, чтобы помочь",
+      "property_management": "Управление недвижимостью",
+      "property_onine": "Профессиональное управление онлайн-маркетингом недвижимости",
+      "mortgate_service": "Ипотечные услуги",
+      "mortgate_service_description": "Помощь в получении финансирования от тайских банков для покупателей недвижимости",
+      "legal_service": "Юридические услуги - Визы",
+      "legal_service_description": "Поддержка в оформлении юридических документов для услуг по передаче недвижимости"
+    },
+    "meetOurTeam": {
+      "title": "Познакомьтесь с нашей командой",
+      "subtitle": "Наши опытные консультанты готовы воплотить ваши мечты о недвижимости в реальность.",
+      "out_team": "Наша команда",
+      "oat":"Oat - Supakorn",
+      "oat_description": "Генеральный директор и основатель",
+      "emy": "Amy - Thannaree",
+      "emy_description": "Директор по продажам",
+      "ice": "Ize - Chanyapak",
+      "ice_description": "Менеджер по продажам"
+    },
+    "blogs": {
+      "section": {
+        "title": "Из нашего блога",
+        "subtitle": "Откройте для себя ценные идеи, которые помогут вам принимать более разумные решения в сфере недвижимости.",
+        "viewAll": "View all articles"
+      },
+      "error": {
+        "fetch": "Failed to load blog posts. Please try again."
+      }
+    },
+    "contact": {
+      "title": "Нужна дополнительная информация ?",
+      "subtitle": "Свяжитесь с нами для получения дополнительной информации",
+      "name": "Имя *",
+      "lastName": "Фамилия *",
+      "email": "Электронная почта *",
+      "subject": "Тема *",
+      "message": "Ваше сообщение *",
+      "sendMessage": "отправлять",
+      "messageSent": "Ваше сообщение успешно отправлено",
+      "messageError": "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз."
     }
   },
   "backoffice": {
@@ -41,42 +107,45 @@
     "manageYourProfile": "Управление вашим профилем"
   },
   "Footer": {
-    "about": "About Us",
-    "contact": "Contact Us",
-    "terms": "Terms and Conditions",
-    "privacy": "Privacy Policy",
-    "copyright": " 2019 by D'LUCK PROPERTY",
-    "popularSearch": "Popular Search",
-    "condoForSale": "Condominium for Sale",
-    "condoForRent": "Condominium for Rent",
-    "poolVillaForSale": "Pool Villa for Sale",
-    "poolVillaForRent": "Pool Villa for Rent",
-    "houseForSale": "House for Sale",
-    "quickLinks": "Quick Links",
-    "propertyForSale": "Property for Sale",
-    "aboutUs": "About Us",
-    "contactUs": "Contact Us",
-    "discoverByArea": "Discover by Area",
-    "jomtien": "Jomtien",
-    "wongamat": "Wongamat",
+    "about": "О нас",
+    "contact": "Связаться с нами",
+    "terms": "Условия и положения",
+    "privacy": "Политика конфиденциальности",
+    "copyright": "© 2025 by D-LUCK PROPERTY",
+    "popularSearch": "Популярный поиск",
+    "condoForSale": "Продать кондоминиум",
+    "condoForRent": "Аренда кондоминиума",
+    "poolVillaForSale": "Продать виллу с бассейном",
+    "poolVillaForRent": "Аренда виллы с бассейном",
+    "houseForSale": "Продать дом",
+    "quickLinks": "Быстрые ссылки",
+    "propertyForSale": "Купить недвижимость в Паттайе",
+    "aboutUs": "О нас",
+    "contactUs": "Связаться с нами",
+    "discoverByArea": "Откройте для себя по области",
+    "jomtien": "Джомтьен",
+    "wongamat": "Пляж Вонгамат",
     "naklua": "Naklua",
     "pratumnak": "Pratumnak",
     "banglamung": "Bang Lamung",
-    "callUsNow": "Call Us Now",
-    "dropEmail": "Drop a mail",
-    "getPromoWithNewsletter": "Get Promo with Newsletter",
+    "callUsNow": "Позвоните нам сейчас",
+    "dropEmail": "Напишите письмо",
+    "getPromoWithNewsletter": "Получите промо с рассылкой",
     "enterEmail": "Enter your email",
-    "subscribe": "Subscribe",
-    "sitemap": "Sitemap"
+    "subscribe": "Подпишитесь",
+    "sitemap": "Карта сайта"
   },
+
   "hero": {
     "title": "Найдите дом своей мечты",
     "subtitle": "От 10 долларов в день с ограниченными по времени скидками"
   },
   "featured": {
     "title": "Откройте для себя наши избранные объявления",
-    "subtitle": "Aliquam lacinia diam quis lacus euismod",
-    "seeAll": "Посмотреть все объекты"
+    "subtitle": "НАЙДИТЕ СВОЮ НЕДВИЖИМОСТЬ В ПАТТАЙЕ",
+    "seeAll": "Посмотреть все объекты недвижимости",
+    "propertyType": "Тип недвижимости",
+    "price": "Цена"
   },
   "footer": {
     "about": "О нас",

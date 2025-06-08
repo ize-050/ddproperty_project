@@ -53,7 +53,6 @@ const AddNewProperty = () => {
 
   const { handleSubmit, formState: { errors, isDirty }, watch, trigger, setError, getValues, reset } = methods;
 
-  // Sync form values with Zustand store when form values change
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       // Only update specific field that changed to avoid full form reset
@@ -154,6 +153,7 @@ const AddNewProperty = () => {
       delete data.nearby;
       delete data.views;
       delete data.facilities;
+      delete data.propertyLabels;
 
       delete data.socialMedia;
       
@@ -323,7 +323,7 @@ const AddNewProperty = () => {
           )}
           
           <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <ListingTypeSection />
+          <ListingTypeSection type={"add"} />
           <PropertyTypeSection />
           <PropertyInfoSection />
           <PropertyDetailSection />

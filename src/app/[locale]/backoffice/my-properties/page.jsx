@@ -6,9 +6,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
 import { FaPlus, FaSearch, FaEye, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight, FaCopy } from 'react-icons/fa';
+import {useLocale} from "next-intl";
+
+//router
+import { useRouter } from 'next/navigation';
 
 
 export default function MyPropertiesPage() {
+  const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations('Backoffice');
   const [properties, setProperties] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -148,6 +154,10 @@ export default function MyPropertiesPage() {
     }
   };
 
+  const handleEditProperty = (propertyId) => {
+    router.push(`/${locale}/backoffice/edit-property/${propertyId}/`);
+  }
+
   return (
     <BackofficeLayout>
       <div className="my-properties-page">
@@ -261,7 +271,9 @@ export default function MyPropertiesPage() {
                         <td className="date-col">{property.formattedDate}</td>
                         <td className="actions-col">
                           <div className="action-buttons">
-                            <button className="action-btn edit">
+                            <button className="action-btn edit"
+                              onClick={() => handleEditProperty(property.id)}
+                            >
                               <FaEdit />
                             </button>
                             <button 

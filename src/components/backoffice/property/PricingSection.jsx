@@ -34,7 +34,6 @@ const PricingSection = () => {
     setPromotionEnabled(!promotionEnabled);
   };
 
-  // Update form with promotional price when it changes
   useEffect(() => {
     if (promotionEnabled) {
       setValue('promotionalPrice', promotionalPrice);

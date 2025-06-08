@@ -2,9 +2,13 @@
 import AdvanceFilterModal from "@/components/common/advance-filter";
 import HeroContent from "./HeroContent";
 import Image from "next/image";
+import React from "react";
+import  { useTranslations } from "next-intl";
 
 const Hero = () => {
+    const t = useTranslations('home');
   return (
+
     <>
       {/* Background Banner Image */}
       <div className="hero-banner-wrapper">
@@ -19,10 +23,10 @@ const Hero = () => {
 
       <div className="col-lg-6 col-xl-6">
         <div className="inner-banner-style8">
-          <h6 className="hero-sub-title animate-up-1">WELCOME TO</h6>
-          <h2 className="hero-title animate-up-2">D-LUCK PROPERTY</h2>
+          <h6 className="hero-sub-title animate-up-1">{t('welcome')}</h6>
+          <h2 className="hero-title animate-up-2">{t('d_luck')}</h2>
           <p className="hero-text fz15 animate-up-3">
-            THE BEST WEBSITE IN PATTAYA THAILAND
+              {t('title')}
           </p>
         </div>
       </div>

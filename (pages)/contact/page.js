@@ -1,3 +1,4 @@
+
 import CallToActions from "@/components/common/CallToActions";
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
@@ -10,6 +11,7 @@ export const metadata = {
 };
 
 const Contact = () => {
+
   return (
     <>
       {/* Main Header Nav */}

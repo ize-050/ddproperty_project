@@ -14,11 +14,7 @@ const ViewSection = () => {
   const [error, setError] = useState(null);
   const { register, setValue } = useFormContext();
 
-  useEffect(() => {
-    console.log('ViewSection rendered with formData:', formData);
-  }, [formData]);
 
-  console.log('ViewSection rendered, formData:', formData);
 
   // Fetch view icons from API
   useEffect(() => {
@@ -86,10 +82,7 @@ const ViewSection = () => {
     );
   }
 
-  console.log('Rendering view section with data:', {
-    viewIcons,
-    formDataViews: formData.views
-  });
+
 
   // CSS styles for active items
   const activeStyle = {

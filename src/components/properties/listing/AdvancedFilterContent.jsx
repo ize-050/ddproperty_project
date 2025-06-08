@@ -10,6 +10,7 @@ import usePropertyFilterStore from '@/store/usePropertyFilterStore';
 
 //service
 import getProperties from '@/utils/properties';
+import { useLocale } from 'next-intl';
 
 const PROPERTY_TYPES = [
   { value: 'CONDO', label: 'Condominium' },
@@ -35,6 +36,7 @@ export default function AdvancedFilterContent({ onClose ,type }) {
   const zones = useZoneStore((s) => s.zones);
 
 
+  const locale = useLocale();
   const setPropertyItems = usePropertyFilterStore((s) => s.setPropertyItems);
   const setPaginationItems = usePropertyFilterStore((s) => s.setPaginationItems);
   const [dataZone, setDataZone] = useState([{
@@ -65,7 +67,7 @@ export default function AdvancedFilterContent({ onClose ,type }) {
     setDataZone(zones.map((zone) => {
       return {
         value: zone.id,
-        label: zone.name,
+        label: zone[`name_${locale}`],
       }
     }))
   }, [zones])
@@ -109,7 +111,7 @@ export default function AdvancedFilterContent({ onClose ,type }) {
     <div className="advanced-filter-content">
       <div className="filter-header">
         <span className="filter-title">More Filter</span>
-        <button className="modal-close-btn" onClick={onClose}><FiX size={24} /></button>
+        <button className="modal-close-btn" onClick={onClose}></button>
       </div>
       <hr className="divider" />
       {/* Price Range */}

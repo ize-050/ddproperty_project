@@ -1,24 +1,30 @@
 import React from "react";
 
-const services = [
-  {
-    icon: "flaticon-security",
-    title: "Property Management",
-    text: "Nullam sollicitudin blandit eros eu pretium.",
-  },
-  {
-    icon: "flaticon-keywording",
-    title: "Mortgage Services",
-    text: "Nullam sollicitudin blandit eros eu pretium.",
-  },
-  {
-    icon: "flaticon-investment",
-    title: "Currency Services",
-    text: "Nullam sollicitudin blandit eros eu pretium.",
-  },
-];
+import {useTranslations} from "next-intl";
+
+
 
 const Service = () => {
+  const t = useTranslations('home');
+
+  const services = [
+    {
+      icon: "flaticon-security",
+      title: t('service.property_management'),
+      text: t('service.property_onine'),
+    },
+    {
+      icon: "flaticon-keywording",
+      title: t('service.mortgate_service'),
+      text: t('service.mortgate_service_description'),
+    },
+    {
+      icon: "flaticon-investment",
+      title: t('service.legal_service'),
+      text: t('service.legal_service_description'),
+    },
+  ];
+
   return (
     <>
       {services.map((service, index) => (

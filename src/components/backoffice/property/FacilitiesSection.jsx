@@ -24,7 +24,7 @@ const FacilitiesSection = () => {
           setFacilityIcons(response.data);
           
           // Initialize all facility icons in the store
-          initializeFacilities(response.data);
+           initializeFacilities(response.data);
 
         } else {
           throw new Error('Failed to fetch facility icons');
@@ -51,9 +51,6 @@ const FacilitiesSection = () => {
 
   };
 
-
-
-  // Define categories order and their display names
   const categoryOrder = ['common-area', 'dining', 'fitness', 'pool', 'other'];
   const categoryDisplayNames = {
     'common-area': 'Common Areas',
@@ -81,10 +78,12 @@ const FacilitiesSection = () => {
         {facilityIcons[category].map((icon) => {
           // สร้าง field name สำหรับ React Hook Form - ใช้รูปแบบ facilities.category.key
           const fieldName = `facilities.${category}.${icon.key}`;
+
+
           
           // ใช้ Boolean เพื่อแน่ใจว่าเป็นค่า boolean จาก nested structure
           const isActive = Boolean(formData.facilities?.[category]?.[icon.key]?.active);
-          
+
           return (
             <div
               key={icon.key}

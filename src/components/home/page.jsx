@@ -72,7 +72,7 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up">
               <div className="main-title text-center">
-                <h6 className="text-white">Developer</h6>
+                <h6 className="text-white">{t('developer')}</h6>
               </div>
             </div>
             <div className="col-lg-12 text-center">
@@ -95,9 +95,9 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row align-items-center" data-aos="fade-up">
             <div className="col-lg-9">
               <div className="main-title2">
-                <h2 className="title">{t('featured.title')}</h2>
+                <h2 className="title">{t('randomProperties.title')}</h2>
                 <p className="paragraph">
-                  {t('featured.subtitle')}
+                  {t('randomProperties.subtitle')}
                 </p>
               </div>
             </div>
@@ -183,11 +183,11 @@ const Page = ({ randomProperties, zones }) => {
               <div className="col-md-11 wow fadeInUp" data-aos-delay="100">
                 <div className="main-title">
                   <h2 className="title text-capitalize">
-                    Let’s find the right selling{" "}
-                    <br className="d-none d-md-block" /> option for you
+                    {t('service.title')}
+
                   </h2>
                   <p className="text">
-                    Aliquam lacinia diam quis lacus euismod
+                    {t('service.subtitle')}
                   </p>
                 </div>
               </div>
@@ -210,18 +210,15 @@ const Page = ({ randomProperties, zones }) => {
               data-aos-delay="100"
             >
               <div className="main-title mb30">
-                <h2 className="title mb20">Explore Locations</h2>
+                <h2 className="title mb20">{t('ExploreLocations.title')}</h2>
                 <p className="text">
-                  Pattaya&apos;s divese landscape extends beyong its
-                  beaches and nightlife, offering a variety of locations {" "}
-                  with unique characteristics that cater to different { " "} real
-                  estate needs and investment strategies.
+                  {t('ExploreLocations.subtitle')}
                   <br className="d-none d-lg-block" />
-                  tristique.
+
                 </p>
               </div>
               <p href="/agency" className="ud-btn btn-transparent mb30-md">
-                More
+                {t('ExploreLocations.more')}
                 <i className="fal fa-arrow-right-long" />
               </p>
             </div>
@@ -341,9 +338,9 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row">
             <div className="col-md-6 offset-md-6 position-relative">
               <div className="home8-contact-form bdrs12 p40 p30-md bgc-white">
-                <h2 className="form-title">Get In Touch</h2>
+                <h2 className="form-title">{t('contact.title')}</h2>
                 <p className="text ">
-                  Aliquam lacinia diam quis lacus euismod
+                    {t('contact.subtitle')}
                 </p>
                 <Contact />
               </div>
