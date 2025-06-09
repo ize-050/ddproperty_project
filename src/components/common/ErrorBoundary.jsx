@@ -27,7 +27,7 @@ class ErrorBoundary extends Component {
           {this.props.errorMessage ? (
             <p>{this.props.errorMessage}</p>
           ) : (
-            <p>We're experiencing some technical issues. Please try refreshing the page.</p>
+            <p>Error</p>
           )}
           <button 
             className="btn btn-primary mt-3" 
