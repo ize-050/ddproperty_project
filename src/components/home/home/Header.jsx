@@ -76,46 +76,48 @@ const Header = () => {
       <header
         className={`header-nav dluck-header ${navbar ? "sticky slideInDown animated" : ""}`}
       >
-        <div className="container-fluid px-lg-5">
-          <div className="header-inner">
-            {/* Hamburger Menu - Left Side */}
-            <div className="hamburger-menu-left d-lg-none">
-              <button 
-                className={`hamburger-btn ${isMobileMenuOpen ? 'active' : ''}`} 
-                onClick={toggleMobileMenu}
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </button>
-            </div>
-            
-            {/* Logo */}
-            <div className="logo-wrapper">
-              <Link className="header-logo" href="/">
-                <Image
-                  width={150}
-                  height={50}
-                  src="/images/logo/logo.png"
-                  alt="D-Luck Property"
-                />
-              </Link>
-            </div>
+        <div className="container">
+          <nav className="navbar navbar-expand-lg d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center">
+              {/* Hamburger Menu - Left Side */}
+              <div className="d-block d-lg-none">
+                <button
+                  className={`hamburger-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
+                  onClick={toggleMobileMenu}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+              </div>
 
-            {/* Main Navigation - Desktop */}
-            <div className="main-nav d-none d-lg-flex">
-              <ul className="main-menu">
-                {menuItems.map((item) => (
-                  <li key={item.id}>
-                    <Link 
-                      href={item.href}
-                      className={isActive(item.href) ? 'active' : ''}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {/* Logo */}
+              <div className="logo-wrapper">
+                <Link className="header-logo" href="/">
+                  <Image
+                    width={150}
+                    height={50}
+                    src="/images/logo/logo.png"
+                    alt="D-Luck Property"
+                  />
+                </Link>
+              </div>
+              
+              {/* Main Navigation - Desktop - ย้ายมาอยู่ใกล้ logo */}
+              <div className="main-nav d-none d-lg-flex">
+                <ul className="main-menu">
+                  {menuItems.map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        href={item.href}
+                        className={isActive(item.href) ? 'active' : ''}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             {/* Right Side Actions */}
@@ -126,35 +128,33 @@ const Header = () => {
               </div>
 
               {/* Backend Button */}
-              <div className="login-button">
-                <Link
-                  href="/backoffice"
-                  className="login-btn"
-                >
-                  <span className="d-none d-md-inline">Backend</span>
-                </Link>
-              </div>
 
-              {/* Mobile Menu Toggle - Removed as we moved it to the left */}
             </div>
-          </div>
+          </nav>
+          <div className={`mobile-menu ${isMobileMenuOpen ? "open" : ""}`}>
+            <div className="mobile-menu-overlay" onClick={toggleMobileMenu}></div>
+            <div className="mobile-menu-content">
 
-          {/* Mobile Menu - Shown when toggle is clicked */}
-          <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-            <div className="mobile-menu-inner">
-              <ul className="mobile-menu-list">
-                {menuItems.map((item) => (
-                  <li key={item.id}>
-                    <Link 
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={isActive(item.href) ? 'active' : ''}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="mobile-nav-wrapper">
+                <ul className="mobile-menu-nav">
+                  {menuItems.map((item) => (
+                    <li key={item.id}>
+                      <Link 
+                        href={item.href} 
+                        className={isActive(item.href) ? 'active' : ''}
+                        onClick={toggleMobileMenu}
+                      >
+                        {item.label}
+                        <span className="menu-arrow">
+                          <i className="fa fa-angle-right"></i>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+
             </div>
           </div>
         </div>

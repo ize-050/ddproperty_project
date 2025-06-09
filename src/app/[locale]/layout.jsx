@@ -18,14 +18,15 @@ import Script from 'next/script';
 import React from 'react';
 
 import "../../../node_modules/react-modal-video/scss/modal-video.scss";
-import "../../../public/scss/main.scss";
+import "@/styles/scss/main.scss";
 import "rc-slider/assets/index.css";
 import "../../styles/main.scss"; // Import backoffice styles
 
 import { DM_Sans, Poppins } from "next/font/google";
 import { supportedLocales } from '../../i18n';
+// const Header = lazy(() => import("@/components/home/home/Header"));
+// const Header = lazy(() => import("@/components/common/DefaultHeader"));
 const Header = lazy(() => import("@/components/home/home/Header"));
-const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
 const Footer = lazy(() => import("@/components/common/Footer"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
@@ -109,7 +110,7 @@ export default async function LocaleLayout({ children, params }) {
                 <AppLoadingWrapper>
                   <Suspense fallback={<LoadingAnimation />}>
                     <Header />
-                    <MobileMenu />
+                    {/*<MobileMenu />*/}
                     <ErrorBoundary errorMessage="มีข้อผิดพลาดในการแสดงผล โปรดลองรีเฟรชหน้านี้">
                       {children}
                     </ErrorBoundary>

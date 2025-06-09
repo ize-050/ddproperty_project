@@ -72,22 +72,82 @@ const Hero = () => {
         .inner-banner-style8 {
           position: relative;
           z-index: 1;
-          padding: 120px 0 50px;
+          //padding: 120px 0 50px;
         }
 
         .inner-banner-style8 .hero-sub-title,
         .inner-banner-style8 .hero-title,
         .inner-banner-style8 .hero-text {
-          color: #ffffff;
-          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            color:#fff;
+        }
+
+        .inner-banner-style8 .hero-sub-title {
+          color:#fff;
+          font-size: 18px;
+          font-weight: 500;
+          margin-bottom: 10px;
         }
 
         .inner-banner-style8 .hero-title {
+            color:#fff;
           font-size: 48px;
           font-weight: 700;
           margin-bottom: 15px;
+          word-wrap: break-word;
+          max-width: 100%;
         }
-
+        
+        @media (max-width: 767px) {
+          .inner-banner-style8 .hero-title {
+            font-size: 32px;
+          }
+          
+          .search-form-wrapper {
+              
+            padding: 15px !important;
+          }
+          
+          .home-eight .inner-banner-style8 .container-fluid {
+              
+            padding-left: 15px;
+            padding-right: 15px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .inner-banner-style8 .hero-title {
+            font-size: 28px;
+          }
+          
+          .inner-banner-style8 {
+            padding: 50px 0 0;
+          }
+          
+          .tab-pane {
+            width: 100%;
+            overflow-x: hidden;
+          }
+          
+          .home-eight .search-box-wrapper {
+            width: 100%;
+          }
+          
+          .home-eight .search-box-wrapper .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+          }
+          
+          .home-eight .search-box-wrapper .nav-tabs::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+          }
+        }
+        
+        .home-eight .inner-banner-style8 .search-box-wrapper {
+          margin-top: 30px;
+        }
       `}</style>
     </>
   );

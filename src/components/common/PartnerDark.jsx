@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { Autoplay } from 'swiper/modules';
 
 const PartnerDark = () => {
   const partnerImages = [
@@ -70,8 +70,10 @@ const PartnerDark = () => {
       loop
       autoplay={{
         delay: 3000, 
-        disableOnInteraction: true,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
       }}
+      modules={[Autoplay]}
       className="swiper-container"
     >
       {partnerImages.map((imageName, index) => (
