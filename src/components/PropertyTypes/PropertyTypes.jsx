@@ -21,9 +21,9 @@ const PropertyTypes = () => {
   const t = useTranslations('home.propertyTypes');
   const commonT = useTranslations('common');
   const locale = useLocale();
-  
+
   // We want to show only these property types in this order
-  const targetTypes = ['CONDO', 'HOUSE', 'VILLA', 'APARTMENT','TOWNHOUSE','LAND','HOME OFFICE'];
+  const targetTypes = ['CONDO', 'HOUSE', 'VILLA', 'APARTMENT', 'TOWNHOUSE', 'LAND', 'HOME OFFICE'];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,11 +31,8 @@ const PropertyTypes = () => {
         setLoading(true);
 
         const typesResponse = await propertyTypeService.getPropertyTypes();
-        console.log("All property types with counts:", typesResponse.data);
 
         const randomResponse = await propertyTypeService.getRandomPropertiesByType();
-        console.log("Random properties:", randomResponse.data);
-        console.log("randomResponse", randomResponse);
         // Group random properties by type
         const propertiesByType = {};
         randomResponse.data.forEach(property => {
@@ -43,8 +40,7 @@ const PropertyTypes = () => {
             propertiesByType[property.propertyType] = property;
           }
         });
-        console.log("propertiesByType", propertiesByType);
-        
+
         // Filter and sort to show only the target types and in the specified order
         const filteredTypes = [];
         targetTypes.forEach(targetType => {
@@ -84,7 +80,7 @@ const PropertyTypes = () => {
 
   // Get a property image for a specific type
   const getPropertyImage = (propertyType) => {
-   if (randomProperties[propertyType.name]) {
+    if (randomProperties[propertyType.name]) {
       return randomProperties[propertyType.name].images[0].url;
     }
   };
@@ -116,256 +112,116 @@ const PropertyTypes = () => {
   }
 
   return (
-    <div className="position-relative property-types-wrapper">
-      {/* ส่วนสำหรับ desktop */}
-      <div className="property-types-header desktop-header">
-        <div className="d-flex align-items-center justify-content-between w-100">
-          <div className="property-types-title">
-            <h2 className="title">{t('title')}</h2>
-            <p>{t('subtitle')}</p>
-          </div>
-          <div className="d-flex align-items-center navigation-wrapper">
-            <button className="property-types-prev simple-arrow">
-              <i className="far fa-arrow-left-long"></i>
-            </button>
-            <div className="property-types-pagination"></div>
-            <button className="property-types-next simple-arrow">
-              <i className="far fa-arrow-right-long"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      {/* ส่วนสำหรับ mobile */}
-      <div className="property-types-header mobile-header">
-        <div className="property-types-title">
-          <h2 className="title">{t('title')}</h2>
-          <p>{t('subtitle')}</p>
-        </div>
-        <div className="d-flex align-items-center navigation-wrapper">
-          <button className="property-types-prev-mobile simple-arrow">
-            <i className="far fa-arrow-left-long"></i>
-          </button>
-          <div className="property-types-pagination-mobile"></div>
-          <button className="property-types-next-mobile simple-arrow">
-            <i className="far fa-arrow-right-long"></i>
-          </button>
-        </div>
-      </div>
-      
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={2}
-        navigation={{
-          prevEl: '.property-types-prev',
-          nextEl: '.property-types-next',
-        }}
-        pagination={{ 
-          el: '.property-types-pagination',
-          clickable: true,
-        }}
-        onSwiper={(swiper) => {
-          setSwiperInstance(swiper);
-          // Set up mobile navigation
-          const mobilePrev = document.querySelector('.property-types-prev-mobile');
-          const mobileNext = document.querySelector('.property-types-next-mobile');
-          const mobilePagination = document.querySelector('.property-types-pagination-mobile');
-          
-          if (mobilePrev && mobileNext) {
-            mobilePrev.addEventListener('click', () => swiper.slidePrev());
-            mobileNext.addEventListener('click', () => swiper.slideNext());
-          }
-          
-          // Clone bullets from main pagination to mobile pagination
-          if (mobilePagination) {
-            swiper.on('paginationRender', function() {
-              const bullets = document.querySelector('.property-types-pagination')?.innerHTML;
-              if (bullets && mobilePagination) {
-                mobilePagination.innerHTML = bullets;
-              }
-            });
-          }
-        }}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-        }}
-        loop={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-          },
-          576: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
-          992: {
-            slidesPerView: 4,
-            spaceBetween: 20,
-          }
-        }}
-        className="property-types-slider"
-      >
-        {propertyTypes.map((propertyType) => (
-          <SwiperSlide key={propertyType.id}>
-            <Link href={`/properties/list?propertyType=${propertyType.name}`} style={{ textDecoration: 'none' }}>
-              <div className={styles.cardImage}>
-                {getPropertyImage(propertyType) ? (
-                  <Image
-                    src={getPropertyImage(propertyType)}
-                    width={270}
-                    height={270}
-                    alt={getLocalizedName(propertyType)}
-                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                  />
-                ) : (
-                  <div className={styles.noImage}>
-                    <span>{getLocalizedName(propertyType)}</span>
-                  </div>
-                )}
-                <div className={styles.cardOverlay}>
-                  <h4 className={styles.overlayTitle}>{getLocalizedName(propertyType)}</h4>
-                  <p className={styles.overlayCount}>{propertyType.count} {commonT('property_other', { count: propertyType.count })}</p>
-                </div>
+    <>
+      <section className="pt-0 pb90 pb30-md">
+        <div className="container">
+          <div className="row  justify-content-between align-items-center">
+            <div className="col-auto">
+              <div
+                className="main-title"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <h2 className="title">{t('title')}</h2>
+                <p className="paragraph">
+                  {t('subtitle')}
+                </p>
               </div>
-            </Link>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </div>
+            {/* End header */}
 
-      <style jsx global>{`
-        .property-types-wrapper {
-          position: relative;
-          margin-bottom: 30px;
-          padding: 0 5px;
-        }
-        
-        .property-types-header {
-          margin-bottom: 20px;
-        }
-        
-        .desktop-header {
-          display: flex;
-          align-items: center;
-        }
-        
-        .mobile-header {
-          display: none;
-        }
-        
-        .property-types-title h2 {
-          margin-bottom: 5px;
-          font-weight: 600;
-        }
-        
-        .property-types-title p {
-          margin-bottom: 0;
-          color: #6B7280;
-          font-size: 14px;
-        }
-        
-        .navigation-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-        }
-        
-        /* Pagination styling */
-        .property-types-pagination, .property-types-pagination-mobile {
-          display: flex !important;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-          width: auto !important;
-          height: auto !important;
-          margin: 0 !important;
-          z-index: 1;
-        }
-        
-        .property-types-pagination .swiper-pagination-bullet,
-        .property-types-pagination-mobile .swiper-pagination-bullet {
-          width: 8px;
-          height: 8px;
-          background-color: #ddd;
-          opacity: 1;
-          margin: 0 4px;
-          display: inline-block;
-          border-radius: 50%;
-          
-        }
+            <div className="col-auto mb30">
+              <div className="row align-items-center justify-content-center">
+                <div className="col-auto">
+                  <button className="properties_homes-prev__active swiper_button">
+                    <i className="far fa-arrow-left-long" />
+                  </button>
+                </div>
+                {/* End prev */}
 
-        .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+                <div className="col-auto">
+                  <div className="pagination swiper--pagination properties_homes_pagination__active" />
+                </div>
+                {/* End pagination */}
 
-          bottom: 0 ;
-        }
-        
-        .property-types-pagination .swiper-pagination-bullet-active,
-        .property-types-pagination-mobile .swiper-pagination-bullet-active {
-          background-color: #3270FC;
-        }
-        
-        /* Simple Arrow navigation styling */
-        .simple-arrow {
-          background: none;
-          border: none;
-          font-size: 20px;
-          color: #333;
-          cursor: pointer;
-          padding: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s ease;
-          z-index: 2;
-        }
-        
-        .simple-arrow:hover {
-          color: #3270FC;
-        }
-        
-        @media (max-width: 767px) {
-          .property-types-slider {
-            padding: 0 5px;
-          }
-          
-          .desktop-header {
-            display: none;
-          }
-          
-          .mobile-header {
-            display: block;
-          }
-          
-          .mobile-header .navigation-wrapper {
-            justify-content: flex-start;
-            margin-top: 10px;
-          }
-          
-          .mobile-header .property-types-title {
-            margin-bottom: 10px;
-          }
-          
-          .property-types-title h2 {
-            font-size: 24px;
-          }
-          
-          .property-types-title p {
-            font-size: 13px;
-          }
-          
-          .simple-arrow {
-            font-size: 18px;
-          }
-        }
-      `}</style>
-    </div>
+                <div className="col-auto">
+                  <button className="properties_homes-next__active swiper_button">
+                    <i className="far fa-arrow-right-long" />
+                  </button>
+                </div>
+                {/* End Next */}
+              </div>
+            </div>
+            {/* End .col for navigation and pagination */}
+          </div>
+          {/* End .row */}
+
+          <div className="row">
+            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
+              <div className="explore-apartment-5col-slider">
+                <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={30}
+                  slidesPerView={2}
+                  navigation={{
+                    nextEl: ".properties_homes-next__active",
+                    prevEl: ".properties_homes-prev__active",
+                  }}
+                  pagination={{
+                    el: ".properties_homes_pagination__active",
+                    clickable: true,
+                  }}
+                  breakpoints={{
+                    300: {
+                      slidesPerView: 2,
+                      spaceBetween: 15,
+                    },
+                    768: {
+                      slidesPerView: 3,
+                    },
+                    1024: {
+                      slidesPerView: 3,
+                    },
+                    1200: {
+                      slidesPerView: 4,
+                    },
+                  }}
+                  loop={true}
+                >
+                  {propertyTypes.map((propertyType) => (
+                         <SwiperSlide key={propertyType.id}>
+                         <div className="item">
+                           <Link href={`/properties/list?propertyType=${propertyType.name}`} style={{ textDecoration: 'none' }}>
+                             <div className="apartment-style2 text-center mb30">
+                               <div className="apartment-img">
+                                 <Image
+                                   width={279}
+                                   height={332}
+                                   className="w-100 h-100 cover"
+                                   src={getPropertyImage(propertyType)}
+                                   alt="homes"
+                                 />
+                               </div>
+                               <div className="apartment-content">
+                                 <h6 className="title mb-0">{getLocalizedName(propertyType)}</h6>
+                                 <p className="text mb-0">{propertyType.count}</p>
+                               </div>
+                             </div>
+                           </Link>
+                         </div>
+                       </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+          </div>
+          {/* End .row */}
+        </div>
+      </section>
+    </>
   );
 };
 
 export default PropertyTypes;
+
+

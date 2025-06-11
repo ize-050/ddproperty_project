@@ -29,31 +29,29 @@ const Page = ({ randomProperties, zones }) => {
   // ใช้ useState และ useEffect เพื่อแก้ไขปัญหา hydration error
   const [isClient, setIsClient] = useState(false);
   const t = useTranslations('home');
-  
+
   // นำข้อมูล zones ไปเก็บใน Zustand store
   const setZones = useZoneStore(state => state.setZones);
-  
+
   useEffect(() => {
     setIsClient(true);
-    
-    console.log("zoneszones",zones)
+
+    console.log("zoneszones", zones)
     if (zones && zones.length > 0) {
       setZones(zones);
       console.log('Zones data stored in Zustand store:', zones);
     }
   }, [zones, setZones]);
-  
+
   // ถ้ายังไม่อยู่ใน client side ให้แสดง loading หรือ skeleton
-//   if (!isClient) {
-//     return <div className="loading-container"><div className="loading-spinner"></div></div>;
-//   }
-  
+  //   if (!isClient) {
+  //     return <div className="loading-container"><div className="loading-spinner"></div></div>;
+  //   }
+
   return (
     <>
-      {/* Sidebar Sticky Bar */}
       <SidebarStickyBar />
 
-      {/* Home Banner Style V1 */}
       <section className="home-banner-style8 p0">
         <div className="home-style8">
           <div className="container">
@@ -89,7 +87,7 @@ const Page = ({ randomProperties, zones }) => {
       </section>
       {/* End Our Partners */}
 
-      {/* Featured Listings */}
+
       <section id="explore-property" className="pb40-md pb90">
         <div className="container">
           <div className="row align-items-center" data-aos="fade-up">
@@ -99,6 +97,14 @@ const Page = ({ randomProperties, zones }) => {
                 <p className="paragraph">
                   {t('randomProperties.subtitle')}
                 </p>
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <div className="text-start text-lg-end mb-3">
+                <Link className="ud-btn2" href="/map-v1">
+                  {t('randomProperties.seeall')}
+                  <i className="fal fa-arrow-right-long" />
+                </Link>
               </div>
             </div>
           </div>
@@ -113,27 +119,18 @@ const Page = ({ randomProperties, zones }) => {
           </div>
         </div>
       </section>
+
+
       {/* End Featured Listings */}
 
       {/* Random Properties */}
-     
+
       {/* End Random Properties */}
 
       {/* Property Types */}
-      <section className="pt-0 pb90 pb30-md">
-        <div className="container">
 
+      <PropertyTypes />
 
-          <div className="row">
-            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
-              <div className="explore-apartment-5col-slider">
-                <PropertyTypes />
-              </div>
-            </div>
-          </div>
-          {/* End .row */}
-        </div>
-      </section>
       {/* End Property Types */}
 
       {/* CTA Banner */}
@@ -240,7 +237,7 @@ const Page = ({ randomProperties, zones }) => {
               <div className="main-title mb30">
                 <h2 className="title mb20">Meet Our Team</h2>
                 <p className="text">
-                  Our Professional Consulttancies ready to help you to 
+                  Our Professional Consulttancies ready to help you to
                   <br className="d-none d-lg-block" />
                   get your dream property.
                 </p>
@@ -273,10 +270,10 @@ const Page = ({ randomProperties, zones }) => {
           </div>
           {/* End header */}
 
-          <div className="row" data-aos="fade-up" data-aos-delay="200">
-            <div className="col-lg-12">
+          <div className="row" data-aos="fade-up" data-aos-delay="300">
+            
               <LatestBlogs />
-            </div>
+           
           </div>
         </div>
       </section>
@@ -301,7 +298,7 @@ const Page = ({ randomProperties, zones }) => {
               <div className="home8-contact-form bdrs12 p40 p30-md bgc-white">
                 <h2 className="form-title">{t('contact.title')}</h2>
                 <p className="text ">
-                    {t('contact.subtitle')}
+                  {t('contact.subtitle')}
                 </p>
                 <Contact />
               </div>

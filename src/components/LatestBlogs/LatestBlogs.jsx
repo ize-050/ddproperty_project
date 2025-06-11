@@ -13,7 +13,7 @@ const LatestBlogs = () => {
   const [error, setError] = useState(null);
   const t = useTranslations('blogs');
   const locale = useLocale();
-  
+
   useEffect(() => {
     const fetchLatestBlogs = async () => {
       try {
@@ -39,17 +39,17 @@ const LatestBlogs = () => {
     if (blog.translatedTitles && blog.translatedTitles[locale]) {
       return blog.translatedTitles[locale];
     }
-    
+
     // Fallback to English if current locale not available
     if (blog.translatedTitles && blog.translatedTitles.en) {
       return blog.translatedTitles.en;
     }
-    
+
     // Fallback to main title field if translations not available
     if (blog.title) {
       return blog.title;
     }
-    
+
     // Last resort - try any available language
     if (blog.translatedTitles) {
       const availableLanguage = Object.keys(blog.translatedTitles)[0];
@@ -57,7 +57,7 @@ const LatestBlogs = () => {
         return blog.translatedTitles[availableLanguage];
       }
     }
-    
+
     // If all else fails
     return 'No title available';
   };
@@ -68,17 +68,17 @@ const LatestBlogs = () => {
     if (blog.translatedContents && blog.translatedContents[locale]) {
       return blog.translatedContents[locale];
     }
-    
+
     // Fallback to English if current locale not available
     if (blog.translatedContents && blog.translatedContents.en) {
       return blog.translatedContents.en;
     }
-    
+
     // Fallback to main content field if translations not available
     if (blog.content) {
       return blog.content;
     }
-    
+
     // Last resort - try any available language
     if (blog.translatedContents) {
       const availableLanguage = Object.keys(blog.translatedContents)[0];
@@ -86,7 +86,7 @@ const LatestBlogs = () => {
         return blog.translatedContents[availableLanguage];
       }
     }
-    
+
     // If all else fails
     return '';
   };
@@ -94,10 +94,10 @@ const LatestBlogs = () => {
   // Format date to display
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     }).format(date);
   };
 
@@ -130,47 +130,45 @@ const LatestBlogs = () => {
   }
 
   return (
-    <div className={styles.blogGrid}>
-      {blogs.map(blog => (
-        <Link href={`/blog/${blog.slug || blog.id}`} key={blog.id} className={styles.blogCard}>
-          <div className={styles.imageContainer}>
+    <>
+      {blogs.map((blog) => (
+        <div className="col-sm-6 col-lg-4" key={blog.id}>
+          <div className="blog-style1">
             {blog.featuredImage ? (
-              <Image
-                src={blog.featuredImage}
-                alt={getLocalizedTitle(blog)}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className={styles.image}
-              />
+              <div className="blog-img">
+                <Image
+                  src={blog.featuredImage}
+                  alt={getLocalizedTitle(blog)}
+                  width={386}
+                  height={271}
+                  className="w-100 cover"
+                />
+              </div>
             ) : (
+
               <div className={styles.noImage}></div>
             )}
-            <div className={styles.dateOverlay}>
-              <span className={styles.day}>
-                {new Date(blog.createdAt).getDate()}
-              </span>
-              <span className={styles.month}>
-                {new Date(blog.createdAt).toLocaleString('default', { month: 'short' })}
-              </span>
-            </div>
-          </div>
-          <div className={styles.contentContainer}>
-            <h3 className={styles.title}>{getLocalizedTitle(blog)}</h3>
-            <p className={styles.excerpt}>
-              {truncateText(getLocalizedContent(blog), 100)}
-            </p>
-            <div className={styles.meta}>
-              <span className={styles.date}>{formatDate(blog.createdAt)}</span>
-              {blog.user && (
-                <span className={styles.author}>
-                  <span className={styles.authorBy}>By</span> {blog.user.name}
+            <div className="blog-content">
+              <div className="date">
+                <span className="day">
+                  {new Date(blog.createdAt).getDate()}
                 </span>
-              )}
+                <span className="month">
+                  {new Date(blog.createdAt).toLocaleString('default', { month: 'short' })}
+                </span>
+              </div>
+              <a className="tag" href="#">
+                {blog.title}
+              </a>
+              <h6 className="title mt-1">
+                <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </h6>
+
             </div>
           </div>
-        </Link>
+        </div>
       ))}
-    </div>
+    </>
   );
 };
 

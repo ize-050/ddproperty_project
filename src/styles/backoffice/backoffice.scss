@@ -28,7 +28,6 @@ $chart-green: #82ca9d;
   padding: 20px 0;
   height: calc(100vh - 70px); // หักความสูงของ header
   position: fixed;
-  top: 70px; // ให้อยู่ใต้ header ที่มีความสูง 70px
   left: 0;
   bottom: 0;
   overflow-y: auto;
@@ -117,11 +116,9 @@ $chart-green: #82ca9d;
 // Main Content
 .backoffice-main {
   flex: 1;
-  padding: 50px;
   display: flex;
   flex-direction: column;
-  margin-left: 280px; // เพิ่ม margin-left เท่ากับความกว้างของ sidebar
-  width: calc(100% - 280px); // ปรับความกว้างให้เหลือพื้นที่หลังจากหักความกว้างของ sidebar
+  margin-left: 300px; // เพิ่ม margin-left เท่ากับความกว้างของ sidebar
   margin-top: 70px; // เพิ่ม margin-top เท่ากับความสูงของ header
 }
 

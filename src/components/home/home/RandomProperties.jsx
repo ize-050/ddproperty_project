@@ -16,7 +16,7 @@ const RandomProperties = ({ randomProperties }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formattedPrices, setFormattedPrices] = useState({});
-  
+
   // สัญลักษณ์สกุลเงินตามภาษา
   const currencySymbol = localeToCurrencySymbol(locale);
 
@@ -24,14 +24,14 @@ const RandomProperties = ({ randomProperties }) => {
   const formatPrice = (price) => {
     return convertAndFormatPriceSync(price, locale, false);
   };
-  
+
   // โหลดราคาที่แปลงแล้วสำหรับแต่ละทรัพย์สิน
   useEffect(() => {
 
     const loadFormattedPrices = async () => {
       if (properties.length > 0) {
         const pricesObj = {};
-        
+
         for (const property of properties) {
           if (property.listings && property.listings.length > 0) {
             for (const listing of property.listings) {
@@ -42,11 +42,11 @@ const RandomProperties = ({ randomProperties }) => {
             }
           }
         }
-        
+
         setFormattedPrices(pricesObj);
       }
     };
-    
+
     loadFormattedPrices();
   }, [properties, locale]);
 
@@ -99,8 +99,8 @@ const RandomProperties = ({ randomProperties }) => {
             <div className="main-title text-center mb-5">
               <h2 className="title">{t('randomProperties.error')}</h2>
               <p className="text-danger">{error}</p>
-              <button 
-                className="btn btn-primary mt-3" 
+              <button
+                className="btn btn-primary mt-3"
                 onClick={fetchRandomProperties}
               >
                 {t('randomProperties.retry')}
@@ -115,19 +115,9 @@ const RandomProperties = ({ randomProperties }) => {
   return (
     <>
       {properties && properties.length > 0 && (
-        <div className="position-relative featured-property-wrapper">
-          {/* Navigation Buttons for both mobile and desktop */}
-          <div className="featured-slider-navigation">
-            <button className="featured-prev__active slider-arrow">
-              <i className="far fa-arrow-left-long"></i>
-            </button>
-            <button className="featured-next__active slider-arrow">
-              <i className="far fa-arrow-right-long"></i>
-            </button>
-          </div>
-          
+        <>
           <Swiper
-            className="overflow-visible featured-property-slider"
+            className="overflow-visible"
             spaceBetween={30}
             modules={[Navigation]}
             navigation={{
@@ -153,21 +143,19 @@ const RandomProperties = ({ randomProperties }) => {
           >
             {properties.map((property) => (
               <SwiperSlide key={property.id}>
-               
                 <div className="item">
                   <div className="listing-style9">
-                    <div className="list-thumb">  
+                    <div className="list-thumb">
                       <img
-                        className="cover"
-
-                        src={property.images && property.images[0] && property.images[0].url ? 
-                          (property.images[0].url.startsWith('http') ? 
-                            property.images[0].url : property.images[0].url 
-                          ) : 
+                        className="w-100 h-100 cover"
+                        src={property.images && property.images[0] && property.images[0].url ?
+                          (property.images[0].url.startsWith('http') ?
+                            property.images[0].url : property.images[0].url
+                          ) :
                           "/images/listings/default-property.jpg"
                         }
                         alt={property.projectName}
-                        style={{ objectFit: 'cover', height: '520px', width: '100%' }}
+
                       />
                       <div className="sale-sticker-wrap">
                         {/*<div className="list-tag rounded-0 fz12">*/}
@@ -186,8 +174,8 @@ const RandomProperties = ({ randomProperties }) => {
 
                     <div className="list-content">
                       <div className="list-price">
-                        {property.listings?.[0]?.price 
-                          ? `${currencySymbol}${formattedPrices[`${property.id}-${property.listings[0].id}`] || formatPrice(property.listings[0].price)}` 
+                        {property.listings?.[0]?.price
+                          ? `${currencySymbol}${formattedPrices[`${property.id}-${property.listings[0].id}`] || formatPrice(property.listings[0].price)}`
                           : 'Contact for price'}
                       </div>
                       <h6 className="list-title my-1">
@@ -213,71 +201,25 @@ const RandomProperties = ({ randomProperties }) => {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+
+          <div className="row align-items-center justify-content-between arrowY-center-position">
+            <div className="col-auto">
+              <button className="featured-prev__active swiper_button">
+                <i className="far fa-arrow-left-long" />
+              </button>
+            </div>
+            {/* End prev */}
+
+            <div className="col-auto">
+              <button className="featured-next__active swiper_button">
+                <i className="far fa-arrow-right-long" />
+              </button>
+            </div>
+            {/* End Next */}
+          </div>
+        </>
       )}
-      
-      <style jsx global>{`
-        .featured-property-wrapper {
-          position: relative;
-          margin-bottom: 30px;
-        }
-        
-        /* Arrow navigation styling for both desktop and mobile */
-        .featured-slider-navigation .slider-arrow {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 100;
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: rgba(255, 255, 255, 0.8);
-          border-radius: 50%;
-          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-          cursor: pointer;
-          border: none;
-          transition: all 0.3s ease;
-        }
-        
-        .featured-slider-navigation .featured-prev__active {
-          left: 15px;
-        }
-        
-        .featured-slider-navigation .featured-next__active {
-          right: 15px;
-        }
-        
-        .featured-slider-navigation .slider-arrow i {
-          font-size: 16px;
-          color: #333;
-        }
-        
-        .featured-slider-navigation .slider-arrow:hover {
-          background-color: #fff;
-          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        
-        @media (max-width: 767px) {
-          .featured-property-slider {
-            padding: 0 10px;
-          }
-          
-          .featured-slider-navigation .slider-arrow {
-            width: 34px;
-            height: 34px;
-          }
-          
-          .featured-slider-navigation .featured-prev__active {
-            left: 5px;
-          }
-          
-          .featured-slider-navigation .featured-next__active {
-            right: 5px;
-          }
-        }
-      `}</style>
+
     </>
   );
 };

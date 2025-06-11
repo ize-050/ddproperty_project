@@ -27,6 +27,7 @@ import { supportedLocales } from '../../i18n';
 // const Header = lazy(() => import("@/components/home/home/Header"));
 // const Header = lazy(() => import("@/components/common/DefaultHeader"));
 const Header = lazy(() => import("@/components/home/home/Header"));
+const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
 const Footer = lazy(() => import("@/components/common/Footer"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
@@ -110,7 +111,7 @@ export default async function LocaleLayout({ children, params }) {
                 <AppLoadingWrapper>
                   <Suspense fallback={<LoadingAnimation />}>
                     <Header />
-                    {/*<MobileMenu />*/}
+                    <MobileMenu />
                     <ErrorBoundary errorMessage="มีข้อผิดพลาดในการแสดงผล โปรดลองรีเฟรชหน้านี้">
                       {children}
                     </ErrorBoundary>
@@ -126,6 +127,7 @@ export default async function LocaleLayout({ children, params }) {
         {/* โหลด JavaScript หลังจาก hydration เสร็จสิ้น */}
         <Script id="aos-script" src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" />
         <Script id="jquery-script" src="https://code.jquery.com/jquery-3.6.0.min.js" />
+        <Script id="bootstrap-script" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />
 
         <Script id="init-scripts">
           {`

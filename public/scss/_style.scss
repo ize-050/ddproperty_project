@@ -684,9 +684,8 @@ li {
     background-color: #ffffff;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    height: calc(100% - 87px);
+    height: 100vh;
     left: 0;
-    margin-top: 87px;
     overflow-y: scroll;
     padding: 30px;
     padding-top: 60px;
@@ -3976,7 +3975,7 @@ li {
     scrollbar-width: thin;
     top: 0;
     width: 70px;
-    z-index: 99;
+    z-index: 9999;
 }
 
 .property-banner-style1 {
@@ -8583,9 +8582,9 @@ input:focus-visible {
     position: absolute;
 }
 .home8-sidebar-wrapper .tel {
-    margin-left: -12px;
+    margin-left: -35px;
     top: 18%;
-    width: 92px;
+    width: 140px;
 }
 .home8-sidebar-wrapper .tel,
 .home8-sidebar-wrapper .mail {

@@ -4,8 +4,16 @@ import Image from "next/image";
 import ContactInfo from "./ContactInfo";
 import Social from "./Social";
 import ProSidebarContent from "./ProSidebarContent";
+import dynamic from "next/dynamic";
+
+const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitcher"), {
+    ssr: false,
+}); 
 
 const MobileMenu = () => {
+
+
+  
   return (
     <div className="mobilie_header_nav stylehome1">
       <div className="mobile-menu">
@@ -29,14 +37,12 @@ const MobileMenu = () => {
               <Link className="mobile_logo" href="/">
                 <Image
                   width={138}
-                  height={44}
-                  src="/images/header-logo2.svg"
+                  height={50}
+                  src="/images/logo/logo.png"
                   alt="logo"
                 />
               </Link>
-              <Link href="/login">
-                <span className="icon fz18 far fa-user-circle" />
-              </Link>
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
@@ -59,20 +65,21 @@ const MobileMenu = () => {
             >
               <span className="far fa-times"></span>
             </div>
-            <h4 className="title">Welcome to Homez</h4>
+            <h4 className="title">DLUCKPROPERTY</h4>
           </div>
           {/* End header */}
 
           <div className="hsidebar-content ">
             <div className="hiddenbar_navbar_content">
               <ProSidebarContent />
-              {/* End .hiddenbar_navbar_menu */}
 
+            
+{/* 
               <div className="hiddenbar_footer position-relative bdrt1">
                 <div className="row pt45 pb30 pl30">
                   <ContactInfo />
                 </div>
-                {/* End .row */}
+        
 
                 <div className="row pt30 pb30 bdrt1">
                   <div className="col-auto">
@@ -82,11 +89,9 @@ const MobileMenu = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              {/* hiddenbar_footer */}
+              </div> */}
             </div>
           </div>
-          {/* End hsidebar-content */}
         </div>
       </div>
     </div>

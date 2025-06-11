@@ -1,33 +1,69 @@
-"use client";
-
+"use client"
+import Image from "next/image";
 import React from "react";
-import "@/styles/components/side-elements.scss";
+
+const socialIcons = [
+  { icon: "fab fa-facebook-f", url: "#" },
+  { icon: "fab fa-twitter", url: "#" },
+  { icon: "fab fa-instagram", url: "#" },
+  { icon: "fab fa-linkedin-in", url: "#" },
+];
+
+const contactInfo = {
+  telephone: {
+    number: "(+66)086-543-2345",
+    url: "tel:+660865432345",
+  },
+  email: {
+    address: "info@d-luckproperty.com",
+    url: "mailto:info@d-luckproperty.com",
+  },
+};
 
 const SidebarStickyBar = () => {
   return (
-    <>
-      {/* Left Side Elements */}
-      <div className="left-side-elements">
-        <div className="vertical-text">
-          <span>info@d-luckproperty.com</span>
+    <div className="home8-sidebar-wrapper d-none d-xxl-block">
+      <a
+        className="sidemenu-btn filter-btn-right mt35 d-block text-center"
+        href="#"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#SidebarPanel"
+        aria-controls="SidebarPanelLabel"
+      >
+        <Image
+          width={25}
+          height={9}
+          className="contain"
+          src="/images/dark-nav-icon.svg"
+          alt="nav icon"
+        />
+      </a>
+      <div className="wrapper">
+        <a className="tel" href={contactInfo.telephone.url}>
+          {contactInfo.telephone.number}
+        </a>
+        <a className="mail" href={contactInfo.email.url}>
+          {contactInfo.email.address}
+        </a>
+        <div className="social-style2">
+          {socialIcons.map((socialIcon, index) => (
+            <a key={index} className="text-center" href={socialIcon.url}>
+              <i className={socialIcon.icon + " d-block"} />
+            </a>
+          ))}
         </div>
-        
-        <div className="social-icons">
-          <ul>
-            <li><a href="https://www.facebook.com/dluckproperty/" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a></li>
-            <li><a href="#" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a></li>
-            <li><a href="#" target="_blank" rel="noopener noreferrer"><i className="fab fa-tiktok"></i></a></li>
-          </ul>
-        </div>
+        <a href="#explore-property">
+          <div className="mouse_scroll at-home8 text-center d-block">
+            <Image
+              width={20}
+              height={105}
+              src="/images/about/home-scroll2.png"
+              alt="scroll image"
+            />
+          </div>
+        </a>
       </div>
-      
-      {/* Scroll Indicator */}
-      <div className="scroll-indicator">
-        <span className="scroll-text">Scroll</span>
-        <div className="scroll-dot"></div>
-        <div className="scroll-line"></div>
-      </div>
-    </>
+    </div>
   );
 };
 

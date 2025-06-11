@@ -6,6 +6,8 @@ import Link from 'next/link';
 import zoneService from '@/services/zoneService';
 import styles from './ExploreLocations.module.css';
 import { useTranslations,useLocale } from 'next-intl';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 const ExploreLocations = () => {
   const [locations, setLocations] = useState([]);
@@ -18,7 +20,7 @@ const ExploreLocations = () => {
     const fetchLocations = async () => {
       try {
         setLoading(true);
-        const response = await zoneService.getExploreLocations(3);
+        const response = await zoneService.getExploreLocations(5);
         setLocations(response.data || []);
       } catch (err) {
         console.error('Error fetching locations:', err);
@@ -52,39 +54,62 @@ const ExploreLocations = () => {
   }
 
   return (
-    <section className={styles.container}>
-      <div className={styles.locationsGrid}>
+    <>
+      <Swiper
+        spaceBetween={30}
+        modules={[Navigation, Pagination]}
+        navigation={{
+          nextEl: ".cities_next__active",
+          prevEl: ".cities_prev__active",
+        }}
+        pagination={{
+          el: ".cities_pagination__active",
+          clickable: true,
+        }}
+        breakpoints={{
+          300: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 2,
+          },
+          1200: {
+            slidesPerView: 3,
+          },
+        }}
+        autoplay={{
+          delay: 3000, // Set the desired delay for autoplay
+          disableOnInteraction: false, // Keep autoplaying even when user interacts with the swiper
+        }}
+      >
         {locations.map((location) => (
-          <Link 
-            href={`/properties/list?zoneId=${location.id}`} 
-            key={location.id} 
-            className={styles.locationCard}
-          >
-            <div className={styles.imageContainer}>
-              {location.imagePath ? (
-
-                <Image
-                  src={location.imagePath}
-                  alt={location.name_th}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className={styles.image}
-                  priority
-                />
-              ) : (
-                <div className={styles.noImage}></div>
-              )}
+          <SwiperSlide key={location.id}>
+            <div className="item">
+              <Link href="/map-v4">
+                <div className="feature-style2 mb30">
+                  <div className="feature-img">
+                    <Image
+                      width={279}
+                      height={279}
+                      className="w-100 h-100 cover"
+                      src={location.imagePath}
+                      alt="city listings"
+                    />
+                  </div>
+                  <div className="feature-content pt20">
+                    <h6 className="title mb-1">{location.name_th}</h6>
+                    <p className="text fz15">{location.propertyCount} Properties</p>
+                  </div>
+                </div>
+              </Link>
             </div>
-            <div className={styles.locationInfo}>
-              <h3 className={styles.locationName}>{location[`name_${locale}`]}</h3>
-              <p className={styles.propertyCount}>
-                {location.propertyCount}  {t('ExploreLocations.properties')}
-              </p>
-            </div>
-          </Link>
+          </SwiperSlide>
         ))}
-      </div>
-    </section>
+      </Swiper>
+        </>
   );
 };
 

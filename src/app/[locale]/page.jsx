@@ -122,7 +122,7 @@ async function HomeContent() {
 // หน้าหลักที่ใช้ Suspense และ dynamic content
 export default function MainRoot() {
   return (
-    <div className="main-wrapper">
+    <div className="">
         <HomeContent />
     </div>
   );
