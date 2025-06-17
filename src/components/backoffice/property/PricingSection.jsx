@@ -6,41 +6,83 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 
 const PricingSection = () => {
   const { formData, setFormData } = usePropertyFormStore();
-  const { register, formState: { errors }, setValue, watch } = useFormContext();
+  const { register, formState: { errors }, setValue, watch, trigger, getValues } = useFormContext();
   const [promotionEnabled, setPromotionEnabled] = useState(false);
-  const [promotionalPrice, setPromotionalPrice] = useState('');
   
   // Watch the short term rental values
   const shortTerm3Months = watch('shortTerm3Months');
   const shortTerm6Months = watch('shortTerm6Months');
   const shortTerm1Year = watch('shortTerm1Year');
-
-
-  // CSS class for error styling
-  const getInputClassName = (fieldName) => {
-    return `form-control ${errors[fieldName] ? 'is-invalid' : ''}`;
-  };
-
-  // Watch price unit changes
+  const promotionalPrice = watch('promotionalPrice');
   const priceUnit = watch('priceUnit');
+  
+  // ตั้งค่าเริ่มต้น
+  useEffect(() => {
+    // ถ้ามีค่า promotionalPrice จาก backend ให้เปิด toggle โดยอัตโนมัติ
+    if (formData.promotionalPrice && formData.promotionalPrice !== '0' && formData.promotionalPrice !== 0) {
+      setPromotionEnabled(true);
+      setValue('promotionalPrice', formData.promotionalPrice);
+    }
+  }, [formData.promotionalPrice, setValue]);
+  
+  // Register promotionalPrice field with validation whenever promotionEnabled changes
+  useEffect(() => {
+    register('promotionalPrice', {
+      validate: value => {
+        if (promotionEnabled && (!value || value === '0' || value === 0 || value === '')) {
+          return 'Promotional price is required when promotion is enabled';
+        }
+        return true;
+      }
+    });
+    
+    // Validate immediately when toggle changes
+    if (promotionEnabled) {
+      trigger('promotionalPrice');
+    }
+  }, [register, promotionEnabled, trigger]);
+
+
+  // priceUnit is already declared above
 
   const handlePromotionalPriceChange = (e) => {
     const value = e.target.value;
-    setPromotionalPrice(value);
     setValue('promotionalPrice', value);
+    
+    // ทำ validation ทันทีเมื่อมีการเปลี่ยนแปลงค่า
+    if (promotionEnabled) {
+      setTimeout(() => trigger('promotionalPrice'), 100);
+    }
   };
 
   const handleTogglePromotion = () => {
-    setPromotionEnabled(!promotionEnabled);
+    const newState = !promotionEnabled;
+    setPromotionEnabled(newState);
+    
+    if(newState) {
+      // เมื่อเปิดใช้งานโปรโมชั่น ใช้ค่าเดิม (ถ้ามี) หรือค่าว่าง
+      const currentValue = getValues('promotionalPrice');
+      if (!currentValue || currentValue === 0 || currentValue === '0') {
+        setValue('promotionalPrice', '');
+      }
+      // ทำ validation ทันที
+      setTimeout(() => trigger('promotionalPrice'), 100);
+    } else {
+      // เมื่อปิดใช้งานโปรโมชั่น ตั้งค่าเป็น 0
+      setValue('promotionalPrice', 0);
+    }
   };
 
   useEffect(() => {
     if (promotionEnabled) {
-      setValue('promotionalPrice', promotionalPrice);
+      setValue('promotionalPrice', formData.promotionalPrice);
+      if (formData.promotionalPrice) {
+        trigger('promotionalPrice');
+      }
     } else {
-      setValue('promotionalPrice', '');
+      setValue('promotionalPrice', '0');
     }
-  }, [promotionEnabled, promotionalPrice, setValue]);
+  }, [promotionEnabled, promotionalPrice, setValue, trigger]);
 
   // ตรวจสอบว่าเป็นประเภทการลงประกาศแบบใด
   const showSaleSection = formData.status === 'SALE' || formData.status === 'SALE_RENT';
@@ -48,6 +90,7 @@ const PricingSection = () => {
 
   return (
     <section className="form-section">
+      {showSaleSection && (
       <div className="section-header-with-toggle">
         <h2>Pricing and Promotion Settings</h2>
         <div className="toggle-switch">
@@ -60,24 +103,25 @@ const PricingSection = () => {
           <label htmlFor="promotionToggle"></label>
         </div>
       </div>
+      )}
 
-      {promotionEnabled && (
+      {promotionEnabled && showSaleSection && (
         <div className="promotion-info">
           <p>Promotional pricing will enhance the attractiveness of your listing.</p>
         </div>
       )}
 
-      {promotionEnabled && (
+      {promotionEnabled && showSaleSection && (
         <div className="promotion-price-display">
           <p>Displayed price when promotion is enabled</p>
-          <div className="promotion-price-box">
-            <div className="original-price">
-              <span className="currency-symbol">฿</span>
-              <span className="strikethrough">{formData.price}</span>
+          <div className="promotion-price-box" >
+            <div className="original-price" style={{ color: '#fefefe' }}>
+              <span className="currency-symbol" style={{ color: '#fefefe' }}>฿</span>
+              <span className="strikethrough" style={{ color: '#fefefe' }}>{formData.price}</span>
             </div>
-            <div className="promotional-price">
-              <span className="currency-symbol">฿</span>
-              <span className="promotion-price-value">{promotionalPrice}</span>
+            <div className="promotional-price" style={{ color: '#fefefe' }}>
+              <span className="currency-symbol" style={{ color: '#fefefe' }}>฿</span>
+              <span className="promotion-price-value" style={{ color: '#fefefe' }}>{promotionalPrice}</span>
             </div>
           </div>
         </div>
@@ -144,7 +188,7 @@ const PricingSection = () => {
                 <div className="short-term-container">
                   <span className="short-term-label">3 M</span>
                   <input
-                    type="number"
+                    type="number" 
                     id="shortTerm3Months"
                     className="short-term-input"
                     value={shortTerm3Months || ''}
@@ -193,9 +237,11 @@ const PricingSection = () => {
             <input
               type="text"
               id="promotionalPrice"
+              className={`form-control ${errors.promotionalPrice ? 'is-invalid' : ''}`}
+              defaultValue={formData.promotionalPrice || ''}
               {...register('promotionalPrice')}
-              value={promotionalPrice}
               onChange={handlePromotionalPriceChange}
+              onBlur={() => promotionEnabled && trigger('promotionalPrice')}
               placeholder="e.g. 25,000,000"
             />
             <span className="unit-text">{priceUnit}</span>
@@ -269,7 +315,7 @@ const PricingSection = () => {
           text-align: center;
           font-size: 14px;
           color: #333;
-          padding: 0 8px;
+          padding: 0 0px;
           outline: none;
           height: 100%;
           box-sizing: border-box;

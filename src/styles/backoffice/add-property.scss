@@ -1,6 +1,7 @@
 // Add Property Page Styles
 @import '../variables';
-
+$card-shadow : 0 2px 10px rgba(0, 0, 0, 0.05);
+$text-dark : #333;
 // Form validation styles
 .is-invalid {
   border: 2px solid #dc3545 !important;
@@ -27,6 +28,55 @@ label.required:after {
   color: #dc3545;
   margin-left: 3px;
 }
+
+
+  .loading-container, .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: $card-shadow;
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba($primary-color, 0.1);
+      border-radius: 50%;
+      border-top-color: $primary-color;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 16px;
+      color: $text-dark;
+      margin: 0 0 15px 0;
+    }
+
+    .retry-btn {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
 
 .error-summary {
   background-color: #fff8f8;
@@ -201,8 +251,8 @@ label.required:after {
       }
       
       &.active {
-        background-color: #d8f5d8;
-        border-color: #0fa60f;
+        background-color: #E8F5E9;
+        border: 1px solid #A5D6A7;
         color: #000;
         font-weight: 500;
       }
@@ -312,8 +362,8 @@ label.required:after {
     .amenity-item {
       display: flex;
       align-items: center;
-      background-color: #ffffff;
-      border: 1px solid #e0e0e0;
+      background-color: #ffff;
+      border: 1px solid #A5D6A7;
       border-radius: 8px;
       padding: 0.75rem 1rem;
       font-size: 0.85rem;
@@ -328,9 +378,10 @@ label.required:after {
       }
       
       &.active {
-        background-color: #e3f2fd;
-        border-color: #2196f3;
+        background-color: #E8F5E9;
+        border: 2px solid #A5D6A7;
         color: #000;
+        font-weight: 500;
       }
       
       .amenity-icon {
@@ -369,8 +420,8 @@ label.required:after {
       }
       
       &.active {
-        background-color: #e3f2fd;
-        border-color: #2196f3;
+        background-color: #E8F5E9;
+        border-color: #A5D6A7;
         color: #000;
         font-weight: 500;
       }
@@ -543,7 +594,7 @@ label.required:after {
     }
     
     .promotion-price-box {
-      background-color: #f8d7da;
+      background-color: #a88082;
       color: #721c24;
       padding: 0.75rem 1rem;
       border-radius: 8px;

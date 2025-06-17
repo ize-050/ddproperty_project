@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import ContactModal from '../../../common/ContactModal/ContactModal';
 
+
 const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
   const propertyAgent = property.contactInfo;
@@ -24,7 +25,9 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
   };
   
   return (
-    <div className="property-sidebar">
+    <div className="property-sidebar" style={{
+      fontFamily:"__Poppins_c70c06"
+    }}>
       {/* Contact Agent Widget */}
       <div className="sidebar-widget contact-agent">
         <h3 className="widget-title">{t('contactAgent')}</h3>
@@ -123,9 +126,12 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
         
         <button 
           className="btn btn-danger w-100 mt-3"
+          style={{
+            color:"#fff"
+          }}
           onClick={() => setIsContactModalOpen(true)}
         >
-          Send a Message Now
+         Send a Message Now 
         </button>
 
         {/* Contact Modal */}
@@ -135,6 +141,9 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
           property={property}
         />
       </div>
+      
+      {/* Related Properties from Same Zone */}
+      
     </div>
   );
 };

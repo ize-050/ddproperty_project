@@ -3,10 +3,13 @@ import AdvanceFilterModal from "@/components/common/advance-filter";
 import HeroContent from "./HeroContent";
 import Image from "next/image";
 import React from "react";
-import  { useTranslations } from "next-intl";
 
-const Hero = () => {
-    const t = useTranslations('home');
+import useTranslation from '@/hooks/useTranslation';  
+
+const Hero = ({propertyTypes}) => {
+  const { getString } = useTranslation('en');
+
+  console.log("getString",getString('title'))
   return (
 
     <>
@@ -23,17 +26,17 @@ const Hero = () => {
 
       <div className="col-lg-6 col-xl-6">
         <div className="inner-banner-style8">
-          <h6 className="hero-sub-title animate-up-1">{t('welcome')}</h6>
-          <h2 className="hero-title animate-up-2">{t('d_luck')}</h2>
+          <h6 className="hero-sub-title animate-up-1">{getString('welcome')}</h6>
+          <h2 className="hero-title animate-up-2">{getString('d_luck')}</h2>
           <p className="hero-text fz15 animate-up-3">
-              {t('title')}
+              {getString('title')}
           </p>
         </div>
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <HeroContent />
+        <HeroContent  propertyTypes={propertyTypes}/>
       </div>
 
       {/* <!-- Advance Feature Modal Start --> */}
@@ -45,7 +48,7 @@ const Hero = () => {
           aria-labelledby="advanceSeachModalLabel"
           aria-hidden="true"
         >
-          <AdvanceFilterModal />
+          <AdvanceFilterModal  />
         </div>
       </div>
       <style jsx global>{`

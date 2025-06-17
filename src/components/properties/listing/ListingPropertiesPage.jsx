@@ -2,10 +2,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import Header from '@/components/home/home/Header';
-import MobileMenu from '@/components/common/mobile-menu';
-import Footer from '@/components/home/home/footer/';
-import ScrollToTop from '@/components/common/ScrollTop';
 // import PropertyFiltering from "@/components/pages/listing/grid-view/grid-full-4-col/PropertyFiltering";
 import HeroSearchBar from './HeroSearchBar';
 import usePropertyFilterStore from '@/store/usePropertyFilterStore';
@@ -13,6 +9,7 @@ import PropertyFilter from './PropertyFilter';
 import useZoneStore from '@/store/useZoneStore';
 import LoadingAnimation from '@/components/common/LoadingAnimation';
 import PropertyFilteringSuspense from './PropertyFilteringSuspense';
+
 
 // Import custom styles
 import '@/styles/property-listing.scss';
@@ -32,6 +29,8 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   const setPropertyItems = usePropertyFilterStore(state => state.setPropertyItems);
   const setPaginationItems = usePropertyFilterStore(state => state.setPaginationItems);
   const paginationItems = usePropertyFilterStore(state => state.paginationItems);
+  const {advancedSearchVisible,setAdvancedSearchVisible} = usePropertyFilterStore();
+
   const filterStore = usePropertyFilterStore();
 
   // ดึงค่า type จาก URL parameters (sale หรือ rent)
@@ -72,6 +71,10 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   }, [properties, pagination, setPropertyItems, setPaginationItems])
 
 
+  useEffect(() => {
+    console.log("Listproperty112312", propertyItems)
+  }, [propertyItems])
+
 
 
   const handleSearch = (filterValues) => {
@@ -79,25 +82,25 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
       ...prev,
       ...filterValues
     }));
-    
+
     // อัปเดต URL เพื่อให้สะท้อนสถานะการกรองปัจจุบัน
     const params = new URLSearchParams(searchParamsObj.toString());
-    
+
     // ถ้ามีการเปลี่ยนแปลง listingType ให้อัปเดต type parameter ใน URL
     if (filterValues.listingType) {
       const typeValue = filterValues.listingType === 'SALE' ? 'sale' : 'rent';
       params.set('type', typeValue);
     }
-    
+
     // อัปเดต parameters อื่นๆ ถ้าจำเป็น
     if (filterValues.propertyType) params.set('propertyType', filterValues.propertyType);
     if (filterValues.zoneId) params.set('zoneId', filterValues.zoneId);
     if (filterValues.bedrooms) params.set('bedrooms', filterValues.bedrooms);
     if (filterValues.bathrooms) params.set('bathrooms', filterValues.bathrooms);
-    
+
     // Reset หน้าเมื่อมีการเปลี่ยนแปลง filter
     params.set('page', '1');
-    
+
     // นำทางไปยัง URL ใหม่
     router.push(`${pathname}?${params.toString()}`);
   };
@@ -136,7 +139,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   const handleFilterChange = (newFilters) => {
     setIsLoading(true); // เริ่ม loading state
 
-    const updatedFilters = { ...filters, ...newFilters, page: 1 }; 
+    const updatedFilters = { ...filters, ...newFilters, page: 1 };
     setFilters(updatedFilters);
     updateURL(updatedFilters);
   };
@@ -166,24 +169,24 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
 
   return (
     <>
-      <Header />
-
-      <MobileMenu />
-
-      <div className="main-content ">
-        <div className="banner-wrapper">
+      <section className="property-banner-style2 bdrs24 maxw1600 mx-auto mt60 p-0">
+        <div className="inner-style1">
           <div className="container">
-            <div className="hero-banner">
-              <div className="banner-content">
-                <h1 className="text-white">Find Your Dream Home</h1>
-                <p className="text-white">We&apos;ve more than 1,000+ properties listed on our website</p>
-              </div>
+            <div className="row">
+              <div className="col-xl-11 mx-auto">
 
-              <HeroSearchBar onSearch={handleSearch} zones={zones} />
+                <HeroSearchBar onSearch={handleSearch} zones={zones}
+                />
+
+              
+              </div>
+              
             </div>
+
           </div>
+          {/* End .container */}
         </div>
-      </div>
+      </section>
 
       <section className="our-listing pb30-991 pt50"
         style={{ backgroundColor: '#f9f6f9' }}

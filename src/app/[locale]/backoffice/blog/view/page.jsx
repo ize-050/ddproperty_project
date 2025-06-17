@@ -263,7 +263,6 @@ const EditBlogPage = () => {
 
   if (loading) {
     return (
-        <BackofficeLayout>
           <div className="blog-page">
             <div className="blog-container text-center py-5">
               <div className="spinner-border text-primary" role="status">
@@ -272,12 +271,10 @@ const EditBlogPage = () => {
               <p className="mt-3">Loading blog data...</p>
             </div>
           </div>
-        </BackofficeLayout>
     );
   }
 
   return (
-      <BackofficeLayout>
         <div className="blog-page">
           <div className="blog-container">
             <div className="page-header">
@@ -389,7 +386,6 @@ const EditBlogPage = () => {
             </div>
           </div>
         </div>
-      </BackofficeLayout>
   );
 };
 

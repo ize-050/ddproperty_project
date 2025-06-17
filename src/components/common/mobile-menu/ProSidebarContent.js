@@ -14,7 +14,7 @@ const ProSidebarContent = () => {
   const t = useTranslations('header');
 
   const [activeMenu, setActiveMenu] = useState("home");
-  
+
   const typeParam = searchParams.get('type');
 
   const isActive = (href) => {
@@ -44,17 +44,17 @@ const ProSidebarContent = () => {
     <Sidebar width="100%" backgroundColor="#fff" className="my-custom-class">
       <Menu>
         {menuItems.map((item, index) => (
-                <MenuItem
-                  key={index}
-                  component={
-                    <Link
-                      className={item.href == path ? "active" : ""}
-                      href={item.href}
-                    />
-                  }
-                >
-                  {item.label}
-                </MenuItem>
+          <MenuItem
+            key={index}
+            component={
+              <Link
+                className={item.href == path ? "active" : ""}
+                href={item.href}
+              />
+            }
+          >
+            {item.label}
+          </MenuItem>
         ))}
       </Menu>
     </Sidebar>

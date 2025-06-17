@@ -17,7 +17,7 @@ const SocialMediaSection = () => {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="youtubeUrl" className="form-label">
-            <FaYoutube className="icon-youtube" /> YouTube URL
+            <FaYoutube className="icon-youtube" color="red" /> YouTube URL
           </label>
           <input
             type="text"

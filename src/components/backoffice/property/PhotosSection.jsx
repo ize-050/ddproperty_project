@@ -20,30 +20,30 @@ const PhotosSection = () => {
       url: URL.createObjectURL(file),
       name: file.name
     }));
-    
+
     addPropertyImages(newImages);
     e.target.value = '';
   };
-  
+
   // Handle drag end event
   const handleDragEnd = (result) => {
     setIsDragging(false);
-    
+
     // Dropped outside the list
     if (!result.destination) {
       return;
     }
-    
+
     // If the item was dropped in a different position, reorder the images
     if (result.source.index !== result.destination.index) {
       reorderPropertyImages(result.source.index, result.destination.index);
     }
   };
-  
+
   const handleDragStart = () => {
     setIsDragging(true);
   };
-  
+
   const handleBrowseFiles = () => {
     document.getElementById('propertyImages').click();
   };
@@ -62,16 +62,16 @@ const PhotosSection = () => {
             onChange={handleImageUpload}
             style={{ display: 'none' }}
           />
-          
+
           {propertyImages.length > 0 ? (
             <div className="images-container">
               <h4 className="images-title">Property Photos</h4>
               <p className="images-subtitle">Drag to reorder - first image will be the main photo</p>
-              
+
               <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
                 <Droppable droppableId="property-images" direction="horizontal">
                   {(provided) => (
-                    <div 
+                    <div
                       className={`uploaded-images ${isDragging ? 'dragging' : ''} has-images`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
@@ -79,7 +79,7 @@ const PhotosSection = () => {
                       {propertyImages.map((image, index) => (
                         <Draggable key={image.id} draggableId={image.id} index={index}>
                           {(provided, snapshot) => (
-                            <div 
+                            <div
                               className={`image-preview ${snapshot.isDragging ? 'dragging' : ''}`}
                               ref={provided.innerRef}
                               {...provided.draggableProps}
@@ -108,7 +108,7 @@ const PhotosSection = () => {
                           )}
                         </Draggable>
                       ))}
-                      
+
                       {/* Add more photos button */}
                       <div className="add-more-photos" onClick={handleBrowseFiles}>
                         <div className="add-icon">
@@ -116,7 +116,7 @@ const PhotosSection = () => {
                         </div>
                         <p>Add More Photos</p>
                       </div>
-                      
+
                       {provided.placeholder}
                     </div>
                   )}
@@ -124,16 +124,18 @@ const PhotosSection = () => {
               </DragDropContext>
             </div>
           ) : (
-            <div className="upload-area">
-              <div className="upload-icon">
-                <FaArrowUp size={24} />
+            <div className="upload-area  position-relative overflow-hidden bdrs12 text-center mb30 px-2">
+              <div className="icon mb30">
+                <span className="flaticon-upload" style={{
+                  fontSize: '60px',
+                }} />
               </div>
               <div className="upload-text">
                 <p className="upload-title">Upload/Drag photos of your property</p>
                 <p className="upload-subtitle">Photos must be JPG or PNG format and at least 2048x768</p>
               </div>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="browse-files-btn"
                 onClick={handleBrowseFiles}
               >

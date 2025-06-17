@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Import UserProfileMenu component
 import UserProfileMenu from './UserProfileMenu';
 
-const BackofficeLayoutContent = ({ children  }) => {
+const BackofficeLayoutContent = ({ children }) => {
   const t = useTranslations('Backoffice');
   const { user } = useAuth();
 
@@ -23,34 +23,30 @@ const BackofficeLayoutContent = ({ children  }) => {
   // Don't apply AuthGuard to login page
   if (isLoginPage) {
     return (
-    <div className="backoffice-container">
-      {/* Main Content */}
-      <div className="backoffice-main" style={{ width: '100%' }}>
-        {/* Content */}
-        <main className="backoffice-content">
-          {children}
-        </main>
-      </div>
-    </div>
-    );
-  }
-  
-  // Apply AuthGuard to all other backoffice pages
-  return (
-    <AuthGuard>
       <div className="backoffice-container">
-        {/* Sidebar */}
-        <BackofficeSidebar />
-        <ToastContainer position="top-right" autoClose={3000} />
         {/* Main Content */}
-        <div className="backoffice-main">
-
+        <div className="backoffice-main" style={{ width: '100%' }}>
           {/* Content */}
           <main className="backoffice-content">
             {children}
           </main>
         </div>
       </div>
+    );
+  }
+
+  // Apply AuthGuard to all other backoffice pages
+  return (
+    <AuthGuard>
+      
+      <div className="dashboard__main pl0-md">
+        <div className="dashboard__content  bgc-f7">
+          <div className="row pb40 d-block d-lg-none">
+            </div>
+            {children}
+           </div>
+        </div>
+   
     </AuthGuard>
   );
 };
@@ -62,6 +58,7 @@ const BackofficeLayout = ({ children }) => {
       <BackofficeLayoutContent>
         {children}
       </BackofficeLayoutContent>
+      <ToastContainer position="top-right" autoClose={3000} />
     </AuthProvider>
   );
 };

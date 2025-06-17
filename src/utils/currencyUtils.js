@@ -1,8 +1,9 @@
 /**
  * Utility functions for currency conversion and formatting
  */
+import { getCookie } from 'cookies-next';
 
-// Map locale to currency code
+// Map locale to currency code (fallback if no currency cookie is set)
 const localeToCurrency = {
   'th': 'THB',
   'en': 'USD',
@@ -15,24 +16,46 @@ const defaultRates = {
   'THB': 1,
   'USD': 0.030640,
   'CNY': 0.20,
-  'RUB': 2.50
+  'RUB': 2.50,
+  'GBP': 0.023,
+  'EUR': 0.027
 };
 
 // Currency symbols
-const currencySymbols = {
+export const currencySymbols = {
   'THB': '฿',
   'USD': '$',
   'CNY': '¥',
-  'RUB': '₽'
+  'RUB': '₽',
+  'GBP': '£',
+  'EUR': '€'
 };
 
 /**
- * Get currency symbol for a locale
- * @param {string} locale - Current locale (th, en, zh, ru)
+ * Get selected currency code
+ * @param {string} locale - Current locale (th, en, zh, ru) as fallback
+ * @returns {string} Currency code
+ */
+export const getSelectedCurrency = (locale) => {
+  // First check if user has selected a specific currency
+  const cookieCurrency = typeof window !== 'undefined' ? getCookie('currency') : null;
+
+  // If cookie exists and is a valid currency, use it
+  if (cookieCurrency && currencySymbols[cookieCurrency]) {
+    return cookieCurrency;
+  }
+
+  // Otherwise fall back to locale-based currency
+  return localeToCurrency[locale] || 'THB';
+};
+
+/**
+ * Get currency symbol for a locale or selected currency
+ * @param {string} locale - Current locale (th, en, zh, ru) as fallback
  * @returns {string} Currency symbol
  */
 export const localeToCurrencySymbol = (locale) => {
-  const currency = localeToCurrency[locale] || 'THB';
+  const currency = getSelectedCurrency(locale);
   return currencySymbols[currency] || '฿';
 };
 
@@ -66,7 +89,7 @@ export const fetchCurrencyRates = async () => {
     }
 
     const data = await response.json();
-    
+
     // Format the rates into a more usable object
     const rates = {};
     data.data.forEach(curr => {
@@ -76,7 +99,7 @@ export const fetchCurrencyRates = async () => {
     // Update cache
     currencyRatesCache = rates;
     lastFetchTime = now;
-    
+
     return rates;
   } catch (error) {
     console.error('Error fetching currency rates:', error);
@@ -88,23 +111,20 @@ export const fetchCurrencyRates = async () => {
 /**
  * Convert price from THB to target currency
  * @param {number} priceInTHB - Original price in THB
- * @param {string} locale - Current locale (th, en, zh, ru)
+ * @param {string} locale - Current locale (th, en, zh, ru) as fallback
  * @param {Object} rates - Object with currency rates
  * @returns {number} Converted price
  */
 export const convertPrice = (priceInTHB, locale, rates = defaultRates) => {
-  const targetCurrency = localeToCurrency[locale] || 'THB';
-  
+  const targetCurrency = getSelectedCurrency(locale);
+
   // If target is THB, no conversion needed
   if (targetCurrency === 'THB') {
     return priceInTHB;
   }
-  
+
   const rate = rates[targetCurrency] || defaultRates[targetCurrency];
-  
-  // For most currencies we divide by the rate (since rates are THB to target)
-  // but in this specific case we're multiplying because the rates are stored as
-  // "how many of target currency equals 1 THB"
+
   return priceInTHB * rate;
 };
 
@@ -120,26 +140,25 @@ export const formatPrice = (price, locale = 'th', showCurrencySymbol = true) => 
     return '-';
   }
 
-  const targetCurrency = localeToCurrency[locale] || 'THB';
+  const targetCurrency = getSelectedCurrency(locale);
   const symbol = showCurrencySymbol ? currencySymbols[targetCurrency] : '';
-  
+
   // Format number with thousands separator and no decimal places
   let formattedPrice;
-  
-  if (locale === 'th') {
-    // Thai uses its own number formatting
-    formattedPrice = new Intl.NumberFormat('th-TH', { 
-      maximumFractionDigits: 0 
-    }).format(price);
-  } else {
-    // Other locales
-    formattedPrice = new Intl.NumberFormat(locale === 'en' ? 'en-US' : 
-                                          locale === 'zh' ? 'zh-CN' : 
-                                          locale === 'ru' ? 'ru-RU' : 'th-TH', { 
-      maximumFractionDigits: 0 
-    }).format(price);
-  }
-  
+
+  // Select number formatting based on currency
+  const formatLocale =
+    targetCurrency === 'THB' ? 'th-TH' :
+      targetCurrency === 'USD' ? 'en-US' :
+        targetCurrency === 'CNY' ? 'zh-CN' :
+          targetCurrency === 'RUB' ? 'ru-RU' :
+            targetCurrency === 'GBP' ? 'en-GB' :
+              targetCurrency === 'EUR' ? 'de-DE' : 'th-TH';
+
+  formattedPrice = new Intl.NumberFormat(formatLocale, {
+    maximumFractionDigits: 0
+  }).format(price);
+
   return `${symbol}${formattedPrice}`;
 };
 
@@ -154,13 +173,13 @@ export const convertAndFormatPrice = async (priceInTHB, locale = 'th', showCurre
   if (priceInTHB === null || priceInTHB === undefined || isNaN(priceInTHB)) {
     return '-';
   }
-  
+
   // Get latest rates
   const rates = await fetchCurrencyRates();
-  
+
   // Convert price
   const convertedPrice = convertPrice(priceInTHB, locale, rates);
-  
+
   // Format and return
   return formatPrice(convertedPrice, locale, showCurrencySymbol);
 };
@@ -172,10 +191,10 @@ export const convertAndFormatPriceSync = (priceInTHB, locale = 'th', showCurrenc
   if (priceInTHB === null || priceInTHB === undefined || isNaN(priceInTHB)) {
     return '-';
   }
-  
+
   // Convert price using default rates
   const convertedPrice = convertPrice(priceInTHB, locale, defaultRates);
-  
+
   // Format and return
   return formatPrice(convertedPrice, locale, showCurrencySymbol);
 };

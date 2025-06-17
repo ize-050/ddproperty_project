@@ -37,6 +37,20 @@
       "bath": "bath",
       "sqm": "sqm"
     },
+    "Language":{
+    "title":"ภาษา",
+    "subtitle":"จัดการภาษา",
+    "addNewLanguage":"เพิ่มภาษาใหม่",
+    "editLanguage":"แก้ไขภาษา",
+    "deleteLanguage":"ลบภาษา",
+    "language":"ภาษา",
+    "code":"รหัส",
+    "status":"สถานะ",
+    "action":"การดำเนินการ",
+    "rent":"เช่า",
+    "buy":"ซื้อ",
+    "blog":"บทความ"
+  },
     "ExploreLocations": {
       "title": "Популярные места в Паттайе",
       "subtitle": "Кондоминиумы, дома и виллы с бассейном на продажу и в аренду в Паттайе и окрестностях: Джомтьен, Кхао Пратамнак, Банг Сарай, Восточная Паттайя, Бан Ампур, На Клуа и Саттахип",
@@ -133,7 +147,22 @@
     "getPromoWithNewsletter": "Получите промо с рассылкой",
     "enterEmail": "Enter your email",
     "subscribe": "Подпишитесь",
-    "sitemap": "Карта сайта"
+    "sitemap": "Карта сайта",
+    "menu":{
+      "dashboard": "Dashboard",
+      "message": "Message",
+      "addproperty": "Add Property",
+      "my_properties": "My Properties",
+      "blog": "Blog",
+      "allpost": "All Post",
+      "addnewpost": "Add New Post",
+      "setting": "All User",
+      "alluser": "All User",
+      "language": "Language",
+      "currency": "Currency",
+      "profile" :"Manage Account",
+      "myprofile": "My Profile"
+    }
   },
 
   "hero": {

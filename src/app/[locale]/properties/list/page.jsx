@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 import ListingPropertiesPage from '@/components/properties/listing/ListingPropertiesPage';
 import serverApi from '@/utils/serverApi';
+import SidebarStickyBar from '@/components/home/home/SidebarStickyBar';
 
 // บังคับให้โหลดข้อมูลใหม่ทุกครั้งที่เข้าหน้า
 export const dynamic = 'force-dynamic';
@@ -149,6 +150,7 @@ export default function PropertyListPage({ params, searchParams }) {
   return (
     <div className="main-wrapper">
       <Suspense fallback={<PropertyListingLoading />}>
+        <SidebarStickyBar  />
         <PropertyListContent searchParams={searchParams} />
       </Suspense>
     </div>

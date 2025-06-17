@@ -1,0 +1,146 @@
+// Loading Skeleton Animation Styles
+
+// Base animation for all skeleton elements
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+// Common skeleton styling
+.skeleton-element {
+  background-color: #e8e8e8;
+  background-image: linear-gradient(90deg, #e8e8e8, #f5f5f5, #e8e8e8);
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+// Property Detail Loading Styles
+.property-detail-loading {
+  padding: 30px 0;
+  
+  .skeleton-header {
+    margin-bottom: 24px;
+    
+    .skeleton-breadcrumb {
+      @extend .skeleton-element;
+      height: 16px;
+      width: 60%;
+      max-width: 400px;
+      margin-bottom: 16px;
+    }
+    
+    .skeleton-title {
+      @extend .skeleton-element;
+      height: 32px;
+      width: 80%;
+      margin-bottom: 12px;
+    }
+    
+    .skeleton-subtitle {
+      @extend .skeleton-element;
+      height: 20px;
+      width: 50%;
+    }
+  }
+  
+  .skeleton-gallery {
+    margin-bottom: 32px;
+    
+    .skeleton-main-image {
+      @extend .skeleton-element;
+      height: 400px;
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+    
+    .skeleton-thumbnails {
+      display: flex;
+      gap: 12px;
+      
+      .skeleton-thumb {
+        @extend .skeleton-element;
+        height: 80px;
+        width: 80px;
+        border-radius: 8px;
+      }
+    }
+  }
+  
+  .skeleton-content {
+    padding: 20px 0;
+    
+    .skeleton-tabs {
+      @extend .skeleton-element;
+      height: 40px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    
+    .skeleton-text-block {
+      @extend .skeleton-element;
+      height: 16px;
+      width: 100%;
+      margin-bottom: 16px;
+      
+      &.short {
+        width: 70%;
+      }
+    }
+  }
+  
+  .skeleton-sidebar {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    
+    .skeleton-price {
+      @extend .skeleton-element;
+      height: 36px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    
+    .skeleton-agent {
+      @extend .skeleton-element;
+      height: 80px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    
+    .skeleton-button {
+      @extend .skeleton-element;
+      height: 48px;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+// Card skeleton styles
+.skeleton-card {
+  @extend .skeleton-element;
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+// List item skeleton styles
+.skeleton-list-item {
+  @extend .skeleton-element;
+  height: 24px;
+  width: 100%;
+  margin-bottom: 12px;
+  
+  &.short {
+    width: 60%;
+  }
+}

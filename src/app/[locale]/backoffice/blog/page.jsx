@@ -323,7 +323,6 @@ const BlogPage = () => {
   });
 
   return (
-    <BackofficeLayout>
       <div className="blog-page">
         <div className="blog-container">
           <div className="page-header">
@@ -443,8 +442,7 @@ const BlogPage = () => {
             )}
           </div>
         </div>
-      </div>
-    </BackofficeLayout>
+      </div> 
   );
 };
 

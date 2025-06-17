@@ -96,8 +96,6 @@ const PropertyMap = ({ property }) => {
 
   return (
     <div className="property-map-container">
-      <h3 className="section-title mb-4">{t('location')}</h3>
-
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}

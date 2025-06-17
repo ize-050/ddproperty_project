@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Navigation, Pagination } from "swiper/modules";
@@ -147,7 +147,9 @@ const RandomProperties = ({ randomProperties }) => {
                   <div className="listing-style9">
                     <div className="list-thumb">
                       <img
-                        className="w-100 h-100 cover"
+                        width={500}
+                        height={465}
+                        className="cover"
                         src={property.images && property.images[0] && property.images[0].url ?
                           (property.images[0].url.startsWith('http') ?
                             property.images[0].url : property.images[0].url
@@ -158,12 +160,62 @@ const RandomProperties = ({ randomProperties }) => {
 
                       />
                       <div className="sale-sticker-wrap">
-                        {/*<div className="list-tag rounded-0 fz12">*/}
-                        {/*  <span className="flaticon-electricity" />*/}
-                        {/*  FEATURED*/}
-                        {/*</div>*/}
-                        <div className="list-tag2 rounded-0 fz12">{property.listings?.map((listing) => listing.listingType).join(', ')}</div>
+                        <div className="special-tags">
+                          {property.labels?.map((label, index) => (
+                            <React.Fragment key={`${property.id}-${label.labelType}-${index}`}>
+                              {label.labelType === 'hot-offer' && (
+                                <div className="tag hot-offer">HOT OFFER</div>
+                              )}
+                              {label.labelType === 'new-listing' && (
+                                <div className="tag new-listing">NEW LISTING</div>
+                              )}
+                              {label.labelType === 'resale' && (
+                                <div className="tag resale">RESALE</div>
+                              )}
+                              {label.labelType === 'rented' && (
+                                <div className="tag rented">RENTED</div>
+                              )}
+                              {label.labelType === 'new-development' && (
+                                <div className="tag new-development">NEW DEVELOPMENT</div>
+                              )}
+                              {label.labelType === 'reduce-price' && (
+                                <div className="tag reduce-price">REDUCE PRICE</div>
+                              )}
+                              {label.labelType === 'sold' && (
+                                <div className="tag sold">SOLD</div>
+                              )}
+                              {label.labelType === 'under-construction' && (
+                                <div className="tag under-construction">UNDER CONSTRUCTION</div>
+                              )}
+                            </React.Fragment>
+                          ))}
+                        
+                        <div className="property-type">
+                          {property.listings && property.listings.length > 1 ? (
+                            <>
+                              {property.listings.some(listing => listing.listingType === 'SALE') &&
+                                property.listings.some(listing => listing.listingType === 'RENT') && (
+                                  <div className="for-rent">For Sale/Rent</div>
+                                )}
+                              {property.listings.every(listing => listing.listingType === 'SALE') && (
+                                <div className="for-sale">For Sale</div>
+                              )}
+                              {property.listings.every(listing => listing.listingType === 'RENT') && (
+                                <div className="for-rent">For Rent</div>
+                              )}
+                            </>
+                          ) : property.listings && property.listings[0]?.listingType && (
+                            <>
+                              <div className={property.listings[0].listingType === 'SALE' ? "for-sale" : "for-rent"}>
+                                {property.listings[0].listingType === 'SALE' ? 'For Sale' : 'For Rent'}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        </div>
                       </div>
+
+
 
                       <div className="list-meta">
                         <Link href={`/property_detail/${property.id}`} className="list-meta-link">

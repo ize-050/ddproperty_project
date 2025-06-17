@@ -461,6 +461,24 @@
         &.new-listing {
           background-color: #f1c40f;
         }
+        &.resale {
+          background-color: #7c2e63;
+        }
+        &.rented {
+          background-color: #f1c40f;
+        }
+        &.new-development {
+          background-color: #2a7bb4;
+        }
+        &.reduce-price {
+          background-color: #e1900f;
+        }
+        &.sold {
+          background-color: #f1c40f;
+        }
+        &.under-construction {
+          background-color: #f1c40f;
+        }
       }
     }
     
@@ -484,10 +502,12 @@
       }
       
       .for-sale {
-        color: #3498db;
+        color: #e37724;
       }
     }
   }
+
+  
   
   .property-content {
     padding: 15px;

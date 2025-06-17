@@ -31,9 +31,8 @@ export async function generateMetadata({ params }) {
     const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
     const propertyUrl = `${localizedUrl}/property_detail/${id}`;
     
-    // สร้าง title ตามชื่อโครงการและประเภท property
-    const propertyType = getPropertyTypeText(property.propertyType, locale);
-    const title = `${property.projectName} - ${propertyType} | DDProperty`;
+    // สร้าง title ตามชื่อโครงการเท่านั้น
+    const title = `${property.projectName}`;
     
     return {
       title,
@@ -170,9 +169,8 @@ async function PropertyDetailContent({ params }) {
 export default function PropertyDetail({ params }) {
   return (
     <main>
-      <Suspense fallback={<LoadingAnimation />}>
+      <Suspense fallback={<LoadingAnimation type="property-detail" />}>
         <PropertyDetailContent params={params} />
-
       </Suspense>
     </main>
   );

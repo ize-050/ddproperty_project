@@ -106,7 +106,9 @@ const usePropertyFormStore = create((set) => ({
   setFormData: (newData) => set((state) => ({
     formData: { ...state.formData, ...newData }
   })),
-
+  setShowMap: (newData) => set((state) => ({
+    showMap: newData
+  })),
   // ฟังก์ชันอัปเดตสถานะของ amenity icons
   setFeature: (type, key, value) => {
 
@@ -710,52 +712,9 @@ const usePropertyFormStore = create((set) => ({
       constructionYear: '',
       communityFees: '',
       promotionalPrice: '',
-      features: {
-        airConditioner: false,
-        bbq: false,
-        dryerMachine: false,
-        hairDryer: false,
-        karaokeBox: false,
-        kitchenware: false,
-        microWave: false,
-        oven: false,
-        privateLift: false,
-        refrigerator: false,
-        tv: false,
-        wardrobe: false,
-        washingMachine: false,
-        waterHeater: false,
-        wifi: false,
-        balcony: false,
-        garden: false,
-        parking: false,
-        pool: false,
-        security: false,
-        fitness: false,
-        petFriendly: false
-      },
+      features: {},
       amenities: {}, // Reset amenities
-      highlights: {
-        duplex: false,
-        penthouse: false,
-        oneBedPlus: false,
-        duplexPenthouse: false,
-        brandNew: false,
-        petsAllowed: false,
-        companyRegistration: false,
-        rentToOwn: false,
-        npaAssets: false,
-        foreignerQuota: false,
-        saleDown: false,
-        newDevelopment: false,
-        newListing: false,
-        reducePrice: false,
-        resale: false,
-        underConstruction: false,
-        hotOffer: false,
-        rented: false,
-        sold: false,
-      },
+      highlights: {},
       propertyLabels: {}, // Reset property labels
       contactInfo: {
         phone: '',
@@ -767,25 +726,11 @@ const usePropertyFormStore = create((set) => ({
         facebookMessenger: '',
         instagram: ''
       },
-      nearby: {
-        nearPark: false,
-        nearMall: false,
-        nearTrainStation: false,
-        nearTransportation: false,
-        nearHospital: false,
-        nearAirport: false,
-        nearBeach: false,
-        nearMarket: false,
-        nearSchool: false,
-      },
-      views: {
-        seaView: false,
-        cityView: false,
-        gardenView: false,
-        lakeView: false,
-        mountainView: false,
-        poolView: false,
-      },
+      nearby: {},
+      views: {},
+      facilities: {},
+
+      views: {  },
       facilities: {
         'common-area': {},
         'dining': {},

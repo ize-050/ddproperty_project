@@ -265,7 +265,7 @@ const AllUserPage = () => {
   };
   
   return (
-    <BackofficeLayout>
+    <>
       <div className="all-user-page">
         <div className="page-header">
           <div className="title-section">
@@ -384,7 +384,7 @@ const AllUserPage = () => {
           mode={modalMode}
         />
       )}
-    </BackofficeLayout>
+    </>
   );
 };
 

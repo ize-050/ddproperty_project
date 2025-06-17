@@ -22,8 +22,7 @@ const PropertyTypes = () => {
   const commonT = useTranslations('common');
   const locale = useLocale();
 
-  // We want to show only these property types in this order
-  const targetTypes = ['CONDO', 'HOUSE', 'VILLA', 'APARTMENT', 'TOWNHOUSE', 'LAND', 'HOME OFFICE'];
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,26 +31,7 @@ const PropertyTypes = () => {
 
         const typesResponse = await propertyTypeService.getPropertyTypes();
 
-        const randomResponse = await propertyTypeService.getRandomPropertiesByType();
-        // Group random properties by type
-        const propertiesByType = {};
-        randomResponse.data.forEach(property => {
-          if (!propertiesByType[property.propertyType]) {
-            propertiesByType[property.propertyType] = property;
-          }
-        });
-
-        // Filter and sort to show only the target types and in the specified order
-        const filteredTypes = [];
-        targetTypes.forEach(targetType => {
-          const foundType = typesResponse.data.find(type => type.name === targetType);
-          if (foundType && foundType.count > 0) {
-            filteredTypes.push(foundType);
-          }
-        });
-
-        setPropertyTypes(filteredTypes);
-        setRandomProperties(propertiesByType);
+        setPropertyTypes(typesResponse.data);
         setError(null);
       } catch (err) {
         console.error('Error fetching property data:', err);
@@ -78,12 +58,6 @@ const PropertyTypes = () => {
     return locale === 'th' ? propertyType.nameTh : propertyType.name;
   };
 
-  // Get a property image for a specific type
-  const getPropertyImage = (propertyType) => {
-    if (randomProperties[propertyType.name]) {
-      return randomProperties[propertyType.name].images[0].url;
-    }
-  };
 
   if (loading) {
     return (
@@ -189,27 +163,27 @@ const PropertyTypes = () => {
                   loop={true}
                 >
                   {propertyTypes.map((propertyType) => (
-                         <SwiperSlide key={propertyType.id}>
-                         <div className="item">
-                           <Link href={`/properties/list?propertyType=${propertyType.name}`} style={{ textDecoration: 'none' }}>
-                             <div className="apartment-style2 text-center mb30">
-                               <div className="apartment-img">
-                                 <Image
-                                   width={279}
-                                   height={332}
-                                   className="w-100 h-100 cover"
-                                   src={getPropertyImage(propertyType)}
-                                   alt="homes"
-                                 />
-                               </div>
-                               <div className="apartment-content">
-                                 <h6 className="title mb-0">{getLocalizedName(propertyType)}</h6>
-                                 <p className="text mb-0">{propertyType.count}</p>
-                               </div>
-                             </div>
-                           </Link>
-                         </div>
-                       </SwiperSlide>
+                    <SwiperSlide key={propertyType.id}>
+                      <div className="item">
+                        <Link href={`/properties/list?propertyType=${propertyType.name}`} style={{ textDecoration: 'none' }}>
+                          <div className="apartment-style2 text-center mb30">
+                            <div className="apartment-img">
+                              <img
+                                width={279}
+                                height={200}
+                                className="w-100 h-100 cover"
+                                src={propertyType.image}
+                                alt="homes"
+                              />
+                            </div>
+                            <div className="apartment-content">
+                              <h6 className="title mb-0" style={{ fontSize: '16px' ,color:"#fff" }}>{getLocalizedName(propertyType)}</h6>
+                              <p className="text mb-0" style={{ fontSize: '14px' ,color:"#fff" }}>{propertyType.count} {propertyType.count === 1 ? 'Property' : 'Properties'}</p>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+                    </SwiperSlide>
                   ))}
                 </Swiper>
               </div>

@@ -1,67 +1,78 @@
-import {
-  homeItems,
-  blogItems,
-  listingItems,
-  propertyItems,
-  pageItems,
-} from "@/data/navItems";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
-const MainMenu = () => {
+const MainMenu = ({getString}) => {
+  const locale = useLocale();
   const pathname = usePathname();
-  const t = useTranslations('header');
-  const [topMenu, setTopMenu] = useState("");
-  const searchParams = useSearchParams();
-  const [submenu, setSubmenu] = useState("");
-  const [activeLink, setActiveLink] = useState("");
-  const typeParam = searchParams.get('type');
+  const router = useRouter();
 
-  const isActive = (href) => {
-    if (pathname === href) return true;
+  const [isOpen, setIsOpen] = useState(false);
+  const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    // ถ้าอยู่ที่หน้า properties/list ให้เช็ค type parameter
-    if (pathname.includes('/properties/list')) {
-      if (href.includes('type=sale') && typeParam === 'sale') return true;
-      if (href.includes('type=rent') && typeParam === 'rent') return true;
-    }
+  // Fetch menu items from the backend
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+        setMenuItems([
+          { id: "home", label: getString("home"), href: '/' + locale + '/' },
+          { id: "forSale", label: getString('buy'), href: '/' + locale + '/properties/list?type=sale' },
+          { id: "forRent", label: getString('rent'), href: '/' + locale + '/properties/list?type=rent' },
+          { id: "blog", label: getString('blog'), href: '/' + locale + '/blog' },
+          { id: "about", label: getString('about'), href: '/' + locale + '/about' },
+          { id: "contact", label: getString('contact'), href: '/' + locale + '/contact' },
+        ]);
+        setLoading(false)
+    };
 
-    return false;
+    fetchMenuItems();
+  }, [locale, getString]);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
   };
 
-
-  const menuItems = [
-    { id: "home", label: t("home"), href: "/" },
-    { id: "forSale", label: t('buy'), href: "/properties/list?type=sale" },
-    { id: "forRent", label: t('rent'), href: "/properties/list?type=rent" },
-    { id: "blog", label: t('blog'), href: "/blog" },
-    { id: "about", label: t('about'), href: "/about" },
-    { id: "contact", label: t('contact'), href: "/contact" },
-  ];
-
-
-
-  const handleActive = (link) => {
-    if (link.split("/")[1] == pathname.split("/")[1]) {
-      return "menuActive";
-    }
+  const closeMenu = () => {
+    setIsOpen(false);
   };
+
+  const handleLinkClick = (href) => {
+    closeMenu();
+    router.push(href);
+  };
+
+  useEffect(()=>{
+    console.log("MenuItems",menuItems);
+  },[menuItems])
+
+  const isActive = (path) => {
+    return pathname === path;
+  };
+
   return (
     <ul className="ace-responsive-menu">
-
-      {menuItems.map((item) => (
-            <li key={item.id} className="visible_list">
-              <Link
-                href={item.href}
-                className={isActive(item.href) ? 'active list-item' : 'list-item'}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-
+      {loading ? (
+        // Show loading placeholders
+        Array(5).fill(0).map((_, index) => (
+          <li key={`loading-${index}`} className="visible_list">
+            <span className="menu-loading-placeholder"></span>
+          </li>
+        ))
+      ) : (
+        // Show actual menu items
+        menuItems.map((item) => (
+          <li key={item.id} className="visible_list">
+            <Link href={item.href}>
+              {item.icon && <i className={`fa ${item.icon} me-2`}></i>}
+              {item.label}
+            </Link>
+          </li>
+        ))
+      )}
     </ul>
   );
 };

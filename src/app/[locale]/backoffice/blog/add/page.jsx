@@ -189,7 +189,6 @@ const CreateBlogPage = () => {
     }
   };
   return (
-    <BackofficeLayout>
       <div className="blog-page">
         <div className="blog-container">
           <div className="page-header">
@@ -247,7 +246,7 @@ const CreateBlogPage = () => {
   
             {/* Rich Text Editor */}
             <div className="form-group editor-container">
-              <label htmlFor="content">Content*</label>
+        
               {languages.map((lang) => (
                 <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
                   <Controller
@@ -323,7 +322,6 @@ const CreateBlogPage = () => {
           </form>
         </div>
       </div>
-    </BackofficeLayout>
   );
 };
 

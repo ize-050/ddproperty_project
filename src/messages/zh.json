@@ -105,7 +105,36 @@
     "language": "Language",
     "currency": "Currency",
     "myProfile": "My Profile",
-    "manageYourProfile": "管理您的个人资料"
+    "manageYourProfile": "管理您的个人资料",
+    "menu":{
+      "dashboard": "Dashboard",
+      "message": "Message",
+      "addproperty": "Add Property",
+      "my_properties": "My Properties",
+      "blog": "Blog",
+      "allpost": "All Post",
+      "addnewpost": "Add New Post",
+      "setting": "All User",
+      "alluser": "All User",
+      "language": "Language",
+      "currency": "Currency",
+      "profile" :"Manage Account",
+      "myprofile": "My Profile"
+    }
+  },
+  "Language":{
+    "title":"ภาษา",
+    "subtitle":"จัดการภาษา",
+    "addNewLanguage":"เพิ่มภาษาใหม่",
+    "editLanguage":"แก้ไขภาษา",
+    "deleteLanguage":"ลบภาษา",
+    "language":"ภาษา",
+    "code":"รหัส",
+    "status":"สถานะ",
+    "action":"การดำเนินการ",
+    "rent":"เช่า",
+    "buy":"ซื้อ",
+    "blog":"บทความ"
   },
   "Footer": {
     "about": "关于我们",

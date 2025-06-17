@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FiSearch, FiMenu } from "react-icons/fi";
-import AdvancedFilterModal from "./AdvancedFilterModal";
-import AdvancedFilterContent from "./AdvancedFilterContent";
 import usePropertyFilterStore from '@/store/usePropertyFilterStore';
 import { useSearchParams } from "next/navigation";
+import AdvanceFilterContent from "./AdvancedFilterContent";
 
 export default function HeroSearchBar({
   onSearch,
@@ -12,41 +11,34 @@ export default function HeroSearchBar({
 }) {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const searchParams = useSearchParams();
-  const {
-    propertyType,
-    minPrice,
-    maxPrice,
-    zoneId,
-    bedrooms,
-    bathrooms,
-    setPropertyType,
-    setMinPrice,
-    setMaxPrice,
-    setZoneId,
-    setBedrooms,
-    setBathrooms,
-    resetFilters
-  } = usePropertyFilterStore();
-  
+  const {advancedSearchVisible,setAdvancedSearchVisible} = usePropertyFilterStore();
+ 
   // ดึงค่า type จาก URL parameters
   const typeParam = searchParams.get('type');
-  
+  const [searchQuery, setSearchQuery] = useState('');
+
   // กำหนด initial listing type จาก URL parameter ถ้ามี
   const getInitialListingType = () => {
     if (typeParam === 'rent') return "RENT";
     if (typeParam === 'sale') return "SALE";
     return initialListingType;
   };
-  
+
+  const tabs = [
+    { id: "buy", label: "Buy" },
+    { id: "rent", label: "Rent" },
+  ];
+
   const [listingType, setListingType] = useState(getInitialListingType());
-  
+
   // อัพเดต listingType เมื่อ URL parameters เปลี่ยน
   useEffect(() => {
     if (typeParam === 'rent') {
-
       setListingType("RENT");
-    } else if (typeParam === 'sale') {
+      setActiveTab("rent");
+    } else if (typeParam === 'buy') {
       setListingType("SALE");
+      setActiveTab("buy");
     }
   }, [typeParam]);
 
@@ -54,74 +46,137 @@ export default function HeroSearchBar({
   // (ถ้าต้องการเก็บ listingType ใน filter store ให้เพิ่ม field และ setter ใน usePropertyFilterStore)
 
   const handleSearch = () => {
-    onSearch && onSearch({
+    onSearch({
       listingType,
-      propertyType,
-      minPrice,
-      maxPrice,
-      zoneId,
-      bedrooms,
-      bathrooms
+      searchQuery,
     });
   };
 
+ 
+
+  
+
+  const [activeTab, setActiveTab] = useState(typeParam === 'rent' ? "rent" : "buy");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    // Update listing type based on tab
+    if (tab === "buy") {
+      setListingType("SALE");
+    } else if (tab === "rent") {
+      setListingType("RENT");
+    }
+  };
+
   return (
-    <div className="hero-search-bar">
-      <div className="search-tabs">
-        <button
-          className={`tab-btn${listingType === "SALE" ? " active" : ""}`}
-          onClick={() => setListingType("SALE")}
-        >
-          Buy
-        </button>
-        <button
-          className={`tab-btn${listingType === "RENT" ? " active" : ""}`}
-          onClick={() => setListingType("RENT")}
-        >
-          Rent
-        </button>
+    <>
+      <div className="inner-banner-style1 text-center">
+        <h2 className="hero-title animate-up-1 ">Find Your Dream Home</h2>
+        <p className="hero-text fz15 animate-up-2">
+          We’ve more than 745,000 apartments, place & plot.
+        </p> 
       </div>
-      <div className="search-main">
-        <input
-          className="search-input"
-          type="text"
-          value={(() => {
-            const pt = [
-              { value: 'CONDO', label: 'Condominium' },
-              { value: 'HOUSE', label: 'House' },
-              { value: 'TOWNHOUSE', label: 'Townhouse' },
-              { value: 'VILLA', label: 'Villa' },
-              { value: 'LAND', label: 'Land' },
-              { value: 'APARTMENT', label: 'Apartment' },
-              { value: 'COMMERCIAL', label: 'Commercial' },
-              { value: 'OFFICE', label: 'Office' },
-              { value: 'RETAIL', label: 'Retail' },
-              { value: 'WAREHOUSE', label: 'Warehouse' },
-              { value: 'FACTORY', label: 'Factory' },
-              { value: 'HOTEL', label: 'Hotel' },
-              { value: 'RESORT', label: 'Resort' },
-            ];
-            return pt.find((p) => p.value === propertyType)?.label || "";
-          })()}
-          placeholder="Condominium"
-          readOnly
-          style={{ cursor: "pointer" }}
-          onClick={() => setAdvancedOpen(true)}
-        />
-        <button className="advanced-btn" type="button" onClick={() => setAdvancedOpen(true)}>
-          <FiMenu size={18} style={{ marginRight: 6 }} /> Advanced
-        </button>
-        <AdvancedFilterModal open={advancedOpen} onClose={() => setAdvancedOpen(false)}>
-          <AdvancedFilterContent onClose={() => setAdvancedOpen(false)} type={typeParam}  />
-        </AdvancedFilterModal>
-        <button
-          className="search-btn"
-          type="button"
-          onClick={handleSearch}
-        >
-          <FiSearch size={22} />
-        </button>
+
+
+
+      {advancedSearchVisible && (
+        <div className="advance-feature-modal">
+          <div
+            className="modal fade show d-block"
+            id="advanceSeachModal"
+            tabIndex={-1}
+            aria-labelledby="advanceSeachModalLabel"
+            aria-hidden="false"
+            style={{paddingRight: '15px'}}
+          >
+            <div className="modal-dialog modal-dialog-centered modal-lg" style={{maxWidth: '800px'}}>
+              <div className="modal-content">
+                <AdvanceFilterContent 
+                  onClose={() => setAdvancedSearchVisible(false)} 
+                  type={typeParam} 
+                />
+              </div>
+            </div>
+          </div>
+          <div className="modal-backdrop fade show"></div>
+        </div>
+      )}
+
+   
+
+      <div className="advance-search-tab mt30  mx-auto animate-up-3">
+        <ul className="nav nav-tabs p-0 m-0">
+          {tabs.map((tab) => (
+            <li className="nav-item" key={tab.id}>
+              <button
+                className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
+                onClick={() => handleTabClick(tab.id)}
+              >
+                {tab.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="tab-content">
+          {tabs.map((tab) => (
+            <div
+              className={`${activeTab === tab.id ? "active" : ""} tab-pane`}
+              key={tab.id}
+            >
+              <div className="advance-content-style1">
+                <div className="row">
+                  <div className="col-md-8 col-lg-9">
+                    <div className="advance-search-field position-relative text-start">
+                      <form className="form-search position-relative">
+                        <div className="box-search">
+                          <span className="icon flaticon-home-1" />
+                          <input
+                            className="form-control bgc-f7 bdrs12"
+                            type="text"
+                            name="search"
+                            placeholder={`Search for ${tab.label}...`}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  {/* End .col-md-8 */}
+
+                  <div className="col-md-4 col-lg-3">
+                    <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-3 mt-md-0">
+                      <button
+                        className="advance-search-btn"
+                        type="button"
+                        onClick={() => setAdvancedSearchVisible(true)}
+                      >
+                        <span className="flaticon-settings" /> Advanced
+                      </button>
+                      <button
+                        className="advance-search-icon ud-btn btn-dark ms-4"
+                        type="button"
+                        onClick={handleSearch}
+                      >
+                        <span className="flaticon-search" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          ))}
+          
+        </div>
+
+
+      
+
       </div>
-    </div>
+
+
+    </>
   );
 }
+

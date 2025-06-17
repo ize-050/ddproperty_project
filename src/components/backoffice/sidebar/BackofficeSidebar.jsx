@@ -2,23 +2,24 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
-
+import  {useTranslations} from "next-intl";
 const SidebarDashboard = () => {
   const pathname = usePathname();
+  const t = useTranslations('backoffice');
 
   const sidebarItems = [
     {
       title: "MAIN",
       items: [
         {
-          href: "/dashboard-home",
-          icon: "flaticon-discovery",
-          text: "Dashboard",
+          href: "/backoffice/",
+          icon: "flaticon-protection",
+          text: t("menu.dashboard"),
         },
         {
-          href: "/dashboard-message",
-          icon: "flaticon-chat-1",
-          text: "Message",
+          href: "/backoffice/message",
+          icon: "flaticon-user",
+          text: t("menu.message"),
         },
       ],
     },
@@ -26,49 +27,59 @@ const SidebarDashboard = () => {
       title: "MANAGE LISTINGS",
       items: [
         {
-          href: "/dashboard-add-property",
-          icon: "flaticon-new-tab",
-          text: "Add New Property",
+          href: "/backoffice/add-property",
+          icon: "flaticon-protection",
+          text: t("menu.addproperty"),
         },
         {
-          href: "/dashboard-my-properties",
-          icon: "flaticon-home",
-          text: "My Properties",
-        },
-        {
-          href: "/dashboard-my-favourites",
-          icon: "flaticon-like",
-          text: "My Favorites",
-        },
-        {
-          href: "/dashboard-saved-search",
-          icon: "flaticon-search-2",
-          text: "Saved Search",
-        },
-        {
-          href: "/dashboard-reviews",
-          icon: "flaticon-review",
-          text: "Reviews",
+          href: "/backoffice/my-properties",
+          icon: "flaticon-user",
+          text: t("menu.my_properties"),
         },
       ],
     },
     {
-      title: "MANAGE ACCOUNT",
+      title: t("menu.allpost"),
       items: [
         {
-          href: "/dashboard-my-package",
+          href: "/backoffice/blog/add",
           icon: "flaticon-protection",
-          text: "My Package",
+          text: t("menu.addnewpost"),
         },
         {
-          href: "/dashboard-my-profile",
+          href: "/backoffice/blog",
           icon: "flaticon-user",
-          text: "My Profile",
+          text: t("menu.allpost"),
+        },
+      ],
+    },
+    {
+      title: t("menu.setting"),
+      items: [
+        {
+          href: "/backoffice/all-user",
+          icon: "flaticon-protection",
+          text: t("menu.alluser"),
         },
         {
-          href: "/login",
-          icon: "flaticon-logout",
-          text: "Logout",
+          href: "/backoffice/language",
+          icon: "flaticon-user",
+          text: t("menu.language"),
+        },
+        {
+          href: "/backoffice/currency",
+          icon: "flaticon-user",
+          text: t("menu.currency"),
+        },
+      ],
+    },
+    {
+      title: t("menu.profile"),
+      items: [
+        {
+          href: "/backoffice/my-profile",
+          icon: "flaticon-protection",
+          text: t("menu.myprofile"),
         },
       ],
     },
@@ -76,7 +87,10 @@ const SidebarDashboard = () => {
 
   return (
     <div className="dashboard__sidebar d-none d-lg-block">
-      <div className="dashboard_sidebar_list">
+      <div className="dashboard_sidebar_list" style={{
+        fontSize: "14px",
+        paddingTop: "50px"
+      }}>
         {sidebarItems.map((section, sectionIndex) => (
           <div key={sectionIndex}>
             <p
@@ -86,7 +100,7 @@ const SidebarDashboard = () => {
             >
               {section.title}
             </p>
-            {section.items.map((item, itemIndex) => (
+            {section?.items?.map((item, itemIndex) => (
               <div key={itemIndex} className="sidebar_list_item">
                 <Link
                   href={item.href}

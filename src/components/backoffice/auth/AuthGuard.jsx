@@ -18,10 +18,10 @@ const AuthGuard = ({ children }) => {
     // Check if user is authenticated
     const checkAuth = () => {
       const token = localStorage.getItem('auth_token');
-      
+
       if (!token) {
         // Redirect to login page if no token found
-        router.push('/backoffice/login');
+        window.location.href = '/backoffice/login';
         return;
       }
 

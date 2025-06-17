@@ -28,6 +28,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
         },
         body: JSON.stringify({
           name: data.name,
+          email: data.email,
           phone: data.phone,
           message: data.message,
           propertyId: property.id
@@ -53,7 +54,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content-1" onClick={(e) => e.stopPropagation()}>
         <button className="close-button" onClick={onClose}>×</button>
         
         <div className="modal-header">
@@ -69,6 +70,21 @@ const ContactModal = ({ isOpen, onClose, property }) => {
               {...register("name", { required: "Name is required" })}
             />
             {errors.name && <span className="error">{errors.name.message}</span>}
+          </div>
+
+          <div className="form-group phone-group">
+            <input 
+              type="email" 
+              placeholder="Email" 
+              {...register("email", { 
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Please enter a valid email"
+                }
+              })}
+            />
+            {errors.email && <span className="error">{errors.email.message}</span>}
           </div>
           
           <div className="form-group phone-group">

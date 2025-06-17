@@ -86,8 +86,8 @@ const ViewSection = () => {
 
   // CSS styles for active items
   const activeStyle = {
-    backgroundColor: '#e3f2fd',
-    borderColor: '#2196f3',
+    backgroundColor: '#E8F5E9',
+    borderColor: '#A5D6A7',
     color: '#000',
   };
 

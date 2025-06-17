@@ -12,8 +12,8 @@ $odd-row-bg: #ffffff;
 $button-red: #d22630;
 
 .my-properties-page {
-  padding: 0;
-  background-color: #f8f9fa;
+  padding: 24px;
+  min-height: 100vh;
 
   .page-header {
     display: flex;
@@ -177,6 +177,7 @@ $button-red: #d22630;
   // Properties Table
   .properties-table-container {
     background-color: white;
+    padding: 2rem;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: $card-shadow;

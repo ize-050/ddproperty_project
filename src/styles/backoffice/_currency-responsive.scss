@@ -1,0 +1,40 @@
+// Responsive overrides for Currency Page
+// Stacks items and expands widths on small screens
+@media (max-width: 768px) {
+  .currency-page {
+    padding: 16px;
+
+    .currency-rates-container {
+      max-width: 100%;
+      margin: 0 auto;
+      max-width: 500px;
+    }
+    
+
+    .currency-rate-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 0;
+
+      .currency-flag-code {
+        min-width: unset;
+      }
+
+      .currency-value-name {
+        width: 100%;
+        justify-content: space-between;
+
+        .currency-input {
+          width: 100%;
+          max-width: none;
+          padding-right: 110px;
+        }
+        
+        .currency-name {
+          right: 0px;
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ import PropertyMap from './PropertyMap';
 
 const PropertyContent = ({ property, description, getPropertyTypeText, getFurnishingText }) => {
   const t = useTranslations('PropertyDetail');
-  
+
   return (
     <div className="property-content">
       {/* Highlights Section */}
@@ -17,9 +17,14 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
             {property?.highlights?.length > 0 ? (
               property.highlights.map((item, index) => (
                 <div className="col-6 col-md-4" key={`highlight-${index}`}>
-                  <div className="nearby-item">
-
-                    <span>{item.highlightType}</span>
+                  <div className="nearby-item" style={{
+                    backgroundColor: 'rgb(232, 245, 233)',
+                    borderColor: 'rgb(165, 214, 167)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                    <h6 style={{ margin: 0 }}>{item.Icon.name}</h6>
                   </div>
                 </div>
               ))
@@ -32,6 +37,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         </div>
       </div>
 
+     
+
       {/* Description Section */}
       <div className="property-section mb-5">
         <h3 className="section-title mb-3">Description</h3>
@@ -40,19 +47,23 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         </div>
       </div>
 
+      <hr></hr>
+
       {/* Details Section */}
       <div className="property-section mb-5">
         <h3 className="section-title mb-3">Details</h3>
-        <div className="property-details-table">
-          <table className="table">
-            <tbody>
-              <tr>
+        <div className="property-details-table border-0">
+          <table className="table" style={{
+            borderStyle: 'none'
+          }}>
+            <tbody style={{ borderStyle: 'hidden !important' }}>
+              <tr style={{ borderStyle: 'hidden !important' }}>
                 <th>Property ID</th>
                 <td>{property.id || 'DP000010'}</td>
                 <th>Ownership Quota</th>
                 <td>{property.ownershipQuota || 'Thai'}</td>
               </tr>
-              <tr>
+              <tr style={{ borderStyle: 'hidden !important' }}>
                 <th>Land Size</th>
                 <td>{property.landSize || '117.8 sq.wah'}</td>
                 <th></th>
@@ -97,29 +108,34 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         </div>
       </div>
 
+
       {/* Location Map */}
       <div className="property-section mb-5">
         <div className="property-map">
-            <PropertyMap property={property} />
+          <PropertyMap property={property} />
         </div>
       </div>
-      
+
+      <hr></hr>
+
       <div className="property-section mb-5">
         <h3 className="section-title mb-4">Near By</h3>
         <div className="nearby-items">
           <div className="row g-3">
 
-            { property.nearbyPlaces.map((item, index) => (
-                <div className="col-6 col-md-4" key={`nearby-${index}`}>
-                  <div className="nearby-item">
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
-                    <span className={"span-items"} style={{marginLeft: '10px'}}>{item.Icon.name}</span>
-                  </div>
+            {property.nearbyPlaces.map((item, index) => (
+              <div className="col-6 col-md-4" key={`nearby-${index}`}>
+                <div className="nearby-item">
+                  <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                  <span className={"span-items"} style={{ marginLefปt: '10px' }}>{item?.Icon?.name}</span>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
+      <hr></hr>
 
       {/* View Section */}
       <div className="property-section mb-5">
@@ -130,8 +146,9 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               property.views.map((item, index) => (
                 <div className="col-6 col-md-4" key={`view-${index}`}>
                   <div className="view-item">
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
-                    <span className={"span-items"} style={{marginLeft: '10px'}}>{item.Icon.name}</span>
+
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{item?.Icon?.name}</span>
                   </div>
                 </div>
               ))
@@ -144,6 +161,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         </div>
       </div>
 
+      <hr></hr>
+
       {/* Facilities Section */}
       <div className="property-section mb-5">
         <h3 className="section-title mb-4">Facilities</h3>
@@ -153,8 +172,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               property.facilities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`facility-${index}`}>
                   <div className="facility-item">
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
-                    <span className={"span-items"} style={{marginLeft: '10px'}}>{item.Icon.name}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{item.Icon.name}</span>
                   </div>
                 </div>
               ))
@@ -167,6 +186,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         </div>
       </div>
 
+      <hr></hr>
+
       {/* Amenity Section */}
       <div className="property-section mb-5">
         <h3 className="section-title mb-4">Amenity</h3>
@@ -176,8 +197,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               property.amenities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`amenity-${index}`}>
                   <div className="amenity-item">
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid"  width={25} height={25}/>
-                    <span className="span-items" style={{marginLeft: '10px'}}>{item.Icon.name}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                    <span className="span-items" style={{ marginLeft: '10px' }}>{item.Icon.name}</span>
                   </div>
                 </div>
               ))
@@ -192,7 +213,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
 
       {/* Map Section */}
-    
+
     </div>
   );
 };

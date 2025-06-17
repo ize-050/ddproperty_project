@@ -118,6 +118,20 @@
       "bath": "bath",
       "sqm": "sqm"
     },
+    "Language":{
+    "title":"ภาษา",
+    "subtitle":"จัดการภาษา",
+    "addNewLanguage":"เพิ่มภาษาใหม่",
+    "editLanguage":"แก้ไขภาษา",
+    "deleteLanguage":"ลบภาษา",
+    "language":"ภาษา",
+    "code":"รหัส",
+    "status":"สถานะ",
+    "action":"การดำเนินการ",
+    "rent":"เช่า",
+    "buy":"ซื้อ",
+    "blog":"บทความ"
+  },
     "blogs": {
       "section": {
         "title": "From Our Blog",
@@ -142,6 +156,8 @@
     }
   },
   "Message": {
+    "messages": "Messages",
+    "messageDescription":"We are glad to see you again",
     "contactForm": "Contact Form",
     "messageTitle": "Message",
     "messageSubtitle": "All Message",
@@ -160,7 +176,7 @@
     "filterByStatus": "Filter by Status",
     "last3Month": "Last 3 Months",
     "clear": "Clear",
-    "searchByName": "Search by Name",
+    "searchByName": "Search by Name, Email or telephone",
     "status": "Status",
     "contact":"Contact",
     "property":"Property",
@@ -219,7 +235,22 @@
     "propertyOverview": "Property Overview",
     "addNewProperty": "Add New Property",
     "propertyId": "Property ID",
-    "propertyType": "Property Type"
+    "propertyType": "Property Type",
+    "menu":{
+      "dashboard": "Dashboard",
+      "message": "Message",
+      "addproperty": "Add Property",
+      "my_properties": "My Properties",
+      "blog": "Blog",
+      "allpost": "All Post",
+      "addnewpost": "Add New Post",
+      "setting": "All User",
+      "alluser": "All User",
+      "language": "Language",
+      "currency": "Currency",
+      "profile" :"Manage Account",
+      "myprofile": "My Profile"
+    }
   },
   "PropertyDetail": {
     "home": "Home",
@@ -326,10 +357,15 @@
     "notAuthenticated": "Please login before proceeding"
   },
   "AddProperty": {
-    "addNewProperty": "Submit property",
-    "updateProperty": "Submit property",
-    "saveProperty": "Save property",
-    "createPropertyDetails": "Create property details",
+    "addNewProperty": "Add New Property",
+    "updateProperty": "Update Property",
+    "property_detail":"Property Detail",
+    "sell":"Sell",
+    "rent":"Rent",
+    "sale_rent":"Sale & Rent",
+    "property_type":"Property Type",
+    "saveProperty": "Save Property",
+    "createPropertyDetails": "List your property at here",
     "save": "Save",
     "cancel": "Cancel",
     "savingData": "Saving data...",

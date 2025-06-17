@@ -1,0 +1,44 @@
+/* Banner preload styles */
+
+.home-banner-style8 {
+  /* Keep the existing styles */
+  background-image: url(../../../public/images/banner/banner.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  
+  /* Add transition for smooth loading */
+  transition: opacity 0.5s ease-in-out;
+  
+  /* Add before pseudo-element for preload image */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../../public/images/banner/banner-placeholder.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+  }
+  
+  /* When banner is loaded */
+  &.loaded {
+    &::before {
+      opacity: 0;
+    }
+    background-image: url(../images/home/home-8.jpg);
+  }
+  
+  /* Content should be above the preload image */
+  .home-style8 {
+    position: relative;
+    z-index: 2;
+  }
+}

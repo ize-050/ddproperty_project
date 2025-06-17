@@ -2,8 +2,61 @@
 
 import React from 'react';
 
-const LoadingAnimation = ({ card = false }) => {
-  // ถ้า card เป็น true จะใช้ style แบบ card
+const LoadingAnimation = ({ card = false, type = 'default' }) => {
+  // Property detail loading style
+  if (type === 'property-detail') {
+    return (
+      <div className="property-detail-loading">
+        <div className="container">
+          <div className="row">
+            {/* Header skeleton */}
+            <div className="col-lg-12 mb-4">
+              <div className="skeleton-header">
+                <div className="skeleton-breadcrumb"></div>
+                <div className="skeleton-title"></div>
+                <div className="skeleton-subtitle"></div>
+              </div>
+            </div>
+            
+            {/* Gallery skeleton */}
+            <div className="col-lg-12 mb-4">
+              <div className="skeleton-gallery">
+                <div className="skeleton-main-image"></div>
+                <div className="skeleton-thumbnails">
+                  <div className="skeleton-thumb"></div>
+                  <div className="skeleton-thumb"></div>
+                  <div className="skeleton-thumb"></div>
+                  <div className="skeleton-thumb"></div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Content skeleton */}
+            <div className="col-lg-8">
+              <div className="skeleton-content">
+                <div className="skeleton-tabs"></div>
+                <div className="skeleton-text-block"></div>
+                <div className="skeleton-text-block"></div>
+                <div className="skeleton-text-block short"></div>
+              </div>
+            </div>
+            
+            {/* Sidebar skeleton */}
+            <div className="col-lg-4">
+              <div className="skeleton-sidebar">
+                <div className="skeleton-price"></div>
+                <div className="skeleton-agent"></div>
+                <div className="skeleton-button"></div>
+                <div className="skeleton-button"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Card style loading
   if (card) {
     return (
       <div style={{
@@ -19,35 +72,41 @@ const LoadingAnimation = ({ card = false }) => {
         margin: '0 auto',
         maxWidth: 380
       }}>
-        <div style={{marginBottom: 18}}>
+        <div style={{ marginBottom: 18 }}>
           <img src="/images/logo/logo.png" alt="DDProperty Logo" width="92" />
         </div>
-        <div className="loading-spinner-dots" style={{display:'flex',gap:10,marginBottom:12}}>
+        <div className="loading-spinner-dots" style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
           <div className="dot dot1"></div>
           <div className="dot dot2"></div>
           <div className="dot dot3"></div>
         </div>
-        <div style={{fontSize:'1.06rem',color:'#222',fontWeight:500,letterSpacing:0.2}}>กำลังโหลด...</div>
+        <div style={{ fontSize: '1.06rem', color: '#222', fontWeight: 500, letterSpacing: 0.2 }}>กำลังโหลด...</div>
       </div>
     );
   }
-  // แบบ global เต็มจอ
+  
+  // Default empty loading with full overlay
   return (
-    <div className="loading-container">
-      <div className="loading-content">
-        <div className="loading-logo">
-          <img src="/images/logo/logo.png" alt="DDProperty Logo" width="180" />
-        </div>
-        <div className="loading-spinner-container">
-          <div className="loading-spinner-dots">
-            <div className="dot dot1"></div>
-            <div className="dot dot2"></div>
-            <div className="dot dot3"></div>
-          </div>
-          <div className="loading-text">กำลังโหลด...</div>
-        </div>
-      </div>
+   <div style={{
+     position: 'fixed',
+     top: 0,
+     left: 0,
+     width: '100%',
+     height: '100%',
+     backgroundColor: 'rgba(255, 255, 255, 0.95)',
+     display: 'flex',
+     flexDirection: 'column',
+     alignItems: 'center',
+     justifyContent: 'center',
+     zIndex: 9999,
+   }}>
+    <div className="loading-spinner-dots" style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+      <div className="dot dot1"></div>
+      <div className="dot dot2"></div>
+      <div className="dot dot3"></div>
     </div>
+    <div style={{ fontSize: '1.06rem', color: '#222', fontWeight: 500, letterSpacing: 0.2 }}>กำลังโหลด...</div>
+   </div>
   );
 };
 

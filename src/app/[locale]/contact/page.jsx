@@ -1,13 +1,41 @@
 import Image from "next/image";
 import Form from "@/components/pages/contact/Form.jsx";
+import LanguageApi from "@/utils/languageApi";
+import { TranslationInitializer } from "@/components/Translation/page";
 
 export const metadata = {
     title: "Contact Us - D-LUCK PROPERTY",
 };
 
-const Contact = () => {
+async function getContactTranslations(locale) {
+    // Fetch contact section translations from API
+    const response = await LanguageApi.getUiStringsBySection('contact', {
+        serverSide: true,
+        cache: 'no-store',
+        next: { revalidate: 3600 } // Cache for 1 hour
+    });
+
+    if (!response.success) {
+        console.error('Failed to fetch contact translations:', response.error);
+        return [];
+    }
+
+    return response.data;
+}
+
+const Contact = async ({ params }) => {
+    // Get locale from params
+    const locale = params.locale || 'en';
+    
+    // Fetch translations
+    const contactTranslations = await getContactTranslations(locale);
     return (
         <>
+            {/* Initialize translations in the client */}
+            <TranslationInitializer 
+                translations={{ contact: contactTranslations }} 
+                locale={locale} 
+            />
 
             <section className="p-0">
                 <Image
@@ -16,8 +44,8 @@ const Contact = () => {
                     width={1920}
                     height={1080}
                     src="/images/contact/banner-contact-us.png"
-                    title="London Eye, London, United Kingdom"
-                    aria-label="London Eye, London, United Kingdom"
+                    title="Contact Us - D-LUCK PROPERTY"
+                    aria-label="Contact Us Banner"
                 />
             </section>
 
@@ -27,21 +55,27 @@ const Contact = () => {
                         <div className="col-lg-5 position-relative">
                             <div className="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">
                                 <h4 className="form-title mb25">
-                                    Need more information?
+                                    {/* Use translation from API */}
+                                    {contactTranslations.find(t => t.slug === 'need_more_info')?.[locale] || 
+                                     contactTranslations.find(t => t.slug === 'need_more_info')?.en || 
+                                     'Need more information?'}
                                 </h4>
-                                <Form />
+                                <Form translations={contactTranslations} locale={locale} />
                             </div>
                         </div>
 
                         <div className="col-lg-5 offset-lg-2">
                             <h2 className="mb-4">
-                                Contact our Property Consultant
+                                {/* Use translation from API */}
+                                {contactTranslations.find(t => t.slug === 'contact_consultant')?.[locale] || 
+                                 contactTranslations.find(t => t.slug === 'contact_consultant')?.en || 
+                                 'Contact our Property Consultant'}
                             </h2>
                             <p className="mb-4">
-                                Please do not hesitate to contact us if you have any
-                                questions about the condo & properties buying, selling or
-                                leasing process and for would like to schedule an
-                                appointment to view properties in Pattaya.
+                                {/* Use translation from API */}
+                                {contactTranslations.find(t => t.slug === 'contact_description')?.[locale] || 
+                                 contactTranslations.find(t => t.slug === 'contact_description')?.en || 
+                                 'Please do not hesitate to contact us if you have any questions about the condo & properties buying, selling or leasing process and for would like to schedule an appointment to view properties in Pattaya.'}
                             </p>
 
                         </div>

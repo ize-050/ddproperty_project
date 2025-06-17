@@ -7,7 +7,7 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 import Script from 'next/script';
 
 const LocationSection = () => {
-  const { formData, showMap, toggleMap, setFormData } = usePropertyFormStore();
+  const { formData, showMap, toggleMap, setFormData ,setShowMap} = usePropertyFormStore();
   const { register, formState: { errors }, setValue } = useFormContext();
   const [searchAddress, setSearchAddress] = useState('');
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -54,8 +54,30 @@ const LocationSection = () => {
     });
   }, []);
   
+// ใส่กลับไปที่เดิมหลังจาก useEffect ที่โหลดข้อมูลแรกสุด
+useEffect(() => {
+  setShowMap(true);
+}, []);
 
-  
+// เพิ่ม useEffect ใหม่เพื่อจัดการเมื่อพิกัดเปลี่ยน
+useEffect(() => {
+  // ถ้าแผนที่และมาร์กเกอร์พร้อมแล้ว และมีพิกัดใน formData
+  if (map && marker && (formData.latitude && formData.longitude)) {
+    const newPosition = new window.google.maps.LatLng(
+      parseFloat(formData.latitude),
+      parseFloat(formData.longitude)
+    );
+    
+    // อัพเดตตำแหน่งมาร์กเกอร์
+    marker.setPosition(newPosition);
+    
+    // เลื่อนแผนที่ไปยังตำแหน่งใหม่
+    map.panTo(newPosition);
+  }
+}, [formData.latitude, formData.longitude, map, marker]);
+
+
+
 
   
   // Initialize map when component mounts and API is loaded
@@ -411,13 +433,12 @@ const LocationSection = () => {
         </div>
       </div>
 
-      {/* Google Maps Script */}
-      {showMap && (
+  
         <Script
           src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`}
           onLoad={() => setMapLoaded(true)}
         />
-      )}
+      
 
       {showMap && (
         <div className="map-section">

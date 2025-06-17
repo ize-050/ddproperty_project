@@ -11,6 +11,10 @@ import React, { useEffect, useState } from "react";
 const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitcher"), {
     ssr: false,
 });
+
+const CurrencySwitcher = dynamic(() => import("@/components/common/CurrencySwitcher"), {
+    ssr: false,
+});
 const Header = () => {
     const [navbar, setNavbar] = useState(false);
 
@@ -69,6 +73,7 @@ const Header = () => {
                             <div className="col-auto">
                                 <div className="d-flex align-items-center">
                                     <LanguageSwitcher />
+                                    <CurrencySwitcher />
                                     <Link
                                         className="ud-btn btn-white add-property bdrs60 ms-4"
                                         href="/backoffice/login"

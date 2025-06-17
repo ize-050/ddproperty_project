@@ -378,7 +378,6 @@ const EditBlogPage = () => {
 
   if (loading) {
     return (
-      <BackofficeLayout>
         <div className="blog-page">
           <div className="blog-container text-center py-5">
             <div className="spinner-border text-primary" role="status">
@@ -387,12 +386,11 @@ const EditBlogPage = () => {
             <p className="mt-3">Loading blog data...</p>
           </div>
         </div>
-      </BackofficeLayout>
+
     );
   }
 
   return (
-    <BackofficeLayout>
       <div className="blog-page">
         <div className="blog-container">
           <div className="page-header">
@@ -447,7 +445,6 @@ const EditBlogPage = () => {
 
             {/* Rich Text Editor */}
             <div className="form-group editor-container">
-              <label htmlFor="content">Content*</label>
               {languages.map((lang) => (
                 <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
                   <Controller
@@ -505,7 +502,6 @@ const EditBlogPage = () => {
           </form>
         </div>
       </div>
-    </BackofficeLayout>
   );
 };
 

@@ -184,17 +184,6 @@ const locale =  params.locale;
                 })}
               </div>
               
-              {/* Categories Widget */}
-              <div className="latest-posts">
-                <h4>Categories</h4>
-                <ul className="list-unstyled">
-                  <li><a href="#">Real Estate</a></li>
-                  <li><a href="#">Property Investment</a></li>
-                  <li><a href="#">Home Decor</a></li>
-                  <li><a href="#">Market Trends</a></li>
-                  <li><a href="#">Buying Guide</a></li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>

@@ -12,6 +12,9 @@ $rent-color: #007bff;
 $featured-color: #ff9800;
 
 .my-properties-page {
+  padding: 24px;
+  background-color: $bg-color;
+  min-height: 100vh;
   .page-header {
     display: flex;
     justify-content: space-between;

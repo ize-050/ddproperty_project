@@ -14,6 +14,8 @@ const currencyFlags = {
   USD: '🇺🇸',
   CNY: '🇨🇳',
   RUB: '🇷🇺',
+  GBP: '🇬🇧',
+  EUR: '🇪🇺',
 };
 
 // Currency names
@@ -22,18 +24,15 @@ const currencyNames = {
   USD: 'US DOLLAR',
   CNY: 'YUAN',
   RUB: 'RUBLE',
+  GBP: 'POUND',
+  EUR: 'EURO',
 };
 
 const CurrencyPage = () => {
   const t = useTranslations('Currency');
   
   // State for currency rates
-  const [currencyRates, setCurrencyRates] = useState({
-    THB: 1.00,
-    USD: 0.028,
-    CNY: 0.20,
-    RUB: 2.50,
-  });
+  const [currencyRates, setCurrencyRates] = useState({});
   
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -138,11 +137,10 @@ const CurrencyPage = () => {
   };
   
   return (
-    <BackofficeLayout>
       <div className="currency-page">
         <div className="page-header">
-          <h1>{t('currency')}</h1>
-          <p>{t('currencySubtitle')}</p>
+          <h1>Currency</h1>
+          <p>We are glad to see you again</p>
         </div>
         
         {isLoading ? (
@@ -151,17 +149,17 @@ const CurrencyPage = () => {
             <p>{t('loading')}</p>
           </div>
         ) : (
+          <div className="currenct-card">
           <div className="currency-rates-container">
             {Object.keys(currencyRates).map((currency) => (
               <div className="currency-rate-item" key={currency}>
                 <div className="currency-flag-code">
-                  <span className="currency-flag">{currencyFlags[currency]}</span>
+                  <span className="flag">{currencyFlags[currency]}</span>
                   <span className="currency-code">{currency}</span>
+                  <span className="equals">=</span>
                 </div>
                 
-                <div className="equals-sign">=</div>
-                
-                <div className="currency-input-container">
+                <div className="currency-value-name">
                   <input
                     type="number"
                     value={currencyRates[currency]}
@@ -176,19 +174,32 @@ const CurrencyPage = () => {
               </div>
             ))}
             
-            <div className="update-button-container">
-              <button 
-                className="update-button"
-                onClick={handleUpdate}
-                disabled={isUpdating}
-              >
-                {isUpdating ? t('updating') : t('update')}
-              </button>
-            </div>
+           
+          </div>
+          <button 
+              className="update-button"
+              style={{  
+                margin: '10px auto 20px auto',
+                display: 'block',
+                width: '200px',
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                backgroundColor: '#374151',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+              onClick={handleUpdate}
+              disabled={isUpdating}
+            >
+              {isUpdating ? 'Updating...' : 'Update'}
+            </button>
           </div>
         )}
       </div>
-    </BackofficeLayout>
   );
 };
 

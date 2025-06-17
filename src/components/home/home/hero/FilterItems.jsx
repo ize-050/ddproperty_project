@@ -5,7 +5,8 @@ import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useZoneStore from "@/store/useZoneStore";
 import Select from "react-select";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 const catOptions = [
   { value: "CONDO", label: "Condominium" },
@@ -15,33 +16,33 @@ const catOptions = [
   { value: "HOUSE", label: "House" },
 ];
 
-const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
+const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) => {
   const router = useRouter();
+  const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations('home');
   const [price, setPrice] = useState([500000, 20000000]); // ปรับค่าเริ่มต้นเป็น 500,000 - 20,000,000 บาท
   const { zones } = useZoneStore();
   // ดึง locale จาก URL path โดยตรง
-  const pathParts = pathname.split('/');
-  const locale = pathParts[1] || 'th'; // ถ้าไม่มี locale ใน path ให้ใช้ 'th' เป็นค่าเริ่มต้น
+
   // กำหนดช่วงราคาเริ่มต้น (500,000 - 20,000,000 บาท)
   const [minPrice, setMinPrice] = useState(500000);
   const [maxPrice, setMaxPrice] = useState(20000000);
-  
+
   // สร้าง state สำหรับควบคุมการแสดง/ซ่อน dropdown
   const [isPriceDropdownOpen, setIsPriceDropdownOpen] = useState(false);
-  
+
   // สร้าง state สำหรับเก็บค่าที่เลือก
   const [selectedPropertyType, setSelectedPropertyType] = useState(catOptions[0]);
   const [selectedZone, setSelectedZone] = useState(null);
-  
+
   // price range handler
   const handleOnChange = (value) => {
     setPrice(value);
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
   };
-  
+
   // ฟังก์ชันสำหรับแปลงราคาให้อยู่ในรูปแบบที่อ่านง่าย
   const formatPrice = (price) => {
     if (price >= 1000000) {
@@ -52,13 +53,17 @@ const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
     return `${price} ฿`;
   };
 
-   
+
   // property type options
 
+  const propertyTypeOptions = propertyTypes.map((propertyType) => ({
+    value: propertyType.id,
+    label: propertyType[`name${locale.charAt(0).toUpperCase()}${locale.slice(1)}`],
+  }));
 
   const locationOptions = zones.map((zone) => ({
     value: zone.id,
-    label: zone.nameEn,
+    label: zone[`name${locale.charAt(0).toUpperCase()}${locale.slice(1)}`],
   }));
 
   const customStyles = {
@@ -68,10 +73,10 @@ const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
         backgroundColor: isSelected
           ? "#eb6753"
           : isHovered
-          ? "#eb675312"
-          : isFocused
-          ? "#eb675312"
-          : undefined,
+            ? "#eb675312"
+            : isFocused
+              ? "#eb675312"
+              : undefined,
       };
     },
   };
@@ -80,40 +85,40 @@ const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
   const handleSearch = () => {
     // สร้าง query parameters สำหรับการค้นหา
     const queryParams = new URLSearchParams();
-    
+
     // เพิ่มพารามิเตอร์ต่างๆ
     if (selectedPropertyType) {
       queryParams.append('propertyType', selectedPropertyType.value);
     }
-    
+
     queryParams.append('minPrice', price[0]);
     queryParams.append('maxPrice', price[1]);
-    
+
     if (selectedZone) {
       queryParams.append('zoneId', selectedZone.value);
     }
-    
+
     // เพิ่ม listingType ตามแท็บที่เลือก (SALE หรือ RENT)
     queryParams.append('type', listingType);
-    
+
     // นำทางไปยังหน้า properties/list พร้อมกับพารามิเตอร์การค้นหา
     // ใช้ locale จาก URL path ปัจจุบัน
     router.push(`/${locale}/properties/list?${queryParams.toString()}`);
   };
-  
+
   // เปิดเผยฟังก์ชัน handleSearch ให้สามารถเรียกใช้จากภายนอกได้
   useImperativeHandle(ref, () => ({
     handleSearch
   }));
-  
+
   return (
     <div className="filter-items-container">
       <div className="col-md-12">
         <div className="bootselect-multiselect mb20">
           <SelectWithInstanceId
-            defaultValue={catOptions[0]}
+            defaultValue={propertyTypeOptions[0]}
             name="propertyType"
-            options={catOptions}
+            options={propertyTypeOptions}
             styles={customStyles}
             className="text-start with_border"
             classNamePrefix="select"
@@ -163,25 +168,26 @@ const FilterItems = forwardRef(({ listingType = "sale" }, ref) => {
       </div>
       {/* End .col-12 */}
       <div className="col-md-12">
-        <div className="bootselect-multiselect mb15">
-          <Select
-            name="zone"
+        <div className="bootselect-multiselect mb15 z-index-1">
+          <SelectWithInstanceId
+            defaultValue={locationOptions[0]}
+            name="propertyType"
             options={locationOptions}
             styles={customStyles}
             className="text-start with_border"
             classNamePrefix="select"
+            instanceId="property-type-select"
             required
-            isSearchable={true}
-            placeholder="Select Zone"
+            isSearchable={false}
             onChange={(option) => setSelectedZone(option)}
           />
         </div>
       </div>
-      
+
       {/* Search Button */}
-  
+
       {/* End .col-12 */}
-      
+
       {/* ซ่อนปุ่มค้นหาไว้เพื่อใช้ในการเรียกจาก HeroContent */}
 
     </div>

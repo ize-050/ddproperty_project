@@ -11,7 +11,6 @@ const LatestBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const t = useTranslations('blogs');
   const locale = useLocale();
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const LatestBlogs = () => {
     };
 
     fetchLatestBlogs();
-  }, [t]);
+  }, []);
 
   // Get localized title based on current locale
   const getLocalizedTitle = (blog) => {

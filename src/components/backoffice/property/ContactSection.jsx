@@ -36,7 +36,16 @@ const ContactSection = () => {
           id="useProfileData"
           onChange={handleUseProfileData}
         />
-        <label htmlFor="useProfileData">use data from profile</label>
+        <label htmlFor="useProfileData" className="form-label"
+        style={{
+          fontSize:'1rem',
+          fontWeight:500,
+          color:'#222',
+          letterSpacing:0.2,
+          marginLeft:'10px',
+          marginBottom:"30px"
+        }}
+        >use data from profile</label>
       </div>
       
       <div className="form-row">
@@ -95,7 +104,7 @@ const ContactSection = () => {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="lineId" className="form-label">
-            <FaLine className="icon-line" /> LINE ID (optional)
+            <FaLine className="icon-line" color="#00B900" /> LINE ID (optional)
           </label>
           <input
             type="text"
@@ -108,7 +117,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="wechatId" className="form-label">
-            <FaWeixin className="icon-wechat" /> Wechat ID (optional)
+            <FaWeixin className="icon-wechat" color="#00B900" /> Wechat ID (optional)
           </label>
           <input
             type="text"
@@ -121,7 +130,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="whatsapp" className="form-label">
-            <FaWhatsapp className="icon-whatsapp" /> WhatsApp (optional)
+            <FaWhatsapp className="icon-whatsapp" color="#00B900" /> WhatsApp (optional)
           </label>
           <input
             type="text"

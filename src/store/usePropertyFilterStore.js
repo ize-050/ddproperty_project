@@ -12,6 +12,7 @@ const usePropertyFilterStore = create((set) => ({
   zoneId: '',
   bedrooms: '',
   bathrooms: '',
+  advancedSearchVisible: false,
   setPropertyType: (propertyType) => set({ propertyType }),
   setMinPrice: (minPrice) => set({ minPrice }),
   setMaxPrice: (maxPrice) => set({ maxPrice }),
@@ -26,6 +27,7 @@ const usePropertyFilterStore = create((set) => ({
     bedrooms: '',
     bathrooms: ''
   }),
+  setAdvancedSearchVisible: (advancedSearchVisible) => set({ advancedSearchVisible }),
   propertyItems: [],
   setPropertyItems: (propertyItems) => set({ propertyItems }),
   paginationItems: {},

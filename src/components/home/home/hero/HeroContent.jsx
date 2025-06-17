@@ -4,10 +4,10 @@ import FilterItems from "./FilterItems";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-const HeroContent = () => {
+const HeroContent = ({propertyTypes}) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("buy");
-    const t = useTranslations('home');
+  const t = useTranslations('home');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -29,7 +29,7 @@ const HeroContent = () => {
               onClick={() => handleTabClick(tab.id)}
               style={{
                 border: 'none',
-                borderBottom: activeTab === tab.id  ? '2px solid #000000' : 'none'
+                borderBottom: activeTab === tab.id ? '2px solid #000000' : 'none'
               }}
             >
               {tab.label}
@@ -46,8 +46,9 @@ const HeroContent = () => {
           >
             <div className="advance-content-style1 at-home8">
               <div className="row">
-                <FilterItems 
+                <FilterItems
                   listingType={tab.type}
+                  propertyTypes={propertyTypes}
                   ref={(filterItemsRef) => {
                     // เก็บ ref ของ FilterItems ไว้ใน tab object
                     if (filterItemsRef) {
@@ -57,7 +58,7 @@ const HeroContent = () => {
                 />
 
                 <div className="col-md-12">
-                 
+
                   <div className="d-grid">
                     <button
                       className="ud-btn btn-thm "
@@ -76,7 +77,7 @@ const HeroContent = () => {
                         }
                       }}
                     >
-                      <span className="flaticon-search" /> 
+                      <span className="flaticon-search" />
                     </button>
                   </div>
                 </div>

@@ -1,15 +1,55 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import { useLocale } from 'next-intl';
+import { toast } from 'react-hot-toast';
 
 const PropertyTypeSection = () => {
   const { formData, setPropertyType } = usePropertyFormStore();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
+  const locale = useLocale();
+  const [propertyTypes, setPropertyTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   // ติดตามการเปลี่ยนแปลงของ propertyType ใน form
   const propertyType = watch('propertyType') || '';
+  
+  // ดึงข้อมูลประเภทอสังหาริมทรัพย์จาก API
+  useEffect(() => {
+    const fetchPropertyTypes = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
+        
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/property-types`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'x-api-key': process.env.NEXT_PUBLIC_API_KEY
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch property types');
+        }
+        
+        const data = await response.json();
+        if (data.status === 'success' && data.data) {
+          setPropertyTypes(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching property types:', error);
+        toast.error('Failed to load property types');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPropertyTypes();
+  }, []);
   
   // ซิงค์ข้อมูลจาก form ไปยัง store
   useEffect(() => {
@@ -27,9 +67,25 @@ const PropertyTypeSection = () => {
   }, []);
   
   // ฟังก์ชันสำหรับการเลือกประเภทอสังหาริมทรัพย์
-  const selectPropertyType = (type) => {
+  const selectPropertyType = (typeId) => {
     // เลือกประเภทอสังหาริมทรัพย์เพียงอย่างเดียว
-    setValue('propertyType', type, { shouldValidate: true, shouldDirty: true });
+    setValue('propertyType', typeId, { shouldValidate: true, shouldDirty: true });
+  };
+  
+  // ฟังก์ชันสำหรับแสดงชื่อประเภทอสังหาริมทรัพย์ตามภาษาที่เลือก
+  const getLocalizedName = (propertyType) => {
+    if (!propertyType) return '';
+    
+    switch (locale) {
+      case 'th':
+        return propertyType.nameTh || propertyType.nameEn || propertyType.name;
+      case 'zh':
+        return propertyType.nameCh || propertyType.nameEn || propertyType.name;
+      case 'ru':
+        return propertyType.nameRu || propertyType.nameEn || propertyType.name;
+      default:
+        return propertyType.nameEn || propertyType.name;
+    }
   };
 
   return (
@@ -42,63 +98,30 @@ const PropertyTypeSection = () => {
         {...register('propertyType', { 
           required: 'Please select a property type'
         })}
+        defaultValue={formData.propertyType}
       />
       
       <div className="property-type-grid">
-        <div
-          className={`property-type-option ${propertyType === 'CONDO' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('CONDO')}
-        >
-          Condominium
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'APARTMENT' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('APARTMENT')}
-        >
-          Apartment
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'HOUSE' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('HOUSE')}
-        >
-          House / Single House
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'TWIN_HOUSE' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('TWIN_HOUSE')}
-        >
-          Twin House
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'TOWNHOUSE' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('TOWNHOUSE')}
-        >
-          Townhome/Townhouse
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'POOL_VILLA' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('POOL_VILLA')}
-        >
-          Pool Villa
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'HOME_OFFICE' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('HOME_OFFICE')}
-        >
-          Home Office
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'COMMERCIAL' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('COMMERCIAL')}
-        >
-          Commercial Building
-        </div>
-        <div
-          className={`property-type-option ${propertyType === 'LAND' ? 'active' : ''}`}
-          onClick={() => selectPropertyType('LAND')}
-        >
-          Land
-        </div>
+        {loading ? (
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Loading property types...</p>
+          </div>
+        ) : propertyTypes.length > 0 ? (
+          propertyTypes.map((type) => (
+            <div
+              key={type.id}
+              className={`property-type-option ${String(propertyType) === String(type.id) ? 'active' : ''}`}
+              onClick={() => selectPropertyType(String(type.id))}
+            >
+              {getLocalizedName(type)}
+            </div>
+          ))
+        ) : (
+          <div className="no-data-message">
+            <p>No property types available</p>
+          </div>
+        )}
       </div>
       
       {errors.propertyType && (

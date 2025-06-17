@@ -47,7 +47,6 @@ const EditProperty = () => {
   }, [methods.watch, formData, setFormData]);
 
   return (
-    <BackofficeLayout>
       <div className="add-property-container">
         <div className="page-header">
           <div className="header-content">
@@ -71,7 +70,6 @@ const EditProperty = () => {
           </FormProvider>
         )}
       </div>
-    </BackofficeLayout>
   );
 };
 

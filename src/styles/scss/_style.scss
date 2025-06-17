@@ -84,8 +84,8 @@ body {
 
 body {
     background-color: #ffffff;
-    font-size: 14px;
     font-weight: 400;
+    font-size: 14px;
     color: var(--headings-color);
     line-height: 26px;
     overflow-x: hidden;
@@ -722,7 +722,6 @@ li {
 
 .dashboard__content {
     border-radius: 16px;
-    padding: 60px 60px 20px;
     width: 100%;
 }
 @media (max-width: 767.98px) {
@@ -742,6 +741,7 @@ li {
 }
 
 .dashboard_title_area {
+    padding: 2rem;
     position: relative;
 }
 
@@ -832,13 +832,10 @@ li {
 }
 
 .upload-img {
-    border: 1px dashed var(--primary-color);
-    padding-bottom: 50px;
-    padding-top: 50px;
+
 }
 .upload-img .icon {
-    font-size: 120px;
-    color: #dddddd;
+  
 }
 
 /* DashBoard Message Styles */
@@ -3927,6 +3924,13 @@ li {
     background-size: cover;
     position: relative;
 }
+
+.home-banner-style8.loaded {
+    &::before {
+      opacity: 0;
+    }
+    background-image: url(../../../public/images/banner/banner.png);
+}
 .home-banner-style8 .home-style8 {
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -3996,7 +4000,7 @@ li {
 }
 
 .property-banner-style2 {
-    background-image: url(../../../public/images/listings/listing-banner-2.jpg);
+    background-image: url('/images/properties-list/banner-listing.png');
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -7233,10 +7237,10 @@ header.menu-home10.sticky .ace-responsive-menu .visible_list a.list-item:before 
 header.nav-homepage-style {
     background-color: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 20px 0;
+    padding: 15px 0;
     position: fixed;
     width: 100%;
-    z-index: 3;
+    z-index: 9999;
 }
 header.nav-homepage-style .ace-responsive-menu .sub-menu {
     background-color: #ffffff;
@@ -7801,7 +7805,7 @@ li.mm-listitem:focus {
 .advance-search-tab .nav.nav-tabs {
     background-color: #ffffff;
     border-bottom: 1px solid #dddddd;
-    border-radius: 12px 12px 0 0;
+    border-radius: 10px 10px 0 0;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
@@ -7813,10 +7817,10 @@ li.mm-listitem:focus {
     position: relative;
 }
 .advance-search-tab .nav-item:first-child {
-    border-radius: 12px 0 0 0;
+    border-radius: 10px 0 0 0;
 }
 .advance-search-tab .nav-item:last-child {
-    border-radius: 0 12px 0 0;
+    border-radius: 0 10px 0 0;
 }
 .advance-search-tab .nav-item:last-child .nav-link {
     margin-right: 0;
@@ -9783,6 +9787,7 @@ input:focus-visible {
 .sidebar-widget {
     background-color: #ffffff;
     border-radius: 12px;
+    border:1px #eee solid;
     -webkit-box-shadow: 0px 1px 4px rgba(24, 26, 32, 0.07);
     -o-box-shadow: 0px 1px 4px rgba(24, 26, 32, 0.07);
     box-shadow: 0px 1px 4px rgba(24, 26, 32, 0.07);

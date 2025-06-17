@@ -21,6 +21,7 @@
     "subtitle": "Aliquam lacinia diam quis lacus euismod",
     "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด"
   },
+  
   "Footer": {
     "about": "เกี่ยวกับเรา",
     "contact": "ติดต่อเรา",
@@ -57,6 +58,8 @@
     "ru": "รัสเซีย"
   },
   "Message": {
+    "messages": "ข้อความ",
+    "messageDescription":"เรายินดีที่จะพบคุณอีกครั้ง",
     "contactForm": "ฟอร์มติดต่อ",
     "messageTitle": "ข้อความ",
     "messageSubtitle": "ข้อความทั้งหมด",
@@ -75,7 +78,7 @@
     "filterByStatus": "กรองตามสถานะ",
     "last3Month": "3 เดือนที่ผ่านมา",
     "clear": "ล้าง",
-    "searchByName": "ค้นหาตามชื่อ",
+    "searchByName": "ค้นหาตามชื่อ,อีเมล,เบอร์โทรศัพท์",
     "status": "สถานะ",
     "contact": "ติดต่อ",
     "property": "อสังหาริมทรัพย์",
@@ -224,7 +227,37 @@
     "addNewCurrency": "เพิ่มสกุลเงินใหม่",
     "addNewPropertyType": "เพิ่มประเภทอสังหาริมทรัพย์ใหม่",
     "addNewPropertyStatus": "เพิ่มสถานะอสังหาริมทรัพย์ใหม่",
-    "addNewPropertyFeature": "เพิ่มคุณสมบัติอสังหาริมทรัพย์ใหม่"
+    "addNewPropertyFeature": "เพิ่มคุณสมบัติอสังหาริมทรัพย์ใหม่",
+    "menu":{
+      "dashboard": "แดชบอร์ด",
+      "message": "ข้อความ",
+      "addproperty": "เพิ่มโครงการ",
+      "my_properties": "ข้อมูลโครงการ",
+      "blog": "ข่าวสาร",
+      "allpost": "ข่าวสารทั้งหมด",
+      "addnewpost": "เพิ่มโพสต์ใหม่",
+      "setting": "ตั้งค่า",
+      "alluser": "ผู้ใช้ทั้งหมด",
+      "language": "ภาษา",
+      "currency": "สกุลเงิน",
+      "profile" :"จัดการโปรไฟล",
+      "myprofile": "โปรไฟล์ของฉัน"
+    }
+   
+  },
+  "Language":{
+    "title":"ภาษา",
+    "subtitle":"จัดการภาษา",
+    "addNewLanguage":"เพิ่มภาษาใหม่",
+    "editLanguage":"แก้ไขภาษา",
+    "deleteLanguage":"ลบภาษา",
+    "language":"ภาษา",
+    "code":"รหัส",
+    "status":"สถานะ",
+    "action":"การดำเนินการ",
+    "rent":"เช่า",
+    "buy":"ซื้อ",
+    "blog":"บทความ"
   },
   "PropertyList":{
     "discoverOurFeaturedListings":"ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",

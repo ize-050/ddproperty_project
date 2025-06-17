@@ -3,28 +3,30 @@ import agents from "@/data/agents";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import useTranslation from "@/hooks/useTranslation";
 
 
 const Agents = () => {
 
+  const { getString } = useTranslation('home');
+
   const  dataAgentMockup = [
     {
     id: 1,
-    name: "Oat - Supakorn",
-    position : "CEO",
+    name: getString('agents.name'),
+    position : getString('agents.position'),
     image: "/images/agent/staff-01.png",
     },
     {
     id: 2,
-    name: "Amy - Thannaree",
-    position : "Sale Director",
+    name: getString('agents.name2'),
+    position : getString('agents.position2'),
     image: "/images/agent/staff-02.png",
     },
     {
     id: 3,
-    name: "ize - Chanyapak",
-    position : "Sale Manager",
+    name: getString('agents.name3'),
+    position : getString('agents.position3'),
     image: "/images/agent/staff-03.png",
     },
 ]

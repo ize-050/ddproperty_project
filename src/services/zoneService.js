@@ -12,7 +12,7 @@ class ZoneService {
    * @param {number} limit - Number of random zones to return (default: 3)
    * @returns {Promise} - API response
    */
-  async getExploreLocations(limit = 3) {
+  async getExploreLocations(limit = 20) {
     try {
       const response = await axios.get(`${API_URL}/zones/explore`, {
         params: { limit },

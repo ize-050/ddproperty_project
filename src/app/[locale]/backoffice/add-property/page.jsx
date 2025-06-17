@@ -65,6 +65,12 @@ const AddNewProperty = () => {
 
 
 
+  useEffect(() => {
+    reset();
+    setFormData({});
+    resetForm();
+  }, []);
+
 
 
   // Update validation summary whenever errors change
@@ -299,7 +305,6 @@ const AddNewProperty = () => {
   };
 
   return (
-    <BackofficeLayout>
       <div className="add-property-container">
         <div className="page-header">
           <div className="header-content">
@@ -452,7 +457,6 @@ const AddNewProperty = () => {
         </form>
         </FormProvider>
       </div>
-    </BackofficeLayout>
   );
 };
 

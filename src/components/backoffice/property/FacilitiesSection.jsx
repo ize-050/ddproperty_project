@@ -62,8 +62,8 @@ const FacilitiesSection = () => {
 
   // CSS styles for active items
   const activeStyle = {
-    backgroundColor: '#e3f2fd',
-    borderColor: '#2196f3',
+    backgroundColor: '#E8F5E9',
+    borderColor: '#A5D6A7',
     color: '#000',
   };
 
@@ -87,7 +87,8 @@ const FacilitiesSection = () => {
           return (
             <div
               key={icon.key}
-              className={`amenity-item ${isActive ? 'active' : ''}`}
+              className={`amenity-item`}
+              style={isActive ? activeStyle : {}}
               onClick={() => handleFacilityClick(category, icon.key, isActive)}
             >
               {/* Hidden input to ensure all facilities are submitted */}

@@ -64,7 +64,6 @@ const MyProfilePage = () => {
   };
 
   return (
-    <BackofficeLayout>
       <div className="my-profile-page">
         <div className="page-header">
           <h1>{t('myProfile')}</h1>
@@ -254,7 +253,6 @@ const MyProfilePage = () => {
           </div>
         </form>
       </div>
-    </BackofficeLayout>
   );
 };
 

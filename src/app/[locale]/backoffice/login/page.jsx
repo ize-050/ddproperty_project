@@ -27,7 +27,7 @@ const LoginPage = () => {
     const token = localStorage.getItem('auth_token');
     if (token) {
       setIsAuthenticated(true);
-      router.push('/backoffice');
+      window.location.href = '/backoffice';
     }
   }, [router]);
 
@@ -69,7 +69,7 @@ const LoginPage = () => {
       localStorage.setItem('user_data', JSON.stringify(data.user));
       
       // Redirect to dashboard
-      router.push('/backoffice');
+      window.location.href = '/backoffice';
     } catch (err) {
       setError(err.message || 'An error occurred during login');
     } finally {
@@ -150,9 +150,6 @@ const LoginPage = () => {
               <input type="checkbox" id="remember" />
               <label htmlFor="remember">{t('rememberMe')}</label>
             </div>
-            <Link href="/backoffice/forgot-password" className="forgot-password">
-              {t('forgotPassword')}
-            </Link>
           </div>
 
           <button 
@@ -163,12 +160,6 @@ const LoginPage = () => {
             {loading ? t('loggingIn') : t('login')}
           </button>
         </form>
-
-        <div className="login-footer">
-          <p>
-            {t('dontHaveAccount')} <Link href="/backoffice/register">{t('register')}</Link>
-          </p>
-        </div>
       </div>
     </div>
   );

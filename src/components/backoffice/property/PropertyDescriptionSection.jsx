@@ -563,7 +563,7 @@ const PropertyDescriptionSection = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="propertyTitle">Property Title*</label>
+          <label htmlFor="propertyTitle">Title*</label>
           <input
               type="text"
               id="propertyTitle"
@@ -572,7 +572,8 @@ const PropertyDescriptionSection = () => {
               value={inputValues.propertyTitle[activeLanguage]}
               onChange={handleDescriptionChange}
               placeholder={`Enter property title in ${languages.find(l => l.code === activeLanguage)?.name}`}
-              {...(activeLanguage === 'en' ? register('propertyTitle', { required: 'Property title is required', value: inputValues.propertyTitle.en }) : {})}
+              name="propertyTitle"
+              ref={activeLanguage === 'en' ? register('propertyTitle', { required: 'Property title is required' }).ref : undefined}
           />
           {activeLanguage === 'en' && errors.propertyTitle && (
               <div className="error-message">{errors.propertyTitle.message}</div>
@@ -580,7 +581,7 @@ const PropertyDescriptionSection = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="description">Property Description*</label>
+          <label htmlFor="description">Description*</label>
           <textarea
               id="description"
               className="form-control"
@@ -589,7 +590,8 @@ const PropertyDescriptionSection = () => {
               onChange={handleDescriptionChange}
               placeholder={`Enter property description in ${languages.find(l => l.code === activeLanguage)?.name}`}
               rows={6}
-              {...(activeLanguage === 'en' ? register('description', { required: 'Property description is required', value: inputValues.description.en }) : {})}
+              name="description"
+              ref={activeLanguage === 'en' ? register('description', { required: 'Property description is required' }).ref : undefined}
           />
           {activeLanguage === 'en' && errors.description && (
               <div className="error-message">{errors.description.message}</div>
@@ -597,15 +599,16 @@ const PropertyDescriptionSection = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="paymentPlan">Payment Plan (Optional)</label>
+          <label htmlFor="paymentPlan">Payment/Payment Plan (Optional)</label>
           <textarea
               id="paymentPlan"
               className="form-control"
               value={inputValues.paymentPlan[activeLanguage]}
               onChange={handleDescriptionChange}
-              placeholder={`Enter payment plan in ${languages.find(l => l.code === activeLanguage)?.name} (Optional)`}
+              placeholder={`Enter payment plan details in ${languages.find(l => l.code === activeLanguage)?.name} (optional)`}
               rows={4}
-              {...(activeLanguage === 'en' ? register('paymentPlan', { value: inputValues.paymentPlan.en }) : {})}
+              name="paymentPlan"
+              ref={activeLanguage === 'en' ? register('paymentPlan').ref : undefined}
           />
         </div>
 

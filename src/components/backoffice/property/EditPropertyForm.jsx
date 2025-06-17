@@ -25,6 +25,7 @@ import FloorPlanSection from './FloorPlanSection';
 import UnitPlanSection from './UnitPlanSection';
 import SocialMediaSection from './SocialMediaSection';
 import ContactSection from './ContactSection';
+import { useLocale } from 'next-intl';
 
 // Store and API
 import usePropertyFormStore from '@/store/propertyFormStore';
@@ -32,41 +33,41 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 const EditPropertyForm = ({ propertyId }) => {
   const router = useRouter();
   const t = useTranslations('AddProperty');
-  const { 
-    formData, 
-    propertyImages, 
-    floorPlanImages, 
-    unitPlanImages, 
+  const locale = useLocale();
+  const {
+    formData,
+    propertyImages,
+    floorPlanImages,
+    unitPlanImages,
     setFormData,
     resetForm,
     addPropertyImages,
     addFloorPlanImages,
-    addUnitPlanImages 
+    addUnitPlanImages
   } = usePropertyFormStore();
 
   console.log("GetPropertyForm propertyId:", propertyId)
-  
+
   const [validationSummary, setValidationSummary] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  
+  const [propertyReference, setPropertyReference] = useState('');
+  const [originalImageCount, setOriginalImageCount] = useState(0);
+  const [originalFloorPlanCount, setOriginalFloorPlanCount] = useState(0);
+  const [originalUnitPlanCount, setOriginalUnitPlanCount] = useState(0);
+
   const { handleSubmit, formState: { errors }, trigger, reset } = useFormContext();
-  
+
   // ดึงข้อมูล Property เดิมเมื่อโหลด component
   useEffect(() => {
 
-    console.log("GetPropertyId ",propertyId)
     const fetchPropertyData = async () => {
       if (!propertyId) return;
-      
+
       try {
         setIsLoading(true);
-        
-        // ดึง token
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
-        
-        // เรียก API เพื่อดึงข้อมูล property
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}`, {
           method: 'GET',
           headers: {
@@ -75,20 +76,17 @@ const EditPropertyForm = ({ propertyId }) => {
             'x-api-key': process.env.NEXT_PUBLIC_API_KEY
           }
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch property data');
         }
-        
+
         const responseData = await response.json();
-        
+
+        console.log("responseData",responseData);
+
         if (responseData.status === 'success' && responseData.data) {
           const property = responseData.data;
-          console.log("Property data retrieved:", property);
-          
-          // แปลงข้อมูล Property ให้ตรงกับ formData structure
-
-
           const amenitiesObj = {};
           property.amenities.forEach(amenity => {
             if (amenity.amenityType) {
@@ -111,8 +109,7 @@ const EditPropertyForm = ({ propertyId }) => {
           });
 
           // แสดงข้อมูล facilities ที่ได้จาก API เพื่อดูโครงสร้าง
-          console.log('Facilities from API:', property.facilities);
-          
+
           // สร้างโครงสร้างตามที่ FacilitiesSection คาดหวัง
           const facilitiesObj = {
             'common-area': {},
@@ -121,18 +118,18 @@ const EditPropertyForm = ({ propertyId }) => {
             'pool': {},
             'other': {}
           };
-          
+
           property.facilities.forEach(facility => {
             if (facility.facilityType) {
               // กำหนด category จากข้อมูล หรือใช้ default เป็น 'other'
-              const category = facility.category || 
-                                 (facility.facilityType.includes('pool') ? 'pool' :
-                                     facility.facilityType.includes('restaurant') ? 'restaurant' :
-                                         facility.facilityType.includes('fitness') ? 'fitness' :
-                                  facility.facilityType.includes('dining') ? 'dining' :
-                                  facility.facilityType.includes('common') ? 'common-area' :
-                                  'other');
-              
+              const category = facility.category ||
+                (facility.facilityType.includes('pool') ? 'pool' :
+                  facility.facilityType.includes('restaurant') ? 'restaurant' :
+                    facility.facilityType.includes('fitness') ? 'fitness' :
+                      facility.facilityType.includes('dining') ? 'dining' :
+                        facility.facilityType.includes('common') ? 'common-area' :
+                          'other');
+
               // เพิ่มข้อมูลลงในโครงสร้าง nested ตาม category
               facilitiesObj[category][facility.facilityType] = {
                 active: facility.active === true,
@@ -141,7 +138,7 @@ const EditPropertyForm = ({ propertyId }) => {
             }
           });
 
-          console.log('Formatted facilities:', facilitiesObj);
+
 
           const viewsObj = {};
           property.views.forEach(view => {
@@ -174,16 +171,15 @@ const EditPropertyForm = ({ propertyId }) => {
             }
           });
 
-
-
           let propertyData = {
             // ข้อมูลพื้นฐาน
-            propertyId: property.propertyId || property.id,
+            propertyId: property.propertyCode,
             propertyCode: property.propertyCode,
+            promotionalPrice: property.promotionalPrice || '',
             projectName: property.projectName || '',
             referenceId: property.referenceId || '',
             propertyTitle: property.propertyTitle || property.title || '',
-            propertyType: property.propertyType || '',
+            propertyType: property.propertyTypeId || '',
             listingType: property.listingType || 'SALE',
             description: property.description || '',
             paymentPlan: property.paymentPlan || '',
@@ -192,19 +188,22 @@ const EditPropertyForm = ({ propertyId }) => {
             translatedTitles: {
               th: property.translatedTitles?.th || '',
               zh: property.translatedTitles?.zh || '',
-              ru: property.translatedTitles?.ru || ''
+              ru: property.translatedTitles?.ru || '',
+              en: property.translatedTitles?.en || ''
             },
             translatedDescriptions: {
               th: property.translatedDescriptions?.th || '',
               zh: property.translatedDescriptions?.zh || '',
-              ru: property.translatedDescriptions?.ru || ''
+              ru: property.translatedDescriptions?.ru || '',
+              en: property.translatedDescriptions?.en || ''
             },
             translatedPaymentPlans: {
               th: property.translatedPaymentPlans?.th || '',
               zh: property.translatedPaymentPlans?.zh || '',
-              ru: property.translatedPaymentPlans?.ru || ''
+              ru: property.translatedPaymentPlans?.ru || '',
+              en: property.translatedPaymentPlans?.en || ''
             },
-            
+
             // Social Media
             socialMedia: {
               youtubeUrl: property.socialMedia?.youtubeUrl || '',
@@ -212,22 +211,22 @@ const EditPropertyForm = ({ propertyId }) => {
               facebookUrl: property.socialMedia?.facebookUrl || '',
               instagramUrl: property.socialMedia?.instagramUrl || ''
             },
-            
+
             // Location
             address: property.address || '',
-            ownershipQuota : property.ownershipQuota || '',
+            ownershipQuota: property.ownershipQuota || '',
             province: property.province || '',
-            usableArea:property.usableArea || '',
+            usableArea: property.usableArea || '',
             landSize: property.landSize || '',
             landArea: property.landArea || '',
             direction: property.direction || '',
             road: property.road || '',
-            property_code : property.propertyCode || '',
+            property_code: property.propertyCode || '',
             building: property.building || '',
             floors: property.floors || '',
             furnishing: property.furnishing || '',
             constructionYear: property.constructionYear || '',
-            communityFees  : property.communityFee || '',
+            communityFees: property.communityFee || '',
             propertyStatus: property.propertyStatus || '',
             unit: property.unit || '',
 
@@ -239,7 +238,7 @@ const EditPropertyForm = ({ propertyId }) => {
             longitude: property.longitude || 100.5018,
 
             zone_id: property.zoneId || '',
-            
+
             // Property details
             bedrooms: property.bedrooms || '',
             bathrooms: property.bathrooms || '',
@@ -248,17 +247,17 @@ const EditPropertyForm = ({ propertyId }) => {
             priceUnit: property.priceUnit || 'THB',
             longTerm1Year: property.longTerm1Year || '',
             propertyPriceTypeId: property.propertyPriceTypeId || '',
-            pricePerSqm: property.pricePerSqm || '',
-            
+            pricePerSqm: property.pricePerSqm,
+
             // เตรียมข้อมูลสำหรับ components ต่างๆ
             // สำคัญมาก: ชื่อฟิลด์เหล่านี้ต้องตรงกับที่ components ต่างๆ คาดหวัง
-            
+
             // Features (Amenities)
             amenities: amenitiesObj,
             propertyLabels: labelObj,
 
             // Facilities
-            facilities:facilitiesObj, // Clone the object to avoid modifying the original facilitiesObj,
+            facilities: facilitiesObj, // Clone the object to avoid modifying the original facilitiesObj,
 
             // Nearby places
             nearby: nearbyObj,
@@ -271,7 +270,7 @@ const EditPropertyForm = ({ propertyId }) => {
             views: viewsObj,
 
             // Property labels
-            
+
             // Contact info
             contactInfo: {
               phone: property.contactInfo.phone || '',
@@ -284,51 +283,50 @@ const EditPropertyForm = ({ propertyId }) => {
               facebookMessenger: property.contactInfo.facebookMessenger || '',
               instagram: property.contactInfo.instagram || ''
             },
-            
+
             // Status
             status: property.status || 'AVAILABLE',
-            
+
             // Dates
             availableFrom: property.availableFrom ? new Date(property.availableFrom) : null,
             availableTo: property.availableTo ? new Date(property.availableTo) : null,
-            
+
             // Agent info
             agentId: property.agentId || '',
             createdBy: property.createdBy || '',
             updatedBy: property.updatedBy || '',
           };
 
-          if(property.status === 'RENT' || property.status === 'SALE_RENT') {
+          if (property.status === 'RENT' || property.status === 'SALE_RENT') {
+            propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
+            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0;
             propertyData.rentalPrice = property.listings.find(l => l.listingType === 'RENT')?.price || 0;
             propertyData.shortTerm3Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm3Months || 0;
             propertyData.shortTerm6Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm6Months || 0;
             propertyData.shortTerm1Year = property.listings.find(l => l.listingType === 'RENT')?.shortTerm1Year || 0;
           }
-          else{
+          else {
             propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
+            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0;
           }
-          // เซ็ตค่า form data ใน store
           setFormData(propertyData);
-          
-          // เซ็ตค่า form data ใน React Hook Form
+
           reset(propertyData);
-          
-          // ตั้งค่ารูปภาพ property (ถ้ามี)
+
           if (property.images && property.images.length > 0) {
             const formattedImages = property.images.map(img => ({
               id: String(img.id || Math.random().toString()),
-              url: process.env.NEXT_PUBLIC_IMAGE_URL + img.url ||  process.env.NEXT_PUBLIC_IMAGE_URL + img.imageUrl,
+              url: process.env.NEXT_PUBLIC_IMAGE_URL + img.url || process.env.NEXT_PUBLIC_IMAGE_URL + img.imageUrl,
               isFeatured: img.isFeatured || false,
               sortOrder: img.sortOrder || 0,
-              file: null, // ไม่มีไฟล์เพราะเป็นการ load รูปที่มีอยู่แล้ว
-              isExisting: true // เพิ่ม flag เพื่อบอกว่าเป็นรูปที่มีอยู่แล้ว
+              file: null,
+              isExisting: true
             })).sort((a, b) => a.sortOrder - b.sortOrder);
 
-            console.log('formattedImages:', formattedImages);
             addPropertyImages(formattedImages);
+            setOriginalImageCount(formattedImages.length);
           }
-          
-          // ตั้งค่ารูปภาพ floor plan (ถ้ามี)
+
           if (property.floorPlans && property.floorPlans.length > 0) {
             const formattedFloorPlans = property.floorPlans.map(img => ({
               id: String(img.id || Math.random().toString()),
@@ -338,24 +336,23 @@ const EditPropertyForm = ({ propertyId }) => {
               sortOrder: img.sortOrder || 0,
             })).sort((a, b) => a.sortOrder - b.sortOrder);
 
-            console.log('formattedFloorPlans:', formattedFloorPlans);
-
             addFloorPlanImages(formattedFloorPlans);
+            setOriginalFloorPlanCount(formattedFloorPlans.length);
           }
-          
-          // ตั้งค่ารูปภาพ unit plan (ถ้ามี)
+
           if (property.unitPlans && property.unitPlans.length > 0) {
             const formattedUnitPlans = property.unitPlans.map(img => ({
               id: String(img.id || Math.random().toString()),
-              url: process.env.NEXT_PUBLIC_IMAGE_URL + img.url ||  process.env.NEXT_PUBLIC_IMAGE_URL + img.imageUrl,
+              url: process.env.NEXT_PUBLIC_IMAGE_URL + img.url || process.env.NEXT_PUBLIC_IMAGE_URL + img.imageUrl,
               file: null,
               isExisting: true,
               sortOrder: img.sortOrder || 0,
             })).sort((a, b) => a.sortOrder - b.sortOrder);
             addUnitPlanImages(formattedUnitPlans);
+            setOriginalUnitPlanCount(formattedUnitPlans.length);
           }
-          
-          console.log('Property data loaded successfully:', propertyData);
+
+
         } else {
           throw new Error('Invalid property data format');
         }
@@ -363,10 +360,12 @@ const EditPropertyForm = ({ propertyId }) => {
         console.error('Error fetching property data:', error);
         toast.error(t('errorFetchingPropertyData') || 'Failed to load property data');
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
     };
-    
+
     if (propertyId) {
       // Reset form before loading new data
       resetForm();
@@ -388,7 +387,7 @@ const EditPropertyForm = ({ propertyId }) => {
     }
   }, [errors, formSubmitted])
 
-  
+
   useEffect(() => {
     if (formSubmitted) {
       trigger();
@@ -397,14 +396,33 @@ const EditPropertyForm = ({ propertyId }) => {
 
   const onSubmit = async (data) => {
     try {
+      console.log("dataRequestEdit",data);
       setValidationSummary([]);
       setFormSubmitted(false);
+      
+      // ตรวจสอบว่าหากเปิดโปรโมชั่นจะต้องกรอกราคาโปรโมชั่นด้วย
+      const hasPromotion = document.getElementById('promotionToggle')?.checked;
+      if (hasPromotion && (!data.promotionalPrice || data.promotionalPrice === '0' || data.promotionalPrice === 0 || data.promotionalPrice === '')) {
+        toast.error('Promotional price is required when promotion is enabled');
+        setValidationSummary(['Promotional price is required when promotion is enabled']);
+        setSaving(false);
+        
+        // เลื่อนไปที่ promotionalPrice field
+        const promotionalPriceElement = document.getElementById('promotionalPrice');
+        if (promotionalPriceElement) {
+          promotionalPriceElement.focus();
+          promotionalPriceElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        return;
+      }
+      
       setSaving(true);
 
       // แสดงข้อความกำลังบันทึกข้อมูล
       const loadingToast = toast.loading(t('savingData'));
 
-      
+
       // สร้าง FormData object สำหรับส่งข้อมูลและรูปภาพ
       const formDataObj = new FormData();
 
@@ -424,7 +442,7 @@ const EditPropertyForm = ({ propertyId }) => {
           formDataObj.append(key, value);
         }
       }
-      
+
       // ตั้งค่าชื่อฟิลด์ให้ถูกต้องตามที่ backend คาดหวัง
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
@@ -439,10 +457,10 @@ const EditPropertyForm = ({ propertyId }) => {
       formDataObj.append('facilities', JSON.stringify(formData.facilities || []));
       formDataObj.append('labels', JSON.stringify(formData.propertyLabels || []));
       formDataObj.append('socialMedia', JSON.stringify(formData.socialMedia || []));
-      
+
       // สร้าง listings array ตามประเภทการขาย/เช่า
       const listings = [];
-      
+
       if (data.status === 'SALE' || data.status === 'SALE_RENT') {
         listings.push({
           listingType: 'SALE',
@@ -452,7 +470,7 @@ const EditPropertyForm = ({ propertyId }) => {
           currency: data.currency || 'THB'
         });
       }
-      
+
       if (data.status === 'RENT' || data.status === 'SALE_RENT') {
         listings.push({
           listingType: 'RENT',
@@ -464,32 +482,37 @@ const EditPropertyForm = ({ propertyId }) => {
           currency: data.currency || 'THB'
         });
       }
-      
+
       // เพิ่ม listings array เข้าไปใน formData
       formDataObj.append('listings', JSON.stringify(listings));
-      
+
       // เพิ่มรูปภาพ property
-      formDataObj.append('replaceImages', 'true'); // เพิ่ม flag ให้ลบรูปเก่าก่อน
-      
+      // ถ้ามีการลบรูปเก่า หรือมีการเปลี่ยนแปลงใดๆ ให้ใช้ replaceImages=true และส่ง existingImages[] เพื่อระบุรูปที่ต้องการเก็บไว้
+      // เพื่อให้แน่ใจว่าการเปลี่ยนแปลงต่างๆ จะถูกบันทึกในฐานข้อมูล
+      // ใช้ replaceImages=true เสมอเพื่อให้ backend อัพเดตข้อมูลรูปภาพทั้งหมด
+      formDataObj.append('replaceImages', 'true');
+
       propertyImages.forEach((image) => {
         if (image.file) {
           formDataObj.append(`images`, image.file);
-          
+
           // เพิ่มข้อมูล isFeatured และ sortOrder สำหรับรูปใหม่
           formDataObj.append(`imageMetadata[${image.id}][isFeatured]`, image.isFeatured ? 'true' : 'false');
           formDataObj.append(`imageMetadata[${image.id}][sortOrder]`, image.sortOrder || 0);
         } else if (image.isExisting) {
           formDataObj.append(`existingImages[]`, image.id);
-          
+
           // เพิ่มข้อมูล isFeatured และ sortOrder สำหรับรูปเก่า
           formDataObj.append(`existingImageMetadata[${image.id}][isFeatured]`, image.isFeatured ? 'true' : 'false');
           formDataObj.append(`existingImageMetadata[${image.id}][sortOrder]`, image.sortOrder || 0);
         }
       });
-      
+
       // เพิ่มรูปภาพ floor plan
-      formDataObj.append('replaceFloorPlans', 'true'); // เพิ่ม flag ให้ลบรูปเก่าก่อน
-      
+      const hasFloorPlanChanges = floorPlanImages.some(img => img.file) ||
+        originalFloorPlanCount !== floorPlanImages.length;
+      formDataObj.append('replaceFloorPlans', hasFloorPlanChanges ? 'true' : 'false'); // Don't replace existing floor plans
+
       floorPlanImages.forEach((image) => {
         if (image.file) {
           formDataObj.append(`floorPlanImages`, image.file);
@@ -498,14 +521,16 @@ const EditPropertyForm = ({ propertyId }) => {
         } else if (image.isExisting) {
           formDataObj.append(`existingFloorPlans[]`, image.id);
 
-            formDataObj.append(`existingFloorPlanMetadata[${image.id}][isFeatured]`, image.isFeatured ? 'true' : 'false');
-            formDataObj.append(`existingFloorPlanMetadata[${image.id}][sortOrder]`, image.sortOrder || 0);
+          formDataObj.append(`existingFloorPlanMetadata[${image.id}][isFeatured]`, image.isFeatured ? 'true' : 'false');
+          formDataObj.append(`existingFloorPlanMetadata[${image.id}][sortOrder]`, image.sortOrder || 0);
         }
       });
-      
+
       // เพิ่มรูปภาพ unit plan
-      formDataObj.append('replaceUnitPlans', 'true'); // เพิ่ม flag ให้ลบรูปเก่าก่อน
-      
+      const hasUnitPlanChanges = unitPlanImages.some(img => img.file) ||
+        originalUnitPlanCount !== unitPlanImages.length;
+      formDataObj.append('replaceUnitPlans', hasUnitPlanChanges ? 'true' : 'false'); // เพิ่ม flag ให้ลบรูปเก่าก่อน
+
       unitPlanImages.forEach((image) => {
         if (image.file) {
           formDataObj.append(`unitPlanImages`, image.file);
@@ -522,8 +547,7 @@ const EditPropertyForm = ({ propertyId }) => {
         }
       });
 
-      console.log('Sending data to API...', { formDataSize: [...formDataObj.entries()].length });
-      
+
       try {
         // แสดงข้อมูลที่ส่งไป API แบบละเอียด
         for (let [key, value] of formDataObj.entries()) {
@@ -532,11 +556,11 @@ const EditPropertyForm = ({ propertyId }) => {
 
         // ดึง token จาก localStorage หรือ sessionStorage
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
-        
+
         if (!token) {
           throw new Error('Authentication token not found. Please login again.');
         }
-        
+
         // ส่งข้อมูลไปยัง API
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}`, {
           method: 'PUT',
@@ -546,204 +570,234 @@ const EditPropertyForm = ({ propertyId }) => {
           },
           body: formDataObj,
         });
-        
+
         // ปิด toast loading
         toast.dismiss(loadingToast);
-        
+
         // ตรวจสอบสถานะการตอบกลับจาก API
         if (!response.ok) {
           // พยายามอ่านข้อความผิดพลาดจาก response (ถ้ามี)
-          const errorData = await response.json().catch(() => ({ 
-            message: `HTTP error: ${response.status} ${response.statusText}` 
+          const errorData = await response.json().catch(() => ({
+            message: `HTTP error: ${response.status} ${response.statusText}`
           }));
-          
+
           throw new Error(errorData.message || `Error updating property: ${response.status}`);
         }
-        
-        // แปลงข้อมูลการตอบกลับเป็น JSON
-        const result = await response.json();
-        console.log('Property update success:', result);
-        
-        // แสดงข้อความสำเร็จ
-        toast.success(t('propertyUpdateSuccess') || 'Property updated successfully');
-        
-        // นำทางกลับไปหน้ารายการทรัพย์สิน
-        setTimeout(() => {
-          router.push('/backoffice/my-properties');
-        }, 1500);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to create property');
+        }
+        const responseData = await response.json();
+
+        if (responseData.status === 'success') {
+          // แสดง dialog ถามว่าต้องการไปที่หน้ารายการอสังหาฯ หรือไม่
+          Swal.fire({
+            title: 'Property Updated!',
+            html: `<div class="text-center">${'The property has been successfully updated.'}</div>`,
+            icon: 'success',
+            confirmButtonText: 'View Property'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Navigate to the property list
+              router.push(`/${locale}/backoffice/my-properties`);
+            }
+          });
+          // Reset form
+          resetForm();
+        } else {
+          throw new Error(responseData.message || 'Failed to create property');
+        }
       } catch (error) {
-        // จัดการข้อผิดพลาด
-        console.error('Error updating property:', error);
-        toast.dismiss(loadingToast);
-        toast.error(error.message || t('errorUpdatingProperty') || 'Failed to update property');
+        console.error('Error creating property:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to create property ' + error.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       } finally {
-        // ตั้งค่าสถานะการบันทึกเป็น false ไม่ว่าจะสำเร็จหรือไม่ก็ตาม
         setSaving(false);
       }
-    } catch (error) {
 
-      toast.error(error.message || t('errorSavingProperty'));
+    } catch (error) {
+      console.error('Error creating property:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to create property ' + error.message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     } finally {
       setSaving(false);
     }
-  };
 
-  if (isLoading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        <p className="mt-2">{t('loadingPropertyData')}</p>
-      </div>
-    );
   }
 
+
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Validation Summary */}
-      {validationSummary.length > 0 && (
-        <div className="validation-summary alert alert-danger">
-          <h5>{t('validationErrors')}:</h5>
-          <ul>
-            {validationSummary.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      
-       Property Form Sections
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="container-fluid">
 
-      <div className="card mb-4">
-        <div className="card-body">
-          <ListingTypeSection type={"edit"} />
-        </div>
-      </div>
 
-      <div className="card mb-4">
-        <div className="card-body">
-          <PropertyInfoSection />
-        </div>
-      </div>
+        {isLoading && (
+          <div className="position-fixed w-100 h-100 d-flex justify-content-center align-items-center"
+            style={{ top: 0, left: 0, backgroundColor: 'rgba(4, 3, 3, 0.7)', zIndex: 9999 }}>
+            <div className="spinner-border" style={{ color: '#922014' }} role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
 
-      <div className="card mb-4">
-        <div className="card-body">
-          <PropertyTypeSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <LocationSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <PricingSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <PropertyDescriptionSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <PhotosSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <FloorPlanSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <UnitPlanSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <PropertyDetailSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <FeaturesSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <PropertyHighlightsSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <FacilitiesSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <NearbySection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <ViewSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <SocialMediaSection />
-        </div>
-      </div>
-      
-      <div className="card mb-4">
-        <div className="card-body">
-          <ContactSection />
-        </div>
-      </div>
-      
-      {/* Form Actions */}
-      <div className="form-actions d-flex justify-content-center mb-5">
-        <button 
-          type="submit" 
-          className="btn btn-dark me-3"
-          disabled={saving}
-        >
-          {saving ? (
-            <>
-              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              {t('saving')}
-            </>
-          ) : (
-            t('updateProperty')
-          )}
-        </button>
 
-        <button
-          type="button" 
-          className="btn btn-outline-dark"
-          onClick={() => router.push('/backoffice/properties')}
-          disabled={saving}
-        >
-          {t('cancel')}
-        </button>
-      </div>
-    </form>
+        {/* Validation Summary */}
+        {validationSummary.length > 0 && (
+          <div className="validation-summary alert alert-danger">
+            <h5>{t('validationErrors')}:</h5>
+            <ul>
+              {validationSummary.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+
+
+
+        
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyInfoSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <ListingTypeSection type={"edit"} />
+          </div>
+        </div>
+
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyTypeSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <LocationSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PricingSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyDescriptionSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PhotosSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <FloorPlanSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <UnitPlanSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyDetailSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <FeaturesSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyHighlightsSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <FacilitiesSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <NearbySection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <ViewSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <SocialMediaSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <ContactSection />
+          </div>
+        </div>
+
+        {/* Form Actions */}
+        <div className="form-actions d-flex justify-content-center mb-5">
+          <button
+            type="submit"
+            className="btn btn-dark me-3"
+            disabled={saving}
+          >
+            {saving ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                {t('saving')}
+              </>
+            ) : (
+              t('updateProperty')
+            )}
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-outline-dark"
+            onClick={() => router.push('/backoffice/properties')}
+            disabled={saving}
+          >
+            {t('cancel')}
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

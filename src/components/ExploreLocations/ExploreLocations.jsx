@@ -20,7 +20,7 @@ const ExploreLocations = () => {
     const fetchLocations = async () => {
       try {
         setLoading(true);
-        const response = await zoneService.getExploreLocations(5);
+        const response = await zoneService.getExploreLocations();
         setLocations(response.data || []);
       } catch (err) {
         console.error('Error fetching locations:', err);
@@ -100,7 +100,7 @@ const ExploreLocations = () => {
                     />
                   </div>
                   <div className="feature-content pt20">
-                    <h6 className="title mb-1">{location.name_th}</h6>
+                    <h6 className="title mb-1">{location[`name_${locale}`]}</h6>
                     <p className="text fz15">{location.propertyCount} Properties</p>
                   </div>
                 </div>
