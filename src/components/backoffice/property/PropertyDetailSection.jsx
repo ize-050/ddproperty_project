@@ -69,7 +69,6 @@ const PropertyDetailSection = () => {
             id="ownershipQuota"
             {...register('ownershipQuota', { required: 'This field is required' })}
           >
-            <option value="">-</option>
             <option value="freehold">Freehold</option>
             <option value="leasehold">Leasehold</option>
           </select>
@@ -137,7 +136,6 @@ const PropertyDetailSection = () => {
             id="furnishing"
             {...register('furnishing')}
           >
-            <option value="">-</option>
             <option value="FULLY_FURNISHED">Fully Furnished</option>
             <option value="PARTIALLY_FURNISHED">Partially Furnished</option>
             <option value="UNFURNISHED">Unfurnished</option>
@@ -180,7 +178,6 @@ const PropertyDetailSection = () => {
             id="constructionYear"
             {...register('constructionYear')}
           >
-            <option value="">-</option>
             {[...Array(50)].map((_, i) => {
               const year = new Date().getFullYear() - i;
               return <option key={year} value={year}>{year}</option>;
