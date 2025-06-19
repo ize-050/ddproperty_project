@@ -89,7 +89,7 @@ export default async function BlogDetailPage({ params }) {
   if (!blog) {
     return (
       <div className="wrapper">
-        <MobileMenu />
+    
         <div className="container py-5 text-center">
           <p>Blog not found</p>
         </div>
@@ -99,7 +99,7 @@ export default async function BlogDetailPage({ params }) {
 
   return (
     <div className="wrapper">
-      <MobileMenu />
+    
       
       <div className="blog-detail-page">
         <div className="container">
