@@ -112,7 +112,7 @@ const PropertyDetailSection = () => {
             <input
               type="number"
               id="usableArea"
-              {...register('usableArea', { required: 'This field is required' })}
+              {...register('usableArea', { required: 'Usable area is required' })}
             />
             <span className="unit">Sq.m.</span>
           </div>
@@ -136,7 +136,7 @@ const PropertyDetailSection = () => {
           <select
             id="furnishing"
             defaultValue="FULLY_FURNISHED"
-            {...register('furnishing') , {required: 'This field is required'}}
+            {...register('furnishing' , {required: 'Furnishing is required'})}
           >
             <option value="FULLY_FURNISHED">Fully Furnished</option>
             <option value="PARTIALLY_FURNISHED">Partially Furnished</option>
