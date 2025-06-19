@@ -67,6 +67,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="ownershipQuota">Ownership Quota*</label>
           <select
             id="ownershipQuota"
+            defaultValue="freehold"
             {...register('ownershipQuota', { required: 'This field is required' })}
           >
             <option value="freehold">Freehold</option>
@@ -133,6 +134,7 @@ const PropertyDetailSection = () => {
         <div className="form-group">
           <label htmlFor="furnishing">Furnishing</label>
           <select
+            defaultValue={"FULLY_FURNISHED"}
             id="furnishing"
             {...register('furnishing')}
           >
@@ -149,12 +151,12 @@ const PropertyDetailSection = () => {
           <select
             id="bedrooms"
             {...register('bedrooms', { required: 'This field is required' })}
+            defaultValue={1}
           >
-            <option value="">-</option>
+            
             {[...Array(10)].map((_, i) => (
               <option key={i} value={i}>{i}</option>
             ))}
-            <option value="10+">10+</option>
           </select>
           {errors.bedrooms && <p className="error-message">{errors.bedrooms.message}</p>}
         </div>
@@ -163,12 +165,12 @@ const PropertyDetailSection = () => {
           <select
             id="bathrooms"
             {...register('bathrooms', { required: 'This field is required' })}
+            defaultValue={1}
           >
-            <option value="">-</option>
+
             {[...Array(10)].map((_, i) => (
               <option key={i} value={i}>{i}</option>
             ))}
-            <option value="10+">10+</option>
           </select>
           {errors.bathrooms && <p className="error-message">{errors.bathrooms.message}</p>}
         </div>
@@ -176,6 +178,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="constructionYear">Construction Year</label>
           <select
             id="constructionYear"
+            defaultValue={new Date().getFullYear()}
             {...register('constructionYear')}
           >
             {[...Array(50)].map((_, i) => {
