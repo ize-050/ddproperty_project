@@ -262,6 +262,7 @@ const PropertyDetailPage = ({ property }) => {
 
 
               {youtubeVideo != '' && (
+                <>
                 <div className="property-section mb-5">
                   <h3 className="section-title mb-3">Video</h3>
                   <div className="video-container" style={{ borderRadius: '8px', overflow: 'hidden' }}>
@@ -275,20 +276,43 @@ const PropertyDetailPage = ({ property }) => {
                     ></iframe>
                   </div>
                 </div>
+                <hr></hr>
+                </>
               )}
 
-              <hr></hr>
+         
+
+
+              {property?.floorPlans?.length > 0 && (
+                <>
+                <PropertyFloorPlan property={property} />
+                <hr></hr>
+                </>
+              )}
+
+              
+
+              {property?.unitPlans?.length > 0 && (
+                <>
+                <PropertyUnitPlan property={property} />
+                <hr></hr>
+                </>
+              )}
 
               {paymentPlan && (
+                <>
                 <div className="property-section mb-5">
                   <h3 className="section-title mb-3">Payment Plan</h3>
                   <div className="payment-plan-container">
                     <p>{paymentPlan}</p>
                   </div>
                 </div>
-              )}
 
               <hr></hr>
+                </>
+                
+              )}
+
 
             </div>
 
