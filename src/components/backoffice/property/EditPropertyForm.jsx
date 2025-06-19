@@ -294,7 +294,7 @@ const EditPropertyForm = ({ propertyId }) => {
 
           if (property.status === 'RENT' || property.status === 'SALE_RENT') {
             propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
-            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0;
+            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || '';
             propertyData.rentalPrice = property.listings.find(l => l.listingType === 'RENT')?.price || 0;
             propertyData.shortTerm3Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm3Months || 0;
             propertyData.shortTerm6Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm6Months || 0;
@@ -302,7 +302,7 @@ const EditPropertyForm = ({ propertyId }) => {
           }
           else {
             propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
-            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0;
+            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || '';
           }
           setFormData(propertyData);
           

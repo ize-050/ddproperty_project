@@ -82,7 +82,7 @@ const PropertyDetailSection = () => {
             <input
               type="number"
               id="landSize"
-              {...register('landSize', { required: 'This field is required' })}
+              {...register('landSize')}
             />
             <div className="unit-options">
               <span 
@@ -102,7 +102,6 @@ const PropertyDetailSection = () => {
               </span>
             </div>
           </div>
-          {errors.landSize && <p className="error-message">{errors.landSize.message}</p>}
         </div>
       </div>
       

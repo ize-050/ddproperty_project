@@ -9,12 +9,16 @@ import { toast } from 'react-toastify';
 
 const ContactSection = () => {
   const { formData } = usePropertyFormStore();
-  const { register, formState: { errors }, setValue } = useFormContext();
+  const { register, formState: { errors }, setValue, watch } = useFormContext();
   const [loadingProfile, setLoadingProfile] = useState(false);
+  
+  // Watch contact info values for controlled inputs
+  const phoneValue = watch('contactInfo.phone');
+  const emailValue = watch('contactInfo.email');
   
   // CSS class for error styling
   const getInputClassName = (fieldName) => {
-    return `form-control ${errors[`contactInfo.${fieldName}`] ? 'is-invalid' : ''}`;
+    return `form-control ${errors.contactInfo?.[fieldName] ? 'is-invalid' : ''}`;
   };
   
   const handleUseProfileData = async (e) => {
@@ -114,12 +118,11 @@ const ContactSection = () => {
           <input
             type="tel"
             id="phone"
-            className={`form-control ${errors['contactInfo.phone'] ? 'is-invalid' : ''}`}
-            defaultValue={formData.contactInfo?.phone || ''}
-            {...register('contactInfo.phone', { required: 'Main telephone number is required' })}
+            className={`form-control ${errors.contactInfo?.phone ? 'is-invalid' : ''}`}
+            {...register('contactInfo.phone')}
           />
-          {errors['contactInfo.phone'] && (
-            <div className="invalid-feedback">{errors['contactInfo.phone'].message}</div>
+          {errors.contactInfo?.phone && (
+            <div className="invalid-feedback">{errors.contactInfo.phone.message}</div>
           )}
         </div>
         
@@ -131,7 +134,6 @@ const ContactSection = () => {
             type="tel"
             id="secondaryPhone"
             className="form-control"
-            defaultValue={formData.contactInfo?.secondaryPhone || ''}
             {...register('contactInfo.secondaryPhone')}
           />
         </div>
@@ -143,18 +145,11 @@ const ContactSection = () => {
           <input
             type="email"
             id="email"
-            className={`form-control ${errors['contactInfo.email'] ? 'is-invalid' : ''}`}
-            defaultValue={formData.contactInfo?.email || ''}
-            {...register('contactInfo.email', { 
-              required: 'Email is required',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email address'
-              }
-            })}
+            className={`form-control ${errors.contactInfo?.email ? 'is-invalid' : ''}`}
+            {...register('contactInfo.email')} 
           />
-          {errors['contactInfo.email'] && (
-            <div className="invalid-feedback">{errors['contactInfo.email'].message}</div>
+          {errors.contactInfo?.email && (
+            <div className="invalid-feedback">{errors.contactInfo.email.message}</div>
           )}
         </div>
       </div>

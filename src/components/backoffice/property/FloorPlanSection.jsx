@@ -107,11 +107,9 @@ const FloorPlanSection = () => {
 
                     {/* Add more photos button */}
                     <div className="add-more-photos" onClick={handleBrowseFiles}>
-                      <div className="icon mb30">
-                        <span className="flaticon-upload" style={{
-                          fontSize: '60px',
-                        }} />
-                      </div>
+                       <div className="add-icon">
+                                              <FaUpload size={24} />
+                                            </div>
                       <p>Add More Floor Plans</p>
                     </div>
 

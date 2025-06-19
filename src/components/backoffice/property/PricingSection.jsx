@@ -47,7 +47,10 @@ const PricingSection = () => {
 
   const handlePromotionalPriceChange = (e) => {
     const value = e.target.value;
-    setValue('promotionalPrice', value);
+    setValue('promotionalPrice', value, { shouldDirty: true, shouldValidate: true });
+    
+    // Update form store
+    setFormData({ ...formData, promotionalPrice: value });
     
     // ทำ validation ทันทีเมื่อมีการเปลี่ยนแปลงค่า
     if (promotionEnabled) {
@@ -72,17 +75,6 @@ const PricingSection = () => {
       setValue('promotionalPrice', 0);
     }
   };
-
-  useEffect(() => {
-    if (promotionEnabled) {
-      setValue('promotionalPrice', formData.promotionalPrice);
-      if (formData.promotionalPrice) {
-        trigger('promotionalPrice');
-      }
-    } else {
-      setValue('promotionalPrice', '0');
-    }
-  }, [promotionEnabled, promotionalPrice, setValue, trigger]);
 
   // ตรวจสอบว่าเป็นประเภทการลงประกาศแบบใด
   const showSaleSection = formData.status === 'SALE' || formData.status === 'SALE_RENT';
@@ -238,7 +230,7 @@ const PricingSection = () => {
               type="text"
               id="promotionalPrice"
               className={`form-control ${errors.promotionalPrice ? 'is-invalid' : ''}`}
-              defaultValue={formData.promotionalPrice || ''}
+              value={promotionalPrice || ''}
               {...register('promotionalPrice')}
               onChange={handlePromotionalPriceChange}
               onBlur={() => promotionEnabled && trigger('promotionalPrice')}

@@ -413,13 +413,15 @@ const AddNewProperty = () => {
 
                     // Add red border to all required fields that are empty
                     // ProjectInfoSection
+                    
+
                     if (!getValues('projectName')) {
                       document.getElementById('projectName').style.border = '2px solid #dc3545';
                     }
                     if (!getValues('area')) {
                       document.getElementById('area').style.border = '2px solid #dc3545';
                     }
-
+                    
                     // LocationSection
                     if (!getValues('address')) {
                       document.getElementById('address').style.border = '2px solid #dc3545';
