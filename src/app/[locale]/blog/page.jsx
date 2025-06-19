@@ -11,20 +11,40 @@ export const metadata = {
 
 // ฟังก์ชันสำหรับแสดงข้อมูลตามภาษา
 const getLocalizedContent = (blog, field, locale) => {
-
   try {
     if (field === 'title' && blog.translatedTitles) {
-
-      console.log("blog.translatedTitles[locale]",blog.translatedTitles[locale])
-
-      return blog.translatedTitles[locale];
+      // Parse JSON string if needed
+      let translatedTitles = blog.translatedTitles;
+      if (typeof translatedTitles === 'string') {
+        translatedTitles = JSON.parse(translatedTitles);
+      }
+      
+      console.log("translatedTitles[locale]", translatedTitles[locale]);
+      return translatedTitles[locale] || blog.title;
     }
+    
     if (field === 'content' && blog.translatedContents) {
-      return blog.translatedContents[locale];
+      // Parse JSON string if needed
+      let translatedContents = blog.translatedContents;
+      if (typeof translatedContents === 'string') {
+        translatedContents = JSON.parse(translatedContents);
+      }
+      
+      return translatedContents[locale] || blog.content;
     }
+    
+    // Fallback to default fields
+    if (field === 'title') return blog.title;
+    if (field === 'content') return blog.content;
+    
   } catch (error) {
     console.error('Error parsing translated content:', error);
+    // Fallback to default fields if parsing fails
+    if (field === 'title') return blog.title;
+    if (field === 'content') return blog.content;
   }
+  
+  return '';
 };
 
 // ฟังก์ชันสำหรับแปลงวันที่เป็นรูปแบบที่ต้องการ
@@ -67,7 +87,6 @@ const locale =  params.locale;
   if (!blogs || blogs.length === 0) {
     return (
       <div className="wrapper">
-        <MobileMenu />
         <div className="container py-5 text-center">
           <p>No blogs found</p>
         </div>
@@ -90,7 +109,7 @@ const locale =  params.locale;
 
   return (
     <div className="wrapper">
-      <MobileMenu />
+
       
       <div className="blog-main-page">
         <div className="container">

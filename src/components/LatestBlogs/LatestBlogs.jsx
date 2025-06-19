@@ -160,7 +160,7 @@ const LatestBlogs = () => {
                 {blog.title}
               </a>
               <h6 className="title mt-1">
-                <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+                <Link href={`/blog/${blog.id}`}>{blog.title}</Link>
               </h6>
 
             </div>
