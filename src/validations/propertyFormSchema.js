@@ -19,6 +19,7 @@ export const propertyFormSchema = yup.object().shape({
   province: yup.string().required('Province is required'),
   postalCode: yup.string().required('Postal code is required'),
   
+
   // Property Details
   bedrooms: yup.string().required('Number of bedrooms is required'),
   bathrooms: yup.string().required('Number of bathrooms is required'),
@@ -29,11 +30,11 @@ export const propertyFormSchema = yup.object().shape({
   ownershipQuota: yup.string(),
   landSize: yup.string(),
   landSizeUnit: yup.string(),
-  usableArea: yup.string(),
-  floors: yup.string(),
-  furnishing: yup.string(),
-  constructionYear: yup.string(),
-  communityFees: yup.string(),
+  usableArea: yup.string().required('Usable area is required'),
+  floors: yup.string().required('Floors is required'),
+  furnishing: yup.string().required('Furnishing is required'),
+  constructionYear: yup.string().required('Construction year is required'),
+  communityFees: yup.string().required('Community fees is required'),
   
   // Pricing
   price: yup.string(),
@@ -120,13 +121,13 @@ export const propertyFormSchemaBasic = yup.object().shape({
   
   // Property Detail fields
   propertyId: yup.string(),
-  ownershipQuota: yup.string(),
-  landSize: yup.string(),
-  landSizeUnit: yup.string(),
-  usableArea: yup.string(),
-  floors: yup.string(),
-  furnishing: yup.string(),
-  constructionYear: yup.string(),
+  ownershipQuota: yup.string().required('Ownership quota is required'),
+  landSize: yup.string().required('Land size is required'),
+  landSizeUnit: yup.string().required('Land size unit is required'),
+  usableArea: yup.string().required('Usable area is required'),
+  floors: yup.string().required('Floors is required'),
+  furnishing: yup.string().required('Furnishing is required'),
+  constructionYear: yup.string().required('Construction year is required'),
   communityFees: yup.string(),
   
   // Pricing

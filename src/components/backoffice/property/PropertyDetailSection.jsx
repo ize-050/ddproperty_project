@@ -68,6 +68,7 @@ const PropertyDetailSection = () => {
           <select
             id="ownershipQuota"
             defaultValue="freehold"
+            className={`form-control ${errors.ownershipQuota ? 'is-invalid' : ''}`}
             {...register('ownershipQuota', { required: 'Ownership quota is required' })}
           >
             <option value="freehold">Freehold</option>
@@ -122,6 +123,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="floors">Floors*</label>
           <select
             id="floors"
+            className={`form-control ${errors.floors ? 'is-invalid' : ''}`}
             {...register('floors', { required: 'This field is required' })}
           >
             <option value="">-</option>
@@ -136,12 +138,14 @@ const PropertyDetailSection = () => {
           <select
             id="furnishing"
             defaultValue="FULLY_FURNISHED"
+            className={`form-control ${errors.furnishing ? 'is-invalid' : ''}`}
             {...register('furnishing' , {required: 'Furnishing is required'})}
           >
             <option value="FULLY_FURNISHED">Fully Furnished</option>
             <option value="PARTIALLY_FURNISHED">Partially Furnished</option>
             <option value="UNFURNISHED">Unfurnished</option>
           </select>
+          {errors.furnishing && <p className="error-message">{errors.furnishing.message}</p>}
         </div>
       </div>
       
@@ -151,6 +155,7 @@ const PropertyDetailSection = () => {
           <select
             id="bedrooms"
             defaultValue={1}
+            className={`form-control ${errors.bedrooms ? 'is-invalid' : ''}`}
             {...register('bedrooms', { required: 'This field is required' })}
           >
             
@@ -165,6 +170,7 @@ const PropertyDetailSection = () => {
           <select
             id="bathrooms"
             defaultValue={1}
+            className={`form-control ${errors.bathrooms ? 'is-invalid' : ''}`}
             {...register('bathrooms', { required: 'This field is required' })}
           >
 
@@ -179,6 +185,7 @@ const PropertyDetailSection = () => {
           <select
             id="constructionYear"
             defaultValue={new Date().getFullYear()}
+            className={`form-control ${errors.constructionYear ? 'is-invalid' : ''}`}
             {...register('constructionYear', { required: 'This field is required' })}
           >
             {[...Array(50)].map((_, i) => {
@@ -186,6 +193,7 @@ const PropertyDetailSection = () => {
               return <option key={year} value={year}>{year}</option>;
             })}
           </select>
+          {errors.constructionYear && <p className="error-message">{errors.constructionYear.message}</p>}
         </div>
       </div>
       
@@ -200,6 +208,7 @@ const PropertyDetailSection = () => {
             />
             <span className="unit">/ Year</span>
           </div>
+          {errors.communityFees && <p className="error-message">{errors.communityFees.message}</p>}
         </div>
       </div>
     </section>
