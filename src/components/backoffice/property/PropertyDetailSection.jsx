@@ -68,7 +68,7 @@ const PropertyDetailSection = () => {
           <select
             id="ownershipQuota"
             defaultValue="freehold"
-            {...register('ownershipQuota', { required: 'This field is required' })}
+            {...register('ownershipQuota', { required: 'Ownership quota is required' })}
           >
             <option value="freehold">Freehold</option>
             <option value="leasehold">Leasehold</option>
@@ -134,9 +134,9 @@ const PropertyDetailSection = () => {
         <div className="form-group">
           <label htmlFor="furnishing">Furnishing</label>
           <select
-            defaultValue={"FULLY_FURNISHED"}
             id="furnishing"
-            {...register('furnishing')}
+            defaultValue="FULLY_FURNISHED"
+            {...register('furnishing') , {required: 'This field is required'}}
           >
             <option value="FULLY_FURNISHED">Fully Furnished</option>
             <option value="PARTIALLY_FURNISHED">Partially Furnished</option>
@@ -150,8 +150,8 @@ const PropertyDetailSection = () => {
           <label htmlFor="bedrooms">Bedrooms*</label>
           <select
             id="bedrooms"
-            {...register('bedrooms', { required: 'This field is required' })}
             defaultValue={1}
+            {...register('bedrooms', { required: 'This field is required' })}
           >
             
             {[...Array(10)].map((_, i) => (
@@ -164,8 +164,8 @@ const PropertyDetailSection = () => {
           <label htmlFor="bathrooms">Bathrooms*</label>
           <select
             id="bathrooms"
-            {...register('bathrooms', { required: 'This field is required' })}
             defaultValue={1}
+            {...register('bathrooms', { required: 'This field is required' })}
           >
 
             {[...Array(10)].map((_, i) => (
@@ -179,7 +179,7 @@ const PropertyDetailSection = () => {
           <select
             id="constructionYear"
             defaultValue={new Date().getFullYear()}
-            {...register('constructionYear')}
+            {...register('constructionYear', { required: 'This field is required' })}
           >
             {[...Array(50)].map((_, i) => {
               const year = new Date().getFullYear() - i;
