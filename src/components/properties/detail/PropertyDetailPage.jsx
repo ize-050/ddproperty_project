@@ -44,8 +44,14 @@ const PropertyDetailPage = ({ property }) => {
         desc = property.description || '';
       }
 
-      const paymentPlan = property.translatedPaymentPlans[locale];
-      setPaymentPlan(paymentPlan);
+      if(locale != 'en'){
+        const paymentPlan = property.translatedPaymentPlans[locale];
+        setPaymentPlan(paymentPlan);
+      }
+      else{
+        const paymentPlan = property.paymentPlan;
+        setPaymentPlan(paymentPlan);
+      }
 
 
 
