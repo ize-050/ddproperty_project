@@ -15,7 +15,7 @@ const TopLoadingBar = () => {
     let finishTimer;
 
     const startLoading = () => {
-      console.log('🔄 Starting loading bar for path:', pathname);
+      console.log(' Starting loading bar for path:', pathname);
       setLoading(true);
       setProgress(0);
       
@@ -33,14 +33,14 @@ const TopLoadingBar = () => {
     };
 
     const finishLoading = () => {
-      console.log('✅ Finishing loading bar');
+      console.log(' Finishing loading bar');
       clearInterval(progressTimer);
       setProgress(100);
       
       setTimeout(() => {
         setLoading(false);
         setProgress(0);
-        console.log('🚫 Loading bar hidden');
+        console.log(' Loading bar hidden');
       }, 200);
     };
 
@@ -71,7 +71,8 @@ const TopLoadingBar = () => {
           height: '4px',
           zIndex: 99999,
           background: 'rgba(0,0,0,0.1)',
-          display: loading ? 'block' : 'none'
+          display: loading ? 'block' : 'none',
+          pointerEvents: 'none' // Allow touch events to pass through
         }}
       >
         <div 
@@ -86,21 +87,7 @@ const TopLoadingBar = () => {
         />
       </div>
       
-      {/* Debug info - remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <div style={{
-          position: 'fixed',
-          top: '10px',
-          right: '10px',
-          background: 'black',
-          color: 'white',
-          padding: '5px',
-          fontSize: '12px',
-          zIndex: 100000
-        }}>
-          Loading: {loading ? 'YES' : 'NO'} | Progress: {Math.round(progress)}%
-        </div>
-      )}
+
     </>
   );
 };

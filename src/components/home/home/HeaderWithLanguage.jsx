@@ -130,7 +130,10 @@ const HeaderWithLanguage = ({ initialStrings = {} }) => {
                                     <CurrencySwitcher />
                                     <Link
                                         className="ud-btn btn-white add-property bdrs60 ms-4"
-                                        href="/backoffice/login"
+                                        href="#"
+                                        onClick={() => {
+                                            window.location.href = '/backoffice/login';
+                                        }}
                                     >
                                         {getString('backoffice_button', 'BACKOFFICE')}
                                         <i className="fal fa-arrow-right-long" />

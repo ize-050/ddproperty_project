@@ -88,7 +88,7 @@ const ExploreLocations = () => {
         {locations.map((location) => (
           <SwiperSlide key={location.id}>
             <div className="item">
-              <Link href="/map-v4">
+              <Link href={`/properties/list?zoneId=${location.id}`}>
                 <div className="feature-style2 mb30">
                   <div className="feature-img">
                     <Image

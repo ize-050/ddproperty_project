@@ -9,6 +9,7 @@
 @import 'components/image-uploader.scss'; // Image uploader component
 @import 'components/TopLoadingBar.scss'; // Top loading bar component
 @import 'components/ProfileDropdown.scss'; // Profile dropdown component
+@import 'components/mobile-sidebar-settings.scss'; // Mobile sidebar settings styles
 @import 'currency-switcher.scss'; // Currency switcher component
 @import 'loading-skeleton.scss'; // Loading skeleton animations
 
@@ -119,6 +120,7 @@ body {
   width: 100%;
   z-index: 1000;
   display: none; /* Hidden by default, shown on mobile */
+  pointer-events: none; /* Allow touch events to pass through */
 }
 
 .mobile-contact-fixed {
@@ -130,6 +132,7 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
+  pointer-events: auto; /* Re-enable pointer events for the actual buttons */
 }
 
 .mobile-contact-inner {
@@ -187,17 +190,16 @@ body {
   margin-right: 5px;
 }
 
+/* Social Float Buttons */
 .social-float-buttons {
   position: absolute;
-  right: 10px;
   bottom: 100%;
-  margin-bottom: 15px;
+  right: 10px;
   display: flex;
   flex-direction: column;
-  z-index: 999;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  gap: 8px;
+  margin-bottom: 10px;
+  pointer-events: auto; /* Enable interactions for social buttons */
 }
 
 .social-float-buttons a {
@@ -205,14 +207,15 @@ body {
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 35px;
-  margin: 2px 0;
-  color: #333;
-  transition: all 0.3s ease;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  pointer-events: auto; /* Ensure social buttons are clickable */
 }
 
 .social-float-buttons a:hover {
-  color: #eb6753;
   transform: scale(1.1);
 }
 
@@ -225,5 +228,47 @@ body {
   /* Add padding to the bottom of the page to prevent content from being hidden behind the fixed bar */
   body {
       padding-bottom: 60px;
+  }
+}
+
+/* Fix mobile scroll and touch issues */
+@media (max-width: 767.98px) {
+  .mobile-contact-container {
+      display: block;
+  }
+  
+  /* Add padding to the bottom of the page to prevent content from being hidden behind the fixed bar */
+  body {
+      padding-bottom: 60px;
+      /* Ensure body can scroll on mobile */
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+  }
+  
+  /* Ensure html can scroll on mobile */
+  html {
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+  }
+  
+  /* Fix mobile header touch issues */
+  .mobilie_header_nav {
+      pointer-events: auto;
+      touch-action: auto;
+  }
+  
+  .mobile_menu_bar {
+      pointer-events: auto;
+      touch-action: auto;
+  }
+  
+  /* Ensure language and currency switchers work on mobile */
+  .language-switcher,
+  .currency-switcher {
+      pointer-events: auto !important;
+      touch-action: auto !important;
+      z-index: 1001;
   }
 }

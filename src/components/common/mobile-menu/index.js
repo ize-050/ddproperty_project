@@ -4,11 +4,8 @@ import Image from "next/image";
 import ContactInfo from "./ContactInfo";
 import Social from "./Social";
 import ProSidebarContent from "./ProSidebarContent";
+import MobileSidebarSettings from "./MobileSidebarSettings";
 import dynamic from "next/dynamic";
-
-const LanguageSwitcher = dynamic(() => import("@/components/common/LanguageSwitcher"), {
-    ssr: false,
-}); 
 
 const MobileMenu = () => {
 
@@ -42,7 +39,7 @@ const MobileMenu = () => {
                   alt="logo"
                 />
               </Link>
-              <LanguageSwitcher />
+              {/* Removed LanguageSwitcher and CurrencySwitcher from header - moved to sidebar */}
             </div>
           </div>
         </div>
@@ -72,7 +69,7 @@ const MobileMenu = () => {
           <div className="hsidebar-content ">
             <div className="hiddenbar_navbar_content">
               <ProSidebarContent />
-
+              <MobileSidebarSettings />
             
 {/* 
               <div className="hiddenbar_footer position-relative bdrt1">

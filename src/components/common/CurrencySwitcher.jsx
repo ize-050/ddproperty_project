@@ -56,7 +56,7 @@ const CurrencySwitcher = () => {
                 <span className="currency-text">{selectedCurrency}</span>
             </button>
 
-            <ul className={`dropdown-menu ${isOpen ? "show" : ""}`}>
+            <ul className={`dropdown-menu currency-dropdown ${isOpen ? "show" : ""}`}>
                 {currencies.map((currency) => (
                     <li key={currency.code}>
                         <button
@@ -70,6 +70,47 @@ const CurrencySwitcher = () => {
                     </li>
                 ))}
             </ul>
+            
+            <style jsx>{`
+                .currency-dropdown {
+                    max-height: 250px;
+                    overflow-y: auto;
+                    -webkit-overflow-scrolling: touch;
+                }
+                
+                @media (max-width: 768px) {
+                    .currency-dropdown {
+                        max-height: 200px;
+                        overflow-y: auto;
+                        -webkit-overflow-scrolling: touch;
+                        scrollbar-width: thin;
+                        scrollbar-color: #ccc transparent;
+                    }
+                    
+                    .currency-dropdown::-webkit-scrollbar {
+                        width: 4px;
+                    }
+                    
+                    .currency-dropdown::-webkit-scrollbar-track {
+                        background: transparent;
+                    }
+                    
+                    .currency-dropdown::-webkit-scrollbar-thumb {
+                        background-color: #ccc;
+                        border-radius: 2px;
+                    }
+                    
+                    .currency-dropdown::-webkit-scrollbar-thumb:hover {
+                        background-color: #999;
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    .currency-dropdown {
+                        max-height: 150px;
+                    }
+                }
+            `}</style>
         </div>
     );
 };

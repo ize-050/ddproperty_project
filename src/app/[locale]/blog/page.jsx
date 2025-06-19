@@ -120,7 +120,7 @@ const locale =  params.locale;
                           <Link href={`/blog/${blog.id}`}>{getLocalizedContent(blog, 'title', locale)}</Link>
                         </h5>
                         <p className="excerpt">
-                          {getLocalizedContent(blog, 'content', locale).replace(/<[^>]*>/g, '').substring(0, 120)}...
+                          {getLocalizedContent(blog, 'content', locale)?.replace(/<[^>]*>/g, '').substring(0, 120)}...
                         </p>
                       </div>
                     </div>

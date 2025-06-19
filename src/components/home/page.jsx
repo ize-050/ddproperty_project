@@ -138,7 +138,7 @@ const Page = ({ randomProperties, zones }) => {
 
                 </p>
               </div>
-              <p href="/agency" className="ud-btn btn-transparent mb30-md">
+              <p href="#" className="ud-btn btn-transparent mb30-md">
                 {getString('ExploreLocations.more')}
                 <i className="fal fa-arrow-right-long" />
               </p>
