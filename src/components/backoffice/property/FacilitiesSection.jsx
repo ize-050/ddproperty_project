@@ -78,9 +78,6 @@ const FacilitiesSection = () => {
         {facilityIcons[category].map((icon) => {
           // สร้าง field name สำหรับ React Hook Form - ใช้รูปแบบ facilities.category.key
           const fieldName = `facilities.${category}.${icon.key}`;
-
-
-          console.log("isActive111",formData.facilities?.[category])
           const isActive = Boolean(formData.facilities?.[category]?.[icon.key]?.active);
 
           
