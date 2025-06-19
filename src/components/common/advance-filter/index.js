@@ -78,7 +78,7 @@ const AdvanceFilterModal = () => {
                 <h6 className="list-title">Type</h6>
                 <div className="form-style2 input-group">
                   <Select
-                    defaultValue={[catOptions[1]]}
+                    defaultValue={[catOptions[0]]}
                     name="colors"
                     options={catOptions}
                     styles={customStyles}
@@ -136,7 +136,7 @@ const AdvanceFilterModal = () => {
                 <h6 className="list-title">Location</h6>
                 <div className="form-style2 input-group">
                   <Select
-                    defaultValue={[locationOptions[0]]}
+                    defaultValue={[locationOptions[1]]}
                     name="colors"
                     styles={customStyles}
                     options={locationOptions}

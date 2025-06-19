@@ -3,12 +3,17 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import PropertyMap from './PropertyMap';
+import ShortTermRental from './ShortTermRental';
 
 const PropertyContent = ({ property, description, getPropertyTypeText, getFurnishingText }) => {
   const t = useTranslations('PropertyDetail');
 
   return (
     <div className="property-content">
+      {property.listings.filter(listing => listing.listingType === 'RENT').length > 0 && (
+        <ShortTermRental property={property} />
+      )}
+
       {/* Highlights Section */}
       <div className="property-section mb-5">
         <h3 className="section-title mb-3">Highlights</h3>
@@ -126,8 +131,13 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
             {property.nearbyPlaces.map((item, index) => (
               <div className="col-6 col-md-4" key={`nearby-${index}`}>
                 <div className="nearby-item">
-                  <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                  {item?.Icon?.iconPath && (
+                    <>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                
                   <span className={"span-items"} style={{ marginLefปt: '10px' }}>{item?.Icon?.name}</span>
+                  </>
+                  )}
                 </div>
               </div>
             ))}
@@ -172,8 +182,10 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               property.facilities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`facility-${index}`}>
                   <div className="facility-item">
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
-                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{item.Icon.name}</span>
+                    {item?.Icon?.iconPath && (
+                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                    )}
+                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{item?.Icon?.name}</span>
                   </div>
                 </div>
               ))
@@ -197,8 +209,10 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               property.amenities.map((item, index) => (
                 <div className="col-6 col-md-4" key={`amenity-${index}`}>
                   <div className="amenity-item">
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.Icon.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
-                    <span className="span-items" style={{ marginLeft: '10px' }}>{item.Icon.name}</span>
+                    {item?.Icon?.iconPath && (
+                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                    )}
+                    <span className="span-items" style={{ marginLeft: '10px' }}>{item?.Icon?.name}</span>
                   </div>
                 </div>
               ))

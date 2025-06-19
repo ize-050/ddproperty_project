@@ -169,6 +169,10 @@ export default function MyPropertiesPage() {
     window.location.href = `/${locale}/backoffice/edit-property/${propertyId}/`;
   }
 
+  const handleViewProperty = (propertyId) => {
+    window.location.href = `/${locale}/backoffice/view-property/${propertyId}/`;
+  }
+
   return (
     <div className="my-properties-page">
       <div className="page-header">
@@ -300,7 +304,9 @@ export default function MyPropertiesPage() {
                           >
                             <FaTrash />
                           </button>
-                          <button className="action-btn view">
+                          <button className="action-btn view"
+                            onClick={() => handleViewProperty(property.id)}
+                          >
                             <FaEye />
                           </button>
                         </div>

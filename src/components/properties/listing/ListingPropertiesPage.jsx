@@ -24,6 +24,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
   const pathname = usePathname();
   const searchParamsObj = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.page) || 1);
   const setZones = useZoneStore(state => state.setZones);
   const propertyItems = usePropertyFilterStore(state => state.propertyItems);
   const setPropertyItems = usePropertyFilterStore(state => state.setPropertyItems);
@@ -64,6 +65,11 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
     setIsLoading(false);
   }, [zones, setZones, properties]);
 
+  // Sync currentPage with searchParams
+  useEffect(() => {
+    const pageFromParams = parseInt(searchParams.page) || 1;
+    setCurrentPage(pageFromParams);
+  }, [searchParams.page]);
 
   useEffect(() => {
     setPropertyItems(properties)
@@ -78,6 +84,8 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
 
 
   const handleSearch = (filterValues) => {
+    console.log('ListingPropertiesPage handleSearch called with:', filterValues);
+    
     setFilters((prev) => ({
       ...prev,
       ...filterValues
@@ -97,6 +105,13 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
     if (filterValues.zoneId) params.set('zoneId', filterValues.zoneId);
     if (filterValues.bedrooms) params.set('bedrooms', filterValues.bedrooms);
     if (filterValues.bathrooms) params.set('bathrooms', filterValues.bathrooms);
+    
+    // เพิ่ม searchQuery parameter
+    if (filterValues.searchQuery) {
+      params.set('searchQuery', filterValues.searchQuery);
+    }
+
+    console.log('URL params being set:', params.toString());
 
     // Reset หน้าเมื่อมีการเปลี่ยนแปลง filter
     params.set('page', '1');
@@ -213,7 +228,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                         <div style={{ minHeight: 240 }}><LoadingAnimation /></div>
                       </div>
                     ) : (
-                      propertyItems && propertyItems.length > 0 ? (
+                      propertyItems && propertyItems?.length > 0 ? (
                         propertyItems.map((property) => (
                           <div className="col-sm-6 col-md-6 col-lg-4 mb-4" key={property.id}>
                             <PropertyFilteringSuspense property={property} />
@@ -228,7 +243,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
 
                 <div className="col-12 text-center mt-4 mb-5">
                   <div className="results-count">
-                    <p>1-{propertyItems.length} of {paginationItems?.total || 0} property available</p>
+                    <p>1-{propertyItems?.length} of {paginationItems?.total || 0} property available</p>
                   </div>
 
                   <div className="simple-pagination">

@@ -148,32 +148,30 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
 
 
-          // สร้างโครงสร้างตามที่ FacilitiesSection คาดหวัง
-          const facilitiesObj = {
+          let facilitiesObj = {}
+
+          let facilityIcons = {
             'common-area': {},
             'dining': {},
             'fitness': {},
             'pool': {},
             'other': {}
           };
-          property.facilities.forEach(facility => {
-            if (facility.facilityType) {
-              const category = facility.category ||
-                (facility.facilityType.includes('pool') ? 'pool' :
-                  facility.facilityType.includes('restaurant') ? 'restaurant' :
-                    facility.facilityType.includes('fitness') ? 'fitness' :
-                      facility.facilityType.includes('dining') ? 'dining' :
-                        facility.facilityType.includes('common') ? 'common-area' :
-                          'other');
 
-              // เพิ่มข้อมูลลงในโครงสร้าง nested ตาม category
-              facilitiesObj[category][facility.facilityType] = {
-                active: facility.active === true,
-                iconId: facility.iconId || null
-              };
-            }
+          property.facilities.forEach(facility => {
+            Object.keys(facilityIcons).forEach(key => {
+              if (facility?.Icon?.sub_name === key) {
+                facilityIcons[key] = facilityIcons[key] || {};
+                facilityIcons[key][facility.Icon.key] = {
+                  active: facility.active,
+                  iconId: facility.iconId,
+                };
+              }
+            })
           });
 
+          facilitiesObj = facilityIcons;
+          
 
           const viewsObj = {};
           property.views.forEach(view => {
@@ -510,6 +508,29 @@ const DuplicatePropertyForm = ({ propertyId }) => {
     try {
       setValidationSummary([]);
       setFormSubmitted(false);
+
+       console.log("dataRequestEdit",data);
+            setValidationSummary([]);
+            setFormSubmitted(false);
+            
+            // ตรวจสอบว่าหากเปิดโปรโมชั่นจะต้องกรอกราคาโปรโมชั่นด้วย
+            const hasPromotion = document.getElementById('promotionToggle')?.checked;
+            if (hasPromotion && (!data.promotionalPrice || data.promotionalPrice === '0' || data.promotionalPrice === 0 || data.promotionalPrice === '')) {
+              toast.error('Promotional price is required when promotion is enabled');
+              setValidationSummary(['Promotional price is required when promotion is enabled']);
+              setSaving(false);
+              
+              // เลื่อนไปที่ promotionalPrice field
+              const promotionalPriceElement = document.getElementById('promotionalPrice');
+              if (promotionalPriceElement) {
+                promotionalPriceElement.focus();
+                promotionalPriceElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+              
+              return;
+            }
+            
+
       setSaving(true);
 
       // แสดงข้อความกำลังบันทึกข้อมูล

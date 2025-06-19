@@ -57,7 +57,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
   // property type options
 
   const propertyTypeOptions = propertyTypes.map((propertyType) => ({
-    value: propertyType.id,
+    value: propertyType.name,
     label: propertyType[`name${locale.charAt(0).toUpperCase()}${locale.slice(1)}`],
   }));
 

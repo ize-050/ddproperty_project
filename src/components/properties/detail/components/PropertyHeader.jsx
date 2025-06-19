@@ -62,7 +62,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
                       }}
                       >{currencySymbol}{formatPrice(listing.price)}</h3>
                       {listing.listingType === 'RENT' && (  
-                       <p className="text space fz15 text-white">{t('bahtPerMonth')}</p>
+                       <p className="text space fz15 text-white">{t('perMonth')}</p>
                       )}
                     </>
                   )

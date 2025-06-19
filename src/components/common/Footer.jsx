@@ -49,19 +49,19 @@ const Footer = () => {
             <h5 style={{ color: 'white', fontSize: '16px', marginBottom: '15px' }}>{t('popularSearch')}</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=condo&purpose=sale" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('condoForSale')}</Link>
+                <Link href="/properties/list?type=sale&propertyType=Condo" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('condoForSale')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=condo&purpose=rent" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('condoForRent')}</Link>
+                <Link href="/properties/list?type=rent&propertyType=Condo" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('condoForRent')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=pool-villa&purpose=sale" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForSale')}</Link>
+                <Link href="/properties/list?type=sale&propertyType=VILLA" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForSale')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=pool-villa&purpose=rent" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForRent')}</Link>
+                <Link href="/properties/list?type=rent&propertyType=VILLA" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForRent')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=house&purpose=sale" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('houseForSale')}</Link>
+                <Link href="/properties/list?type=sale&propertyType=HOUSE" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('houseForSale')}</Link>
               </li>
             </ul>
           </div>
@@ -71,7 +71,7 @@ const Footer = () => {
             <h5 style={{ color: 'white', fontSize: '16px', marginBottom: '15px' }}>{t('quickLinks')}</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('propertyForSale')}</Link>
+                <Link href="/properties/list?type=sale" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('propertyForSale')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
                 <Link href="/about" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('aboutUs')}</Link>
@@ -87,19 +87,19 @@ const Footer = () => {
             <h5 style={{ color: 'white', fontSize: '16px', marginBottom: '15px' }}>{t('discoverByArea')}</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?location=jomtien" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('jomtien')}</Link>
+                <Link href="/properties/list?zoneId=1" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('jomtien')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?location=wongamat" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('wongamat')}</Link>
+                <Link href="/properties/list?zoneId=2" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('wongamat')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?location=naklua" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('naklua')}</Link>
+                <Link href="/properties/list?zoneId=3" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('naklua')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?location=pratumnak" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('pratumnak')}</Link>
+                <Link href="/properties/list?zoneId=4" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('pratumnak')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?location=banglamung" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('banglamung')}</Link>
+                <Link href="/properties/list?zoneId=5" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('banglamung')}</Link>
               </li>
             </ul>
           </div>

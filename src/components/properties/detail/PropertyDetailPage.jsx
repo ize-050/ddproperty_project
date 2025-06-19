@@ -279,7 +279,6 @@ const PropertyDetailPage = ({ property }) => {
 
               <hr></hr>
 
-
               {paymentPlan && (
                 <div className="property-section mb-5">
                   <h3 className="section-title mb-3">Payment Plan</h3>
@@ -292,12 +291,6 @@ const PropertyDetailPage = ({ property }) => {
               <hr></hr>
 
             </div>
-
-
-
-
-
-
 
 
             {/* Right Sidebar */}

@@ -45,18 +45,19 @@
 }
 
 .call-button {
-  background-color: #27ae60;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease;
+  background-color: #9e0b0f !important;
+  color: white !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
 }
 
 .call-button:hover {
-  background-color: #219653;
-  transform: scale(1.1);
+  background-color: #7a0909 !important;
+  transform: scale(1.1) !important;
 }

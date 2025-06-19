@@ -46,6 +46,11 @@ export default function HeroSearchBar({
   // (ถ้าต้องการเก็บ listingType ใน filter store ให้เพิ่ม field และ setter ใน usePropertyFilterStore)
 
   const handleSearch = () => {
+    console.log('HeroSearchBar handleSearch called with:', {
+      listingType,
+      searchQuery,
+    });
+    
     onSearch({
       listingType,
       searchQuery,
@@ -60,11 +65,24 @@ export default function HeroSearchBar({
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    
     // Update listing type based on tab
+    let newListingType;
     if (tab === "buy") {
+      newListingType = "SALE";
       setListingType("SALE");
     } else if (tab === "rent") {
+      newListingType = "RENT";
       setListingType("RENT");
+    }
+    
+    // Automatically trigger search when tab changes
+    if (newListingType) {
+      console.log('Tab changed, triggering search with listingType:', newListingType);
+      onSearch({
+        listingType: newListingType,
+        searchQuery,
+      });
     }
   };
 
@@ -93,6 +111,7 @@ export default function HeroSearchBar({
               <div className="modal-content">
                 <AdvanceFilterContent 
                   onClose={() => setAdvancedSearchVisible(false)} 
+                  onSearch={onSearch}
                   type={typeParam} 
                 />
               </div>
@@ -179,4 +198,3 @@ export default function HeroSearchBar({
     </>
   );
 }
-

@@ -1,26 +1,74 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FaEnvelope, FaPhone, FaLine, FaWeixin, FaWhatsapp, FaFacebookMessenger, FaInstagram } from 'react-icons/fa';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import userService from '@/services/userService';
+import { toast } from 'react-toastify';
 
 const ContactSection = () => {
   const { formData } = usePropertyFormStore();
   const { register, formState: { errors }, setValue } = useFormContext();
+  const [loadingProfile, setLoadingProfile] = useState(false);
   
   // CSS class for error styling
   const getInputClassName = (fieldName) => {
     return `form-control ${errors[`contactInfo.${fieldName}`] ? 'is-invalid' : ''}`;
   };
   
-  const handleUseProfileData = (e) => {
+  const handleUseProfileData = async (e) => {
     const { checked } = e.target;
     if (checked) {
-      // ในกรณีจริงควรดึงข้อมูลจาก profile ของผู้ใช้
-      // นี่เป็นเพียงตัวอย่าง
-      setValue('contactInfo.phone', '0812345678');
-      setValue('contactInfo.email', 'example@email.com');
+      setLoadingProfile(true);
+      try {
+        // ดึงข้อมูล profile จาก API
+        const response = await userService.getMyProfile();
+        const userData = response.data;
+        
+        console.log("userData", userData)
+        // ใส่ข้อมูลลงในฟอร์ม
+        if (userData.phone) {
+          setValue('contactInfo.phone', userData.phone);
+        }
+        if (userData.email) {
+          setValue('contactInfo.email', userData.email);
+        }
+        if (userData?.line) {
+          setValue('contactInfo.lineId', userData.line);
+        }
+        if (userData?.wechat) {
+          setValue('contactInfo.wechatId', userData.wechat);
+        }
+        if (userData?.whatsapp) {
+          setValue('contactInfo.whatsapp', userData.whatsapp);
+        }
+        if (userData?.facebook) {
+          setValue('contactInfo.facebookMessenger', userData.facebook);
+        }
+        if (userData?.instagram) {
+          setValue('contactInfo.instagram', userData.instagram);
+        }
+        if (userData?.phoneAlt){
+          setValue('contactInfo.secondaryPhone', userData.phoneAlt);
+        }
+      } catch (error) {
+        console.error('Error loading profile data:', error);
+        toast.error('Failed to load profile data');
+        // Uncheck the checkbox if failed
+        e.target.checked = false;
+      } finally {
+        setLoadingProfile(false);
+      }
+    } else {
+      // Clear form fields when unchecked
+      setValue('contactInfo.phone', '');
+      setValue('contactInfo.email', '');
+      setValue('contactInfo.lineId', '');
+      setValue('contactInfo.wechatId', '');
+      setValue('contactInfo.whatsapp', '');
+      setValue('contactInfo.facebookMessenger', '');
+      setValue('contactInfo.instagram', '');
     }
   };
 
@@ -35,6 +83,7 @@ const ContactSection = () => {
           type="checkbox"
           id="useProfileData"
           onChange={handleUseProfileData}
+          disabled={loadingProfile}
         />
         <label htmlFor="useProfileData" className="form-label"
         style={{
@@ -45,7 +94,16 @@ const ContactSection = () => {
           marginLeft:'10px',
           marginBottom:"30px"
         }}
-        >use data from profile</label>
+        >
+          {loadingProfile ? (
+            <>
+              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              Loading profile data...
+            </>
+          ) : (
+            'Use data from profile'
+          )}
+        </label>
       </div>
       
       <div className="form-row">

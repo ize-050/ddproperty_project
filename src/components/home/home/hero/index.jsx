@@ -1,26 +1,55 @@
 "use client";
-import AdvanceFilterModal from "@/components/common/advance-filter";
+import AdvanceFilterContent from "@/components/properties/listing/AdvancedFilterContent";
 import HeroContent from "./HeroContent";
 import Image from "next/image";
 import React from "react";
+import usePropertyFilterStore from "@/store/usePropertyFilterStore";
+import { useRouter } from "next/navigation";
 
-import useTranslation from '@/hooks/useTranslation';  
+import useTranslation from '@/hooks/useTranslation';
 
-const Hero = ({propertyTypes}) => {
+const Hero = ({ propertyTypes }) => {
   const { getString } = useTranslation('en');
+  const router = useRouter();
 
-  console.log("getString",getString('title'))
+  // Use store for modal state
+  const { advancedSearchVisible, setAdvancedSearchVisible, searchParams } = usePropertyFilterStore();
+
+
+  // Handle search from advanced modal
+  const handleAdvancedSearchSubmit = (filters) => {
+    console.log("filters", filters);
+    // Create search params from filters
+    const searchParams = new URLSearchParams();
+
+    // Add filters from advanced search
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value && value !== '') {
+        searchParams.append(key, value);
+      }
+    });
+
+    // Close modal and navigate to search results
+    setAdvancedSearchVisible(false);
+    router.push(`/properties/list?${searchParams.toString()}`);
+  };
+
+  const handleCloseAdvancedModal = () => {
+    setAdvancedSearchVisible(false);
+  };
+
+  console.log("getString", getString('title'))
   return (
 
     <>
       {/* Background Banner Image */}
       <div className="hero-banner-wrapper">
-        <Image 
-          src="/images/banner/banner.png" 
-          alt="D-Luck Property Banner" 
-          fill 
+        <Image
+          src="/images/banner/banner.png"
+          alt="D-Luck Property Banner"
+          fill
           priority
-          className="hero-banner-image" 
+          className="hero-banner-image"
         />
       </div>
 
@@ -29,28 +58,45 @@ const Hero = ({propertyTypes}) => {
           <h6 className="hero-sub-title animate-up-1">{getString('welcome')}</h6>
           <h2 className="hero-title animate-up-2">{getString('d_luck')}</h2>
           <p className="hero-text fz15 animate-up-3">
-              {getString('title')}
+            {getString('title')}
+
+            
+          </p>
+          <p className="hero-text fz15 animate-up-3">
+            {getString('subtitle')}
           </p>
         </div>
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <HeroContent  propertyTypes={propertyTypes}/>
+        <HeroContent propertyTypes={propertyTypes} />
       </div>
 
       {/* <!-- Advance Feature Modal Start --> */}
-      <div className="advance-feature-modal">
-        <div
-          className="modal fade"
-          id="advanceSeachModal"
-          tabIndex={-1}
-          aria-labelledby="advanceSeachModalLabel"
-          aria-hidden="true"
-        >
-          <AdvanceFilterModal  />
+      {advancedSearchVisible && (
+        <div className="advance-feature-modal">
+          <div
+            className="modal fade show d-block"
+            id="advanceSeachModal"
+            tabIndex={-1}
+            aria-labelledby="advanceSeachModalLabel"
+            aria-hidden="false"
+            style={{ paddingRight: '15px' }}
+          >
+            <div className="modal-dialog modal-dialog-centered modal-lg" style={{ maxWidth: '800px' }}>
+              <div className="modal-content">
+                <AdvanceFilterContent
+                  onClose={() => setAdvancedSearchVisible(false)}
+                  onSearch={handleAdvancedSearchSubmit}
+                  type={'sale'}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="modal-backdrop fade show"></div>
         </div>
-      </div>
+      )}
       <style jsx global>{`
         .home-banner-style8 {
           position: relative;

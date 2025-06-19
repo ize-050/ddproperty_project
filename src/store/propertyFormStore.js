@@ -110,28 +110,28 @@ const usePropertyFormStore = create((set) => ({
     showMap: newData
   })),
   // ฟังก์ชันอัปเดตสถานะของ amenity icons
-  setFeature: (type, key, value) => {
-
-    // Type should be 'amenity'
-    if (type === 'amenity') {
-      set(state => {
-
-        const updatedAmenities = {
+  setAmenity: (key, value, id) => set((state) => {
+    console.log('setAmenity called with:', { key, value, id });
+    console.log('Current amenities before update:', state.formData.amenities);
+    
+    const updatedState = {
+      formData: {
+        ...state.formData,
+        amenities: {
           ...state.formData.amenities,
           [key]: {
-            iconId: state.formData.amenities[key]?.iconId || null, // Preserve existing iconId if available
             active: value,
+            iconId: id
           }
-        };
-
-        return { formData: { ...state.formData, amenities: updatedAmenities } };
-      });
-    }
-  },
-
-  setFacility: (category, key, value) => set((state) => {
-    // ดึง iconId จากข้อมูลเดิม
+        }
+      }
+    };
     
+    console.log('Updated amenities after update:', updatedState.formData.amenities);
+    return updatedState;
+  }),
+
+  setFacility: (category, key, value, id) => set((state) => {
     return {
       formData: {
         ...state.formData,
@@ -140,8 +140,8 @@ const usePropertyFormStore = create((set) => ({
           [category]: {
             ...state.formData.facilities[category],
             [key]: {
-              iconId: state.formData.facilities[category][key]?.iconId || null, // Preserve existing iconId if available
               active: value,
+              iconId: id
             }
           }
         }
@@ -149,10 +149,7 @@ const usePropertyFormStore = create((set) => ({
     };
   }),
 
-  setHighlight: (key, value) => set((state) => {
-    // ดึง iconId จากข้อมูลเดิม
-
-    
+  setHighlight: (key, value, id) => set((state) => {
     return {
       formData: {
         ...state.formData,
@@ -160,55 +157,70 @@ const usePropertyFormStore = create((set) => ({
           ...state.formData.highlights,
           [key]: {
             active: value,
-            iconId: state.formData.highlights[key]?.iconId || null // Preserve existing iconId if available
+            iconId: id
           }
         }
       }
     };
   }),
 
-  setNearby: (key, value) => set((state) => {
-
+  setNearby: (key, value, id) => set((state) => {
     return {
       formData: {
         ...state.formData,
         nearby: {
           ...state.formData.nearby,
           [key]: {
-            iconId: state.formData.nearby[key]?.iconId || null,
             active: value,
+            iconId: id
           }
         }
       }
     };
   }),
 
-  setView: (key, value) => set((state) => {
-
+  setView: (key, value, id) => set((state) => {
     return {
       formData: {
         ...state.formData,
         views: {
           ...state.formData.views,
           [key]: {
-            iconId: state.formData.views[key]?.iconId || null,
             active: value,
+            iconId: id
           }
         }
       }
     };
   }),
 
-  setPropertyLabel: (key, value) => set((state) => {
-
+  setPropertyLabel: (key, value, id) => set((state) => {
     return {
       formData: {
         ...state.formData,
         propertyLabels: {
           ...state.formData.propertyLabels,
           [key]: {
-            iconId: state.formData.propertyLabels[key]?.iconId || null,
             active: value,
+            iconId: id
+          }
+        }
+      }
+    };
+  }),
+
+  setFeature: (category, key, value, id) => set((state) => {
+    return {
+      formData: {
+        ...state.formData,
+        features: {
+          ...state.formData.features,
+          [category]: {
+            ...state.formData.features[category],
+            [key]: {
+              active: value,
+              iconId: id
+            }
           }
         }
       }
@@ -216,51 +228,99 @@ const usePropertyFormStore = create((set) => ({
   }),
 
   initializeFacilities: (facilityIcons) => {
-    set(state => {
+    console.log('initializeFacilities called with:', facilityIcons);
+    set((state) => {
       const currentFacilities = state.formData.facilities || {};
-      const updatedFacilities = {...currentFacilities}
+      const updatedFacilities = { ...currentFacilities };
 
-      // Handle different structures - object of arrays or a single array
+      // Handle different data structures
       if (facilityIcons && typeof facilityIcons === 'object') {
         // Loop through each category and their items
         Object.keys(facilityIcons).forEach(category => {
-          const categoryFacilities = {};
-
           if (Array.isArray(facilityIcons[category])) {
             // Process all icons in this category
             facilityIcons[category].forEach(icon => {
-              if (icon.key) {
+              if (icon && icon.key) {
+                // Preserve existing active state if it exists, otherwise initialize as false
                 if (!updatedFacilities[category]) {
-                  categoryFacilities[icon.key] = {
+                  updatedFacilities[category] = {};
+                }
+                if (!updatedFacilities[category][icon.key]) {
+                  updatedFacilities[category][icon.key] = {
                     active: false,
                     iconId: icon.id
                   };
+                  console.log(`Initialized facility icon: ${category}.${icon.key} with iconId: ${icon.id}`);
                 } else {
-                    categoryFacilities[icon.key] = {
-                        ...updatedFacilities[category][icon.key],
-                        iconId: icon.id
-                    };
+                  // Keep the active state but update the iconId
+                  updatedFacilities[category][icon.key] = {
+                    ...updatedFacilities[category][icon.key],
+                    iconId: icon.id
+                  };
                 }
               }
             });
           }
-
-          // Only add the category if it has items
-          if (Object.keys(categoryFacilities).length > 0) {
-            updatedFacilities[category] = categoryFacilities;
-          }
         });
       }
+
+      console.log('Updated facilities data:', updatedFacilities);
+
       return {
         formData: {
           ...state.formData,
-          facilities: {...updatedFacilities}
+          facilities: updatedFacilities
         }
       };
-
     });
+  },
 
+  initializeFeatures: (featureIcons) => {
+    console.log('initializeFeatures called with:', featureIcons);
+    set((state) => {
+      const currentFeatures = state.formData.features || {};
+      const updatedFeatures = { ...currentFeatures };
 
+      // Handle different data structures
+      if (featureIcons && typeof featureIcons === 'object') {
+        // Loop through each category and their items
+        Object.keys(featureIcons).forEach(category => {
+          if (Array.isArray(featureIcons[category])) {
+            // Process all icons in this category
+            featureIcons[category].forEach(icon => {
+              if (icon && icon.key) {
+                // Preserve existing active state if it exists, otherwise initialize as false
+                if (!updatedFeatures[category]) {
+                  updatedFeatures[category] = {};
+                }
+                if (!updatedFeatures[category][icon.key]) {
+                  updatedFeatures[category][icon.key] = {
+                    active: false,
+                    iconId: icon.id
+                  };
+                  console.log(`Initialized feature icon: ${category}.${icon.key} with iconId: ${icon.id}`);
+                } else {
+                  // Keep the active state but update the iconId
+                  updatedFeatures[category][icon.key] = {
+                    ...updatedFeatures[category][icon.key],
+                    iconId: icon.id
+                  };
+                }
+              }
+            });
+          }
+        });
+      }
+
+      console.log('Updated features data:', updatedFeatures);
+
+      return {
+        formData: {
+          ...state.formData,
+          features: updatedFeatures
+        }
+      };
+    });
   },
 
   // Initialize highlights icons after fetching from API
@@ -268,9 +328,9 @@ const usePropertyFormStore = create((set) => ({
     // Get current state first to preserve existing values
     set(state => {
       const currentHighlights = state.formData.highlights || {};
-      const updatedHighlights = {...currentHighlights}; // Clone to avoid direct mutation
-      
-      console.log('Current highlights before init:', currentHighlights);
+      const updatedHighlights = { ...currentHighlights }; // Clone to avoid direct mutation
+
+
 
       // Handle different structures - object of arrays or a single array
       if (highlightIcons && typeof highlightIcons === 'object') {
@@ -297,7 +357,7 @@ const usePropertyFormStore = create((set) => ({
           }
         });
       }
-      
+
       return {
         formData: {
           ...state.formData,
@@ -309,38 +369,36 @@ const usePropertyFormStore = create((set) => ({
 
   // Initialize nearby icons after fetching from API
   initializeNearby: (nearbyIcons) => {
+    console.log('initializeNearby called with:', nearbyIcons);
     // Get current state first to preserve existing values
     set(state => {
       const currentNearby = state.formData.nearby || {};
-      const updatedNearby = {...currentNearby}; // Clone to avoid direct mutation
+      const updatedNearby = { ...currentNearby }; // Clone to avoid direct mutation
 
-      // Handle different structures - object of arrays or a single array
-      if (nearbyIcons && typeof nearbyIcons === 'object') {
-        // Loop through each category and their items
-        Object.keys(nearbyIcons).forEach(category => {
-          if (Array.isArray(nearbyIcons[category])) {
-            // Process all icons in this category
-            nearbyIcons[category].forEach(icon => {
-              if (icon.key) {
-                // Preserve existing active state if it exists, otherwise initialize as false
-                if (!updatedNearby[icon.key]) {
-                  updatedNearby[icon.key] = {
-                    active: false,
-                    iconId: icon.id
-                  };
-                } else {
-                  // Keep the active state but update the iconId
-                  updatedNearby[icon.key] = {
-                    ...updatedNearby[icon.key],
-                    iconId: icon.id
-                  };
-                }
-              }
-            });
-          }
-        });
-      }
+      // Handle different data structures
+      let iconsToProcess = [];
       
+      if (Array.isArray(nearbyIcons)) {
+        iconsToProcess = nearbyIcons;
+      } else if (nearbyIcons && typeof nearbyIcons === 'object') {
+        // If it's an object, try to extract arrays from it
+        iconsToProcess = Object.values(nearbyIcons).flat();
+      }
+
+      console.log('Icons to process for nearby:', iconsToProcess);
+
+      iconsToProcess.forEach(icon => {
+        if (icon && icon.key && !updatedNearby[icon.key]) {
+          updatedNearby[icon.key] = {
+            active: false,
+            iconId: icon.id
+          };
+          console.log(`Initialized nearby icon: ${icon.key} with iconId: ${icon.id}`);
+        }
+      });
+
+      console.log('Updated nearby data:', updatedNearby);
+
       return {
         formData: {
           ...state.formData,
@@ -355,7 +413,7 @@ const usePropertyFormStore = create((set) => ({
     // Get current state first to preserve existing values
     set(state => {
       const currentViews = state.formData.views || {};
-      const updatedViews = {...currentViews}; // Clone to avoid direct mutation
+      const updatedViews = { ...currentViews }; // Clone to avoid direct mutation
 
       // Handle different structures - object of arrays or a single array
       if (viewIcons && typeof viewIcons === 'object') {
@@ -383,7 +441,7 @@ const usePropertyFormStore = create((set) => ({
           }
         });
       }
-      
+
       return {
         formData: {
           ...state.formData,
@@ -392,7 +450,7 @@ const usePropertyFormStore = create((set) => ({
       };
     });
   },
-  setSocialMedia: (name,socialMedia) => {
+  setSocialMedia: (name, socialMedia) => {
     set(state => ({
       formData: {
         ...state.formData,
@@ -405,38 +463,32 @@ const usePropertyFormStore = create((set) => ({
   },
   // Initialize property labels after fetching from API
   initializePropertyLabels: (labelIcons) => {
-    // Get current state first to preserve existing values
-    set(state => {
+    console.log('initializePropertyLabels called with:', labelIcons);
+    set((state) => {
       const currentLabels = state.formData.propertyLabels || {};
-      const updatedLabels = {...currentLabels}; // Clone to avoid direct mutation
+      const updatedLabels = { ...currentLabels };
 
-      // Handle different structures - object of arrays or a single array
-      if (labelIcons && typeof labelIcons === 'object') {
-        // Loop through each category and their items
-        Object.keys(labelIcons).forEach(category => {
-          if (Array.isArray(labelIcons[category])) {
-            // Process all icons in this category
-            labelIcons[category].forEach(icon => {
-              if (icon.key) {
-                // Preserve existing active state if it exists, otherwise initialize as false
-                if (!updatedLabels[icon.key]) {
-                  updatedLabels[icon.key] = {
-                    active: false,
-                    iconId: icon.id
-                  };
-                } else {
-                  // Keep the active state but update the iconId
-                  updatedLabels[icon.key] = {
-                    ...updatedLabels[icon.key],
-                    iconId: icon.id
-                  };
-                }
-              }
-            });
-          }
-        });
-      }
+      // Handle different data structures
+      let iconsToProcess = [];
       
+      if (Array.isArray(labelIcons)) {
+        iconsToProcess = labelIcons;
+      } else if (labelIcons && typeof labelIcons === 'object') {
+        iconsToProcess = Object.values(labelIcons).flat();
+      }
+
+      console.log('Icons to process for property labels:', iconsToProcess);
+
+      iconsToProcess.forEach(icon => {
+        if (icon && icon.key && !updatedLabels[icon.key]) {
+          updatedLabels[icon.key] = {
+            active: false,
+            iconId: icon.id
+          };
+          console.log(`Initialized property label icon: ${icon.key} with iconId: ${icon.id}`);
+        }
+      });
+
       return {
         formData: {
           ...state.formData,
@@ -447,44 +499,144 @@ const usePropertyFormStore = create((set) => ({
   },
 
   initializeAmenities: (amenityIcons) => {
-    // Get current state first to preserve existing values
-    set(state => {
+    console.log('initializeAmenities called with:', amenityIcons);
+    set((state) => {
       const currentAmenities = state.formData.amenities || {};
-      const updatedAmenities = {...currentAmenities}; // Clone to avoid direct mutation
+      const updatedAmenities = { ...currentAmenities };
 
-      // Handle different structures - object of arrays or a single array
-      if (amenityIcons && typeof amenityIcons === 'object') {
-        // Loop through each category and their items
-        Object.keys(amenityIcons).forEach(category => {
-          if (Array.isArray(amenityIcons[category])) {
-            // Process all icons in this category
-            amenityIcons[category].forEach(icon => {
-              if (icon.key) {
-                // Preserve existing active state if it exists, otherwise initialize as false
-                if (!updatedAmenities[icon.key]) {
-                  updatedAmenities[icon.key] = {
-                    active: false,
-                    iconId: icon.id
-                  };
-                } else {
-                  // Keep the active state but update the iconId
-                  updatedAmenities[icon.key] = {
-                    ...updatedAmenities[icon.key],
-                    iconId: icon.id
-                  };
-                }
-              }
-            });
-          }
-        });
+      // Handle different data structures
+      let iconsToProcess = [];
+      
+      if (Array.isArray(amenityIcons)) {
+        iconsToProcess = amenityIcons;
+      } else if (amenityIcons && typeof amenityIcons === 'object') {
+        iconsToProcess = Object.values(amenityIcons).flat();
       }
 
-      console.log('Updated amenities after init:', updatedAmenities);
-      
+      console.log('Icons to process for amenities:', iconsToProcess);
+
+      iconsToProcess.forEach(icon => {
+        if (icon && icon.key && !updatedAmenities[icon.key]) {
+          updatedAmenities[icon.key] = {
+            active: false,
+            iconId: icon.id
+          };
+          console.log(`Initialized amenity icon: ${icon.key} with iconId: ${icon.id}`);
+        }
+      });
+
       return {
         formData: {
           ...state.formData,
           amenities: updatedAmenities
+        }
+      };
+    });
+  },
+
+  initializeHighlights: (highlightIcons) => {
+    console.log('initializeHighlights called with:', highlightIcons);
+    set((state) => {
+      const currentHighlights = state.formData.highlights || {};
+      const updatedHighlights = { ...currentHighlights };
+
+      // Handle different data structures
+      let iconsToProcess = [];
+      
+      if (Array.isArray(highlightIcons)) {
+        iconsToProcess = highlightIcons;
+      } else if (highlightIcons && typeof highlightIcons === 'object') {
+        iconsToProcess = Object.values(highlightIcons).flat();
+      }
+
+      console.log('Icons to process for highlights:', iconsToProcess);
+
+      iconsToProcess.forEach(icon => {
+        if (icon && icon.key && !updatedHighlights[icon.key]) {
+          updatedHighlights[icon.key] = {
+            active: false,
+            iconId: icon.id
+          };
+          console.log(`Initialized highlight icon: ${icon.key} with iconId: ${icon.id}`);
+        }
+      });
+
+      return {
+        formData: {
+          ...state.formData,
+          highlights: updatedHighlights
+        }
+      };
+    });
+  },
+
+  initializeViews: (viewIcons) => {
+    console.log('initializeViews called with:', viewIcons);
+    set((state) => {
+      const currentViews = state.formData.views || {};
+      const updatedViews = { ...currentViews };
+
+      // Handle different data structures
+      let iconsToProcess = [];
+      
+      if (Array.isArray(viewIcons)) {
+        iconsToProcess = viewIcons;
+      } else if (viewIcons && typeof viewIcons === 'object') {
+        iconsToProcess = Object.values(viewIcons).flat();
+      }
+
+      console.log('Icons to process for views:', iconsToProcess);
+
+      iconsToProcess.forEach(icon => {
+        if (icon && icon.key && !updatedViews[icon.key]) {
+          updatedViews[icon.key] = {
+            active: false,
+            iconId: icon.id
+          };
+          console.log(`Initialized view icon: ${icon.key} with iconId: ${icon.id}`);
+        }
+      });
+
+      return {
+        formData: {
+          ...state.formData,
+          views: updatedViews
+        }
+      };
+    });
+  },
+
+  initializePropertyLabels: (labelIcons) => {
+    console.log('initializePropertyLabels called with:', labelIcons);
+    set((state) => {
+      const currentLabels = state.formData.propertyLabels || {};
+      const updatedLabels = { ...currentLabels };
+
+      // Handle different data structures
+      let iconsToProcess = [];
+      
+      if (Array.isArray(labelIcons)) {
+        iconsToProcess = labelIcons;
+      } else if (labelIcons && typeof labelIcons === 'object') {
+        iconsToProcess = Object.values(labelIcons).flat();
+      }
+
+      console.log('Icons to process for property labels:', iconsToProcess);
+
+      iconsToProcess.forEach(icon => {
+        if (icon && icon.key && !updatedLabels[icon.key]) {
+          updatedLabels[icon.key] = {
+            active: false,
+            iconId: icon.id
+          };
+          console.log(`Initialized property label icon: ${icon.key} with iconId: ${icon.id}`);
+        }
+      });
+
+      return {
+        formData: {
+          ...state.formData,
+          propertyLabels: updatedLabels
         }
       };
     });
@@ -531,7 +683,7 @@ const usePropertyFormStore = create((set) => ({
   })),
 
   setStatus: (status) => set(state => ({
-    formData :{
+    formData: {
       ...state.formData,
       status: status
     }
@@ -596,13 +748,13 @@ const usePropertyFormStore = create((set) => ({
     const newImages = [...state.propertyImages];
     const [removed] = newImages.splice(sourceIndex, 1);
     newImages.splice(destinationIndex, 0, removed);
-    
+
     // อัปเดต sortOrder ตามลำดับใหม่
     const updatedImages = newImages.map((image, index) => ({
       ...image,
       sortOrder: index
     }));
-    
+
     return {
       propertyImages: updatedImages
     };
@@ -621,13 +773,13 @@ const usePropertyFormStore = create((set) => ({
     const newImages = [...state.floorPlanImages];
     const [removed] = newImages.splice(sourceIndex, 1);
     newImages.splice(destinationIndex, 0, removed);
-    
+
     // อัปเดต sortOrder ตามลำดับใหม่
     const updatedImages = newImages.map((image, index) => ({
       ...image,
       sortOrder: index
     }));
-    
+
     return {
       floorPlanImages: updatedImages
     };
@@ -646,13 +798,13 @@ const usePropertyFormStore = create((set) => ({
     const newImages = [...state.unitPlanImages];
     const [removed] = newImages.splice(sourceIndex, 1);
     newImages.splice(destinationIndex, 0, removed);
-    
+
     // อัปเดต sortOrder ตามลำดับใหม่
     const updatedImages = newImages.map((image, index) => ({
       ...image,
       sortOrder: index
     }));
-    
+
     return {
       unitPlanImages: updatedImages
     };
@@ -730,7 +882,7 @@ const usePropertyFormStore = create((set) => ({
       views: {},
       facilities: {},
 
-      views: {  },
+      views: {},
       facilities: {
         'common-area': {},
         'dining': {},
@@ -744,6 +896,7 @@ const usePropertyFormStore = create((set) => ({
     unitPlanImages: [],
     showMap: true
   }),
+
 }));
 
 export default usePropertyFormStore;

@@ -2,14 +2,35 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
-import  {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
+
 const SidebarDashboard = () => {
   const pathname = usePathname();
   const t = useTranslations('backoffice');
 
+  // Extract path without locale (e.g., /th/backoffice/dashboard -> /backoffice/dashboard)
+  const getPathWithoutLocale = (path) => {
+    const segments = path.split('/');
+    // Remove locale segment (th, en, zh, ru)
+    if (segments.length > 1 && ['th', 'en', 'zh', 'ru'].includes(segments[1])) {
+      return '/' + segments.slice(2).join('/');
+    }
+    return path;
+  };
+
+  const currentPath = getPathWithoutLocale(pathname);
+
+  // Check if menu item is active
+  const isActive = (href) => {
+    if (href === "/backoffice/" || href === "/backoffice") {
+      return currentPath === "/backoffice" || currentPath === "/backoffice/";
+    }
+    return currentPath === href;
+  };
+
   const sidebarItems = [
     {
-      title: "MAIN",
+      title: t("menu.main"),
       items: [
         {
           href: "/backoffice/",
@@ -24,7 +45,7 @@ const SidebarDashboard = () => {
       ],
     },
     {
-      title: "MANAGE LISTINGS",
+      title:  t("menu.managelisting"),
       items: [
         {
           href: "/backoffice/add-property",
@@ -102,15 +123,22 @@ const SidebarDashboard = () => {
             </p>
             {section?.items?.map((item, itemIndex) => (
               <div key={itemIndex} className="sidebar_list_item">
-                <Link
-                  href={item.href}
-                  className={`items-center   ${
-                    pathname == item.href ? "-is-active" : ""
-                  } `}
-                >
-                  <i className={`${item.icon} mr15`} />
-                  {item.text}
-                </Link>
+                {item.href === "#" ? (
+                  <button onClick={item.onClick} className={`items-center `}>
+                    <i className={`${item.icon} mr15`} />
+                    {item.text}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={`items-center   ${
+                      isActive(item.href) ? "-is-active" : ""
+                    } `}
+                  >
+                    <i className={`${item.icon} mr15`} />
+                    {item.text}
+                  </Link>
+                )}
               </div>
             ))}
           </div>

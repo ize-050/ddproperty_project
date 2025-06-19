@@ -3,16 +3,19 @@ import React, { useState } from "react";
 import FilterItems from "./FilterItems";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import usePropertyFilterStore from "@/store/usePropertyFilterStore";
 
-const HeroContent = ({propertyTypes}) => {
+const HeroContent = ({ propertyTypes }) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("buy");
   const t = useTranslations('home');
+  
+  // Use store instead of local state
+  const { advancedSearchVisible, setAdvancedSearchVisible } = usePropertyFilterStore();
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
 
   const tabs = [
     { id: "buy", label: t("buy"), type: "sale" },
@@ -57,7 +60,22 @@ const HeroContent = ({propertyTypes}) => {
                   }}
                 />
 
+
+
                 <div className="col-md-12">
+
+                  <div className="d-bloc mt-3 mt-md-0 mb15">
+                    <button
+                      className="advance-search-btn"
+                      type="button"
+                      onClick={() => setAdvancedSearchVisible(true)}
+                    >
+                      <span className="flaticon-settings" /> Advanced
+                    </button>{" "}
+                  </div>
+
+
+
 
                   <div className="d-grid">
                     <button

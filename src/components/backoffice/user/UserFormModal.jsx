@@ -77,23 +77,7 @@ const UserFormModal = ({ isOpen, onClose, onSubmit, user, mode }) => {
       delete userData.password;
     }
     
-    // Format social media data
-    const socialMedia = {
-      facebook: userData.facebook || '',
-      line: userData.line || '',
-      whatsapp: userData.whatsapp || '',
-      wechat: userData.wechat || ''
-    };
-    
-    // Remove individual social media fields
-    delete userData.facebook;
-    delete userData.line;
-    delete userData.whatsapp;
-    delete userData.wechat;
-    
-    // Add formatted socialMedia
-    userData.socialMedia = socialMedia;
-    
+
     // Submit the data
     onSubmit(userData);
   };

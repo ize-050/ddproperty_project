@@ -48,14 +48,14 @@ const NearbySection = () => {
   }, [initializeNearby]);
 
   // Handle nearby selection
-  const handleNearbyClick = (type, key, active) => {
+  const handleNearbyClick = (type, key, active,id) => {
     console.log(`Toggle ${type} icon: ${key} from ${active} to ${!active}`);
     
     // Convert to boolean for consistent handling
     const newValue = !active;
     
     // Update Zustand store with boolean
-    setNearby(key, newValue);
+    setNearby(key, newValue,id);
     
     // Update React Hook Form with the same boolean value
 
@@ -112,7 +112,7 @@ const NearbySection = () => {
                 key={icon.id}
                 className="amenity-item"
                 style={isActive ? activeStyle : {}}
-                onClick={() => handleNearbyClick('nearby', icon.key, isActive)}
+                onClick={() => handleNearbyClick('nearby', icon.key, isActive,icon.id)}
               >
 
                 <span className="amenity-icon">

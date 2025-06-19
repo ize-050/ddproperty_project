@@ -48,14 +48,14 @@ const ViewSection = () => {
   }, [initializeViews]);
 
   // Handle view selection
-  const handleViewClick = (type, key, active) => {
+  const handleViewClick = (type, key, active, id) => {
     console.log(`Toggle ${type} icon: ${key} from ${active} to ${!active}`);
     
     // Convert to boolean for consistent handling
     const newValue = !active;
     
-    // Update Zustand store with boolean (ไม่ส่ง type อีกต่อไป)
-    setView(key, newValue);
+    // Update Zustand store with boolean
+    setView(key, newValue, id);
 
 
   };
@@ -109,7 +109,7 @@ const ViewSection = () => {
                 key={icon.id}
                 className="amenity-item"
                 style={isActive ? activeStyle : {}}
-                onClick={() => handleViewClick('views', icon.key, isActive)}
+                onClick={() => handleViewClick('views', icon.key, isActive, icon.id)}
               >
                 {/* Hidden input to ensure all views are submitted */}
                 <input

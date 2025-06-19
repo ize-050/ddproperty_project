@@ -3,7 +3,11 @@ import agents from "@/data/agents";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/swiper-bundle.min.css";
+import { Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/autoplay";
 
 const Agents = () => {
 
@@ -37,27 +41,37 @@ const Agents = () => {
   return (
     <>
       <Swiper
-        spaceBetween={2}
+        modules={[Autoplay]}
+        spaceBetween={20}
+        slidesPerView={1}
         breakpoints={{
           300: {
-            slidesPerView: 4,
+            slidesPerView: 1,
+            spaceBetween: 15,
+          },
+          576: {
+            slidesPerView: 2,
             spaceBetween: 15,
           },
           768: {
-            slidesPerView: 4,
-            spaceBetween: 15,
+            slidesPerView: 3,
+            spaceBetween: 20,
           },
           1024: {
             slidesPerView: 4,
+            spaceBetween: 20,
           },
           1200: {
             slidesPerView: 4,
+            spaceBetween: 30,
           },
         }}
         autoplay={{
-          delay: 3000, // Set the desired delay for autoplay
-          disableOnInteraction: false, // Keep autoplaying even when user interacts with the swiper
+          delay: 3000,
+          disableOnInteraction: false,
         }}
+        loop={true}
+        className="agents-swiper"
       >
         {dataAgentMockup.map((agent, index) => (
           <SwiperSlide key={index}>
@@ -66,8 +80,8 @@ const Agents = () => {
                 <div className="rounded mb30">
                   <div className="team-img">
                     <Image
-                      width={250}
-                      height={250}
+                      width={200}
+                      height={200}
                       className="rounded-3"
                       src={agent.image}
                       alt="agent team"

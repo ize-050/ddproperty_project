@@ -83,7 +83,7 @@ const EditPropertyForm = ({ propertyId }) => {
 
         const responseData = await response.json();
 
-        console.log("responseData",responseData);
+        console.log("responseData", responseData);
 
         if (responseData.status === 'success' && responseData.data) {
           const property = responseData.data;
@@ -110,8 +110,8 @@ const EditPropertyForm = ({ propertyId }) => {
 
           // แสดงข้อมูล facilities ที่ได้จาก API เพื่อดูโครงสร้าง
 
-          // สร้างโครงสร้างตามที่ FacilitiesSection คาดหวัง
-          const facilitiesObj = {
+
+          const facilityIcons = {
             'common-area': {},
             'dining': {},
             'fitness': {},
@@ -120,23 +120,18 @@ const EditPropertyForm = ({ propertyId }) => {
           };
 
           property.facilities.forEach(facility => {
-            if (facility.facilityType) {
-              // กำหนด category จากข้อมูล หรือใช้ default เป็น 'other'
-              const category = facility.category ||
-                (facility.facilityType.includes('pool') ? 'pool' :
-                  facility.facilityType.includes('restaurant') ? 'restaurant' :
-                    facility.facilityType.includes('fitness') ? 'fitness' :
-                      facility.facilityType.includes('dining') ? 'dining' :
-                        facility.facilityType.includes('common') ? 'common-area' :
-                          'other');
-
-              // เพิ่มข้อมูลลงในโครงสร้าง nested ตาม category
-              facilitiesObj[category][facility.facilityType] = {
-                active: facility.active === true,
-                iconId: facility.iconId || null
-              };
-            }
+            Object.keys(facilityIcons).forEach(key => {
+              if (facility?.Icon?.sub_name === key) {
+                facilityIcons[key] = facilityIcons[key] || {};
+                facilityIcons[key][facility?.Icon?.key] = {
+                  active: facility.active,
+                  iconId: facility.iconId,
+                };
+              }
+            })
           });
+
+          
 
 
 
@@ -257,7 +252,7 @@ const EditPropertyForm = ({ propertyId }) => {
             propertyLabels: labelObj,
 
             // Facilities
-            facilities: facilitiesObj, // Clone the object to avoid modifying the original facilitiesObj,
+            facilities: facilityIcons,
 
             // Nearby places
             nearby: nearbyObj,
@@ -310,6 +305,7 @@ const EditPropertyForm = ({ propertyId }) => {
             propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0;
           }
           setFormData(propertyData);
+          
 
           reset(propertyData);
 
@@ -396,27 +392,27 @@ const EditPropertyForm = ({ propertyId }) => {
 
   const onSubmit = async (data) => {
     try {
-      console.log("dataRequestEdit",data);
+      console.log("dataRequestEdit", data);
       setValidationSummary([]);
       setFormSubmitted(false);
-      
+
       // ตรวจสอบว่าหากเปิดโปรโมชั่นจะต้องกรอกราคาโปรโมชั่นด้วย
       const hasPromotion = document.getElementById('promotionToggle')?.checked;
       if (hasPromotion && (!data.promotionalPrice || data.promotionalPrice === '0' || data.promotionalPrice === 0 || data.promotionalPrice === '')) {
         toast.error('Promotional price is required when promotion is enabled');
         setValidationSummary(['Promotional price is required when promotion is enabled']);
         setSaving(false);
-        
+
         // เลื่อนไปที่ promotionalPrice field
         const promotionalPriceElement = document.getElementById('promotionalPrice');
         if (promotionalPriceElement) {
           promotionalPriceElement.focus();
           promotionalPriceElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
+
         return;
       }
-      
+
       setSaving(true);
 
       // แสดงข้อความกำลังบันทึกข้อมูล
@@ -666,7 +662,7 @@ const EditPropertyForm = ({ propertyId }) => {
 
 
 
-        
+
         <div className="card mb-4">
           <div className="card-body">
             <PropertyInfoSection />

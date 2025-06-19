@@ -24,7 +24,7 @@ import "../../../node_modules/react-modal-video/scss/modal-video.scss";
 import "@/styles/scss/main.scss";
 import "rc-slider/assets/index.css";
 import "../../styles/main.scss"; // Import backoffice styles
-
+import "@/styles/components/TopLoadingBar.scss"; // Import loading bar styles
 
 import { DM_Sans, Poppins } from "next/font/google";
 import { supportedLocales } from '../../i18n';
@@ -37,6 +37,10 @@ const Footer = lazy(() => import("@/components/common/Footer"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 const MobileContactButtons = dynamic(() => import("@/components/common/MobileContactButtons"), {
+  ssr: false
+});
+
+const TopLoadingBar = dynamic(() => import("@/components/common/TopLoadingBar"), {
   ssr: false
 });
 
@@ -99,8 +103,8 @@ export default async function LocaleLayout({ children, params }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>D'LuckProperty</title>
-        <meta name="description" content="D'LuckProperty - Thailand Real Estate Portal" />
+        <title>D&#39;LuckProperty</title>
+        <meta name="description" content="D&#39;LuckProperty - Thailand Real Estate Portal" />
         <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
       </head>
       <body
@@ -114,6 +118,7 @@ export default async function LocaleLayout({ children, params }) {
           <AOSInit />
           <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="wrapper ovh">
+              <TopLoadingBar />
               {isBackoffice && !isLoginPage ? (
                 <>
                   <HeaderBackoffice />

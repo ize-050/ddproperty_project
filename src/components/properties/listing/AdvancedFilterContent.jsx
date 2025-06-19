@@ -15,23 +15,8 @@ import PriceRange from './PriceRange';
 
 //service
 import getProperties from '@/utils/properties';
+import propertyTypeService from '@/services/propertyTypeService';
 import { useLocale } from 'next-intl';
-
-const PROPERTY_TYPES = [
-    { value: 'CONDO', label: 'Condominium' },
-    { value: 'HOUSE', label: 'House' },
-    { value: 'TOWNHOUSE', label: 'Townhouse' },
-    { value: 'VILLA', label: 'Villa' },
-    { value: 'LAND', label: 'Land' },
-    { value: 'APARTMENT', label: 'Apartment' },
-    { value: 'COMMERCIAL', label: 'Commercial' },
-    { value: 'OFFICE', label: 'Office' },
-    { value: 'RETAIL', label: 'Retail' },
-    { value: 'WAREHOUSE', label: 'Warehouse' },
-    { value: 'FACTORY', label: 'Factory' },
-    { value: 'HOTEL', label: 'Hotel' },
-    { value: 'RESORT', label: 'Resort' },
-];
 
 const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -48,17 +33,12 @@ const customStyles = {
     },
 };
 
-
-
-
-
-
-
-export default function AdvancedFilterContent({ onClose, type }) {
+export default function AdvancedFilterContent({ onClose, onSearch, type }) {
     const zones = useZoneStore((s) => s.zones);
 
     const [priceRange, setPriceRange] = useState([0, 15000000]);
     const [zone_id, zoneIdHandler] = useState(null);
+    const [propertyTypesOptions, setPropertyTypesOptions] = useState([]);
     const locale = useLocale();
     const setPropertyItems = usePropertyFilterStore((s) => s.setPropertyItems);
     const setPaginationItems = usePropertyFilterStore((s) => s.setPaginationItems);
@@ -113,41 +93,86 @@ export default function AdvancedFilterContent({ onClose, type }) {
         }))
     }, [zones])
 
-
+    useEffect(() => {
+        const fetchPropertyTypes = async () => {
+            try {
+                const response = await propertyTypeService.getPropertyTypesForFilter();
+                const propertyTypes = response.data.map((propertyType) => {
+                    // เลือก label ตามภาษาปัจจุบัน
+                    let label = propertyType.name; // fallback
+                    
+                    switch (locale) {
+                        case 'th':
+                            label = propertyType.nameTh || propertyType.nameEn || propertyType.name;
+                            break;
+                        case 'en':
+                            label = propertyType.nameEn || propertyType.name;
+                            break;
+                        case 'zh':
+                            label = propertyType.nameCh || propertyType.nameEn || propertyType.name;
+                            break;
+                        case 'ru':
+                            label = propertyType.nameRu || propertyType.nameEn || propertyType.name;
+                            break;
+                        default:
+                            label = propertyType.nameEn || propertyType.name;
+                    }
+                    
+                    return {
+                        value: propertyType.name,
+                        label: label,
+                    };
+                });
+                setPropertyTypesOptions(propertyTypes);
+            } catch (error) {
+                console.error('Error fetching property types:', error);
+                // Fallback to default options if API fails
+                setPropertyTypesOptions([
+                    { value: 'CONDO', label: locale === 'th' ? 'คอนโดมิเนียม' : 'Condominium' },
+                    { value: 'HOUSE', label: locale === 'th' ? 'บ้าน' : 'House' },
+                    { value: 'VILLA', label: locale === 'th' ? 'วิลล่า' : 'Villa' },
+                    { value: 'TOWNHOUSE', label: locale === 'th' ? 'ทาวน์เฮาส์' : 'Townhouse' },
+                ]);
+            }
+        };
+        fetchPropertyTypes();
+    }, [locale]); // เพิ่ม locale เป็น dependency
 
     const handleSearch = () => {
-        // Build query params string
-        const params = new URLSearchParams();
-        if (propertyType) params.set('propertyType', propertyType);
-        if (minPrice) params.set('minPrice', minPrice);
-        if (maxPrice) params.set('maxPrice', maxPrice);
-        if (zoneId) params.set('zoneId', zoneId);
-        if (bedrooms) params.set('bedrooms', bedrooms);
-        if (bathrooms) params.set('bathrooms', bathrooms);
+        console.log('AdvancedFilterContent handleSearch called with:', {
+            propertyType,
+            minPrice,
+            maxPrice,
+            zoneId,
+            bedrooms,
+            bathrooms,
+            type
+        });
 
-        if (type) params.set('type', type);
+        // Convert type prop to proper listingType format
+        let currentListingType;
+        if (type === 'rent') {
+            currentListingType = 'RENT';
+        } else if (type === 'sale') {
+            currentListingType = 'SALE';
+        } else {
+            // Default to current listingType if type prop is invalid
+            currentListingType = type;
+        }
 
-
-
-        // Update URL params WITHOUT reload
-        const newUrl = `${window.location.pathname}?${params.toString()}`;
-        window.history.replaceState({}, '', newUrl);
-
-        // Call API as before
-        const Request = {
+        // Call parent's onSearch function with filter values
+        onSearch({
             propertyType: propertyType,
             minPrice: minPrice,
             maxPrice: maxPrice,
             zoneId: zoneId,
             bedrooms: bedrooms,
             bathrooms: bathrooms,
-        }
-
-        getProperties(Request).then((res) => {
-            setPropertyItems(res.data);
-            setPaginationItems(res.pagination);
-            onClose();
+            listingType: currentListingType
         });
+        
+        // Close the modal
+        onClose();
     };
 
     return (
@@ -185,9 +210,9 @@ export default function AdvancedFilterContent({ onClose, type }) {
                             <h6 className="list-title">Type</h6>
                             <div className="form-style2 input-group">
                                 <Select
-                                    defaultValue={[PROPERTY_TYPES[0]]}
+                                    defaultValue={propertyTypesOptions[0]}
                                     name="colors"
-                                    options={PROPERTY_TYPES}
+                                    options={propertyTypesOptions}
                                     styles={customStyles}
                                     onChange={(e) =>
                                         setPropertyType(e.value)
@@ -207,7 +232,7 @@ export default function AdvancedFilterContent({ onClose, type }) {
                             <h6 className="list-title">Location</h6>
                             <div className="form-style2 input-group">
                                 <Select
-                                    defaultValue={[dataZone[0]]}
+                                    defaultValue={dataZone[0]}
                                     name="colors"
                                     styles={customStyles}
                                     options={dataZone}

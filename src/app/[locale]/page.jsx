@@ -1,4 +1,3 @@
-
 import React, { Suspense } from "react";
 import { lazy } from 'react';
 import dynamic from 'next/dynamic';
@@ -274,11 +273,11 @@ export default async function HomeContent({ params }) {
               </div>
               <div className="col-12" data-aos="fade-up" data-aos-delay="100">
                 <p>
-                  D-LUCK PROPERTY is your premier destination for Pattaya real estate services. Whether you&apos;re searching for Pattaya condos for sale or Pattaya condos for rent, we provide comprehensive, up-to-date information about Thailand&apos;s dynamic property market.
+                  D-LUCK PROPERTY is your premier destination for Pattaya real estate services. Whether you&#39;re searching for Pattaya condos for sale or Pattaya condos for rent, we provide comprehensive, up-to-date information about Thailand&#39;s dynamic property market.
                 </p>
 
                 <div className="mt20">
-                  <h4>Buy, Sell & Rent Property Services in Pattaya</h4>
+                  <h4>Buy, Sell &amp; Rent Property Services in Pattaya</h4>
                   <p>
                     At D-LUCK PROPERTY, we specialize in helping clients buy, sell, and rent condos, houses, land, and commercial properties throughout Pattaya, Thailand. Our experienced team ensures smooth transactions for both local and international clients.
                   </p>
@@ -305,13 +304,48 @@ export default async function HomeContent({ params }) {
             <div className="row mt20">
               <div className="col-lg-12" data-aos="fade-up">
                 <div className="main-title text-center">
-                  <h2>芭提雅房地产 | D-LUCK PROPERTY</h2>
+                  <h2>Недвижимость Паттайи | D-LUCK PROPERTY</h2>
                 </div>
               </div>
               <div className="col-12 " data-aos="fade-up" data-aos-delay="100">
                 <p>
-                  D-LUCK PROPERTY คือจุดหมายปลายทางอันดับหนึ่งสำหรับบริการอสังหาริมทรัพย์พัทยา ไม่ว่าคุณจะมองหาคอนโดพัทยาขาย หรือคอนโดพัทยาเช่า เราให้บริการข้อมูลที่ครบถ้วนและทันสมัยเกี่ยวกับตลาดอสังหาริมทรัพย์ไทยที่เปลี่ยนแปลงอยู่ตลอดเวลา
+                D-LUCK PROPERTY — ваша ведущая платформа для услуг недвижимости в Паттайе. Независимо от того, ищете ли вы кондоминиумы в Паттайе на продажу или кондоминиумы в Паттайе в аренду, мы предоставляем полную и актуальную информацию о динамичном рынке недвижимости Таиланда.
                 </p>
+
+                <div className="mt20">
+                  <h4>Услуги покупки, продажи и аренды недвижимости в Паттайе</h4>
+                  <p>
+                  В D-LUCK PROPERTY мы специализируемся на помощи клиентам в покупке, продаже и аренде кондоминиумов, домов, земельных участков и коммерческой недвижимости по всей Паттайе, Таиланд. Наша опытная команда обеспечивает беспроблемные сделки как для местных, так и для международных клиентов.
+                  </p>
+                </div>
+
+                <div className="mt20">
+                  <h4>Услуги покупки, продажи и аренды недвижимости в Паттайе</h4>
+                  <p>
+                    В D-LUCK PROPERTY мы специализируемся на помощи клиентам в Паттайе в покупке, продаже и аренде квартир, домов, земли и коммерческой недвижимости. Наш опытный коллектив обеспечивает успешные сделки для местных и иностранных клиентов.
+                  </p>
+                </div>
+
+                <div className="mt20">
+                  <h4>Инвестиционные возможности в недвижимость Паттайи</h4>
+                  <p>
+                  Ищете инвестиции в недвижимость Паттайи? Мы помогаем инвесторам найти высокодоходную недвижимость с сильным арендным потенциалом, нацеливаясь на годовую доходность от 8%. Наши специалисты по инвестициям сосредоточены на прибрежных кондоминиумах, проектах на стадии строительства и готовой арендной недвижимости с существующими арендаторами.
+                  </p>
+                </div>
+
+                <div className="mt20">
+                  <h4>Профессиональные услуги размещения объявлений</h4>
+                  <p>
+                  Владельцы недвижимости могут максимизировать охват через наши комплексные услуги размещения. Мы предлагаем профессиональную фотосъемку, маркетинг на множественных платформах и экспертный анализ ценообразования для быстрой и прибыльной продажи или аренды вашей недвижимости в Паттайе.
+                  </p>
+                </div>
+                
+                <div className="mt20">
+                  <p>
+                  Свяжитесь с D-LUCK PROPERTY сегодня для получения бесплатной консультации и откройте для себя лучшие возможности недвижимости в Паттайе.
+                  </p>
+                </div>
+            
               </div>
             </div>
           </div>
@@ -349,11 +383,7 @@ export default async function HomeContent({ params }) {
                   </p>
                 </div>
 
-                <div className="mt30 text-center">
-                  <a href="/contact" className="btn btn-thm">
-                    立即联系 D-LUCK PROPERTY 获取免费咨询
-                  </a>
-                </div>
+          
               </div>
             </div>
           </div>
@@ -380,8 +410,3 @@ export default async function HomeContent({ params }) {
     </TranslationInitializer>
   );
 }
-
-
-
-
-

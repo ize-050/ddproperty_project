@@ -51,19 +51,19 @@ const PropertyHighlightsSection = () => {
   }, [initializeHighlights, initializePropertyLabels]);
 
   // Handle selection
-  const handleClick = (type, key, active) => {
+  const handleHighlightClick = (type, key, active, id) => {
     console.log(`Toggle ${type} icon: ${key} from ${active} to ${!active}`);
-
+    
     // Convert to boolean for consistent handling
     const newValue = !active;
-
+    
     if (type === 'highlight') {
       // Update Zustand store with boolean
-      setHighlight(key, newValue);
+      setHighlight(key, newValue, id);
     }
     if (type === 'label') {
       // Update property labels in the store
-      setPropertyLabel(key, newValue);
+      setPropertyLabel(key, newValue, id);
     }
   };
 
@@ -117,7 +117,7 @@ const PropertyHighlightsSection = () => {
                     key={icon.id}
                     className="amenity-item"
                     style={isActive ? activeStyle : {}}
-                    onClick={() => handleClick('highlight', icon.key, isActive)}
+                    onClick={() => handleHighlightClick('highlight', icon.key, isActive, icon.id)}
                 >
                   <input
                       type="hidden"
@@ -158,7 +158,7 @@ const PropertyHighlightsSection = () => {
                     key={icon.id}
                     className="amenity-item"
                     style={isActive ? activeStyle : {}}
-                    onClick={() => handleClick('label', icon.key, isActive)}
+                    onClick={() => handleHighlightClick('label', icon.key, isActive, icon.id)}
                 >
                   <input
                       type="hidden"

@@ -41,13 +41,13 @@ const FacilitiesSection = () => {
   }, [initializeFacilities]);
 
   // Handle facility selection
-  const handleFacilityClick = (category, key, active) => {
+  const handleFacilityClick = (category, key, active, id) => {
     console.log(`Toggle ${category} icon: ${key} from ${active} to ${!active}`);
     // Convert to boolean for consistent handling
     const newValue = !active;
     
     // Update Zustand store with boolean
-    setFacility(category, key, newValue);
+    setFacility(category, key, newValue, id);
 
   };
 
@@ -80,16 +80,18 @@ const FacilitiesSection = () => {
           const fieldName = `facilities.${category}.${icon.key}`;
 
 
-          
-          // ใช้ Boolean เพื่อแน่ใจว่าเป็นค่า boolean จาก nested structure
+          console.log("isActive111",formData.facilities?.[category])
           const isActive = Boolean(formData.facilities?.[category]?.[icon.key]?.active);
+
+          
 
           return (
             <div
               key={icon.key}
               className={`amenity-item`}
               style={isActive ? activeStyle : {}}
-              onClick={() => handleFacilityClick(category, icon.key, isActive)}
+              
+              onClick={() => handleFacilityClick(category, icon.key, isActive, icon.id)}
             >
               {/* Hidden input to ensure all facilities are submitted */}
               <input

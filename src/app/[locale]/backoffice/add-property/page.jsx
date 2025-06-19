@@ -27,12 +27,13 @@ import FloorPlanSection from '@/components/backoffice/property/FloorPlanSection'
 import UnitPlanSection from '@/components/backoffice/property/UnitPlanSection';
 import SocialMediaSection from '@/components/backoffice/property/SocialMediaSection';
 import ContactSection from '@/components/backoffice/property/ContactSection';
+import { useLocale } from 'next-intl';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import '@/styles/backoffice/add-property.scss';
 import '@/styles/backoffice/form-validation.css';
 
 //lib
-import  Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 const AddNewProperty = () => {
   const router = useRouter();
@@ -42,7 +43,8 @@ const AddNewProperty = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoadingNextCode, setIsLoadingNextCode] = useState(true);
   const [saving, setSaving] = useState(false);
-  
+  const locale = useLocale();
+
   // Initialize React Hook Form with Yup schema validation
   const methods = useForm({
     resolver: yupResolver(propertyFormSchemaBasic),
@@ -87,7 +89,7 @@ const AddNewProperty = () => {
       setValidationSummary([]);
     }
   }, [errors, formSubmitted]);
-  
+
   // Force validation on all fields when form is submitted
   useEffect(() => {
     if (formSubmitted) {
@@ -100,10 +102,10 @@ const AddNewProperty = () => {
     const fetchNextPropertyCode = async () => {
       try {
         setIsLoadingNextCode(true);
-        
+
         // Get token
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
-        
+
         // Call API to get next property code
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/next-property-code`, {
           method: 'GET',
@@ -112,13 +114,13 @@ const AddNewProperty = () => {
             'Content-Type': 'application/json',
           }
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch next property code');
         }
-        
+
         const data = await response.json();
-        
+
         if (data.success && data.propertyCode) {
           // Set the property ID in the form and store
           setFormData({ ...formData, propertyId: data.propertyCode });
@@ -132,7 +134,7 @@ const AddNewProperty = () => {
         setIsLoadingNextCode(false);
       }
     };
-    
+
     fetchNextPropertyCode();
   }, []);
 
@@ -144,13 +146,13 @@ const AddNewProperty = () => {
 
       // แสดงข้ความกำลังบันทึกข้อมูล
       const loadingToast = toast.loading(t('savingData'));
-      
+
       // สร้าง FormData object สำหรับส่งข้อมูลและรูปภาพ
       const formDataObj = new FormData();
 
       // ดึงข้อมูลจาก store
 
-      
+
 
 
       // ลบข้อมูล amenities ฯลฯ ออกจาก data เพื่อไม่ให้ซ้ำซ้อน
@@ -162,7 +164,7 @@ const AddNewProperty = () => {
       delete data.propertyLabels;
 
       delete data.socialMedia;
-      
+
       // เพิ่มข้อมูลพื้นฐานลงใน FormData
       for (const [key, value] of Object.entries(data)) {
         if (typeof value === 'object' && value !== null) {
@@ -185,10 +187,10 @@ const AddNewProperty = () => {
       // แปลงชื่อฟิลด์ให้ตรงกับ backend
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
-      
+
       // สร้าง listings array ตามประเภทการขาย/เช่า
       const listings = [];
-      
+
       if (data.status === 'SALE' || data.status === 'SALE_RENT') {
         listings.push({
           listingType: 'SALE',
@@ -198,7 +200,7 @@ const AddNewProperty = () => {
           currency: data.currency || 'THB'
         });
       }
-      
+
       if (data.status === 'RENT' || data.status === 'SALE_RENT') {
         listings.push({
           listingType: 'RENT',
@@ -210,7 +212,7 @@ const AddNewProperty = () => {
           currency: data.currency || 'THB'
         });
       }
-      
+
       // เพิ่ม listings array เข้าไปใน formData
       formDataObj.append('listings', JSON.stringify(listings));
 
@@ -220,28 +222,28 @@ const AddNewProperty = () => {
           formDataObj.append('images', image.file);
         }
       });
-      
+
       // เพิ่มรูปภาพ Floor Plan ลงใน FormData
       floorPlanImages.forEach((image, index) => {
         if (image.file) {
           formDataObj.append('floorPlanImages', image.file);
         }
       });
-      
+
       // เพิ่มรูปภาพ Unit Plan ลงใน FormData
       unitPlanImages.forEach((image, index) => {
         if (image.file) {
           formDataObj.append('unitPlanImages', image.file);
         }
       });
-      
+
 
       // ส่งข้อมูลไปยัง API endpoint
       // ดึง token จาก localStorage หรือ cookie
       const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
-      
+
       console.log('Sending data to API...', { formDataSize: [...formDataObj.entries()].length });
-      
+
       // ใช้ URL ที่ถูกต้องสำหรับ backend API
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const response = await axios.post(`${apiUrl}/properties`, formDataObj, {
@@ -252,28 +254,43 @@ const AddNewProperty = () => {
         }
       });
 
-      // ปิด toast
-      toast.dismiss(loadingToast);
 
-      toast.success(t('dataSavedSuccessfully'));
-      
       // รีเซ็ตฟอร์ม
       reset();
       setFormData({});
+      setSaving(false);
 
-      setTimeout(() => {
-        router.push('/backoffice/my-properties');
-      }, 1500);
-      
+      if (response.data.status === 'success') {
+        console.log('Property created successfully:', response.data);
+        // แสดง dialog ถามว่าต้องการไปที่หน้ารายการอสังหาฯ หรือไม่
+        Swal.fire({
+          title: 'Property Added!',
+          html: `<div class="text-center">${'The property has been successfully added.'}</div>`,
+          icon: 'success',
+          confirmButtonText: 'View Property'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Navigate to the property list
+            router.push(`/${locale}/backoffice/my-properties`);
+          }
+        });
+        // Reset form
+        resetForm();
+      } else {
+        console.log('Failed to create property:', response);
+        throw new Error(response.message || 'Failed to create property');
+      }
+
     } catch (error) {
+      console.error('Error creating property:', error);
+      setSaving(false);
       Swal.fire({
         icon: 'error',
         title: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
         text: error.response?.data?.message || error.response?.data?.error || error.message || t('errorSavingData'),
         footer: error.response?.data?.errors ? `<pre>${JSON.stringify(error.response.data.errors, null, 2)}</pre>` : ''
       });
-    } finally {
-      setSaving(false);
+      window.location.reload();
     }
   };
 
@@ -281,7 +298,7 @@ const AddNewProperty = () => {
   const onError = (errors) => {
     console.log('Form validation errors:', errors);
     setFormSubmitted(true);
-    
+
     // Create validation summary
     const errorMessages = [];
     Object.entries(errors).forEach(([key, error]) => {
@@ -290,13 +307,13 @@ const AddNewProperty = () => {
       }
     });
     setValidationSummary(errorMessages);
-    
+
     // Force trigger validation on all fields to show all errors
     trigger();
-    
+
     // Show error message
     alert(t('pleaseFillInAllRequiredFields'));
-    
+
     // Scroll to validation summary
     const validationSummaryElement = document.getElementById('validation-summary');
     if (validationSummaryElement) {
@@ -305,34 +322,34 @@ const AddNewProperty = () => {
   };
 
   return (
-      <div className="add-property-container">
-        <div className="page-header">
-          <div className="header-content">
-            <div>
-              <h1>{t('addNewProperty')}</h1>
-              <p>{t('createPropertyDetails')}</p>
-            </div>
+    <div className="add-property-container">
+      <div className="page-header">
+        <div className="header-content">
+          <div>
+            <h1>{t('addNewProperty')}</h1>
+            <p>{t('createPropertyDetails')}</p>
           </div>
         </div>
+      </div>
 
-        <FormProvider {...methods}>
-          {validationSummary.length > 0 && (
-            <div id="validation-summary" className="validation-summary">
-              <h4>{t('pleaseCorrectTheFollowingErrors')}:</h4>
-              <ul>
-                {validationSummary.map((message, index) => (
-                  <li key={index}>{message}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <FormProvider {...methods}>
+        {validationSummary.length > 0 && (
+          <div id="validation-summary" className="validation-summary">
+            <h4>{t('pleaseCorrectTheFollowingErrors')}:</h4>
+            <ul>
+              {validationSummary.map((message, index) => (
+                <li key={index}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
           <ListingTypeSection type={"add"} />
           <PropertyTypeSection />
           <PropertyInfoSection />
           <PropertyDetailSection />
-         
+
           <LocationSection />
           <PricingSection />
           <PropertyHighlightsSection />
@@ -351,10 +368,10 @@ const AddNewProperty = () => {
           {/* Terms & Conditions */}
           <section className="form-section">
             <div className="terms-container">
-              <input 
-                type="checkbox" 
-                id="termsAgree" 
-                {...methods.register('termsAgree', { required: t('youMustAgreeToTheTerms') })} 
+              <input
+                type="checkbox"
+                id="termsAgree"
+                {...methods.register('termsAgree', { required: t('youMustAgreeToTheTerms') })}
               />
               <label htmlFor="termsAgree">{t('iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty')}</label>
               {methods.formState.errors.termsAgree && (
@@ -377,17 +394,15 @@ const AddNewProperty = () => {
 
           {/* Form Buttons */}
           <div className="form-buttons">
-            <button type="button" className="btn btn-secondary" onClick={() => router.back()}>
-              {t('cancel')}
-            </button>
-            <button 
-              type="button" 
+
+            <button
+              type="button"
               className="btn btn-primary"
               disabled={saving}
               onClick={() => {
                 // Set form as submitted to show all validation errors
                 setFormSubmitted(true);
-                
+
                 // Force validate all fields
                 trigger().then(isValid => {
                   if (isValid) {
@@ -395,7 +410,7 @@ const AddNewProperty = () => {
                   } else {
                     // Show error message
                     alert(t('pleaseFillInAllRequiredFields'));
-                    
+
                     // Add red border to all required fields that are empty
                     // ProjectInfoSection
                     if (!getValues('projectName')) {
@@ -404,7 +419,7 @@ const AddNewProperty = () => {
                     if (!getValues('area')) {
                       document.getElementById('area').style.border = '2px solid #dc3545';
                     }
-                    
+
                     // LocationSection
                     if (!getValues('address')) {
                       document.getElementById('address').style.border = '2px solid #dc3545';
@@ -421,12 +436,12 @@ const AddNewProperty = () => {
                     if (!getValues('postalCode')) {
                       document.getElementById('postalCode').style.border = '2px solid #dc3545';
                     }
-                    
+
                     // PricingSection
                     if (!getValues('price')) {
                       document.getElementById('price').style.border = '2px solid #dc3545';
                     }
-                    
+
                     // ContactSection
                     if (!getValues('contactInfo.phone')) {
                       document.getElementById('phone').style.border = '2px solid #dc3545';
@@ -434,7 +449,7 @@ const AddNewProperty = () => {
                     if (!getValues('contactInfo.email')) {
                       document.getElementById('email').style.border = '2px solid #dc3545';
                     }
-                    
+
                     // PropertyDescriptionSection
                     if (!getValues('propertyTitle')) {
                       document.getElementById('propertyTitle').style.border = '2px solid #dc3545';
@@ -453,10 +468,15 @@ const AddNewProperty = () => {
                 </>
               ) : t('saveProperty')}
             </button>
+
+            <button type="button" className="btn btn-secondary" onClick={() => router.back()}>
+              {t('cancel')}
+            </button>
+
           </div>
         </form>
-        </FormProvider>
-      </div>
+      </FormProvider>
+    </div>
   );
 };
 

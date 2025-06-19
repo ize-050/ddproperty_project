@@ -1,0 +1,64 @@
+// Top Loading Bar Styles
+.top-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 99999; 
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none; 
+  
+  &.active {
+    display: block;
+  }
+  
+  .loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #d22630 0%, #ff4757 50%, #d22630 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 0 8px rgba(210, 38, 48, 0.6);
+    border-radius: 0 2px 2px 0;
+    
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+  }
+}
+
+// 
+body.loading {
+  .top-loading-bar {
+    display: block;
+  }
+}
+
+// Alternative styles for different themes
+.top-loading-bar.blue {
+  .loading-progress {
+    background: linear-gradient(90deg, #3498db 0%, #74b9ff 50%, #3498db 100%);
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+  }
+}
+
+.top-loading-bar.green {
+  .loading-progress {
+    background: linear-gradient(90deg, #2ecc71 0%, #55efc4 50%, #2ecc71 100%);
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.6);
+  }
+}
+
+.top-loading-bar.purple {
+  .loading-progress {
+    background: linear-gradient(90deg, #9b59b6 0%, #a29bfe 50%, #9b59b6 100%);
+    box-shadow: 0 0 8px rgba(155, 89, 182, 0.6);
+  }
+}

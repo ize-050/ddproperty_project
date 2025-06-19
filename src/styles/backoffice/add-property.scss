@@ -1175,7 +1175,7 @@ label.required:after {
   
   .form-buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1rem;
     margin-top: 2rem;
     
@@ -1188,26 +1188,27 @@ label.required:after {
       transition: all 0.2s;
       
       &.btn-primary {
-        background-color: #00b300; // สีเขียวตามรูปภาพ
+        background-color: #222222; // สีดำเหมือนหน้า My Profile
         color: white;
         border: none;
         
         &:hover {
-          background-color: darken(#00b300, 5%);
+          background-color: #000000;
         }
       }
       
       &.btn-secondary {
-        background-color: #333333;
+        background-color: #222222; // สีดำเหมือน btn-primary
         color: white;
         border: none;
         
         &:hover {
-          background-color: darken(#333333, 5%);
+          background-color: #000000;
         }
       }
     }
   }
+
 }
 
 // Responsive adjustments

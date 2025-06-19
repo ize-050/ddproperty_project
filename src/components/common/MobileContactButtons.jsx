@@ -42,7 +42,7 @@ const MobileContactButtons = () => {
                 {/* Fixed Mobile Contact Buttons */}
                 <div className="mobile-contact-fixed">
                     <div className="mobile-contact-inner">
-                        <div className="contact-question">Got any questions? I'm happy to help.</div>
+                        <div className="contact-question">Got any questions? I&#39;m happy to help.</div>
                         <div className="contact-actions">
                             <div
                                 style={{

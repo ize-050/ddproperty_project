@@ -10,7 +10,7 @@ import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 export const dynamic = "force-dynamic";
 
 const LoginPage = () => {
-  const t = useTranslations('Backoffice');
+  const t = useTranslations('');
   const router = useRouter();
   
   const [formData, setFormData] = useState({

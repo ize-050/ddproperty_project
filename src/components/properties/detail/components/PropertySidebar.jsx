@@ -9,13 +9,14 @@ import ContactModal from '../../../common/ContactModal/ContactModal';
 const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
   const propertyAgent = property.contactInfo;
+  const userAgent = property.user;
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
-  console.log("PropertySidebar:", property);
   // ดึงข้อมูลตัวแทนจาก property
   let  agent = {
     ...propertyAgent,
     name :property?.user?.name,
+    picture : process.env.NEXT_PUBLIC_IMAGE_URL + '/uploads/profiles/' + property?.user?.picture
   };
   // ฟังก์ชันสำหรับเปิด URL ของ social media
   const openSocialMedia = (url) => {
@@ -35,7 +36,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
         <div className="agent-profile">
           <div className="agent-avatar">
             <img 
-              src={agent?.avatar || '/images/listings/agent-1.png'}
+              src={agent?.picture || '/images/listings/agent-1.png'}
               alt={agent?.name}
               className="img-fluid rounded-circle"
             />
@@ -75,7 +76,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
             </div>
             <div className="details">
               <h5>LINE</h5>
-              <p>{agent.line}</p>
+              <p>{agent.lineId}</p>
             </div>
           </div>
           
@@ -86,7 +87,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
             </div>
             <div className="details">
               <h5>WeChat</h5>
-              <p>{agent.wechat}</p>
+              <p>{agent.wechatId}</p>
             </div>
           </div>
           

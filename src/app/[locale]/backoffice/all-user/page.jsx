@@ -280,30 +280,7 @@ const AllUserPage = () => {
           </button>
         </div>
         
-        <div className="filters-section">
-          <div className="search-box">
-            <FaSearch className="search-icon" />
-            <input 
-              type="text" 
-              placeholder={t('searchUsers')} 
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </div>
-          
-          <div className="role-filter">
-            <select 
-              value={selectedRole} 
-              onChange={handleRoleFilter}
-            >
-              <option value="">{t('allRoles')}</option>
-              <option value="ADMIN">Admin</option>
-              <option value="USER">User</option>
-              <option value="AGENT">Agent</option>
-            </select>
-          </div>
-        </div>
-        
+
         <div className="users-table-container">
           {loading ? (
             <div className="loading-indicator">Loading...</div>

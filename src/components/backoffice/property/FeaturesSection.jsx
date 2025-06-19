@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 
 const FeaturesSection = () => {
-  const { formData, setFeature, initializeAmenities } = usePropertyFormStore();
+  const { formData, setAmenity, initializeAmenities } = usePropertyFormStore();
   const [amenityIcons, setAmenityIcons] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,15 +47,17 @@ const FeaturesSection = () => {
 
 
   // Handle amenity selection
-  const handleFeatureClick = (type, key, active) => {
+  const handleFeatureClick = (type, key, active, id) => {
     console.log(`Toggle ${type} icon: ${key} from ${active} to ${!active}`);
+    console.log('Current formData.amenities before click:', formData.amenities);
 
     // Convert to boolean for consistent handling
     const newValue = !active;
 
-    // Update Zustand store with boolean
-    setFeature(type, key, newValue);
-
+    // Update Zustand store with boolean - ไม่ต้องส่ง type เพราะ setAmenity ไม่ใช้
+    setAmenity(key, newValue, id);
+    
+    console.log('Called setAmenity with:', { key, newValue, id });
 
   };
 
@@ -116,7 +118,7 @@ const FeaturesSection = () => {
                 key={icon.id}
                 className={`amenity-item`}
                 style={isActive ? activeStyle : {}}
-                onClick={() => handleFeatureClick('amenity', icon.key, isActive)}
+                onClick={() => handleFeatureClick('amenity', icon.key, isActive, icon.id)}
               >
                 {/* เพิ่ม hidden input เพื่อเก็บ iconId */}
                 <input

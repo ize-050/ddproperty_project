@@ -34,10 +34,8 @@ export default function PropertyFiltering({ property }) {
   const [salePriceFormatted, setSalePriceFormatted] = useState('');
   const [rentPriceFormatted, setRentPriceFormatted] = useState('');
 
-  useEffect(() => {
-     
 
-    console.log("propertyFilter",property);
+  useEffect(() => {
 
     const loadPrices = async () => {
       if (property?.listings) {
@@ -58,10 +56,6 @@ export default function PropertyFiltering({ property }) {
 
     loadPrices();
   }, [property, locale]);
-
-  if (!property) {
-    return <div className="alert alert-warning">No property data available</div>;
-  }
 
 
 
@@ -100,11 +94,6 @@ export default function PropertyFiltering({ property }) {
   const underConstruction = property.labels.some(label => label.labelType === 'under-construction');
 
 
-
-
-  useEffect(() => {
-      console.log("property1231231",property)
-  }, [property]);
 
   const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${property.id}`;
 

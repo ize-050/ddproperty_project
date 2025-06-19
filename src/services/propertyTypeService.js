@@ -27,6 +27,25 @@ class PropertyTypeService {
   }
 
   /**
+   * Get property types for dropdown filters
+   * @returns {Promise} - API response with property types for filtering
+   */
+  async getPropertyTypesForFilter() {
+    try {
+      const response = await axios.get(`${API_URL}/properties/types`, {
+        headers: {
+          'x-api-key': API_KEY
+        }
+      });
+      
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching property types for filter:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Get a random property for each property type
    * @returns {Promise} - API response with random properties for each type
    */

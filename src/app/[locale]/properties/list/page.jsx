@@ -45,6 +45,11 @@ async function searchProperties(searchParams) {
       queryParams.append('bathrooms', searchParams.bathrooms);
     }
 
+    // เพิ่ม keyword search parameter
+    if (searchParams.searchQuery) {
+      queryParams.append('keyword', searchParams.searchQuery);
+    }
+
     if (searchParams.page) {
       queryParams.append('page', searchParams.page);
     } else {

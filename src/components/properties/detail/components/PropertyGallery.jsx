@@ -40,7 +40,7 @@ const PropertyGallery = ({ images, property }) => {
           <div className="row">
             {galleryImages.length > 0 && (
               <>
-                <div className="col-md-8">
+                <div className="col-md-6">
                   <div className="sp-img-content mb15-md">
                     <div className="preview-img-1 sp-img">
                       <Item
@@ -64,7 +64,7 @@ const PropertyGallery = ({ images, property }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4 d-flex align-items-stretch">
+                <div className="col-md-6 d-flex align-items-stretch">
                   {galleryImages.length > 1 && (
                     <div className="thumbs-grid w-100 h-100 d-grid grid-template-columns-repeat-2 gap-2">
                       {galleryImages.slice(1, 5).map((image, idx) => (
