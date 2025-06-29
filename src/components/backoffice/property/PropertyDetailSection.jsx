@@ -16,7 +16,7 @@ const PropertyDetailSection = () => {
     // อัพเดท store เมื่อมีการเปลี่ยนแปลงค่าใน form
     const updateStore = () => {
       const fieldsToUpdate = [
-        'propertyId', 'ownershipQuota', 'landSize', 'landSizeUnit',
+        'propertyId', 'ownershipQuota', 'land_size_rai', 'land_size_ngan', 'land_size_sq_wah',
         'usableArea', 'floors', 'furnishing', 'bedrooms', 'bathrooms',
         'constructionYear', 'communityFees'
       ];
@@ -68,7 +68,7 @@ const PropertyDetailSection = () => {
           <select
             id="ownershipQuota"
             defaultValue="freehold"
-            className={`form-control ${errors.ownershipQuota ? 'is-invalid' : ''}`}
+            className={`form-control custom-select ${errors.ownershipQuota ? 'is-invalid' : ''}`}
             {...register('ownershipQuota', { required: 'Ownership quota is required' })}
           >
             <option value="freehold">Freehold</option>
@@ -77,29 +77,37 @@ const PropertyDetailSection = () => {
           {errors.ownershipQuota && <p className="error-message">{errors.ownershipQuota.message}</p>}
         </div>
         <div className="form-group">
-          <label htmlFor="landSize">Land Size*</label>
-          <div className="input-with-unit">
-            <input
-              type="number"
-              id="landSize"
-              {...register('landSize')}
-            />
-            <div className="unit-options">
-              <span 
-                className={watch('landSizeUnit') === 'rai' ? 'active' : ''} 
-                onClick={() => setValue('landSizeUnit', 'rai', { shouldDirty: true })}>
-                Rai
-              </span>
-              <span 
-                className={watch('landSizeUnit') === 'ngan' ? 'active' : ''} 
-                onClick={() => setValue('landSizeUnit', 'ngan', { shouldDirty: true })}>
-                Ngan
-              </span>
-              <span 
-                className={watch('landSizeUnit') === 'sqwah' ? 'active' : ''} 
-                onClick={() => setValue('landSizeUnit', 'sqwah', { shouldDirty: true })}>
-                Sq.wah
-              </span>
+          <label htmlFor="landSize">Land Size</label>
+          <div className="land-size-grid">
+            <div className="land-size-item">
+              <input
+                type="number"
+                id="landSizeRai"
+                className="form-control"
+                placeholder="0"
+                {...register('land_size_rai')}
+              />
+              <span className="unit-label">Rai</span>
+            </div>
+            <div className="land-size-item">
+              <input
+                type="number"
+                id="landSizeNgan"
+                className="form-control"
+                placeholder="0"
+                {...register('land_size_ngan')}
+              />
+              <span className="unit-label">Ngan</span>
+            </div>
+            <div className="land-size-item">
+              <input
+                type="number"
+                id="landSizeSqWah"
+                className="form-control"
+                placeholder="0"
+                {...register('land_size_sq_wah')}
+              />
+              <span className="unit-label">Sq.wah</span>
             </div>
           </div>
         </div>
@@ -122,7 +130,7 @@ const PropertyDetailSection = () => {
           <label htmlFor="floors">Floors*</label>
           <select
             id="floors"
-            className={`form-control ${errors.floors ? 'is-invalid' : ''}`}
+            className={`form-control custom-select ${errors.floors ? 'is-invalid' : ''}`}
             {...register('floors', { required: 'This field is required' })}
           >
             <option value="">-</option>
@@ -137,7 +145,7 @@ const PropertyDetailSection = () => {
           <select
             id="furnishing"
             defaultValue="FULLY_FURNISHED"
-            className={`form-control ${errors.furnishing ? 'is-invalid' : ''}`}
+            className={`form-control custom-select ${errors.furnishing ? 'is-invalid' : ''}`}
             {...register('furnishing' , {required: 'Furnishing is required'})}
           >
             <option value="FULLY_FURNISHED">Fully Furnished</option>
@@ -154,7 +162,7 @@ const PropertyDetailSection = () => {
           <select
             id="bedrooms"
             defaultValue={1}
-            className={`form-control ${errors.bedrooms ? 'is-invalid' : ''}`}
+            className={`form-control custom-select ${errors.bedrooms ? 'is-invalid' : ''}`}
             {...register('bedrooms', { required: 'This field is required' })}
           >
             
@@ -169,7 +177,7 @@ const PropertyDetailSection = () => {
           <select
             id="bathrooms"
             defaultValue={1}
-            className={`form-control ${errors.bathrooms ? 'is-invalid' : ''}`}
+            className={`form-control custom-select ${errors.bathrooms ? 'is-invalid' : ''}`}
             {...register('bathrooms', { required: 'This field is required' })}
           >
 
@@ -184,7 +192,7 @@ const PropertyDetailSection = () => {
           <select
             id="constructionYear"
             defaultValue={new Date().getFullYear()}
-            className={`form-control ${errors.constructionYear ? 'is-invalid' : ''}`}
+            className={`form-control custom-select ${errors.constructionYear ? 'is-invalid' : ''}`}
             {...register('constructionYear', { required: 'This field is required' })}
           >
             {[...Array(50)].map((_, i) => {
@@ -209,6 +217,8 @@ const PropertyDetailSection = () => {
           </div>
           {errors.communityFees && <p className="error-message">{errors.communityFees.message}</p>}
         </div>
+        <div className="form-group"></div>
+        <div className="form-group"></div>
       </div>
     </section>
   );

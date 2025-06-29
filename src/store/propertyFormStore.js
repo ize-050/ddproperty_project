@@ -63,6 +63,14 @@ const usePropertyFormStore = create((set) => ({
     communityFees: '',
     // Promotional price
     promotionalPrice: '',
+    // Co-Agent Accept fields
+    coAgentAccept: false,
+    commissionType: 'percent', // 'percent' or 'amount'
+    commissionPercent: '',
+    commissionAmount: '',
+    privateNote: '',
+    // Featured property
+    isFeatured: false,
     // Features/Amenities
     features: {
     },
@@ -864,6 +872,13 @@ const usePropertyFormStore = create((set) => ({
       constructionYear: '',
       communityFees: '',
       promotionalPrice: '',
+      coAgentAccept: false,
+      commissionType: 'percent', // 'percent' or 'amount'
+      commissionPercent: '',
+      commissionAmount: '',
+      privateNote: '',
+      // Featured property
+      isFeatured: false,
       features: {},
       amenities: {}, // Reset amenities
       highlights: {},
@@ -896,6 +911,71 @@ const usePropertyFormStore = create((set) => ({
     unitPlanImages: [],
     showMap: true
   }),
+
+  // Co-Agent Accept setters
+  setCoAgentAccept: (value) => set((state) => ({
+    formData: { ...state.formData, coAgentAccept: value }
+  })),
+  
+  setCommissionType: (value) => set((state) => ({
+    formData: { ...state.formData, commissionType: value }
+  })),
+  
+  setCommissionPercent: (value) => set((state) => ({
+    formData: { ...state.formData, commissionPercent: value }
+  })),
+  
+  setCommissionAmount: (value) => set((state) => ({
+    formData: { ...state.formData, commissionAmount: value }
+  })),
+  
+  setPrivateNote: (value) => set((state) => ({
+    formData: { ...state.formData, privateNote: value }
+  })),
+
+  // Initialize highlights icons after fetching from API
+  initializeHighlights: (highlightIcons) => {
+    // Get current state first to preserve existing values
+    set(state => {
+      const currentHighlights = state.formData.highlights || {};
+      const updatedHighlights = { ...currentHighlights }; // Clone to avoid direct mutation
+
+
+
+      // Handle different structures - object of arrays or a single array
+      if (highlightIcons && typeof highlightIcons === 'object') {
+        // Loop through each category and their items
+        Object.keys(highlightIcons).forEach(category => {
+          if (Array.isArray(highlightIcons[category])) {
+            // Process all icons in this category
+            highlightIcons[category].forEach(icon => {
+              if (icon.key) {
+                if (!updatedHighlights[icon.key]) {
+                  updatedHighlights[icon.key] = {
+                    active: false,
+                    iconId: icon.id
+                  };
+                } else {
+                  // Keep the active state but update the iconId
+                  updatedHighlights[icon.key] = {
+                    ...updatedHighlights[icon.key],
+                    iconId: icon.id
+                  };
+                }
+              }
+            });
+          }
+        });
+      }
+
+      return {
+        formData: {
+          ...state.formData,
+          highlights: updatedHighlights
+        }
+      };
+    });
+  },
 
 }));
 

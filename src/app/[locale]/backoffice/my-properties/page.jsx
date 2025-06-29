@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
-import { FaPlus, FaSearch, FaEye, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight, FaCopy } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaEyeSlash, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight, FaCopy } from 'react-icons/fa';
 import { useLocale } from "next-intl";
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
@@ -70,7 +70,13 @@ export default function MyPropertiesPage() {
 
       const data = await response.json();
 
-      setProperties(data.properties || []);
+      // Set default isPublished for properties that don't have this field yet
+      const propertiesWithDefaults = (data.properties || []).map(property => ({
+        ...property,
+        isPublished: property.isPublished !== undefined ? property.isPublished : true
+      }));
+
+      setProperties(propertiesWithDefaults);
       setTotalPages(data.totalPages || 1);
       setError(null);
     } catch (err) {
@@ -161,8 +167,8 @@ export default function MyPropertiesPage() {
 
   // Function to duplicate property
   const handleDuplicateProperty = (propertyId) => {
-    // Navigate to the duplicate property page
-    window.location.href = `/${locale}/backoffice/duplicate-property/${propertyId}`;
+    // Navigate to the duplicate property page in same tab
+    router.push(`/${locale}/backoffice/duplicate-property/${propertyId}`);
   };
 
   const handleEditProperty = (propertyId) => {
@@ -170,7 +176,52 @@ export default function MyPropertiesPage() {
   }
 
   const handleViewProperty = (propertyId) => {
-    window.location.href = `/${locale}/backoffice/view-property/${propertyId}/`;
+    window.open(`/${locale}/property_detail/${propertyId}`, '_blank');
+  }
+
+  const handleTogglePropertyPublished = async (propertyId, currentIsPublished) => {
+    try {
+      const newIsPublished = !currentIsPublished;
+      const token = localStorage.getItem('auth_token');
+      
+      // Optimistically update UI first (no reload needed)
+      setProperties(prevProperties => 
+        prevProperties.map(property => 
+          property.id === propertyId 
+            ? { ...property, isPublished: newIsPublished }
+            : property
+        )
+      );
+      
+      // Use dedicated status update endpoint
+      const requestBody = { status: newIsPublished ? 'ACTIVE' : 'INACTIVE' };
+      
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        // Revert the optimistic update if API call fails
+        setProperties(prevProperties => 
+          prevProperties.map(property => 
+            property.id === propertyId 
+              ? { ...property, isPublished: currentIsPublished }
+              : property
+          )
+        );
+        throw new Error('Failed to update property status');
+      }
+
+      toast.success(`Property ${newIsPublished ? 'published' : 'unpublished'} successfully`);
+    } catch (error) {
+      console.error('Error updating property status:', error);
+      toast.error('Failed to update property status');
+    }
   }
 
   return (
@@ -248,6 +299,7 @@ export default function MyPropertiesPage() {
                   <th className="reference-col">REFERENCE</th>
                   <th className="operation-col">OPERATION</th>
                   <th className="price-col">PRICE</th>
+                  <th className="published-col">PUBLISHED</th>
                   <th className="displays-col">DISPLAYS</th>
                   <th className="visits-col">VISITS</th>
                   <th className="enquiries-col">ENQUIRIES</th>
@@ -281,12 +333,34 @@ export default function MyPropertiesPage() {
                       <td className="reference-col">{property.reference}</td>
                       <td className="operation-col">{property.listings?.map((listing) => listing.listingType).join(', ')}</td>
                       <td className="price-col">{property.listings?.map((listing) => formatPrice(listing.price, listing.isRent)).join(', ')}</td>
+                      <td className="published-col">
+                        <span className={`status-badge ${property.isPublished ? 'active' : 'inactive'}`}>
+                          {property.isPublished ? 'PUBLISHED' : 'UNPUBLISHED'}
+                        </span>
+                      </td>
                       <td className="displays-col">{property.viewCount || 0}</td>
                       <td className="visits-col">{property.viewCount || 0}</td>
                       <td className="enquiries-col">{property.inquiryCount || 0}</td>
                       <td className="date-col">{property.formattedDate}</td>
                       <td className="actions-col">
                         <div className="action-buttons">
+                          <button 
+                            className="view-btn"
+                            onClick={() => handleViewProperty(property.id)}
+                            style={{
+                              backgroundColor: 'white',
+                              color: '#333',
+                              border: '1px solid #ddd',
+                              padding: '5px 12px',
+                              borderRadius: '4px',
+                              fontSize: '12px',
+                              fontWeight: '500',
+                              cursor: 'pointer',
+                              marginRight: '8px'
+                            }}
+                          >
+                            View
+                          </button>
                           <button className="action-btn edit"
                             onClick={() => handleEditProperty(property.id)}
                           >
@@ -304,10 +378,12 @@ export default function MyPropertiesPage() {
                           >
                             <FaTrash />
                           </button>
-                          <button className="action-btn view"
-                            onClick={() => handleViewProperty(property.id)}
+                          <button 
+                            className={`action-btn status-toggle ${property.isPublished ? 'active' : 'inactive'}`}
+                            onClick={() => handleTogglePropertyPublished(property.id, property.isPublished)}
+                            title={property.isPublished ? 'Unpublish property' : 'Publish property'}
                           >
-                            <FaEye />
+                            {property.isPublished ? <FaEye /> : <FaEyeSlash />}
                           </button>
                         </div>
                       </td>
@@ -315,7 +391,7 @@ export default function MyPropertiesPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="11" className="no-properties">
+                    <td colSpan="10" className="no-properties">
                       <p>No properties found. Add your first property to get started.</p>
                     </td>
                   </tr>

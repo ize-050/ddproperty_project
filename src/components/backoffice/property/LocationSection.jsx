@@ -343,83 +343,7 @@ useEffect(() => {
   return (
     <section className="form-section">
       <h2>Property Location*</h2>
-      <div className="form-group">
-        <label htmlFor="address">Address*</label>
-        <input
-          type="text"
-          id="address"
-          className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-          defaultValue={formData.address}
-          placeholder="Enter property address"
-          {...register('address', { required: 'Address is required' })}
-        />
-        {errors.address && (
-          <div className="invalid-feedback">{errors.address.message}</div>
-        )}
-      </div>
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="province">City/Province*</label>
-          <input
-            type="text"
-            id="province"
-            className={`form-control ${errors.province ? 'is-invalid' : ''}`}
-            defaultValue={formData.province}
-            placeholder="e.g. Bangkok"
-            {...register('province', { required: 'City/Province is required' })}
-          />
-          {errors.province && (
-            <div className="invalid-feedback">{errors.province.message}</div>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="district">District*</label>
-          <input
-            type="text"
-            id="district"
-            className={`form-control ${errors.district ? 'is-invalid' : ''}`}
-            defaultValue={formData.district}
-            placeholder="e.g. Watthana"
-            {...register('district', { required: 'District is required' })}
-          />
-          {errors.district && (
-            <div className="invalid-feedback">{errors.district.message}</div>
-          )}
-        </div>
-      </div>
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="subdistrict">Subdistrict*</label>
-          <input
-            type="text"
-            id="subdistrict"
-            className={`form-control ${errors.subdistrict ? 'is-invalid' : ''}`}
-            defaultValue={formData.subdistrict}
-            placeholder="e.g. Khlong Toei Nuea"
-            {...register('subdistrict', { required: 'Subdistrict is required' })}
-          />
-          {errors.subdistrict && (
-            <div className="invalid-feedback">{errors.subdistrict.message}</div>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="postalCode">Postal Code*</label>
-          <input
-            type="text"
-            id="postalCode"
-            className={`form-control ${errors.postalCode ? 'is-invalid' : ''}`}
-            defaultValue={formData.postalCode}
-            placeholder="e.g. 10110"
-            {...register('postalCode', { required: 'Postal code is required' })}
-          />
-          {errors.postalCode && (
-            <div className="invalid-feedback">{errors.postalCode.message}</div>
-          )}
-        </div>
-      </div>
-
-
-
+      
       <div className="form-group map-toggle">
         <label>Display on map (for better visibility)</label>
         <div className="toggle-switch">
@@ -433,12 +357,10 @@ useEffect(() => {
         </div>
       </div>
 
-  
-        <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`}
-          onLoad={() => setMapLoaded(true)}
-        />
-      
+      <Script
+        src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`}
+        onLoad={() => setMapLoaded(true)}
+      />
 
       {showMap && (
         <div className="map-section">
@@ -531,6 +453,83 @@ useEffect(() => {
           </div>
         </div>
       )}
+
+      <div className="form-group">
+        <label htmlFor="address">Address*</label>
+        <input
+          type="text"
+          id="address"
+          className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+          defaultValue={formData.address}
+          placeholder="Enter property address"
+          {...register('address', { required: 'Address is required' })}
+        />
+        {errors.address && (
+          <div className="invalid-feedback">{errors.address.message}</div>
+        )}
+      </div>
+      
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="province">City/Province*</label>
+          <input
+            type="text"
+            id="province"
+            className={`form-control ${errors.province ? 'is-invalid' : ''}`}
+            defaultValue={formData.province}
+            placeholder="e.g. Bangkok"
+            {...register('province', { required: 'City/Province is required' })}
+          />
+          {errors.province && (
+            <div className="invalid-feedback">{errors.province.message}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="district">District*</label>
+          <input
+            type="text"
+            id="district"
+            className={`form-control ${errors.district ? 'is-invalid' : ''}`}
+            defaultValue={formData.district}
+            placeholder="e.g. Watthana"
+            {...register('district', { required: 'District is required' })}
+          />
+          {errors.district && (
+            <div className="invalid-feedback">{errors.district.message}</div>
+          )}
+        </div>
+      </div>
+      
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="subdistrict">Subdistrict*</label>
+          <input
+            type="text"
+            id="subdistrict"
+            className={`form-control ${errors.subdistrict ? 'is-invalid' : ''}`}
+            defaultValue={formData.subdistrict}
+            placeholder="e.g. Khlong Toei Nuea"
+            {...register('subdistrict', { required: 'Subdistrict is required' })}
+          />
+          {errors.subdistrict && (
+            <div className="invalid-feedback">{errors.subdistrict.message}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="postalCode">Postal Code*</label>
+          <input
+            type="text"
+            id="postalCode"
+            className={`form-control ${errors.postalCode ? 'is-invalid' : ''}`}
+            defaultValue={formData.postalCode}
+            placeholder="e.g. 10110"
+            {...register('postalCode', { required: 'Postal code is required' })}
+          />
+          {errors.postalCode && (
+            <div className="invalid-feedback">{errors.postalCode.message}</div>
+          )}
+        </div>
+      </div>
     </section>
   );
 };

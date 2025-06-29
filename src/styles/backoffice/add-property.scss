@@ -205,21 +205,79 @@ label.required:after {
     select,
     textarea {
       width: 100%;
-      padding: 0.6rem;
+      padding: 0.375rem 0.75rem;
       border: 1px solid #e8e8e8;
       border-radius: 4px;
       font-size: 0.85rem;
+      font-weight: 400;
+      line-height: 1.5;
       transition: border-color 0.2s;
       background-color: #ffffff;
       
       &:focus {
-        border-color: #cccccc;
+        border-color: #86b7fe;
         outline: none;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
       }
       
       &::placeholder {
         color: #aaa;
+      }
+    }
+
+    // Custom select styling based on Bootstrap form-select
+    select {
+      display: block;
+      width: 100%;
+      padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 16px 12px;
+      border: 1px solid #e8e8e8;
+      border-radius: 4px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+
+      &:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+
+      &:disabled {
+        background-color: #e9ecef;
+        opacity: 1;
+      }
+
+      option {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        background-color: #ffffff;
+        color: #212529;
+        border: none;
+        
+        &:hover {
+          background-color: #f8f9fa;
+        }
+        
+        &:checked, &:selected {
+          background-color: #0d6efd;
+          color: white;
+        }
+
+        &:disabled {
+          color: #6c757d;
+          background-color: #e9ecef;
+        }
       }
     }
     
@@ -336,6 +394,60 @@ label.required:after {
     }
   }
   
+  // Land size grid layout
+  .land-size-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+    
+    .land-size-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      
+      input {
+        width: 100%;
+        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 400;
+        line-height: 1.5;
+        transition: border-color 0.2s;
+        background-color: #ffffff;
+        
+        &:focus {
+          border-color: #86b7fe;
+          outline: none;
+          box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        &::placeholder {
+          color: #aaa;
+        }
+      }
+      
+      .unit-label {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: $text-secondary;
+        pointer-events: none;
+        background-color: #ffffff;
+        padding: 0 0.25rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+
   // Facility categories
   .facility-category {
     margin-bottom: 2rem;
@@ -679,13 +791,14 @@ label.required:after {
     
     .unit {
       background-color: #f5f5f5;
-      padding: 0.5rem 0.75rem;
+      padding: 0.375rem 0.75rem;
       border: 1px solid #ced4da;
       border-left: none;
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
       color: $text-secondary;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
       white-space: nowrap;
     }
     

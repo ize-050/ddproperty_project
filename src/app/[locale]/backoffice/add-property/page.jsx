@@ -27,6 +27,7 @@ import FloorPlanSection from '@/components/backoffice/property/FloorPlanSection'
 import UnitPlanSection from '@/components/backoffice/property/UnitPlanSection';
 import SocialMediaSection from '@/components/backoffice/property/SocialMediaSection';
 import ContactSection from '@/components/backoffice/property/ContactSection';
+import CoAgentSection from '@/components/backoffice/property/CoAgentSection';
 import { useLocale } from 'next-intl';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import '@/styles/backoffice/add-property.scss';
@@ -165,13 +166,18 @@ const AddNewProperty = () => {
 
       delete data.socialMedia;
 
+      // Exclude co-agent fields from general loop to avoid duplication
+      const excludeFields = ['coAgentAccept', 'commissionType', 'commissionPercent', 'commissionAmount', 'privateNote'];
+
       // เพิ่มข้อมูลพื้นฐานลงใน FormData
       for (const [key, value] of Object.entries(data)) {
-        if (typeof value === 'object' && value !== null) {
-          // แปลง object เป็น JSON string
-          formDataObj.append(key, JSON.stringify(value));
-        } else {
-          formDataObj.append(key, value);
+        if (!excludeFields.includes(key)) {
+          if (typeof value === 'object' && value !== null) {
+            // แปลง object เป็น JSON string
+            formDataObj.append(key, JSON.stringify(value));
+          } else {
+            formDataObj.append(key, value);
+          }
         }
       }
 
@@ -187,6 +193,18 @@ const AddNewProperty = () => {
       // แปลงชื่อฟิลด์ให้ตรงกับ backend
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
+      
+      // เพิ่ม land size fields
+      if (data.land_size_rai) formDataObj.append('land_size_rai', data.land_size_rai);
+      if (data.land_size_ngan) formDataObj.append('land_size_ngan', data.land_size_ngan);
+      if (data.land_size_sq_wah) formDataObj.append('land_size_sq_wah', data.land_size_sq_wah);
+      
+      // เพิ่ม co-agent fields
+      formDataObj.append('coAgentAccept', data.coAgentAccept || false);
+      if (data.commissionType) formDataObj.append('commissionType', data.commissionType);
+      if (data.commissionPercent) formDataObj.append('commissionPercent', data.commissionPercent);
+      if (data.commissionAmount) formDataObj.append('commissionAmount', data.commissionAmount);
+      if (data.privateNote) formDataObj.append('privateNote', data.privateNote);
 
       // สร้าง listings array ตามประเภทการขาย/เช่า
       const listings = [];
@@ -348,10 +366,11 @@ const AddNewProperty = () => {
           <ListingTypeSection type={"add"} />
           <PropertyTypeSection />
           <PropertyInfoSection />
-          <PropertyDetailSection />
+      
 
           <LocationSection />
           <PricingSection />
+          <PropertyDetailSection />
           <PropertyHighlightsSection />
           <NearbySection />
           <ViewSection />
@@ -364,6 +383,7 @@ const AddNewProperty = () => {
           <UnitPlanSection />
           <SocialMediaSection />
           <ContactSection />
+          <CoAgentSection />
 
           {/* Terms & Conditions */}
           <section className="form-section">

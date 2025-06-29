@@ -28,8 +28,9 @@ export const propertyFormSchema = yup.object().shape({
   // Property Detail fields
   propertyId: yup.string(),
   ownershipQuota: yup.string(),
-  landSize: yup.string(),
-  landSizeUnit: yup.string(),
+  land_size_rai: yup.string(),
+  land_size_ngan: yup.string(),
+  land_size_sq_wah: yup.string(),
   usableArea: yup.string().required('Usable area is required'),
   floors: yup.string(),
   furnishing: yup.string().required('Furnishing is required'),
@@ -91,6 +92,28 @@ export const propertyFormSchema = yup.object().shape({
     instagram: yup.string()
   }),
   
+  // Co-Agent Accept
+  coAgentAccept: yup.boolean(),
+  commissionType: yup.string().when('coAgentAccept', {
+    is: true,
+    then: (schema) => schema.oneOf(['percent', 'amount'], 'Commission type must be either percent or amount'),
+    otherwise: (schema) => schema
+  }),
+  commissionPercent: yup.string().when(['coAgentAccept', 'commissionType'], {
+    is: (coAgentAccept, commissionType) => coAgentAccept && commissionType === 'percent',
+    then: (schema) => schema.required('Commission percentage is required'),
+    otherwise: (schema) => schema
+  }),
+  commissionAmount: yup.string().when(['coAgentAccept', 'commissionType'], {
+    is: (coAgentAccept, commissionType) => coAgentAccept && commissionType === 'amount',
+    then: (schema) => schema.required('Commission amount is required'),
+    otherwise: (schema) => schema
+  }),
+  privateNote: yup.string(),
+  
+  // Featured property
+  isFeatured: yup.boolean(),
+  
   // Terms agreement
   termsAgree: yup.boolean().oneOf([true], 'You must agree to the terms')
 });
@@ -122,8 +145,9 @@ export const propertyFormSchemaBasic = yup.object().shape({
   // Property Detail fields
   propertyId: yup.string(),
   ownershipQuota: yup.string().required('Ownership quota is required'),
-  landSize: yup.string(), 
-  landSizeUnit: yup.string(), 
+  land_size_rai: yup.string(),
+  land_size_ngan: yup.string(),
+  land_size_sq_wah: yup.string(), 
   usableArea: yup.string().required('Usable area is required'),
   floors: yup.string(), 
   furnishing: yup.string().required('Furnishing is required'),
@@ -184,6 +208,28 @@ export const propertyFormSchemaBasic = yup.object().shape({
     facebookMessenger: yup.string(),
     instagram: yup.string()
   }),
+  
+  // Co-Agent Accept
+  coAgentAccept: yup.boolean(),
+  commissionType: yup.string().when('coAgentAccept', {
+    is: true,
+    then: (schema) => schema.oneOf(['percent', 'amount'], 'Commission type must be either percent or amount'),
+    otherwise: (schema) => schema
+  }),
+  commissionPercent: yup.string().when(['coAgentAccept', 'commissionType'], {
+    is: (coAgentAccept, commissionType) => coAgentAccept && commissionType === 'percent',
+    then: (schema) => schema.required('Commission percentage is required'),
+    otherwise: (schema) => schema
+  }),
+  commissionAmount: yup.string().when(['coAgentAccept', 'commissionType'], {
+    is: (coAgentAccept, commissionType) => coAgentAccept && commissionType === 'amount',
+    then: (schema) => schema.required('Commission amount is required'),
+    otherwise: (schema) => schema
+  }),
+  privateNote: yup.string(),
+  
+  // Featured property
+  isFeatured: yup.boolean(),
   
   // Terms agreement
   termsAgree: yup.boolean().oneOf([true], 'You must agree to the terms')

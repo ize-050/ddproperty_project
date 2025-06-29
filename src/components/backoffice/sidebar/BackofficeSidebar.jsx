@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
@@ -34,12 +35,12 @@ const SidebarDashboard = () => {
       items: [
         {
           href: "/backoffice/",
-          icon: "flaticon-protection",
+          icon: "dashboard",
           text: t("menu.dashboard"),
         },
         {
           href: "/backoffice/message",
-          icon: "flaticon-user",
+          icon: "message",
           text: t("menu.message"),
         },
       ],
@@ -49,12 +50,12 @@ const SidebarDashboard = () => {
       items: [
         {
           href: "/backoffice/add-property",
-          icon: "flaticon-protection",
+          icon: "addproperty",
           text: t("menu.addproperty"),
         },
         {
           href: "/backoffice/my-properties",
-          icon: "flaticon-user",
+          icon: "myproperty",
           text: t("menu.my_properties"),
         },
       ],
@@ -64,12 +65,12 @@ const SidebarDashboard = () => {
       items: [
         {
           href: "/backoffice/blog/add",
-          icon: "flaticon-protection",
+          icon: "addpost",
           text: t("menu.addnewpost"),
         },
         {
           href: "/backoffice/blog",
-          icon: "flaticon-user",
+          icon: "allpost",
           text: t("menu.allpost"),
         },
       ],
@@ -79,17 +80,17 @@ const SidebarDashboard = () => {
       items: [
         {
           href: "/backoffice/all-user",
-          icon: "flaticon-protection",
+          icon: "allusers",
           text: t("menu.alluser"),
         },
         {
           href: "/backoffice/language",
-          icon: "flaticon-user",
+          icon: "language",
           text: t("menu.language"),
         },
         {
           href: "/backoffice/currency",
-          icon: "flaticon-user",
+          icon: "currency",
           text: t("menu.currency"),
         },
       ],
@@ -99,7 +100,7 @@ const SidebarDashboard = () => {
       items: [
         {
           href: "/backoffice/my-profile",
-          icon: "flaticon-protection",
+          icon: "myprofile",
           text: t("menu.myprofile"),
         },
       ],
@@ -108,6 +109,53 @@ const SidebarDashboard = () => {
 
   return (
     <div className="dashboard__sidebar d-none d-lg-block">
+      <style jsx global>{`
+        .sidebar-menu-item {
+          position: relative;
+        }
+        
+        .sidebar-icon-container {
+          position: relative;
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          margin-right: 15px;
+        }
+        
+        .sidebar-icon-dark, .sidebar-icon-light {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 16px;
+          height: 16px;
+        }
+        
+        .sidebar-icon-light {
+          display: none;
+        }
+        
+        .sidebar-icon-dark {
+          display: block;
+        }
+        
+        /* Hover state: show light, hide dark */
+        .sidebar_list_item:hover .sidebar-icon-dark {
+          display: none !important;
+        }
+        
+        .sidebar_list_item:hover .sidebar-icon-light {
+          display: block !important;
+        }
+        
+        /* Active state: always show light, hide dark */
+        .sidebar-menu-item.-is-active .sidebar-icon-dark {
+          display: none !important;
+        }
+        
+        .sidebar-menu-item.-is-active .sidebar-icon-light {
+          display: block !important;
+        }
+      `}</style>
       <div className="dashboard_sidebar_list" style={{
         fontSize: "14px",
         paddingTop: "50px"
@@ -121,26 +169,62 @@ const SidebarDashboard = () => {
             >
               {section.title}
             </p>
-            {section?.items?.map((item, itemIndex) => (
-              <div key={itemIndex} className="sidebar_list_item">
-                {item.href === "#" ? (
-                  <button onClick={item.onClick} className={`items-center `}>
-                    <i className={`${item.icon} mr15`} />
-                    {item.text}
-                  </button>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className={`items-center   ${
-                      isActive(item.href) ? "-is-active" : ""
-                    } `}
-                  >
-                    <i className={`${item.icon} mr15`} />
-                    {item.text}
-                  </Link>
-                )}
-              </div>
-            ))}
+            {section?.items?.map((item, itemIndex) => {
+              const isItemActive = isActive(item.href);
+              const darkIconPath = `/images/icons/dark/${item.icon}.svg`;
+              const lightIconPath = `/images/icons/light/${item.icon}.svg`;
+              
+              return (
+                <div key={itemIndex} className="sidebar_list_item">
+                  {item.href === "#" ? (
+                    <button onClick={item.onClick} className={`items-center sidebar-menu-item`}>
+                      <div className="sidebar-icon-container">
+                        <Image
+                          src={darkIconPath}
+                          alt={item.text}
+                          width={16}
+                          height={16}
+                          className="sidebar-icon-dark"
+                        />
+                        <Image
+                          src={lightIconPath}
+                          alt={item.text}
+                          width={16}
+                          height={16}
+                          className="sidebar-icon-light"
+                        />
+                      </div>
+                      {item.text}
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`items-center sidebar-menu-item ${
+                        isItemActive ? "-is-active" : ""
+                      } `}
+                    >
+                      <div className="sidebar-icon-container">
+                        <Image
+                          src={darkIconPath}
+                          alt={item.text}
+                          width={16}
+                          height={16}
+                          className="sidebar-icon-dark"
+                        />
+                        <Image
+                          src={lightIconPath}
+                          alt={item.text}
+                          width={16}
+                          height={16}
+                          className="sidebar-icon-light"
+                        />
+                      </div>
+                      {item.text}
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

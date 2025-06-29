@@ -26,6 +26,7 @@ import FloorPlanSection from './FloorPlanSection';
 import UnitPlanSection from './UnitPlanSection';
 import SocialMediaSection from './SocialMediaSection';
 import ContactSection from './ContactSection';
+import CoAgentSection from './CoAgentSection';
 
 // Store and API
 import usePropertyFormStore from '@/store/propertyFormStore';
@@ -300,6 +301,20 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             agentId: property.agentId || '',
             createdBy: property.createdBy || '',
             updatedBy: property.updatedBy || '',
+
+            // Co-Agent fields
+            coAgentAccept: property.coAgentAccept || false,
+            commissionType: property.commissionType === 'PERCENT' ? 'percent' : 
+                           property.commissionType === 'FIXED_AMOUNT' ? 'amount' : 
+                           property.commissionType || 'percent',
+            commissionPercent: property.commissionPercent || '',
+            commissionAmount: property.commissionAmount || '',
+            privateNote: property.privateNote || '',
+
+            // Land Size fields
+            land_size_rai: property.landSizeRai || '',
+            land_size_ngan: property.landSizeNgan || '',
+            land_size_sq_wah: property.landSizeSqWah || '',
           };
 
           if (property.status === 'RENT' || property.status === 'SALE_RENT') {
@@ -548,18 +563,35 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       delete data.labels;
       delete data.socialMedia;
 
+      // Exclude co-agent fields from general loop to avoid duplication
+      const excludeFields = ['coAgentAccept', 'commissionType', 'commissionPercent', 'commissionAmount', 'privateNote'];
+
       for (const [key, value] of Object.entries(data)) {
-        if (typeof value === 'object' && value !== null) {
-          // แปลง object เป็น JSON string
-          formDataObj.append(key, JSON.stringify(value));
-        } else {
-          formDataObj.append(key, value);
+        if (!excludeFields.includes(key)) {
+          if (typeof value === 'object' && value !== null) {
+            // แปลง object เป็น JSON string
+            formDataObj.append(key, JSON.stringify(value));
+          } else {
+            formDataObj.append(key, value);
+          }
         }
       }
 
       // ตั้งค่าชื่อฟิลด์ให้ถูกต้องตามที่ backend คาดหวัง
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
+      
+      // เพิ่ม land size fields
+      if (data.land_size_rai) formDataObj.append('land_size_rai', data.land_size_rai);
+      if (data.land_size_ngan) formDataObj.append('land_size_ngan', data.land_size_ngan);
+      if (data.land_size_sq_wah) formDataObj.append('land_size_sq_wah', data.land_size_sq_wah);
+      
+      // เพิ่ม co-agent fields
+      formDataObj.append('coAgentAccept', data.coAgentAccept || false);
+      if (data.commissionType) formDataObj.append('commissionType', data.commissionType);
+      if (data.commissionPercent) formDataObj.append('commissionPercent', data.commissionPercent);
+      if (data.commissionAmount) formDataObj.append('commissionAmount', data.commissionAmount);
+      if (data.privateNote) formDataObj.append('privateNote', data.privateNote);
 
       // ส่งฟิลด์ arrays ตาม format ที่ backend ต้องการ
       formDataObj.append('facility', JSON.stringify(formData.facility || []));
@@ -806,6 +838,12 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">
           <ContactSection />
+        </div>
+      </div>
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <CoAgentSection />
         </div>
       </div>
 

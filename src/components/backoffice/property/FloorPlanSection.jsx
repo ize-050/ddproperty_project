@@ -5,22 +5,82 @@ import Image from 'next/image';
 import { FaUpload, FaTrash, FaGripLines, FaArrowUp } from 'react-icons/fa';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import { compressImage, getImageInfo, isImageFile } from '@/utils/imageCompression';
+import { toast } from 'react-hot-toast';
 
 const FloorPlanSection = () => {
   const { floorPlanImages, addFloorPlanImages, removeFloorPlanImage, reorderFloorPlanImages } = usePropertyFormStore();
   const [isDragging, setIsDragging] = useState(false);
+  const [isCompressing, setIsCompressing] = useState(false);
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map(file => ({
-      id: String(Math.random().toString(36).substr(2, 9)), // ทำให้แน่ใจว่า id เป็น string
-      file,
-      url: URL.createObjectURL(file),
-      name: file.name
-    }));
-
-    addFloorPlanImages(newImages);
-    e.target.value = ''; // เคลียร์ input เพื่อให้สามารถอัพโหลดไฟล์เดิมซ้ำได้
+    
+    if (files.length === 0) return;
+    
+    // Check total image limit for floor plans
+    const totalImages = floorPlanImages.length + files.length;
+    if (totalImages > 100) {
+      toast.error(`Maximum 100 floor plan images allowed. You're trying to add ${files.length} images but already have ${floorPlanImages.length}. Please remove some images first.`);
+      e.target.value = '';
+      return;
+    }
+    
+    setIsCompressing(true);
+    const loadingToast = toast.loading(`Compressing ${files.length} floor plan image(s)...`);
+    
+    try {
+      const processedImages = [];
+      
+      for (const file of files) {
+        if (!isImageFile(file)) {
+          toast.error(`${file.name} is not a valid image file`);
+          continue;
+        }
+        
+        // Get original image info
+        const originalInfo = await getImageInfo(file);
+        console.log('Original floor plan info:', originalInfo);
+        
+        // Compress image with settings optimized for floor plans
+        const compressedFile = await compressImage(file, {
+          maxWidth: 2048,      // Higher resolution for floor plans
+          maxHeight: 1536,     // Maintain detail for technical drawings
+          quality: 0.85,       // Higher quality for clarity
+          format: 'jpeg',      
+          maxSizeKB: 800       // Allow larger size for detailed plans
+        });
+        
+        // Get compressed image info
+        const compressedInfo = await getImageInfo(compressedFile);
+        console.log('Compressed floor plan info:', compressedInfo);
+        
+        // Calculate compression results (but don't show individual toast)
+        const compressionRatio = Math.round((1 - compressedFile.size / file.size) * 100);
+        
+        processedImages.push({
+          id: String(Math.random().toString(36).substring(2, 11)),
+          file: compressedFile,
+          url: URL.createObjectURL(compressedFile),
+          name: compressedFile.name,
+          originalSize: file.size,
+          compressedSize: compressedFile.size,
+          compressionRatio
+        });
+      }
+      
+      if (processedImages.length > 0) {
+        addFloorPlanImages(processedImages);
+      }
+      
+    } catch (error) {
+      console.error('Error processing floor plan images:', error);
+      toast.error('Failed to process floor plan images: ' + error.message);
+    } finally {
+      setIsCompressing(false);
+      toast.dismiss(loadingToast);
+      e.target.value = '';
+    }
   };
 
   // Handle drag end event
@@ -43,6 +103,7 @@ const FloorPlanSection = () => {
   };
 
   const handleBrowseFiles = () => {
+    if (isCompressing) return;
     document.getElementById('floorPlanImages').click();
   };
 
@@ -61,7 +122,9 @@ const FloorPlanSection = () => {
 
         {floorPlanImages.length > 0 ? (
           <div className="images-container">
-            <h4 className="images-title">Floor Plan Images</h4>
+            <h4 className="images-title">
+              Floor Plan Images ({floorPlanImages.length}/100)
+            </h4>
             <p className="images-subtitle">Drag to reorder - first image will be the main floor plan</p>
 
             <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
@@ -106,12 +169,32 @@ const FloorPlanSection = () => {
                     ))}
 
                     {/* Add more photos button */}
-                    <div className="add-more-photos" onClick={handleBrowseFiles}>
-                       <div className="add-icon">
-                                              <FaUpload size={24} />
-                                            </div>
-                      <p>Add More Floor Plans</p>
-                    </div>
+                    {floorPlanImages.length < 100 && (
+                      <div 
+                        className={`add-more-photos ${isCompressing ? 'disabled' : ''}`}
+                        onClick={handleBrowseFiles}
+                      >
+                        <div className="add-icon">
+                          {isCompressing ? (
+                            <div className="spinner-border spinner-border-sm" role="status">
+                              <span className="visually-hidden">Compressing...</span>
+                            </div>
+                          ) : (
+                            <FaUpload size={24} />
+                          )}
+                        </div>
+                        <p>{isCompressing ? 'Compressing...' : 'Add More Floor Plans'}</p>
+                      </div>
+                    )}
+                    
+                    {floorPlanImages.length >= 100 && (
+                      <div className="add-more-photos disabled">
+                        <div className="add-icon">
+                          <span>📐</span>
+                        </div>
+                        <p>Maximum 100 floor plans reached</p>
+                      </div>
+                    )}
 
                     {provided.placeholder}
                   </div>
@@ -127,15 +210,23 @@ const FloorPlanSection = () => {
               }} />
             </div>
             <div className="upload-text">
-              <p className="upload-title">Upload/Drag photos of your property</p>
-              <p className="upload-subtitle">Photos must be JPG or PNG format and at least 2048x768</p>
+              <p className="upload-title">Upload/Drag floor plan images</p>
+              <p className="upload-subtitle">Images must be JPG or PNG format and at least 2048x768 (Maximum 100 images)</p>
             </div>
             <button
               type="button"
-              className="browse-files-btn"
+              className={`browse-files-btn ${isCompressing ? 'disabled' : ''}`}
               onClick={handleBrowseFiles}
+              disabled={isCompressing}
             >
-              Browse Files
+              {isCompressing ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Compressing...
+                </>
+              ) : (
+                'Browse Files'
+              )}
             </button>
           </div>
         )}

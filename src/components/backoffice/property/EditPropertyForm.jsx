@@ -25,6 +25,7 @@ import FloorPlanSection from './FloorPlanSection';
 import UnitPlanSection from './UnitPlanSection';
 import SocialMediaSection from './SocialMediaSection';
 import ContactSection from './ContactSection';
+import CoAgentSection from './CoAgentSection';
 import { useLocale } from 'next-intl';
 
 // Store and API
@@ -281,6 +282,9 @@ const EditPropertyForm = ({ propertyId }) => {
 
             // Status
             status: property.status || 'AVAILABLE',
+            
+            // Featured property
+            isFeatured: property.isFeatured || false,
 
             // Dates
             availableFrom: property.availableFrom ? new Date(property.availableFrom) : null,
@@ -290,9 +294,23 @@ const EditPropertyForm = ({ propertyId }) => {
             agentId: property.agentId || '',
             createdBy: property.createdBy || '',
             updatedBy: property.updatedBy || '',
+
+            // Co-Agent fields
+            coAgentAccept: property.coAgentAccept || false,
+            commissionType: property.commissionType === 'PERCENT' ? 'percent' : 
+                           property.commissionType === 'FIXED_AMOUNT' ? 'amount' : 
+                           property.commissionType || 'percent',
+            commissionPercent: property.commissionPercent || '',
+            commissionAmount: property.commissionAmount || '',
+            privateNote: property.privateNote || '',
+
+            // Land Size fields
+            land_size_rai: property.landSizeRai || '',
+            land_size_ngan: property.landSizeNgan || '',
+            land_size_sq_wah: property.landSizeSqWah || '',
           };
 
-          if (property.status === 'RENT' || property.status === 'SALE_RENT') {
+          if (property.status === 'SALE' || property.status === 'SALE_RENT') {
             propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
             propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || '';
             propertyData.rentalPrice = property.listings.find(l => l.listingType === 'RENT')?.price || 0;
@@ -430,18 +448,35 @@ const EditPropertyForm = ({ propertyId }) => {
       delete data.labels;
       delete data.socialMedia;
 
+      // Exclude co-agent fields from general loop to avoid duplication
+      const excludeFields = ['coAgentAccept', 'commissionType', 'commissionPercent', 'commissionAmount', 'privateNote'];
+
       for (const [key, value] of Object.entries(data)) {
-        if (typeof value === 'object' && value !== null) {
-          // แปลง object เป็น JSON string
-          formDataObj.append(key, JSON.stringify(value));
-        } else {
-          formDataObj.append(key, value);
+        if (!excludeFields.includes(key)) {
+          if (typeof value === 'object' && value !== null) {
+            // แปลง object เป็น JSON string
+            formDataObj.append(key, JSON.stringify(value));
+          } else {
+            formDataObj.append(key, value);
+          }
         }
       }
 
       // ตั้งค่าชื่อฟิลด์ให้ถูกต้องตามที่ backend คาดหวัง
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
+      
+      // เพิ่ม land size fields
+      if (data.land_size_rai) formDataObj.append('land_size_rai', data.land_size_rai);
+      if (data.land_size_ngan) formDataObj.append('land_size_ngan', data.land_size_ngan);
+      if (data.land_size_sq_wah) formDataObj.append('land_size_sq_wah', data.land_size_sq_wah);
+      
+      // เพิ่ม co-agent fields
+      formDataObj.append('coAgentAccept', data.coAgentAccept || false);
+      if (data.commissionType) formDataObj.append('commissionType', data.commissionType);
+      if (data.commissionPercent) formDataObj.append('commissionPercent', data.commissionPercent);
+      if (data.commissionAmount) formDataObj.append('commissionAmount', data.commissionAmount);
+      if (data.privateNote) formDataObj.append('privateNote', data.privateNote);
 
       // ส่งฟิลด์ arrays ตาม format ที่ backend ต้องการ
 
@@ -763,6 +798,12 @@ const EditPropertyForm = ({ propertyId }) => {
         <div className="card mb-4">
           <div className="card-body">
             <ContactSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <CoAgentSection />
           </div>
         </div>
 

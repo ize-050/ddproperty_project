@@ -7,7 +7,7 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 
 const PropertyInfoSection = () => {
   const { formData } = usePropertyFormStore();
-  const { register, formState: { errors }, setValue } = useFormContext();
+  const { register, formState: { errors }, setValue, watch } = useFormContext();
   const [zones, setZones] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -95,7 +95,7 @@ const PropertyInfoSection = () => {
             <>
               <select
                 id="zone_id"
-                className={`form-control ${errors.zone_id ? 'is-invalid' : ''}`}
+                className={`form-control custom-select ${errors.zone_id ? 'is-invalid' : ''}`}
                 defaultValue={formData.zone_id || ''}
                 {...register('zone_id', { required: 'Area is required' })}
                 onChange={handleZoneChange}
@@ -128,6 +128,43 @@ const PropertyInfoSection = () => {
             placeholder="e.g. PROP123"
             {...register('referenceId')}
           />
+        </div>
+      </div>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label className="form-label">Property Display</label>
+          <div className="radio-group">
+            <div className="form-check">
+              <input
+                type="radio"
+                id="featured-no"
+                className="form-check-input"
+                value="false"
+                checked={watch('isFeatured') === false || watch('isFeatured') === 'false' || watch('isFeatured') === undefined || watch('isFeatured') === null}
+                {...register('isFeatured')}
+              />
+              <label htmlFor="featured-no" className="form-check-label">
+                Normal Property
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                id="featured-yes"
+                className="form-check-input"
+                value="true"
+                checked={watch('isFeatured') === true || watch('isFeatured') === 'true'}
+                {...register('isFeatured')}
+              />
+              <label htmlFor="featured-yes" className="form-check-label">
+                Featured Property (Show on Homepage)
+              </label>
+            </div>
+          </div>
+          <small className="form-text text-muted">
+            Featured properties will appear in the random/popular section on the homepage
+          </small>
         </div>
       </div>
     </section>

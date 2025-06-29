@@ -187,6 +187,16 @@ $featured-color: #ff9800;
           background-color: rgba($rent-color, 0.1);
           color: $rent-color;
         }
+
+        &.active {
+          background-color: rgba($sale-color, 0.1);
+          color: $sale-color;
+        }
+
+        &.inactive {
+          background-color: rgba($text-light, 0.1);
+          color: $text-light;
+        }
       }
 
       .featured-badge {
@@ -241,6 +251,50 @@ $featured-color: #ff9800;
               background-color: rgba($primary-color, 0.2);
             }
           }
+
+          &.status-toggle {
+            transition: all 0.3s ease;
+            
+            svg {
+              transition: all 0.2s ease;
+            }
+
+            &.active {
+              background-color: rgba($sale-color, 0.1);
+              color: $sale-color;
+
+              &:hover {
+                background-color: rgba($sale-color, 0.2);
+                transform: scale(1.05);
+              }
+            }
+
+            &.inactive {
+              background-color: rgba($text-light, 0.1);
+              color: $text-light;
+
+              &:hover {
+                background-color: rgba($text-light, 0.2);
+                transform: scale(1.05);
+              }
+            }
+          }
+
+          &.duplicate {
+            background-color: rgba($featured-color, 0.1);
+            color: $featured-color;
+
+            &:hover {
+              background-color: rgba($featured-color, 0.2);
+            }
+          }
+        }
+      }
+
+      .view-btn {
+        &:hover {
+          background-color: #f8f9fa !important;
+          border-color: #adb5bd !important;
         }
       }
     }
