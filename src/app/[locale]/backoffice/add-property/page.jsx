@@ -320,8 +320,10 @@ const AddNewProperty = () => {
         title: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
         text: error.response?.data?.message || error.response?.data?.error || error.message || t('errorSavingData'),
         footer: error.response?.data?.errors ? `<pre>${JSON.stringify(error.response.data.errors, null, 2)}</pre>` : ''
+      }).then(() => {
+        window.location.reload();
       });
-      window.location.reload();
+     
     }
   };
 

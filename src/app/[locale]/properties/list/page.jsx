@@ -155,7 +155,7 @@ export default function PropertyListPage({ params, searchParams }) {
   return (
     <div className="main-wrapper">
       <Suspense fallback={<PropertyListingLoading />}>
-        <SidebarStickyBar  />
+       
         <PropertyListContent searchParams={searchParams} />
       </Suspense>
     </div>

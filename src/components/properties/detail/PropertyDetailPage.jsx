@@ -267,25 +267,7 @@ const PropertyDetailPage = ({ property }) => {
               <hr></hr>
 
 
-              {youtubeVideo != '' && (
-                <>
-                <div className="property-section mb-5">
-                  <h3 className="section-title mb-3">Video</h3>
-                  <div className="video-container" style={{ borderRadius: '8px', overflow: 'hidden' }}>
-                    <iframe
-                      width="100%"
-                      height="450"
-                      src={youtubeVideo}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-                <hr></hr>
-                </>
-              )}
-
+             
          
 
 
@@ -304,6 +286,26 @@ const PropertyDetailPage = ({ property }) => {
                 <hr></hr>
                 </>
               )}
+
+{youtubeVideo != '' && (
+                <>
+                <div className="property-section mb-5">
+                  <h3 className="section-title mb-3">Video</h3>
+                  <div className="video-container" style={{ borderRadius: '8px', overflow: 'hidden' }}>
+                    <iframe
+                      width="100%"
+                      height="450"
+                      src={youtubeVideo}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </div>
+                <hr></hr>
+                </>
+              )}
+
 
               {paymentPlan && (
                 <>

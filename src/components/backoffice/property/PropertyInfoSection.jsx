@@ -102,7 +102,7 @@ const PropertyInfoSection = () => {
             <>
               <select
                 id="zone_id"
-                className={`form-control custom-select ${errors.zone_id ? 'is-invalid' : ''}`}
+                className={`form-control custom-select ${errors.zone_id || errors.area ? 'is-invalid' : ''}`}
                 defaultValue={formData.zone_id || ''}
                 {...register('zone_id', { required: 'Area is required' })}
                 onChange={handleZoneChange}
@@ -115,11 +115,11 @@ const PropertyInfoSection = () => {
                 ))}
               </select>
               {/* Hidden field to store area name for backward compatibility */}
-              <input type="hidden" {...register('area')} />
+              <input type="hidden" {...register('area', { required: 'Area is required' })} />
             </>
           )}
-          {errors.zone_id && (
-            <div className="invalid-feedback">{errors.zone_id.message}</div>
+          {(errors.zone_id || errors.area) && (
+            <div className="invalid-feedback">{errors.zone_id?.message || errors.area?.message}</div>
           )}
         </div>
         <div className="form-group">

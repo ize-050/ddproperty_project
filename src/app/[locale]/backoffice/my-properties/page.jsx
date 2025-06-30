@@ -190,8 +190,8 @@ export default function MyPropertiesPage() {
 
   // Function to duplicate property
   const handleDuplicateProperty = (propertyId) => {
-    // Navigate to the duplicate property page in same tab
-    router.push(`/${locale}/backoffice/duplicate-property/${propertyId}`);
+    // Navigate to the duplicate property page in new tab
+    window.open(`/${locale}/backoffice/duplicate-property/${propertyId}`, '_blank');
   };
 
   const handleEditProperty = (propertyId) => {
@@ -259,7 +259,7 @@ export default function MyPropertiesPage() {
           <div className="search-container">
             <input
               type="text"
-              placeholder="Search by name"
+              placeholder="Search properties..."
               value={searchTerm}
               onChange={handleSearch}
               className="search-input"
