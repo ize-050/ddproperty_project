@@ -192,6 +192,11 @@ export default function MyPropertiesPage() {
   const handleDuplicateProperty = (propertyId) => {
     // Navigate to the duplicate property page in new tab
     window.open(`/${locale}/backoffice/duplicate-property/${propertyId}`, '_blank');
+    
+    // Refresh current page after opening new tab
+    setTimeout(() => {
+      window.location.reload();
+    }, 500); // รอ 500ms เพื่อให้ new tab เปิดก่อน
   };
 
   const handleEditProperty = (propertyId) => {
