@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
+import Image from 'next/image';
 
 const ListingTypeSection = ({type}) => {
   const { formData, setStatus } = usePropertyFormStore();
@@ -35,7 +36,16 @@ const ListingTypeSection = ({type}) => {
 
   return (
     <section className="form-section">
-      <h2>Listing Type*</h2>
+      <div className="section-header">
+        <Image 
+          src="/images/icons/iconproperty/listingproperty.svg" 
+          alt="Listing Property" 
+          width={24} 
+          height={24} 
+          className="section-icon"
+        />
+        <h2 className="section-title">Listing Type*</h2>
+      </div>
       <div className="listing-type-options">
         <div
           className={`listing-option ${formData.status === 'SALE' ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`}

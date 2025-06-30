@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { FaInfoCircle } from 'react-icons/fa';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import Image from 'next/image';
 
 const PropertyDetailSection = () => {
   const { formData, setFormData } = usePropertyFormStore();
@@ -48,8 +48,14 @@ const PropertyDetailSection = () => {
   return (
     <section className="form-section">
       <div className="section-header">
-        <FaInfoCircle className="section-icon" />
-        <h2>Project Detail</h2>
+        <Image 
+          src="/images/icons/iconproperty/property_information.svg" 
+          alt="Property Information" 
+          width={24} 
+          height={24} 
+          className="section-icon"
+        />
+        <h2 className="section-title">Project Detail</h2>
       </div>
       
       <div className="form-row">
@@ -195,10 +201,15 @@ const PropertyDetailSection = () => {
             className={`form-control custom-select ${errors.constructionYear ? 'is-invalid' : ''}`}
             {...register('constructionYear', { required: 'This field is required' })}
           >
-            {[...Array(50)].map((_, i) => {
-              const year = new Date().getFullYear() - i;
-              return <option key={year} value={year}>{year}</option>;
-            })}
+            {(() => {
+              const currentYear = new Date().getFullYear();
+              const years = [];
+              // เพิ่มปีอนาคตถึง 2035
+              for (let year = 2035; year >= currentYear - 50; year--) {
+                years.push(<option key={year} value={year}>{year}</option>);
+              }
+              return years;
+            })()}
           </select>
           {errors.constructionYear && <p className="error-message">{errors.constructionYear.message}</p>}
         </div>

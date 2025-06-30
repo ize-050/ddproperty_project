@@ -164,8 +164,6 @@ label.required:after {
       font-weight: 600;
       margin-bottom: 1.5rem;
       color: $primary-color;
-      border-bottom: 1px solid $border-color;
-      padding-bottom: 0.75rem;
     }
   }
   
@@ -357,10 +355,172 @@ label.required:after {
     @media (min-width: 768px) {
       grid-template-columns: repeat(4, 1fr);
     }
+  }
+
+  // Room type grid
+  .room-type-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .room-type-item {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: #007bff;
+        background: #f0f8ff;
+      }
+      
+      &.active {
+        border-color: #007bff;
+        background: #e3f2fd;
+        
+        .room-type-name {
+          color: #007bff;
+          font-weight: 600;
+        }
+      }
+      
+      .room-type-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .room-type-info {
+          .room-type-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+          }
+        }
+        
+        .room-type-checkbox {
+          input[type="checkbox"] {
+            display: none;
+          }
+          
+          .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            display: inline-block;
+            position: relative;
+            
+            &:after {
+              content: '';
+              position: absolute;
+              display: none;
+              left: 6px;
+              top: 2px;
+              width: 6px;
+              height: 10px;
+              border: solid #007bff;
+              border-width: 0 2px 2px 0;
+              transform: rotate(45deg);
+            }
+          }
+          
+          input:checked + .checkmark {
+            background: #007bff;
+            border-color: #007bff;
+            
+            &:after {
+              display: block;
+              border-color: white;
+            }
+          }
+        }
+      }
+    }
     
     .selection-item {
       display: flex;
       align-items: center;
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: #007bff;
+        background: #f0f8ff;
+      }
+      
+      &.active {
+        border-color: #007bff;
+        background: #e3f2fd;
+        
+        .selection-name {
+          color: #007bff;
+          font-weight: 600;
+        }
+      }
+      
+      .selection-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        
+        .selection-info {
+          .selection-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+          }
+        }
+        
+        .selection-radio {
+          input[type="radio"] {
+            display: none;
+          }
+          
+          .radio-checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            background: #fff;
+            display: inline-block;
+            position: relative;
+            
+            &:after {
+              content: '';
+              position: absolute;
+              display: none;
+              left: 6px;
+              top: 6px;
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background: #007bff;
+            }
+          }
+          
+          input:checked + .radio-checkmark {
+            background: #fff;
+            border-color: #007bff;
+            
+            &:after {
+              display: block;
+            }
+          }
+        }
+      }
       background-color: #ffffff;
       border: 1px solid #e0e0e0;
       border-radius: 8px;
@@ -480,7 +640,7 @@ label.required:after {
       padding: 0.75rem 1rem;
       font-size: 0.85rem;
       color: $text-secondary;
-      font-weight: 900;
+      font-weight: 700;
 
       cursor: pointer;
       transition: all 0.2s;
@@ -493,7 +653,7 @@ label.required:after {
         background-color: #E8F5E9;
         border: 2px solid #A5D6A7;
         color: #000;
-        font-weight: 500;
+        font-weight: 700;
       }
       
       .amenity-icon {
@@ -762,7 +922,7 @@ label.required:after {
     }
   }
   
-  // Project Detail Section
+  // Section Header with Icons
   .section-header {
     display: flex;
     align-items: center;
@@ -771,11 +931,64 @@ label.required:after {
     .section-icon {
       margin-right: 0.75rem;
       color: $primary-color;
-      font-size: 1.25rem;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
     }
     
-    h2 {
+    .section-title {
       margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $primary-color;
+      line-height: 24px;
+      flex: 1;
+    }
+    
+    // Toggle switch in header
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+        
+        &:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 3px;
+          bottom: 3px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
+        }
+      }
+      
+      input:checked + .slider {
+        background-color: #28a745;
+      }
+      
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
     }
   }
   
@@ -872,6 +1085,7 @@ label.required:after {
       
       .amenity-label {
         font-size: 0.9rem;
+        font-weight: 700;
       }
     }
   }
@@ -1040,17 +1254,7 @@ label.required:after {
   }
   
   .media-section {
-    .section-title {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      
-      &:before {
-        content: '📷';
-        margin-right: 0.5rem;
-        font-size: 1.2rem;
-      }
-    }
+    // No special styling needed - uses .section-header
     
     .photo-gallery {
       background-color: white;

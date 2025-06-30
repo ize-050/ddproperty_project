@@ -109,7 +109,16 @@ const PhotosSection = () => {
 
   return (
     <section className="form-section media-section">
-      <h2 className="section-title">Media</h2>
+      <div className="section-header">
+        <Image
+          src="/images/icons/iconproperty/camera.svg"
+          alt="Media"
+          width={24}
+          height={24}
+          className="section-icon"
+        />
+        <h2 className="section-title">Media</h2>
+      </div>
       <div className="photo-gallery">
         <h3>Photo Gallery</h3>
         <div className="image-upload-container">

@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useLocale } from 'next-intl';
 import { toast } from 'react-hot-toast';
+import Image from 'next/image';
 
 const PropertyTypeSection = () => {
   const { formData, setPropertyType } = usePropertyFormStore();
@@ -90,7 +91,16 @@ const PropertyTypeSection = () => {
 
   return (
     <section className="form-section">
-      <h2>Property Type*</h2>
+      <div className="section-header">
+        <Image
+          src="/images/icons/iconproperty/property_type.svg"
+          alt="Property Type"
+          width={24}
+          height={24}
+          className="section-icon"
+        />
+        <h2 className="section-title">Property Type*</h2>
+      </div>
       
       {/* Hidden input for react-hook-form to track the selected property type */}
       <input

@@ -14,6 +14,12 @@
         font-size: 18px;
         color: #6c757d;
       }
+      
+      .section-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+      }
 
       .co-agent-label {
         font-weight: 600;
@@ -215,6 +221,12 @@
       i {
         font-size: 18px;
         color: #6c757d;
+      }
+      
+      .section-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
       }
 
       .private-note-label {

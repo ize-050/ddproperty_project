@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { FaGlobe, FaSpinner } from 'react-icons/fa';
+import Image from 'next/image';
 
 const PropertyDescriptionSection = () => {
   const { formData, setDescription, setTranslatedDescriptions } = usePropertyFormStore();
@@ -523,7 +524,16 @@ const PropertyDescriptionSection = () => {
 
   return (
       <section className="form-section">
-        <h2>Property Description</h2>
+        <div className="section-header">
+          <Image
+            src="/images/icons/iconproperty/property_description.svg"
+            alt="Property Description"
+            width={24}
+            height={24}
+            className="section-icon"
+          />
+          <h2 className="section-title">Property Description</h2>
+        </div>
 
         <div className="language-tabs">
           {languages.map((lang) => (

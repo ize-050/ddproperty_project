@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import Image from 'next/image';
 
 const CoAgentSection = () => {
   const { control, watch, setValue, formState: { errors } } = useFormContext();
@@ -77,32 +78,36 @@ const CoAgentSection = () => {
   };
 
   return (
-    <div className="co-agent-section">
+    <section className="form-section co-agent-section">
       {/* Co-Agent Accept Toggle */}
-      <div className="co-agent-header">
-        <div className="co-agent-toggle">
-          <i className="flaticon-handshake"></i>
-          <span className="co-agent-label">Co-Agent Accept</span>
-          
-          <Controller
-            name="coAgentAccept"
-            control={control}
-            defaultValue={coAgentAccept}
-            render={({ field }) => (
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={field.value}
-                  onChange={(e) => {
-                    field.onChange(e.target.checked);
-                    handleCoAgentToggle(e.target.checked);
-                  }}
-                />
-                <span className="slider round"></span>
-              </label>
-            )}
-          />
-        </div>
+      <div className="section-header">
+        <Image 
+          src="/images/icons/iconproperty/co-agent.svg" 
+          alt="Co-Agent" 
+          width={24} 
+          height={24} 
+          className="section-icon"
+        />
+        <h2 className="section-title">Co-Agent Accept</h2>
+        
+        <Controller
+          name="coAgentAccept"
+          control={control}
+          defaultValue={coAgentAccept}
+          render={({ field }) => (
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={field.value}
+                onChange={(e) => {
+                  field.onChange(e.target.checked);
+                  handleCoAgentToggle(e.target.checked);
+                }}
+              />
+              <span className="slider round"></span>
+            </label>
+          )}
+        />
       </div>
 
       {/* Commission Section - Only show when Co-Agent Accept is enabled */}
@@ -196,7 +201,13 @@ const CoAgentSection = () => {
       {/* Private Note Section */}
       <div className="private-note-section">
         <div className="private-note-header">
-          <i className="flaticon-note"></i>
+          <Image 
+            src="/images/icons/iconproperty/privatenote.svg" 
+            alt="Private Note" 
+            width={24} 
+            height={24} 
+            className="section-icon"
+          />
           <span className="private-note-label">Private Note</span>
         </div>
         
@@ -218,7 +229,7 @@ const CoAgentSection = () => {
           )}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

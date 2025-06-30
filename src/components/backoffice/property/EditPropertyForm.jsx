@@ -25,6 +25,7 @@ import FloorPlanSection from './FloorPlanSection';
 import UnitPlanSection from './UnitPlanSection';
 import SocialMediaSection from './SocialMediaSection';
 import ContactSection from './ContactSection';
+import MoreRoomTypeSection from './MoreRoomTypeSection';
 import CoAgentSection from './CoAgentSection';
 import { useLocale } from 'next-intl';
 
@@ -89,25 +90,29 @@ const EditPropertyForm = ({ propertyId }) => {
         if (responseData.status === 'success' && responseData.data) {
           const property = responseData.data;
           const amenitiesObj = {};
-          property.amenities.forEach(amenity => {
-            if (amenity.amenityType) {
-              amenitiesObj[amenity.amenityType] = {
-                active: amenity.active || false,
-                iconId: amenity.iconId || null
-              };
-            }
-          });
+          if (property.amenities && Array.isArray(property.amenities)) {
+            property.amenities.forEach(amenity => {
+              if (amenity.amenityType) {
+                amenitiesObj[amenity.amenityType] = {
+                  active: amenity.active || false,
+                  iconId: amenity.iconId || null
+                };
+              }
+            });
+          }
 
 
           const highlightsObj = {};
-          property.highlights.forEach(highlight => {
-            if (highlight.highlightType) {
-              highlightsObj[highlight.highlightType] = {
-                active: highlight.active || false,
-                iconId: highlight.iconId || null
-              };
-            }
-          });
+          if (property.highlights && Array.isArray(property.highlights)) {
+            property.highlights.forEach(highlight => {
+              if (highlight.highlightType) {
+                highlightsObj[highlight.highlightType] = {
+                  active: highlight.active || false,
+                  iconId: highlight.iconId || null
+                };
+              }
+            });
+          }
 
           // แสดงข้อมูล facilities ที่ได้จาก API เพื่อดูโครงสร้าง
 
@@ -120,52 +125,60 @@ const EditPropertyForm = ({ propertyId }) => {
             'other': {}
           };
 
-          property.facilities.forEach(facility => {
-            Object.keys(facilityIcons).forEach(key => {
-              if (facility?.Icon?.sub_name === key) {
-                facilityIcons[key] = facilityIcons[key] || {};
-                facilityIcons[key][facility?.Icon?.key] = {
-                  active: facility.active,
-                  iconId: facility.iconId,
-                };
-              }
-            })
-          });
+          if (property.facilities && Array.isArray(property.facilities)) {
+            property.facilities.forEach(facility => {
+              Object.keys(facilityIcons).forEach(key => {
+                if (facility?.Icon?.sub_name === key) {
+                  facilityIcons[key] = facilityIcons[key] || {};
+                  facilityIcons[key][facility?.Icon?.key] = {
+                    active: facility.active,
+                    iconId: facility.iconId,
+                  };
+                }
+              })
+            });
+          }
 
           
 
 
 
           const viewsObj = {};
-          property.views.forEach(view => {
-            if (view.viewType) {
-              viewsObj[view.viewType] = {
-                active: view.active || false,
-                iconId: view.iconId || null
-              };
-            }
-          });
+          if (property.views && Array.isArray(property.views)) {
+            property.views.forEach(view => {
+              if (view.viewType) {
+                viewsObj[view.viewType] = {
+                  active: view.active || false,
+                  iconId: view.iconId || null
+                };
+              }
+            });
+          }
 
           const nearbyObj = {};
-          property.nearbyPlaces.forEach(nearby => {
-            if (nearby.nearbyType) {
-              nearbyObj[nearby.nearbyType] = {
-                active: nearby.active || false,
-                iconId: nearby.iconId || null
-              };
-            }
-          });
+          if (property.nearbyPlaces && Array.isArray(property.nearbyPlaces)) {
+            property.nearbyPlaces.forEach(nearby => {
+              if (nearby.nearbyType) {
+                nearbyObj[nearby.nearbyType] = {
+                  active: nearby.active || false,
+                  iconId: nearby.iconId || null
+                };
+              }
+            });
+          }
 
 
           const labelObj = {};
-          property.labels.forEach(label => {
-            if (label.labelType) {
-              labelObj[label.labelType] = {
-                active: label.active || false,
-                iconId: label.iconId || null
-              };
-            }
-          });
+          if (property.labels && Array.isArray(property.labels)) {
+            property.labels.forEach(label => {
+              if (label.labelType) {
+                labelObj[label.labelType] = {
+                  active: label.active || false,
+                  iconId: label.iconId || null
+                };
+              }
+            });
+          }
 
           let propertyData = {
             // ข้อมูลพื้นฐาน
@@ -269,15 +282,15 @@ const EditPropertyForm = ({ propertyId }) => {
 
             // Contact info
             contactInfo: {
-              phone: property.contactInfo.phone || '',
-              email: property.contactInfo.email || '',
-              line: property.contactInfo.instagram || '',
-              whatsapp: property.contactInfo.whatsapp || '',
-              wechatId: property.contactInfo.wechatId || '',
-              secondaryPhone: property.contactInfo.secondaryPhone || '',
-              lineId: property.contactInfo.lineId || '',
-              facebookMessenger: property.contactInfo.facebookMessenger || '',
-              instagram: property.contactInfo.instagram || ''
+              phone: property.contactInfo?.phone || '',
+              email: property.contactInfo?.email || '',
+              line: property.contactInfo?.instagram || '',
+              whatsapp: property.contactInfo?.whatsapp || '',
+              wechatId: property.contactInfo?.wechatId || '',
+              secondaryPhone: property.contactInfo?.secondaryPhone || '',
+              lineId: property.contactInfo?.lineId || '',
+              facebookMessenger: property.contactInfo?.facebookMessenger || '',
+              instagram: property.contactInfo?.instagram || ''
             },
 
             // Status
@@ -322,6 +335,7 @@ const EditPropertyForm = ({ propertyId }) => {
             propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
             propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || '';
           }
+          console.log("propertyData for form:", propertyData);
           setFormData(propertyData);
           
 
@@ -653,12 +667,23 @@ const EditPropertyForm = ({ propertyId }) => {
 
     } catch (error) {
       console.error('Error creating property:', error);
-      Swal.fire({
-        title: 'Error',
-        text: 'Failed to create property ' + error.message,
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      
+      // Check if it's an image limit error
+      if (error.response?.data?.error === 'IMAGE_LIMIT_EXCEEDED') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'จำนวนรูปภาพเกินกำหนด',
+          text: 'จำนวนรูปภาพเกิน 50 รูป กรุณาเลือกรูปภาพไม่เกิน 50 รูป',
+          confirmButtonText: 'ตกลง'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to create property ' + (error.response?.data?.message || error.message),
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
     } finally {
       setSaving(false);
     }
@@ -698,15 +723,17 @@ const EditPropertyForm = ({ propertyId }) => {
 
 
 
+      
+
         <div className="card mb-4">
           <div className="card-body">
-            <PropertyInfoSection />
+            <ListingTypeSection type={"edit"} />
           </div>
         </div>
 
         <div className="card mb-4">
           <div className="card-body">
-            <ListingTypeSection type={"edit"} />
+            <PropertyInfoSection />
           </div>
         </div>
 
@@ -762,6 +789,12 @@ const EditPropertyForm = ({ propertyId }) => {
         <div className="card mb-4">
           <div className="card-body">
             <FeaturesSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <MoreRoomTypeSection />
           </div>
         </div>
 

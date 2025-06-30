@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
-import { FaPlus, FaSearch, FaEye, FaEyeSlash, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight, FaCopy } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaEyeSlash, FaEdit, FaTrash, FaTimes, FaChevronLeft, FaChevronRight, FaCopy, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import { useLocale } from "next-intl";
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
@@ -152,6 +152,29 @@ export default function MyPropertiesPage() {
     setCurrentPage(1); // Reset to first page when sorting
   };
 
+  // Handle column header click for sorting
+  const handleColumnSort = (column) => {
+    if (sortBy === column) {
+      // If clicking the same column, toggle sort order
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // If clicking a new column, set it as sortBy and default to desc
+      setSortBy(column);
+      setSortOrder('desc');
+    }
+    setCurrentPage(1); // Reset to first page when sorting
+  };
+
+  // Get sort icon for column headers
+  const getSortIcon = (column) => {
+    if (sortBy !== column) {
+      return <FaSort className="sort-icon neutral" />;
+    }
+    return sortOrder === 'asc' 
+      ? <FaSortUp className="sort-icon asc" />
+      : <FaSortDown className="sort-icon desc" />;
+  };
+
   // Format price based on whether it's for rent or sale
   const formatPrice = (price, isRent = false) => {
     const formatter = new Intl.NumberFormat('th-TH', {
@@ -294,16 +317,45 @@ export default function MyPropertiesPage() {
             <table className="properties-table">
               <thead>
                 <tr>
-
-                  <th className="property-col">PROPERTY</th>
-                  <th className="reference-col">REFERENCE</th>
+                  <th 
+                    className="property-col sortable-header" 
+                    onClick={() => handleColumnSort('projectName')}
+                  >
+                    PROPERTY {getSortIcon('projectName')}
+                  </th>
+                  <th 
+                    className="reference-col sortable-header"
+                    onClick={() => handleColumnSort('referenceId')}
+                  >
+                    REFERENCE {getSortIcon('referenceId')}
+                  </th>
                   <th className="operation-col">OPERATION</th>
-                  <th className="price-col">PRICE</th>
-                  <th className="published-col">PUBLISHED</th>
-                  <th className="displays-col">DISPLAYS</th>
+                  <th 
+                    className="price-col sortable-header"
+                    onClick={() => handleColumnSort('price')}
+                  >
+                    PRICE {getSortIcon('price')}
+                  </th>
+                  <th 
+                    className="published-col sortable-header"
+                    onClick={() => handleColumnSort('isPublished')}
+                  >
+                    PUBLISHED {getSortIcon('isPublished')}
+                  </th>
+                  <th 
+                    className="displays-col sortable-header"
+                    onClick={() => handleColumnSort('viewCount')}
+                  >
+                    DISPLAYS {getSortIcon('viewCount')}
+                  </th>
                   <th className="visits-col">VISITS</th>
                   <th className="enquiries-col">ENQUIRIES</th>
-                  <th className="date-col">DATE</th>
+                  <th 
+                    className="date-col sortable-header"
+                    onClick={() => handleColumnSort('createdAt')}
+                  >
+                    DATE {getSortIcon('createdAt')}
+                  </th>
                   <th className="actions-col">ACTIONS</th>
                 </tr>
               </thead>

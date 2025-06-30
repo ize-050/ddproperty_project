@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import Image from 'next/image';
 
 const PropertyInfoSection = () => {
   const { formData } = usePropertyFormStore();
@@ -66,8 +67,14 @@ const PropertyInfoSection = () => {
   return (
     <section className="form-section">
       <div className="section-header">
-        <FaMapMarkerAlt className="section-icon" />
-        <h2>Property Information*</h2>
+        <Image
+          src="/images/icons/iconproperty/property_information.svg"
+          alt="Property Information"
+          width={24}
+          height={24}
+          className="section-icon"
+        />
+        <h2 className="section-title">Property Information*</h2>
       </div>
       
       <div className="form-row">
@@ -115,9 +122,6 @@ const PropertyInfoSection = () => {
             <div className="invalid-feedback">{errors.zone_id.message}</div>
           )}
         </div>
-      </div>
-      
-      <div className="form-row">
         <div className="form-group">
           <label htmlFor="referenceId">Reference ID</label>
           <input

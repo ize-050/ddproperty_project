@@ -15,6 +15,7 @@ import LocationSection from '@/components/backoffice/property/LocationSection';
 import PricingSection from '@/components/backoffice/property/PricingSection';
 import FeaturesSection from '@/components/backoffice/property/FeaturesSection';
 import PropertyHighlightsSection from '@/components/backoffice/property/PropertyHighlightsSection';
+import MoreRoomTypeSection from '@/components/backoffice/property/MoreRoomTypeSection';
 import NearbySection from '@/components/backoffice/property/NearbySection';
 import ViewSection from '@/components/backoffice/property/ViewSection';
 import FacilitiesSection from '@/components/backoffice/property/FacilitiesSection';
@@ -302,6 +303,18 @@ const AddNewProperty = () => {
     } catch (error) {
       console.error('Error creating property:', error);
       setSaving(false);
+      
+      // Check if it's an image limit error
+      if (error.response?.data?.error === 'IMAGE_LIMIT_EXCEEDED') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'จำนวนรูปภาพเกินกำหนด',
+          text: 'จำนวนรูปภาพเกิน 50 รูป กรุณาเลือกรูปภาพไม่เกิน 50 รูป',
+          confirmButtonText: 'ตกลง'
+        });
+        return;
+      }
+      
       Swal.fire({
         icon: 'error',
         title: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
@@ -371,6 +384,7 @@ const AddNewProperty = () => {
           <LocationSection />
           <PricingSection />
           <PropertyDetailSection />
+          <MoreRoomTypeSection />
           <PropertyHighlightsSection />
           <NearbySection />
           <ViewSection />

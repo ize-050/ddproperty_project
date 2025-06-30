@@ -16,6 +16,7 @@ import LocationSection from './LocationSection';
 import PricingSection from './PricingSection';
 import FeaturesSection from './FeaturesSection';
 import PropertyHighlightsSection from './PropertyHighlightsSection';
+import MoreRoomTypeSection from './MoreRoomTypeSection';
 import NearbySection from './NearbySection';
 import ViewSection from './ViewSection';
 import FacilitiesSection from './FacilitiesSection';
@@ -185,14 +186,16 @@ const DuplicatePropertyForm = ({ propertyId }) => {
           });
 
           const nearbyObj = {};
-          property.nearbyPlaces.forEach(nearby => {
-            if (nearby.nearbyType) {
-              nearbyObj[nearby.nearbyType] = {
-                active: nearby.active || false,
-                iconId: nearby.iconId || null
-              };
-            }
-          });
+          if (property.nearbyPlaces && Array.isArray(property.nearbyPlaces)) {
+            property.nearbyPlaces.forEach(nearby => {
+              if (nearby.nearbyType) {
+                nearbyObj[nearby.nearbyType] = {
+                  active: nearby.active || false,
+                  iconId: nearby.iconId || null
+                };
+              }
+            });
+          }
 
 
           const labelObj = {};
@@ -704,12 +707,23 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       }
     } catch (error) {
       console.error('Error creating property:', error);
-      Swal.fire({
-        title: 'Error',
-        text: 'Failed to create property ' + error.message,
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      
+      // Check if it's an image limit error
+      if (error.response?.data?.error === 'IMAGE_LIMIT_EXCEEDED') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'จำนวนรูปภาพเกินกำหนด',
+          text: 'จำนวนรูปภาพเกิน 50 รูป กรุณาเลือกรูปภาพไม่เกิน 50 รูป',
+          confirmButtonText: 'ตกลง'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to create property ' + (error.response?.data?.message || error.message),
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
     } finally {
       setSaving(false);
     }
@@ -737,15 +751,17 @@ const DuplicatePropertyForm = ({ propertyId }) => {
         </div>
       )}
 
+    
+
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">
-          <PropertyInfoSection />
+          <ListingTypeSection type={"edit"} />
         </div>
       </div>
 
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">
-          <ListingTypeSection type={"edit"} />
+          <PropertyInfoSection />
         </div>
       </div>
 
@@ -802,6 +818,12 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">
           <FeaturesSection />
+        </div>
+      </div>
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <MoreRoomTypeSection />
         </div>
       </div>
 

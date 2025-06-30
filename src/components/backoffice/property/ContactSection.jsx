@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import userService from '@/services/userService';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
 const ContactSection = () => {
   const { formData } = usePropertyFormStore();
@@ -78,9 +79,16 @@ const ContactSection = () => {
 
   return (
     <section className="form-section contact-section">
-      <h2 className="section-title">
-        <FaEnvelope className="section-icon" /> Contact
-      </h2>
+      <div className="section-header">
+        <Image 
+          src="/images/icons/iconproperty/mail.svg" 
+          alt="Mail" 
+          width={24} 
+          height={24} 
+          className="section-icon"
+        />
+        <h2 className="section-title">Contact</h2>
+      </div>
       
       <div className="use-profile-data">
         <input
