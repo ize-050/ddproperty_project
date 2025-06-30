@@ -230,6 +230,7 @@
   "AddProperty": {
     "addNewProperty": "Добавить новое имущество",
     "updateProperty": "Обновить имущество",
+    "duplicatePropertyTitle": "Копировать имущество",
     "duplicateProperty": "Копировать имущество",
     "editProperty": "Редактировать имущество",
     "editPropertyTitle": "Редактировать имущество",

@@ -259,6 +259,7 @@
   "AddProperty": {
     "addNewProperty": "添加新房产",
     "updateProperty": "更新房产",
+    "duplicatePropertyTitle": "复制房产",
     "duplicateProperty": "复制房产",
     "editProperty": "编辑房产",
     "editPropertyTitle": "编辑房产",

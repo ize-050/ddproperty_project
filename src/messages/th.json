@@ -328,6 +328,7 @@
   },
   "AddProperty": {
     "addNewProperty": "เพิ่มอสังหาริมทรัพย์ใหม่",
+    "duplicatePropertyTitle": "คัดลอกอสังหาริมทรัพย์",
     "updateProperty": "บันทึกข้อมูล",
     "duplicateProperty": "คัดลอกอสังหาริมทรัพย์",
     "editProperty": "แก้ไขอสังหาริมทรัพย์",

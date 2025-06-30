@@ -12,9 +12,19 @@ const NearbySection = () => {
   const [nearbyIcons, setNearbyIcons] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { register, setValue } = useFormContext();
+  const { register, setValue, watch } = useFormContext();
+  
+  // Watch nearby form field instead of using formData
+  const watchedNearby = watch('nearby') || {};
 
 
+
+  // Sync formData to React Hook Form when formData changes
+  useEffect(() => {
+    if (formData.nearby) {
+      setValue('nearby', formData.nearby);
+    }
+  }, [formData.nearby, setValue]);
 
   // Fetch nearby icons from API
   useEffect(() => {
@@ -105,7 +115,7 @@ const NearbySection = () => {
             // สร้าง field name สำหรับ React Hook Form
             const fieldName = `nearby.${icon.key}`;
             // ใช้ Boolean เพื่อให้แน่ใจว่าเป็นค่า boolean
-            const isActive = Boolean(formData.nearby?.[icon.key]?.active);
+            const isActive = Boolean(watchedNearby?.[icon.key]?.active);
             
             return (
               <div

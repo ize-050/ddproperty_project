@@ -347,6 +347,7 @@
   "AddProperty": {
     "addNewProperty": "Add New Property",
     "updateProperty": "Update Property",
+    "duplicatePropertyTitle": "Duplicate Property",
     "duplicateProperty": "Duplicate Property",
     "editProperty": "Edit Property",
     "editPropertyTitle": "Edit Property",

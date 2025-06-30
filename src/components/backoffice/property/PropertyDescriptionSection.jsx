@@ -53,6 +53,15 @@ const PropertyDescriptionSection = () => {
 
   // Sync formData with local state when component mounts or formData changes
   useEffect(() => {
+    // Set form values directly when formData changes
+    setValue('propertyTitle', formData.propertyTitle || '');
+    setValue('description', formData.description || '');
+    setValue('paymentPlan', formData.paymentPlan || '');
+    setValue('translatedTitles', formData.translatedTitles || {});
+    setValue('translatedDescriptions', formData.translatedDescriptions || {});
+    setValue('translatedPaymentPlans', formData.translatedPaymentPlans || {});
+    
+    // Also update local state
     setInputValues({
       propertyTitle: {
         en: formData.propertyTitle || '',
@@ -73,7 +82,7 @@ const PropertyDescriptionSection = () => {
         ru: formData.translatedPaymentPlans?.ru || ''
       }
     });
-  }, [formData]);
+  }, [formData, setValue]);
 
   // Handle description change for the active language
   const handleDescriptionChange = (e) => {

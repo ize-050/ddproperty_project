@@ -128,25 +128,29 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
 
           const amenitiesObj = {};
-          property.amenities.forEach(amenity => {
-            if (amenity.amenityType) {
-              amenitiesObj[amenity.amenityType] = {
-                active: amenity.active || false,
-                iconId: amenity.iconId || null
-              };
-            }
-          });
+          if (property.amenities && Array.isArray(property.amenities)) {
+            property.amenities.forEach(amenity => {
+              if (amenity.amenityType) {
+                amenitiesObj[amenity.amenityType] = {
+                  active: amenity.active || false,
+                  iconId: amenity.iconId || null
+                };
+              }
+            });
+          }
 
 
           const highlightsObj = {};
-          property.highlights.forEach(highlight => {
-            if (highlight.highlightType) {
-              highlightsObj[highlight.highlightType] = {
-                active: highlight.active || false,
-                iconId: highlight.iconId || null
-              };
-            }
-          });
+          if (property.highlights && Array.isArray(property.highlights)) {
+            property.highlights.forEach(highlight => {
+              if (highlight.highlightType) {
+                highlightsObj[highlight.highlightType] = {
+                  active: highlight.active || false,
+                  iconId: highlight.iconId || null
+                };
+              }
+            });
+          }
 
 
 
@@ -160,30 +164,34 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             'other': {}
           };
 
-          property.facilities.forEach(facility => {
-            Object.keys(facilityIcons).forEach(key => {
-              if (facility?.Icon?.sub_name === key) {
-                facilityIcons[key] = facilityIcons[key] || {};
-                facilityIcons[key][facility.Icon.key] = {
-                  active: facility.active,
-                  iconId: facility.iconId,
-                };
-              }
-            })
-          });
+          if (property.facilities && Array.isArray(property.facilities)) {
+            property.facilities.forEach(facility => {
+              Object.keys(facilityIcons).forEach(key => {
+                if (facility?.Icon?.sub_name === key) {
+                  facilityIcons[key] = facilityIcons[key] || {};
+                  facilityIcons[key][facility.Icon.key] = {
+                    active: facility.active,
+                    iconId: facility.iconId,
+                  };
+                }
+              })
+            });
+          }
 
           facilitiesObj = facilityIcons;
           
 
           const viewsObj = {};
-          property.views.forEach(view => {
-            if (view.viewType) {
-              viewsObj[view.viewType] = {
-                active: view.active || false,
-                iconId: view.iconId || null
-              };
-            }
-          });
+          if (property.views && Array.isArray(property.views)) {
+            property.views.forEach(view => {
+              if (view.viewType) {
+                viewsObj[view.viewType] = {
+                  active: view.active || false,
+                  iconId: view.iconId || null
+                };
+              }
+            });
+          }
 
           const nearbyObj = {};
           if (property.nearbyPlaces && Array.isArray(property.nearbyPlaces)) {
@@ -199,14 +207,78 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
 
           const labelObj = {};
-          property.labels.forEach(label => {
-            if (label.labelType) {
-              labelObj[label.labelType] = {
-                active: label.active || false,
-                iconId: label.iconId || null
-              };
+          if (property.labels && Array.isArray(property.labels)) {
+            property.labels.forEach(label => {
+              if (label.labelType) {
+                labelObj[label.labelType] = {
+                  active: label.active || false,
+                  iconId: label.iconId || null
+                };
+              }
+            });
+          }
+
+          // Parse JSON fields if they are JSON strings
+          let parsedContactInfo = {};
+          let parsedSocialMedia = {};
+          let parsedTranslatedTitles = {};
+          let parsedTranslatedDescriptions = {};
+          let parsedTranslatedPaymentPlans = {};
+          
+          try {
+            if (typeof property.contactInfo === 'string') {
+              parsedContactInfo = JSON.parse(property.contactInfo);
+            } else {
+              parsedContactInfo = property.contactInfo || {};
             }
-          });
+          } catch (error) {
+            console.error('Error parsing contactInfo:', error);
+            parsedContactInfo = {};
+          }
+          
+          try {
+            if (typeof property.socialMedia === 'string') {
+              parsedSocialMedia = JSON.parse(property.socialMedia);
+            } else {
+              parsedSocialMedia = property.socialMedia || {};
+            }
+          } catch (error) {
+            console.error('Error parsing socialMedia:', error);
+            parsedSocialMedia = {};
+          }
+
+          try {
+            if (typeof property.translatedTitles === 'string') {
+              parsedTranslatedTitles = JSON.parse(property.translatedTitles);
+            } else {
+              parsedTranslatedTitles = property.translatedTitles || {};
+            }
+          } catch (error) {
+            console.error('Error parsing translatedTitles:', error);
+            parsedTranslatedTitles = {};
+          }
+
+          try {
+            if (typeof property.translatedDescriptions === 'string') {
+              parsedTranslatedDescriptions = JSON.parse(property.translatedDescriptions);
+            } else {
+              parsedTranslatedDescriptions = property.translatedDescriptions || {};
+            }
+          } catch (error) {
+            console.error('Error parsing translatedDescriptions:', error);
+            parsedTranslatedDescriptions = {};
+          }
+
+          try {
+            if (typeof property.translatedPaymentPlans === 'string') {
+              parsedTranslatedPaymentPlans = JSON.parse(property.translatedPaymentPlans);
+            } else {
+              parsedTranslatedPaymentPlans = property.translatedPaymentPlans || {};
+            }
+          } catch (error) {
+            console.error('Error parsing translatedPaymentPlans:', error);
+            parsedTranslatedPaymentPlans = {};
+          }
 
 
 
@@ -220,31 +292,31 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             description: property.description || '',
             paymentPlan: property.paymentPlan || '',
 
-            // Translations
+            // Translations (use parsed data)
             translatedTitles: {
-              th: property.translatedTitles?.th || '',
-              zh: property.translatedTitles?.zh || '',
-              ru: property.translatedTitles?.ru || '',
-              en: property.translatedTitles?.en || ''
+              th: parsedTranslatedTitles?.th || '',
+              zh: parsedTranslatedTitles?.zh || '',
+              ru: parsedTranslatedTitles?.ru || '',
+              en: parsedTranslatedTitles?.en || ''
             },
             translatedDescriptions: {
-              th: property.translatedDescriptions?.th || '',
-              zh: property.translatedDescriptions?.zh || '',
-              ru: property.translatedDescriptions?.ru || '',
-              en: property.translatedDescriptions?.en || ''
+              th: parsedTranslatedDescriptions?.th || '',
+              zh: parsedTranslatedDescriptions?.zh || '',
+              ru: parsedTranslatedDescriptions?.ru || '',
+              en: parsedTranslatedDescriptions?.en || ''
             },
             translatedPaymentPlans: {
-              th: property.translatedPaymentPlans?.th || '',
-              zh: property.translatedPaymentPlans?.zh || '',
-              ru: property.translatedPaymentPlans?.ru || '',
-              en: property.translatedPaymentPlans?.en || ''
+              th: parsedTranslatedPaymentPlans?.th || '',
+              zh: parsedTranslatedPaymentPlans?.zh || '',
+              ru: parsedTranslatedPaymentPlans?.ru || '',
+              en: parsedTranslatedPaymentPlans?.en || ''
             },
 
             socialMedia: {
-              youtubeUrl: property.socialMedia?.youtubeUrl || '',
-              tiktokUrl: property.socialMedia?.tiktokUrl || '',
-              facebookUrl: property.socialMedia?.facebookUrl || '',
-              instagramUrl: property.socialMedia?.instagramUrl || ''
+              youtubeUrl: parsedSocialMedia?.youtubeUrl || '',
+              tiktokUrl: parsedSocialMedia?.tiktokUrl || '',
+              facebookUrl: parsedSocialMedia?.facebookUrl || '',
+              instagramUrl: parsedSocialMedia?.instagramUrl || ''
             },
 
             address: property.address || '',
@@ -288,15 +360,14 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             highlights: highlightsObj,
             views: viewsObj,
             contactInfo: {
-              phone: property.contactInfo.phone || '',
-              email: property.contactInfo.email || '',
-              line: property.contactInfo.instagram || '',
-              whatsapp: property.contactInfo.whatsapp || '',
-              wechatId: property.contactInfo.wechatId || '',
-              secondaryPhone: property.contactInfo.secondaryPhone || '',
-              lineId: property.contactInfo.lineId || '',
-              facebookMessenger: property.contactInfo.facebookMessenger || '',
-              instagram: property.contactInfo.instagram || ''
+              phone: parsedContactInfo?.phone || '',
+              email: parsedContactInfo?.email || '',
+              lineId: parsedContactInfo?.lineId || '',
+              whatsapp: parsedContactInfo?.whatsapp || '',
+              wechatId: parsedContactInfo?.wechatId || '',
+              secondaryPhone: parsedContactInfo?.secondaryPhone || '',
+              facebookMessenger: parsedContactInfo?.facebookMessenger || '',
+              instagram: parsedContactInfo?.instagram || ''
             },
             status: property.status || 'AVAILABLE',
             availableFrom: property.availableFrom ? new Date(property.availableFrom) : null,
