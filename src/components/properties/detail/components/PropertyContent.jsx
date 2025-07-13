@@ -1,12 +1,35 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import PropertyMap from './PropertyMap';
 import ShortTermRental from './ShortTermRental';
 
 const PropertyContent = ({ property, description, getPropertyTypeText, getFurnishingText }) => {
   const t = useTranslations('PropertyDetail');
+
+  const getCommunityFeeUnit = (propertyTypeName) => {
+    if (!propertyTypeName) return '';
+    const type = propertyTypeName.trim().toLowerCase();
+
+
+    const sqmTypes = ['condo', 'apartment', 'commercial', 'office', 'retail'];
+    const sqwahTypes = ['house', 'villa', 'townhouse', 'land'];
+
+    if (sqmTypes.includes(type)) {
+      return '/sqm.';
+    }
+
+    if (sqwahTypes.includes(type)) {
+      return '/sqwah.';
+    }
+
+    return ''; // Default case, no unit
+  };
+
+  useEffect(() => {
+    console.log("propertyContent", property);
+  }, [property]);
 
   return (
     <div className="property-content">
@@ -42,7 +65,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
         </div>
       </div>
 
-     
+
 
       {/* Description Section */}
       <div className="property-section mb-5">
@@ -90,14 +113,18 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <th>Bathrooms</th>
                 <td>{property.bathrooms || '4'}</td>
                 <th>Construction Year</th>
-                <td>{property.yearBuilt || '2024'}</td>
+                <td>{property.constructionYear || 'N/A'}</td>
               </tr>
-              <tr>
-                <th>Community Fees</th>
-                <td>{property.communityFee || '50'}</td>
-                <th></th>
-                <td></td>
-              </tr>
+              {property.communityFee > 0 && (
+                <tr>
+                  <th>Community Fees</th>
+                  <td>
+                    {`${property.communityFee} ${getCommunityFeeUnit(property.propertyType?.nameEn)}`}
+                  </td>
+                  <th></th>
+                  <td></td>
+                </tr>
+              )}
               <tr>
                 <th>Area</th>
                 <td>{property.district || 'Banglamung'}</td>
@@ -133,10 +160,10 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <div className="nearby-item">
                   {item?.Icon?.iconPath && (
                     <>
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
-                
-                  <span className={"span-items"} style={{ marginLefปt: '10px' }}>{item?.Icon?.name}</span>
-                  </>
+                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+
+                      <span className={"span-items"} style={{ marginLefปt: '10px' }}>{item?.Icon?.name}</span>
+                    </>
                   )}
                 </div>
               </div>

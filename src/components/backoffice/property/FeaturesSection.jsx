@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { getIconsByPrefix } from '@/services/iconService';
+import { useTranslations } from 'next-intl';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
 import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 
 const FeaturesSection = () => {
+  const t = useTranslations('backoffice.features');
   const { formData, setAmenity, initializeAmenities } = usePropertyFormStore();
   const [amenityIcons, setAmenityIcons] = useState({});
   const [loading, setLoading] = useState(true);
@@ -31,7 +33,7 @@ const FeaturesSection = () => {
           initializeAmenities(response.data || {});
 
         } else {
-          throw new Error('Failed to fetch amenity icons');
+          throw new Error(t('fetchError'));
         }
       } catch (err) {
         console.error('Error fetching amenity icons:', err);
@@ -71,9 +73,9 @@ const FeaturesSection = () => {
   if (loading) {
     return (
       <section className="form-section">
-        <h2>Amenity</h2>
+        <h2>{t('title')}</h2>
         <div className="loading-spinner">
-          <FaSpinner className="spinner-icon" /> Loading amenities...
+          <FaSpinner className="spinner-icon" /> {t('loading')}
         </div>
       </section>
     );
@@ -82,9 +84,9 @@ const FeaturesSection = () => {
   if (error) {
     return (
       <section className="form-section">
-        <h2>Amenity</h2>
+        <h2>{t('title')}</h2>
         <div className="error-message">
-          Error loading amenities: {error}
+          {t('error', { error })}
         </div>
       </section>
     );
@@ -101,7 +103,7 @@ const FeaturesSection = () => {
 
   return (
     <section className="form-section">
-      <h2>Amenity</h2>
+      <h2>{t('title')}</h2>
       <div className="amenities-grid">
         {amenityArray.length > 0 ? (
           amenityArray.map((icon) => {
@@ -147,7 +149,7 @@ const FeaturesSection = () => {
             );
           })
         ) : (
-          <div className="no-data">ไม่พบข้อมูล Amenities</div>
+          <div className="no-data">{t('noneAvailable')}</div>
         )}
       </div>
     </section>

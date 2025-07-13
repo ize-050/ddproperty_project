@@ -24,7 +24,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
         <div className="row">
           <div className="col-lg-8">
             <div className="single-property-content mb30-md">
-              <h2 className="sp-lg-title text-white">{property.projectName || 'Unnamed Property'}</h2>
+              <h2 className="sp-lg-title text-white">{property.displayTitle || property.title || property.projectName || 'Unnamed Property'}</h2>
               <div className="pd-meta mb15 d-md-flex align-items-center">
                 <p className="text text-white fz15 mb-0 pr10 bdrrn-sm">
                   <i className="fas fa-map-marker-alt me-2"></i>
@@ -40,7 +40,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
                 )}
                 <a className="ff-heading text-white bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm" href="#">
                   <i className="fas fa-building pe-2"></i>
-                  {getPropertyTypeText(property.propertyType)}
+                  {getPropertyTypeText(property.propertyType?.nameEn)}
                 </a>
                 <a className="ff-heading text-white ml10 ml0-sm fz15" href="#">
                   <i className="fas fa-vector-square pe-2 align-text-top"></i>

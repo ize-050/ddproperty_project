@@ -4,10 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { getIconsByPrefix } from '@/services/iconService';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import { FaSpinner } from 'react-icons/fa';
 import Image from 'next/image';
 
 const ViewSection = () => {
+  const t = useTranslations('backoffice.view');
   const { formData, setView, initializeViews } = usePropertyFormStore();
   const [viewIcons, setViewIcons] = useState({});
   const [loading, setLoading] = useState(true);
@@ -63,9 +65,9 @@ const ViewSection = () => {
   if (loading) {
     return (
       <section className="form-section">
-        <h2>View</h2>
+        <h2>{t('title')}</h2>
         <div className="loading-spinner">
-          <FaSpinner className="spinner-icon" /> Loading views...
+          <FaSpinner className="spinner-icon" /> {t('loading')}
         </div>
       </section>
     );
@@ -74,9 +76,9 @@ const ViewSection = () => {
   if (error) {
     return (
       <section className="form-section">
-        <h2>View</h2>
+        <h2>{t('title')}</h2>
         <div className="error-message">
-          Error loading views: {error}
+          {t('error', { error })}
         </div>
       </section>
     );
@@ -95,7 +97,7 @@ const ViewSection = () => {
 
   return (
     <section className="form-section">
-      <h2>View</h2>
+      <h2>{t('title')}</h2>
       <div className="amenities-grid">
         {viewsArray.length > 0 ? (
           viewsArray.map((icon) => {

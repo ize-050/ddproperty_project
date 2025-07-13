@@ -3,11 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 
 const PropertyTypeSection = () => {
+  const t = useTranslations('backoffice.propertyType');
   const { formData, setPropertyType } = usePropertyFormStore();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
   const locale = useLocale();
@@ -43,7 +44,7 @@ const PropertyTypeSection = () => {
         }
       } catch (error) {
         console.error('Error fetching property types:', error);
-        toast.error('Failed to load property types');
+        toast.error(t('toast.error'));
       } finally {
         setLoading(false);
       }
@@ -94,19 +95,19 @@ const PropertyTypeSection = () => {
       <div className="section-header">
         <Image
           src="/images/icons/iconproperty/property_type.svg"
-          alt="Property Type"
+          alt={t('alt')}
           width={24}
           height={24}
           className="section-icon"
         />
-        <h2 className="section-title">Property Type*</h2>
+        <h2 className="section-title">{t('title')}</h2>
       </div>
       
       {/* Hidden input for react-hook-form to track the selected property type */}
       <input
         type="hidden"
         {...register('propertyType', { 
-          required: 'Please select a property type'
+          required: t('validation.required')
         })}
         defaultValue={formData.propertyType}
       />
@@ -115,7 +116,7 @@ const PropertyTypeSection = () => {
         {loading ? (
           <div className="loading-container">
             <div className="spinner"></div>
-            <p>Loading property types...</p>
+            <p>{t('loading')}</p>
           </div>
         ) : propertyTypes.length > 0 ? (
           propertyTypes.map((type) => (
@@ -129,7 +130,7 @@ const PropertyTypeSection = () => {
           ))
         ) : (
           <div className="no-data-message">
-            <p>No property types available</p>
+            <p>{t('noData')}</p>
           </div>
         )}
       </div>

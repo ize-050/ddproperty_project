@@ -1,12 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
+import { Controller } from 'react-hook-form';
+import { NumericFormat } from 'react-number-format';
 
 const PricingSection = () => {
+  const t = useTranslations('backoffice.pricing');
   const { formData, setFormData } = usePropertyFormStore();
-  const { register, formState: { errors }, setValue, watch, trigger, getValues } = useFormContext();
+  const { control, register, formState: { errors }, setValue, watch, trigger, getValues } = useFormContext();
   const [promotionEnabled, setPromotionEnabled] = useState(false);
   
   // Watch the short term rental values
@@ -30,7 +34,7 @@ const PricingSection = () => {
     register('promotionalPrice', {
       validate: value => {
         if (promotionEnabled && (!value || value === '0' || value === 0 || value === '')) {
-          return 'Promotional price is required when promotion is enabled';
+          return t('validation.promotionalPriceRequired');
         }
         return true;
       }
@@ -45,18 +49,7 @@ const PricingSection = () => {
 
   // priceUnit is already declared above
 
-  const handlePromotionalPriceChange = (e) => {
-    const value = e.target.value;
-    setValue('promotionalPrice', value, { shouldDirty: true, shouldValidate: true });
-    
-    // Update form store
-    setFormData({ ...formData, promotionalPrice: value });
-    
-    // ทำ validation ทันทีเมื่อมีการเปลี่ยนแปลงค่า
-    if (promotionEnabled) {
-      setTimeout(() => trigger('promotionalPrice'), 100);
-    }
-  };
+  
 
   const handleTogglePromotion = () => {
     const newState = !promotionEnabled;
@@ -84,7 +77,7 @@ const PricingSection = () => {
     <section className="form-section">
       {showSaleSection && (
       <div className="section-header-with-toggle">
-        <h2>Pricing and Promotion Settings</h2>
+        <h2>{t('title')}</h2>
         <div className="toggle-switch">
           <input
             type="checkbox"
@@ -99,13 +92,13 @@ const PricingSection = () => {
 
       {promotionEnabled && showSaleSection && (
         <div className="promotion-info">
-          <p>Promotional pricing will enhance the attractiveness of your listing.</p>
+          <p>{t('promotionInfo')}</p>
         </div>
       )}
 
       {promotionEnabled && showSaleSection && (
         <div className="promotion-price-display">
-          <p>Displayed price when promotion is enabled</p>
+          <p>{t('displayedPrice')}</p>
           <div className="promotion-price-box" >
             <div className="original-price" style={{ color: '#fefefe' }}>
               <span className="currency-symbol" style={{ color: '#fefefe' }}>฿</span>
@@ -125,17 +118,29 @@ const PricingSection = () => {
           {showSaleSection && (
             <div className={showRentSection ? "col-md-6" : "col-md-12"}>
               <div className="form-group">
-                <label htmlFor="price">Selling Price</label>
+                <label htmlFor="price">{t('labels.sellingPrice')}</label>
                 <div className="price-input-wrapper">
-                  <input
-                    type="text"
-                    id="price"
-                    className={`form-control ${errors.price ? 'is-invalid' : ''}`}
-                    defaultValue={formData.price}
-                    placeholder="e.g. 30,000,000"
-                    {...register('price', { required: showSaleSection ? 'Price is required' : false })}
+                  <Controller
+                    name="price"
+                    control={control}
+                    rules={{ required: showSaleSection ? t('validation.priceRequired') : false }}
+                    render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                      <NumericFormat
+                        name={name}
+                        ref={ref}
+                        value={value}
+                        onBlur={onBlur}
+                        thousandSeparator=","
+                        id="price"
+                        className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+                        placeholder={t('placeholders.sellingPrice')}
+                        onValueChange={(values) => {
+                          onChange(values.value);
+                        }}
+                      />
+                    )}
                   />
-                  <span className="unit-text">THB</span>
+                  <span className="unit-text">{t('units.thb')}</span>
                 </div>
                 {errors.price && (
                   <div className="invalid-feedback">{errors.price.message}</div>
@@ -148,17 +153,29 @@ const PricingSection = () => {
           {showRentSection && (
             <div className={showSaleSection ? "col-md-6" : "col-md-12"}>
               <div className="form-group">
-                <label htmlFor="rentalPrice">Rental Price</label>
+                <label htmlFor="rentalPrice">{t('labels.rentalPrice')}</label>
                 <div className="price-input-wrapper">
-                  <input
-                    type="text"
-                    id="rentalPrice"
-                    className={`form-control ${errors.rentalPrice ? 'is-invalid' : ''}`}
-                    defaultValue={formData.rentalPrice}
-                    placeholder="e.g. 80,000"
-                    {...register('rentalPrice', { required: showRentSection ? 'Rental price is required' : false })}
+                  <Controller
+                    name="rentalPrice"
+                    control={control}
+                    rules={{ required: showRentSection ? t('validation.rentalPriceRequired') : false }}
+                    render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                      <NumericFormat
+                        name={name}
+                        ref={ref}
+                        value={value}
+                        onBlur={onBlur}
+                        thousandSeparator=","
+                        id="rentalPrice"
+                        className={`form-control ${errors.rentalPrice ? 'is-invalid' : ''}`}
+                        placeholder={t('placeholders.rentalPrice')}
+                        onValueChange={(values) => {
+                          onChange(values.value);
+                        }}
+                      />
+                    )}
                   />
-                  <span className="unit-text">THB/Month</span>
+                  <span className="unit-text">{t('units.thbPerMonth')}</span>
                 </div>
                 {errors.rentalPrice && (
                   <div className="invalid-feedback">{errors.rentalPrice.message}</div>
@@ -173,18 +190,29 @@ const PricingSection = () => {
       <div className="row">
         {showRentSection && (
           <div className="short-term-rental">
-            <h3>Short Term Rental (optional)</h3>
+            <h3>{t('shortTerm.title')}</h3>
 
             <div className="row short-term-row">
               <div className="col-md-4">
                 <div className="short-term-container">
-                  <span className="short-term-label">3 M</span>
-                  <input
-                    type="number" 
-                    id="shortTerm3Months"
-                    className="short-term-input"
-                    value={shortTerm3Months || ''}
-                    {...register('shortTerm3Months')}
+                  <span className="short-term-label">{t('shortTerm.months3')}</span>
+                  <Controller
+                    name="shortTerm3Months"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                      <NumericFormat
+                        name={name}
+                        ref={ref}
+                        value={value}
+                        onBlur={onBlur}
+                        thousandSeparator=","
+                        id="shortTerm3Months"
+                        className="short-term-input"
+                        onValueChange={(values) => {
+                          onChange(values.value);
+                        }}
+                      />
+                    )}
                   />
                   <span className="short-term-currency">THB/M</span>
                 </div>
@@ -192,13 +220,24 @@ const PricingSection = () => {
 
               <div className="col-md-4">
                 <div className="short-term-container">
-                  <span className="short-term-label">6 M</span>
-                  <input
-                    type="number"
-                    id="shortTerm6Months"
-                    className="short-term-input"
-                    value={shortTerm6Months || ''}
-                    {...register('shortTerm6Months')}
+                  <span className="short-term-label">{t('shortTerm.months6')}</span>
+                  <Controller
+                    name="shortTerm6Months"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                      <NumericFormat
+                        name={name}
+                        ref={ref}
+                        value={value}
+                        onBlur={onBlur}
+                        thousandSeparator=","
+                        id="shortTerm6Months"
+                        className="short-term-input"
+                        onValueChange={(values) => {
+                          onChange(values.value);
+                        }}
+                      />
+                    )}
                   />
                   <span className="short-term-currency">THB/M</span>
                 </div>
@@ -206,13 +245,24 @@ const PricingSection = () => {
 
               <div className="col-md-4">
                 <div className="short-term-container">
-                  <span className="short-term-label">1 Y</span>
-                  <input
-                    type="number"
-                    id="shortTerm1Year"
-                    className="short-term-input"
-                    value={shortTerm1Year || ''}
-                    {...register('shortTerm1Year')}
+                  <span className="short-term-label">{t('shortTerm.year1')}</span>
+                  <Controller
+                    name="shortTerm1Year"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                      <NumericFormat
+                        name={name}
+                        ref={ref}
+                        value={value}
+                        onBlur={onBlur}
+                        thousandSeparator=","
+                        id="shortTerm1Year"
+                        className="short-term-input"
+                        onValueChange={(values) => {
+                          onChange(values.value);
+                        }}
+                      />
+                    )}
                   />
                   <span className="short-term-currency">THB/Y</span>
                 </div>
@@ -226,15 +276,31 @@ const PricingSection = () => {
         <div className="form-group">
           <label htmlFor="promotionalPrice">Promotional Price</label>
           <div className="price-input-wrapper">
-            <input
-              type="text"
-              id="promotionalPrice"
-              className={`form-control ${errors.promotionalPrice ? 'is-invalid' : ''}`}
-              value={promotionalPrice || ''}
-              {...register('promotionalPrice')}
-              onChange={handlePromotionalPriceChange}
-              onBlur={() => promotionEnabled && trigger('promotionalPrice')}
-              placeholder="e.g. 25,000,000"
+            <Controller
+              name="promotionalPrice"
+              control={control}
+              render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                <NumericFormat
+                  name={name}
+                  ref={ref}
+                  value={value || ''}
+                  onBlur={() => {
+                    onBlur();
+                    if (promotionEnabled) trigger('promotionalPrice');
+                  }}
+                  thousandSeparator=","
+                  id="promotionalPrice"
+                  className={`form-control ${errors.promotionalPrice ? 'is-invalid' : ''}`}
+                  placeholder="e.g. 25,000,000"
+                  onValueChange={(values) => {
+                    onChange(values.value);
+                    setFormData({ ...formData, promotionalPrice: values.value });
+                    if (promotionEnabled) {
+                      setTimeout(() => trigger('promotionalPrice'), 100);
+                    }
+                  }}
+                />
+              )}
             />
             <span className="unit-text">{priceUnit}</span>
           </div>

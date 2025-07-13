@@ -31,12 +31,12 @@ export async function generateMetadata({ params }) {
     const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
     const propertyUrl = `${localizedUrl}/property_detail/${id}`;
     
-    // สร้าง title ตามชื่อโครงการเท่านั้น
-    const title = `${property.projectName}`;
+    // สร้าง title ตามภาษาที่เลือก
+    const translatedTitles = JSON.parse(property.translatedTitles || '{}');
+    const title = translatedTitles[locale] || translatedTitles['en'] || property.title || property.projectName;
     
     return {
       title,
-      description: description.substring(0, 160),
       alternates: {
         canonical: propertyUrl,
         languages: {
@@ -48,7 +48,6 @@ export async function generateMetadata({ params }) {
       },
       openGraph: {
         title,
-        description: description.substring(0, 160),
         url: propertyUrl,
         siteName: 'DDProperty',
         images: [
@@ -56,7 +55,7 @@ export async function generateMetadata({ params }) {
             url: property.featuredImage?.url || '/images/logo/logo.png',
             width: 800,
             height: 600,
-            alt: property.projectName,
+            alt: property.title,
           },
         ],
         locale,
@@ -77,62 +76,13 @@ export async function generateMetadata({ params }) {
 // ฟังก์ชันสำหรับดึงข้อมูล property จาก API ตาม ID
 async function getPropertyById(id) {
   try {
-    console.log(`Fetching property details for ID: ${id}`);
     const property = await serverApi.get(`/properties/${id}`);
-    
-    // เพิ่มข้อมูลที่จำเป็นสำหรับหน้า property detail
-    const enhancedProperty = enhancePropertyData(property);
-    console.log('Enhanced property data with missing fields');
-    
-    return enhancedProperty;
+
+    return property;
   } catch (error) {
     console.error('Error fetching property details:', error);
     throw error;
   }
-}
-
-// ฟังก์ชันแปลประเภท property ตามภาษา
-function getPropertyTypeText(propertyType, locale) {
-  const propertyTypes = {
-    CONDO: {
-      th: 'คอนโดมิเนียม',
-      en: 'Condominium',
-      zh: '公寓',
-      ru: 'Кондоминиум'
-    },
-    HOUSE: {
-      th: 'บ้านเดี่ยว',
-      en: 'House',
-      zh: '独立屋',
-      ru: 'Дом'
-    },
-    TOWNHOUSE: {
-      th: 'ทาวน์เฮาส์',
-      en: 'Townhouse',
-      zh: '联排别墅',
-      ru: 'Таунхаус'
-    },
-    LAND: {
-      th: 'ที่ดิน',
-      en: 'Land',
-      zh: '土地',
-      ru: 'Земля'
-    },
-    APARTMENT: {
-      th: 'อพาร์ทเมนท์',
-      en: 'Apartment',
-      zh: '公寓',
-      ru: 'Апартаменты'
-    },
-    COMMERCIAL: {
-      th: 'อาคารพาณิชย์',
-      en: 'Commercial Building',
-      zh: '商业建筑',
-      ru: 'Коммерческое здание'
-    }
-  };
-  
-  return propertyTypes[propertyType]?.[locale] || propertyTypes[propertyType]?.en || propertyType;
 }
 
 // Component สำหรับดึงข้อมูลและแสดงผล
@@ -141,12 +91,16 @@ async function PropertyDetailContent({ params }) {
   const t = await getTranslations('PropertyDetail');
   
   try {
-    // ดึงข้อมูล property จาก API
     const property = await getPropertyById(id);
-    
+    const propertyDataWithTitle = {
+      ...property.data, 
+    };
+
+    console.log("propertyDataWithTitle", propertyDataWithTitle);
+
     // ส่งข้อมูลไปให้ component
     return (
-      <PropertyDetailPage property={property.data} />
+      <PropertyDetailPage property={propertyDataWithTitle} />
     );
   } catch (error) {
     // แสดงข้อความ error ถ้าดึงข้อมูลไม่สำเร็จ

@@ -3,64 +3,89 @@
     "home": "домашняя страница",
     "properties": "Недвижимость",
     "agents": "Агенты",
-    "buy": "Купить",
-    "rent": "Аренда",
     "blog": "Статьи",
     "about": "О нас",
+    "buy": "Купить",
+    "rent": "Аренда",
     "contact": "Связаться с нами",
     "login": "Вход / Регистрация",
     "addProperty": "Добавить объект"
   },
+  "hero": {
+    "title": "Найдите дом своей мечты",
+    "subtitle": "Всего от $10 в день с ограниченным по времени предложением скидок"
+  },
+  "PropertyList": {
+    "discoverOurFeaturedListings": "Откройте для себя наши избранные объявления",
+    "noPropertiesFound": "Объекты не найдены",
+    "tryDifferentFilters": "Попробуйте другие фильтры"
+  },
+  "featured": {
+    "title": "Откройте для себя наши избранные объявления",
+    "subtitle": "Aliquam lacinia diam quis lacus euismod",
+    "seeAll": "Посмотреть все объекты"
+  },
+  "Footer": {
+    "about": "О нас",
+    "contact": "Связаться с нами",
+    "terms": "Условия и положения",
+    "privacy": "Политика конфиденциальности",
+    "copyright": " 2019 D'LUCK PROPERTY",
+    "popularSearch": "Популярный поиск",
+    "condoForSale": "Кондоминиум на продажу",
+    "condoForRent": "Кондоминиум в аренду",
+    "poolVillaForSale": "Вилла с бассейном на продажу",
+    "poolVillaForRent": "Вилла с бассейном в аренду",
+    "houseForSale": "Дом на продажу",
+    "quickLinks": "Быстрые ссылки",
+    "propertyForSale": "Недвижимость на продажу",
+    "aboutUs": "О нас",
+    "contactUs": "Связаться с нами",
+    "discoverByArea": "Поиск по районам",
+    "jomtien": "Джомтьен",
+    "wongamat": "Вонгамат",
+    "naklua": "Наклыа",
+    "pratumnak": "Пратамнак",
+    "banglamung": "Банг Ламунг",
+    "callUsNow": "Позвоните нам",
+    "dropEmail": "Напишите нам",
+    "getPromoWithNewsletter": "Получайте акции с новостной рассылкой",
+    "enterEmail": "Введите ваш email",
+    "subscribe": "Подписаться",
+    "sitemap": "Карта сайта"
+  },
+  "language": {
+    "en": "Английский",
+    "th": "Тайский",
+    "zh": "Китайский",
+    "ru": "Русский"
+  },
   "home": {
-    "welcome": "ДОБРО ПОЖАЛОВАТЬ НА",
+    "title": "ДОБРО ПОЖАЛОВАТЬ НА",
     "d_luck": "D-LUCK PROPERTY",
     "buy": "Купить",
     "rent": "Аренда",
     "price": "цена",
     "select_area": "Выберите область",
     "advance_search": "Расширенный поиск",
-    "title": "ЛУЧШИЙ САЙТ НЕДВИЖИМОСТИ В ПАТТАЙЕ, ТАИЛАНД",
+    "subtitle": "ЛУЧШИЙ САЙТ НЕДВИЖИМОСТИ В ПАТТАЙЕ, ТАИЛАНД",
     "developer": "Застройщик недвижимости",
-    "featured":{
+    "featured": {
       "title": "Откройте для себя наши избранные объявления",
       "subtitle": "Aliquam lacinia diam quis lacus euismod",
       "seeAll": "Посмотреть все объекты"
     },
-    "randomProperties": {
-      "title": "Откройте для себя наши избранные списки",
-      "subtitle": "НАЙДИТЕ СВОЮ НЕДВИЖИМОСТЬ В ПАТТАЙЕ",
-      "seeAll": "Посмотреть все объекты недвижимости",
-      "loading": "Loading properties...",
-      "error": "Error loading properties",
-      "retry": "Retry",
-      "bed": "bed",
-      "bath": "bath",
-      "sqm": "sqm"
+    "propertyTypes": {
+      "title": "Типы недвижимости",
+      "subtitle": "Откройте для себя недвижимость в Паттайе на продажу и в аренду — квартиры, виллы с бассейном, дома и коммерческая недвижимость",
+      "noPropertyTypesFound": "Типы недвижимости не найдены"
     },
-    "Language":{
-    "title":"ภาษา",
-    "subtitle":"จัดการภาษา",
-    "addNewLanguage":"เพิ่มภาษาใหม่",
-    "editLanguage":"แก้ไขภาษา",
-    "deleteLanguage":"ลบภาษา",
-    "language":"ภาษา",
-    "code":"รหัส",
-    "status":"สถานะ",
-    "action":"การดำเนินการ",
-    "rent":"เช่า",
-    "buy":"ซื้อ",
-    "blog":"บทความ"
-  },
     "ExploreLocations": {
       "title": "Популярные места в Паттайе",
       "subtitle": "Кондоминиумы, дома и виллы с бассейном на продажу и в аренду в Паттайе и окрестностях: Джомтьен, Кхао Пратамнак, Банг Сарай, Восточная Паттайя, Бан Ампур, На Клуа и Саттахип",
       "more": "Подробнее",
       "properties": "списки",
       "errorFetching": "Ошибка при получении списков"
-    },
-    "propertyTypes": {
-      "title": "Типы недвижимости",
-      "subtitle": "Откройте для себя недвижимость в Паттайе на продажу и в аренду — квартиры, виллы с бассейном, дома и коммерческая недвижимость"
     },
     "service": {
       "title": "Вместе мы найдем идеальную стратегию продажи для вас",
@@ -76,21 +101,45 @@
       "title": "Познакомьтесь с нашей командой",
       "subtitle": "Наши опытные консультанты готовы воплотить ваши мечты о недвижимости в реальность.",
       "out_team": "Наша команда",
-      "oat":"Oat - Supakorn",
+      "oat": "Oat - Supakorn",
       "oat_description": "Генеральный директор и основатель",
       "emy": "Amy - Thannaree",
       "emy_description": "Директор по продажам",
       "ice": "Ize - Chanyapak",
       "ice_description": "Менеджер по продажам"
     },
+    "randomProperties": {
+      "title": "Откройте для себя наши избранные списки",
+      "subtitle": "НАЙДИТЕ СВОЮ НЕДВИЖИМОСТЬ В ПАТТАЙЕ",
+      "loading": "Загрузка объектов...",
+      "error": "Ошибка загрузки объектов",
+      "retry": "Повторить",
+      "bed": "спальня",
+      "bath": "ванная",
+      "sqm": "кв.м"
+    },
+    "Language": {
+      "title": "язык",
+      "subtitle": "Управление языками",
+      "addNewLanguage": "Добавить новый язык",
+      "editLanguage": "Редактировать язык",
+      "deleteLanguage": "Удалить язык",
+      "language": "язык",
+      "code": "код",
+      "status": "статус",
+      "action": "действие",
+      "rent": "аренда",
+      "buy": "купить",
+      "blog": "статьи"
+    },
     "blogs": {
       "section": {
         "title": "Из нашего блога",
         "subtitle": "Откройте для себя ценные идеи, которые помогут вам принимать более разумные решения в сфере недвижимости.",
-        "viewAll": "View all articles"
+        "viewAll": "Посмотреть все статьи"
       },
       "error": {
-        "fetch": "Failed to load blog posts. Please try again."
+        "fetch": "Не удалось загрузить сообщения блога. Пожалуйста, попробуйте еще раз."
       }
     },
     "contact": {
@@ -106,131 +155,731 @@
       "messageError": "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз."
     }
   },
+  "Message": {
+    "messages": "Сообщения",
+    "description": "Мы рады видеть вас снова",
+    "formTitle": "Контактная форма",
+    "title": "Сообщение",
+    "subtitle": "Все сообщения",
+    "update": "Обновить",
+    "delete": "Удалить",
+    "deleteConfirm": "Вы уверены, что хотите удалить это сообщение?",
+    "deleteAllConfirm": "Вы уверены, что хотите удалить все сообщения?",
+    "leadsReceived": "Полученные лиды",
+    "inquiriesReceived": "Полученные запросы",
+    "new": "Новый",
+    "contacted": "Связались",
+    "visit": "Посещение",
+    "proposal": "Предложение",
+    "won": "Выиграно",
+    "filterByProperty": "Фильтр по объекту",
+    "filterByStatus": "Фильтр по статусу",
+    "last3Month": "Последние 3 месяца",
+    "clear": "Очистить",
+    "searchByName": "Поиск по имени, email или телефону",
+    "status": "Статус",
+    "contact": "Контакт",
+    "property": "Объект",
+    "enquiries": "Запросы",
+    "lastActivity": "Последняя активность",
+    "lost": "Проиграно",
+    "name": "Имя",
+    "email": "Электронная почта",
+    "subject": "Тема",
+    "messageContent": "Сообщение",
+    "send": "Отправить сообщение",
+    "sentSuccess": "Ваше сообщение успешно отправлено!",
+    "sentError": "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.",
+    "requiredField": "Это поле обязательно для заполнения",
+    "invalidEmail": "Пожалуйста, введите действительный адрес электронной почты",
+    "inbox": "Входящие",
+    "sent": "Отправленные",
+    "trash": "Корзина",
+    "compose": "Написать",
+    "reply": "Ответить",
+    "forward": "Переслать",
+    "read": "Прочитано",
+    "replied": "Отвечено",
+    "archived": "Архивировано",
+    "last6Month": "Последние 6 месяцев",
+    "lastYear": "Прошлый год",
+    "allTime": "За все время",
+    "loading": "Загрузка сообщений...",
+    "error": "Ошибка: {error}",
+    "tryAgain": "Попробовать снова",
+    "updateStatusSuccess": "Статус сообщения обновлен на {status}",
+    "updateStatusError": "Не удалось обновить статус сообщения",
+    "fetchError": "Не удалось загрузить сообщения",
+    "unknown": "Неизвестный",
+    "unknownProperty": "Неизвестный объект",
+    "sentMessage": "Сообщение отправлено",
+    "messageDescription": "Мы рады видеть вас снова"
+  },
   "backoffice": {
-    "adminLogin": "Вход администратора",
-    "loginDescription": "Пожалуйста, войдите для доступа к панели администратора",
-    "email": "Адрес электронной почты",
-    "enterEmail": "Введите ваш адрес электронной почты",
-    "password": "Пароль",
-    "enterPassword": "Введите ваш пароль",
-    "rememberMe": "Запомнить меня",
-    "loggingIn": "Вход в систему...",
-    "login": "Войти",
-    "dashboard": "Панель управления",
-    "message": "Сообщения",
-    "addProperty": "Добавить недвижимость",
-    "myProperties": "Моя недвижимость",
-    "allPost": "Все посты",
-    "addNewPost": "Добавить новый пост",
-    "allUser": "Все пользователи",
-    "language": "Язык",
-    "currency": "Валюта",
-    "myProfile": "Мой профиль",
-    "manageYourProfile": "Управление вашим профилем",
-    "menu":{
-       "dashboard": "Панель управления",
-       "message": "Сообщения",
-       "addproperty": "Добавить недвижимость",
-       "my_properties": "Моя недвижимость",
-       "blog": "Блог",
-       "main": "Главная",
-       "allpost": "Все посты",
-       "managelisting": "Управление списками",
-       "addnewpost": "Добавить новый пост",
-       "setting": "Настройки",
-       "alluser": "Все пользователи",
-       "language": "Язык",
-       "currency": "Валюта",
-       "profile" :"Управление аккаунтом",
-       "myprofile": "Мой профиль",
-       "logout": "Выйти"
+    "frontend": "Интерфейс",
+    "paginationOf": "из",
+    "coAgent": {
+      "title": "Со-агент",
+      "accept": "Принимать со-агентов",
+      "alt": "Значок со-агента",
+      "commissionPercent": "Комиссия в процентах",
+      "commissionSpecific": "Комиссия в конкретной сумме",
+      "commissionRate": "Ставка комиссии",
+      "commissionPercentPlaceholder": "например, 3.0",
+      "commissionAmountPlaceholder": "например, 50000",
+      "totalCommission": "Общая комиссия",
+      "currencyTHB": "бат",
+      "privateNote": "Личная заметка для со-агентов",
+      "privateNoteAlt": "Иконка личной заметки",
+      "privateNotePlaceholder": "Введите здесь любые личные заметки для со-агентов. Они будут видны только вам и им."
+    },
+    "socialMedia": {
+      "youtubeUrl": "URL YouTube",
+      "youtubePlaceholder": "Введите URL-адрес видео на YouTube",
+      "tiktokUrl": "URL TikTok",
+      "tiktokPlaceholder": "Введите URL-адрес видео в TikTok"
+    },
+    "menu": {
+      "main": "Главное меню",
+      "dashboard": "Панель управления",
+      "message": "Сообщения",
+      "managelisting": "Управление списками",
+      "addproperty": "Добавить объект",
+      "my_properties": "Мои объекты",
+      "allpost": "Все посты",
+      "addnewpost": "Добавить новый пост",
+      "setting": "Настройки",
+      "alluser": "Все пользователи",
+      "language": "Язык",
+      "currency": "Валюта",
+      "profile": "Профиль",
+      "myprofile": "Мой профиль",
+      "logout": "Выйти"
+    },
+    "dashboard": {
+      "loadingStats": "Загрузка статистики...",
+      "errorLoadingStats": "Не удалось загрузить статистику",
+      "allProperties": "Все объекты",
+      "totalViews": "Общее количество просмотров",
+      "totalEnquiries": "Общее количество запросов",
+      "failedToFetchRecentActivities": "Не удалось загрузить недавние активности",
+      "apiRequestFailed": "API запрос завершился с ошибкой {status}",
+      "activities": {
+        "anonymousUser": "Анонимный пользователь",
+        "noEmailProvided": "Email не предоставлен",
+        "noPhoneProvided": "Телефон не предоставлен",
+        "noMessageContent": "Нет содержания сообщения",
+        "unknownProperty": "Неизвестный объект",
+        "unknownDate": "Неизвестная дата",
+        "yourListing": "Ваше объявление",
+        "hasStatus": "имеет статус",
+        "leftAReviewOn": "оставил(а) отзыв на",
+        "favouritesYour": "добавил(а) в избранное ваше",
+        "listing": "объявление"
+      },
+      "propertyOverview": "Обзор объекта",
+      "properties": "Объекты",
+      "yearly": "Ежегодно",
+      "noRecentActivities": "Нет недавних активностей",
+      "messages": "Сообщения",
+      "propertyViews": "Просмотры объекта",
+      "hourly": "По часам",
+      "weekly": "Еженедельно",
+      "monthly": "Ежемесячно",
+      "recentActivities": "Недавние активности",
+      "views": "Просмотры",
+      "inquiries": "Запросы",
+      "viewMore": "Посмотреть больше"
+    },
+    "manageYourProfile": "Управляйте своим профилем",
+    "welcomeMessage": "Мы рады видеть вас снова!",
+    "other": "Другое",
+    "noData": "Нет данных",
+    "location": {
+      "title": "Местоположение",
+      "toggleMap": "Показать карту для выбора местоположения",
+      "searchAddress": "Поиск адреса",
+      "searchPlaceholder": "Введите адрес, город или ориентир",
+      "propertyLocationMarker": "Местоположение объекта",
+      "addressNotFound": "Адрес не найден. Попробуйте другой поисковый запрос.",
+      "addressLabel": "Адрес",
+      "countryLabel": "Страна",
+      "provinceLabel": "Провинция / Штат",
+      "districtLabel": "Район / Округ",
+      "subdistrictLabel": "Подрайон / Город",
+      "postalCodeLabel": "Почтовый индекс",
+      "latitudeLabel": "Широта",
+      "longitudeLabel": "Долгота",
+      "addressPlaceholder": "Полный адрес с карты",
+      "countryPlaceholder": "Страна с карты",
+      "provincePlaceholder": "Провинция с карты",
+      "districtPlaceholder": "Район с карты",
+      "subdistrictPlaceholder": "Подрайон с карты",
+      "postalCodePlaceholder": "Почтовый индекс с карты"
+    },
+
+    "view": {
+      "title": "Просмотр",
+      "loading": "Загрузка просмотров...",
+      "error": "Ошибка загрузки просмотров: {error}",
+      "noData": "Данные о просмотрах не найдены"
+    },
+    "socialMediaTiktokPlaceholder": "https://www.tiktok.com/@username/video/...",
+    "coAgentTitle": "Co Agent",
+    "propertyDetail": {
+      "title": "Детали объекта",
+      "alt": "Иконка деталей объекта",
+      "labels": {
+        "propertyId": "ID объекта",
+        "ownershipQuota": "Квота собственности",
+        "landSize": "Размер участка",
+        "usableArea": "Полезная площадь",
+        "floors": "Этажи",
+        "furnishing": "Меблировка",
+        "bedrooms": "Спальни",
+        "bathrooms": "Ванные комнаты",
+        "constructionYear": "Год постройки",
+        "communityFees": "Коммунальные платежи"
+      },
+      "units": {
+        "rai": "Рай",
+        "ngan": "Нган",
+        "sqwah": "Кв. ва",
+        "sqm": "кв.м.",
+        "month": "/ месяц",
+        "perSqm": "/кв.м.",
+        "perSqwah": "/кв. ва"
+      },
+      "options": {
+        "ownership": {
+          "freehold": "Полная собственность",
+          "leasehold": "Аренда"
+        },
+        "furnishing": {
+          "fully": "Полностью меблирована",
+          "partially": "Частично меблирована",
+          "unfurnished": "Без мебели"
+        }
+      },
+      "validation": {
+        "ownershipRequired": "Требуется указать тип владения",
+        "usableAreaRequired": "Требуется указать полезную площадь",
+        "required": "Это поле обязательно для заполнения"
+      }
+    },
+    "contact": {
+      "title": "Контактная информация",
+      "alt": "Иконка контакта",
+      "useProfile": "Использовать данные из моего профиля",
+      "loading": "Загрузка...",
+      "failedLoad": "Не удалось загрузить данные профиля",
+      "phoneMain": "Основной телефон*",
+      "phoneSecondary": "Дополнительный телефон",
+      "email": "Электронная почта*",
+      "line": "Line ID",
+      "wechat": "WeChat ID",
+      "whatsapp": "WhatsApp",
+      "facebook": "Facebook Messenger",
+      "instagram": "Instagram"
+    },
+    "myProperties": {
+      "title": "Мои объекты",
+      "subtitle": "Управляйте своими списками объектов",
+      "searchPlaceholder": "Поиск объектов...",
+      "sortBy": {
+        "date": "Сортировать по: Дате добавления",
+        "price": "Сортировать по: Цене",
+        "views": "Сортировать по: Просмотрам"
+      },
+      "clear": "Очистить",
+      "addNew": "Добавить новый объект",
+      "loading": "Загрузка объектов...",
+      "retry": "Повторить",
+      "tableHeaders": {
+        "property": "ОБЪЕКТ",
+        "reference": "АРТИКУЛ",
+        "operation": "ОПЕРАЦИЯ",
+        "price": "ЦЕНА",
+        "published": "ОПУБЛИКОВАНО",
+        "displays": "ПОКАЗЫ",
+        "visits": "ПОСЕЩЕНИЯ",
+        "enquiries": "ЗАПРОСЫ",
+        "date": "ДАТА",
+        "actions": "ДЕЙСТВИЯ"
+      },
+      "propertyImageAlt": "Изображение объекта",
+      "noImage": "Нет изображения",
+      "status": {
+        "published": "ОПУБЛИКОВАНО",
+        "unpublished": "НЕ ОПУБЛИКОВАНО"
+      },
+      "noProperties": {
+        "title": "Объекты не найдены",
+        "subtitle": "Попробуйте изменить параметры поиска или фильтры, или добавьте новый объект."
+      },
+      "pagination": {
+        "page": "Страница {currentPage} из {totalPages}",
+        "itemsPerPage": "{count} / страница"
+      },
+      "priceUnit": "/месяц",
+      "errors": {
+        "authTokenNotFound": "Токен аутентификации не найден",
+        "fetchError": "Ошибка при загрузке объектов: {error}"
+      },
+      "deleteDialog": {
+        "title": "Вы уверены?",
+        "text": "Вы не сможете отменить это действие!",
+        "confirmButton": "Да, удалить!",
+        "cancelButton": "Отмена"
+      },
+      "errorDialog": {
+        "title": "Ошибка",
+        "text": "Что-то пошло не так"
+      },
+      "toast": {
+        "deleteSuccess": "Объект успешно удален.",
+        "deleteError": "Не удалось удалить объект.",
+        "updateStatusSuccess": "Статус объекта успешно обновлен на {status}",
+        "updateStatusError": "Не удалось обновить статус объекта"
+      }
+    },
+    "photos": {
+      "propertyAlt": "Фотография объекта",
+      "maxImagesError": "Допускается не более 100 изображений. Вы пытаетесь добавить {filesLength} изображений, но уже есть {propertyImagesLength}. Сначала удалите несколько изображений.",
+      "compressing": "Сжатие {filesLength} изображений...",
+      "invalidFile": "{fileName} не является допустимым файлом изображения",
+      "processError": "Не удалось обработать изображения: {errorMessage}",
+      "mediaAlt": "Медиа",
+      "title": "Медиа",
+      "galleryTitle": "Фотогалерея",
+      "imagesTitle": "Фотографии объекта ({propertyImagesLength}/100)",
+      "reorderSubtitle": "Перетащите, чтобы изменить порядок - первое изображение будет главным",
+      "compressingButton": "Сжатие...",
+      "addMoreButton": "Добавить еще фотографий",
+      "maxImagesReached": "Достигнуто максимальное количество изображений (100)",
+      "uploadTitle": "Загрузить/перетащить фотографии вашего объекта",
+      "uploadSubtitle": "Фотографии должны быть в формате JPG или PNG и размером не менее 2048x768 (максимум 100 изображений)",
+      "browseFilesButton": "Выбрать файлы"
+    },
+    "nearby": {
+      "title": "Поблизости",
+      "alt": "Иконка Поблизости",
+      "loading": "Загрузка ближайших мест...",
+      "error": "Ошибка загрузки ближайших мест: {error}",
+      "noData": "Данные о ближайших местах не найдены",
+      "iconAlt": "Иконка {name}"
+    },
+    "moreRoomType": {
+      "title": "Дополнительный тип комнаты",
+      "alt": "Иконка дополнительного типа комнаты",
+      "duplex": "Дуплекс",
+      "penthouse": "Пентхаус",
+      "oneBedPlus": "1 спальня плюс",
+      "duplexPenthouse": "Дуплекс-пентхаус"
+    },
+    "propertyDescription": {
+      "title": "Описание объекта",
+      "alt": "Иконка описания объекта",
+      "translateAllButton": "Автоматический перевод на все языки",
+      "translateFieldTooltip": "Перевести это поле",
+      "form": {
+        "titleLabel": "Заголовок*",
+        "titlePlaceholder": "Введите заголовок объекта на {languageName}",
+        "titleRequiredError": "Заголовок объекта обязателен",
+        "descriptionLabel": "Описание*",
+        "descriptionPlaceholder": "Введите описание объекта на {languageName}",
+        "descriptionRequiredError": "Описание объекта обязательно",
+        "paymentPlanLabel": "План оплаты (необязательно)",
+        "paymentPlanPlaceholder": "Введите детали плана оплаты на {languageName} (необязательно)"
+      },
+      "languages": {
+        "en": "АНГЛИЙСКИЙ (Основной)",
+        "th": "ТАЙСКИЙ",
+        "zh": "КИТАЙСКИЙ",
+        "ru": "РУССКИЙ"
+      },
+      "alerts": {
+        "enterEnglishFirst": "Пожалуйста, сначала введите контент на английском языке",
+        "translationFailed": "Перевод не удался. Пожалуйста, попробуйте позже.",
+        "serviceUnavailable": "Служба перевода в настоящее время недоступна. Пожалуйста, попробуйте позже.",
+        "enterContentFirst": "Пожалуйста, сначала введите контент на {languageName}"
+      }
+    },
+    "propertyHighlights": {
+    "title": "Основные моменты недвижимости",
+    "labelTitle": "Метка недвижимости",
+    "loading": "Загрузка основных моментов...",
+    "error": "Ошибка загрузки основных моментов: {error}",
+    "fetchError": "Не удалось получить данные об основных моментах недвижимости",
+    "noHighlights": "Нет доступных вариантов основных моментов",
+    "noLabels": "Нет доступных вариантов меток"
+  },
+
+  "unitPlan": {
+    "title": "План блока",
+    "alt": "План блока",
+    "maxImagesError": "Допускается не более 100 изображений планов блоков. У вас есть {count}.",
+    "compressing": "Сжатие {count} планов блоков...",
+    "invalidFile": "{fileName} не является допустимым файлом изображения.",
+    "processError": "Не удалось обработать планы блоков: {error}",
+    "imagesTitle": "Изображения планов блоков ({count}/100)",
+    "reorderSubtitle": "Перетащите для изменения порядка - первое изображение будет основным планом блока",
+    "addMore": "Добавить еще планы блоков",
+    "compressingButton": "Сжатие...",
+    "uploadTitle": "Загрузить изображения планов блоков",
+    "uploadSubtitle": "Фотографии должны быть в формате JPG или PNG",
+    "browseFiles": "Просмотреть файлы"
+  },
+  "propertyType": {
+      "title": "Тип недвижимости*",
+      "alt": "Значок типа недвижимости",
+      "loading": "Загрузка типов недвижимости...",
+      "noData": "Типы недвижимости отсутствуют",
+      "toast": {
+        "error": "Не удалось загрузить типы недвижимости"
+      },
+      "validation": {
+        "required": "Пожалуйста, выберите тип недвижимости"
+      }
+    },
+
+  "pricing": {
+      "title": "Настройки цен и акций",
+      "promotionInfo": "Акционная цена повысит привлекательность вашего объявления.",
+      "displayedPrice": "Цена, отображаемая при включенной акции",
+      "labels": {
+        "sellingPrice": "Цена продажи",
+        "rentalPrice": "Стоимость аренды"
+      },
+      "placeholders": {
+        "sellingPrice": "например, 30,000,000",
+        "rentalPrice": "например, 80,000"
+      },
+      "units": {
+        "thb": "THB",
+        "thbPerMonth": "THB/месяц"
+      },
+      "shortTerm": {
+        "title": "Краткосрочная аренда (необязательно)",
+        "months3": "3 мес.",
+        "months6": "6 мес.",
+        "year1": "1 год"
+      },
+      "validation": {
+        "promotionalPriceRequired": "Требуется указать акционную цену, когда акция включена",
+        "priceRequired": "Требуется указать цену",
+        "rentalPriceRequired": "Требуется указать стоимость аренды"
+      }
+    },
+    "propertyInfo": {
+      "title": "Информация о недвижимости*",
+      "alt": "Значок информации о недвижимости",
+      "labels": {
+        "projectName": "Название проекта*",
+        "area": "Район*",
+        "referenceId": "ID для справки",
+        "propertyDisplay": "Отображение недвижимости"
+      },
+      "placeholders": {
+        "projectName": "например, The Riviera Jomtien",
+        "selectArea": "Выберите район",
+        "referenceId": "например, PROP123"
+      },
+      "options": {
+        "normal": "Обычная недвижимость",
+        "featured": "Рекомендуемая недвижимость (показывать на главной странице)"
+      },
+      "notes": {
+        "featured": "Рекомендуемые объекты будут отображаться в случайном/популярном разделе на главной странице"
+      },
+      "loadingZones": "Загрузка районов...",
+      "errorLoadingZones": "Ошибка при загрузке районов: {error}",
+      "validation": {
+        "projectNameRequired": "Название проекта обязательно",
+        "areaRequired": "Район обязателен"
+      }
+    },
+    "propertyDetail": {
+      "title": "Детали объекта",
+      "alt": "Иконка информации о объекте",
+      "labels": {
+        "propertyId": "ID объекта",
+        "ownershipQuota": "Доля собственности",
+        "landSize": "Площадь земли",
+        "usableArea": "Полезная площадь",
+        "floors": "Этажи",
+        "furnishing": "Обстановка",
+        "bedrooms": "Спальни",
+        "bathrooms": "Ванные комнаты",
+        "constructionYear": "Год постройки",
+        "communityFees": "Плата за обслуживание"
+      },
+      "options": {
+        "ownership": {
+          "freehold": "Свободная собственность",
+          "leasehold": "Собственность на праве аренды"
+        },
+        "furnishing": {
+          "fully": "Полностью меблировано",
+          "partially": "Частично меблировано",
+          "unfurnished": "Без мебели"
+        }
+      },
+      "units": {
+        "rai": "Рай",
+        "ngan": "Нган",
+        "sqwah": "Квадратный вах",
+        "sqm": "Квадратный метр",
+        "month": "/месяц"
+      },
+      "validation": {
+        "ownershipRequired": "Доля собственности обязательна",
+        "usableAreaRequired": "Полезная площадь обязательна",
+        "required": "Это поле обязательно для заполнения"
+      }
+    },
+    "listingType": {
+      "title": "Тип объявления",
+      "alt": "Иконка типа объявления",
+      "forSale": "На продажу",
+      "forRent": "В аренду",
+      "forSaleAndRent": "На продажу и в аренду",
+      "required": "Пожалуйста, выберите тип объявления",
+      "currentSelection": "Текущий выбор: {status}",
+      "noSelection": "Нет",
+      "disabled": "Тип объявления нельзя изменить в режиме редактирования/просмотра."
+    },
+    "floorPlan": {
+      "title": "План этажа",
+      "alt": "Изображение плана этажа",
+      "maxImagesError": "Вы можете загрузить максимум 100 изображений. Вы пытаетесь загрузить {filesLength} изображений, но у вас уже есть {floorPlanImagesLength}.",
+      "compressing": "Сжатие {filesLength, plural, one {изображения} few {изображений} many {изображений} other {изображений}}...",
+      "invalidFile": "Пропуск файла, не являющегося изображением: {fileName}",
+      "processError": "Ошибка при обработке изображений: {errorMessage}",
+      "imagesTitle": "Загружено {floorPlanImagesLength} изображений",
+      "reorderSubtitle": "Перетащите, чтобы изменить порядок изображений.",
+      "addMoreButton": "Добавить еще",
+      "compressingButton": "Сжатие...",
+      "uploadTitle": "Загрузить/перетащить изображения плана этажа",
+      "uploadSubtitle": "Изображения должны быть в формате JPG или PNG и размером не менее 2048x768 (максимум 100 изображений)",
+      "browseFilesButton": "Выбрать файлы"
+    },
+    "features": {
+      "title": "Особенности и удобства",
+      "loading": "Загрузка особенностей...",
+      "error": "Ошибка при загрузке особенностей: {error}",
+      "fetchError": "Не удалось получить иконки удобств.",
+      "noneAvailable": "Нет доступных особенностей или удобств.",
+      "iconAlt": "Иконка {name}"
+    },
+    "facilities": {
+      "title": "Удобства",
+      "loading": "Загрузка удобств...",
+      "error": "Ошибка при загрузке удобств: {error}",
+      "fetchError": "Не удалось получить удобства",
+      "noData": "Нет удобств",
+      "iconAlt": "Значок {name}",
+      "noneAvailable": "Нет доступных удобств для {category}",
+      "categoryCommon": "Общая зона",
+      "categoryDining": "Столовая",
+      "categoryFitness": "Фитнес",
+      "categoryPool": "Бассейн",
+      "categoryOther": "Другое"
+    },
+    "commissionPercentPlaceholder": "5",
+    "commissionAmountPlaceholder": "500000"
+  },
+  "ExploreLocations": {
+    "title": "Исследуйте локации",
+    "description": "Помимо пляжей и ночной жизни, Паттайя может похвастаться разнообразным ландшафтом с различными локациями, каждая из которых имеет уникальные характеристики, отвечающие различным потребностям в недвижимости и инвестиционным стратегиям.",
+    "more": "Больше",
+    "properties": "Объекты",
+    "errorFetching": "Ошибка загрузки местоположений. Пожалуйста, попробуйте еще раз позже."
+  },
+  "Blog": {
+    "title": "Блог",
+    "createNew": "Создать новую запись в блоге",
+    "createNewSubtitle": "Добавить новую запись в блоге с многоязычной поддержкой",
+    "edit": "Редактировать запись в блоге",
+    "editSubtitle": "Редактировать запись в блоге с многоязычной поддержкой",
+    "viewAll": "Все записи в блоге",
+    "viewAllSubtitle": "Управляйте всеми своими записями в блоге",
+    "languages": {
+      "en": "АНГЛИЙСКИЙ (Основной)",
+      "th": "ТАЙСКИЙ",
+      "zh": "КИТАЙСКИЙ",
+      "ru": "РУССКИЙ"
+    },
+    "form": {
+      "titleLabel": "Заголовок*",
+      "titlePlaceholder": "Введите заголовок на {langName}",
+      "titleRequired": "Требуется заголовок на {langName}",
+      "contentPlaceholder": "Введите содержание на {langName}",
+      "contentRequired": "Требуется содержание на {langName}",
+      "categoryLabel": "Категория",
+      "categoryPlaceholder": "Введите категорию",
+      "featuredImageLabel": "Главное изображение*",
+      "featuredImagePlaceholder": "Загрузить/перетащить фотографии для вашего блога",
+      "featuredImageHint": "Рекомендуемая ширина не менее 1080px",
+      "featuredImageRequired": "Требуется главное изображение",
+      "cancelButton": "Отмена",
+      "createButton": "Создать блог",
+      "updateButton": "Обновить блог"
+    },
+    "toast": {
+      "errorTitle": "Ошибка обработки переводов заголовков",
+      "errorContent": "Ошибка обработки переводов содержания",
+      "errorTags": "Ошибка обработки тегов",
+      "errorAuth": "Вы должны войти в систему, чтобы создать запись в блоге",
+      "errorCreate": "Не удалось создать запись в блоге. Пожалуйста, попробуйте еще раз.",
+      "errorUpdate": "Не удалось обновить запись в блоге. Пожалуйста, попробуйте еще раз.",
+      "successCreate": "Запись в блоге успешно создана!",
+      "successUpdate": "Запись в блоге успешно обновлена!",
+      "successDelete": "Запись в блоге успешно удалена!",
+      "errorDelete": "Не удалось удалить запись в блоге."
+    },
+    "table": {
+      "title": "Заголовок",
+      "category": "Категория",
+      "author": "Автор",
+      "date": "Дата",
+      "actions": "Действия"
+    },
+    "deleteDialog": {
+      "title": "Вы уверены?",
+      "text": "Вы не сможете отменить это действие!",
+      "confirmButton": "Да, удалить!",
+      "cancelButton": "Отмена"
+    },
+    "pagination": "Показано {start}-{end} из {total} элементов",
+    "searchPlaceholder": "Поиск по названию",
+    "clearButton": "Очистить",
+    "sortBy": {
+      "date": "Сортировать по: Дате",
+      "title": "Сортировать по: Названию",
+      "category": "Сортировать по: Категории"
     }
   },
-  "Footer": {
-    "about": "О нас",
-    "contact": "Связаться с нами",
-    "terms": "Условия и положения",
-    "privacy": "Политика конфиденциальности",
-    "copyright": " 2025 by D-LUCK PROPERTY",
-    "popularSearch": "Популярный поиск",
-    "condoForSale": "Продать кондоминиум",
-    "condoForRent": "Аренда кондоминиума",
-    "poolVillaForSale": "Продать виллу с бассейном",
-    "poolVillaForRent": "Аренда виллы с бассейном",
-    "houseForSale": "Продать дом",
-    "quickLinks": "Быстрые ссылки",
-    "propertyForSale": "Купить недвижимость в Паттайе",
-    "aboutUs": "О нас",
-    "contactUs": "Связаться с нами",
-    "discoverByArea": "Откройте для себя по области",
-    "jomtien": "Джомтьен",
-    "wongamat": "Пляж Вонгамат",
-    "naklua": "Naklua",
-    "pratumnak": "Pratumnak",
-    "banglamung": "Bang Lamung",
-    "callUsNow": "Позвоните нам сейчас",
-    "dropEmail": "Напишите письмо",
-    "getPromoWithNewsletter": "Получите промо с рассылкой",
-    "enterEmail": "Enter your email",
-    "subscribe": "Подпишитесь",
-    "sitemap": "Карта сайта",
-    "menu":{
-       "dashboard": "Dashboard",
-       "message": "Message",
-       "addproperty": "Add Property",
-       "my_properties": "My Properties",
-       "blog": "Blog",
-       "allpost": "All Post",
-       "addnewpost": "Add New Post",
-       "setting": "All User",
-       "alluser": "All User",
-       "language": "Language",
-       "currency": "Currency",
-       "profile" :"Manage Account",
-       "myprofile": "My Profile",
-       "logout": "Выйти"
+  "Currency": {
+    "title": "Управление валютой",
+    "subtitle": "Управление курсами обмена валют для веб-сайта",
+    "loading": "Загрузка данных...",
+    "updateButton": "Обновить",
+    "updatingButton": "Обновление...",
+    "ratesUpdated": "Курсы обмена успешно обновлены",
+    "updateFailed": "Не удалось обновить курсы обмена",
+    "errorFetching": "Ошибка при получении курсов обмена",
+    "notAuthenticated": "Пожалуйста, войдите в систему, чтобы продолжить",
+    "names": {
+      "THB": "Бат",
+      "USD": "Доллар США",
+      "CNY": "Юань",
+      "RUB": "Рубль",
+      "GBP": "Фунт",
+      "EUR": "Евро"
     }
   },
 
-  "hero": {
-    "title": "Найдите дом своей мечты",
-    "subtitle": "От 10 долларов в день с ограниченными по времени скидками"
-  },
-  "featured": {
-    "title": "Откройте для себя наши избранные объявления",
-    "subtitle": "НАЙДИТЕ СВОЮ НЕДВИЖИМОСТЬ В ПАТТАЙЕ",
-    "seeAll": "Посмотреть все объекты недвижимости",
-    "propertyType": "Тип недвижимости",
-    "price": "Цена"
-  },
-  "footer": {
-    "about": "О нас",
-    "contact": "Связаться с нами",
-    "terms": "Условия использования",
-    "privacy": "Политика конфиденциальности",
-    "copyright": " 2025 DDProperty. Все права защищены."
-  },
-  "language": {
-    "en": "Английский",
-    "th": "Тайский",
-    "zh": "Китайский",
-    "ru": "Русский"
-  },
-  "Currency": {
-    "currency": "Курсы валют",
-    "currencySubtitle": "Управление курсами валют для сайта",
-    "loading": "Загрузка данных...",
+  "Users": {
+    "allUser": "Все пользователи",
+    "manageAllUsers": "Управление всеми пользователями в системе",
+    "addUser": "Добавить пользователя",
+    "editUser": "Редактировать пользователя",
+    "searchUsers": "Поиск пользователей...",
+    "allRoles": "Все роли",
+    "name": "Имя",
+    "email": "Электронная почта",
+    "phone": "Телефон",
+    "role": "Роль",
+    "actions": "Действия",
+    "view": "Просмотр",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "confirmDelete": "Подтвердить удаление",
+    "deleteUserConfirmation": "Вы уверены, что хотите удалить этого пользователя? Это действие нельзя отменить.",
+    "userDeleted": "Пользователь успешно удален",
+    "userCreated": "Пользователь успешно создан",
+    "userUpdated": "Пользователь успешно обновлен",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "socialMedia": "Социальные сети",
+    "basicInfo": "Основная информация",
+    "cancel": "Отмена",
+    "create": "Создать",
     "update": "Обновить",
+    "nameRequired": "Требуется имя",
+    "emailRequired": "Требуется электронная почта",
+    "invalidEmail": "Неверный формат электронной почты",
+    "invalidPhone": "Неверный номер телефона",
+    "roleRequired": "Требуется роль",
+    "passwordRequired": "Требуется пароль",
+    "currency": "Управление валютой",
+    "currencyTitle": "Курсы обмена валют",
+    "currencySubtitle": "Управление курсами обмена валют для веб-сайта",
+    "loading": "Загрузка данных...",
     "updating": "Обновление...",
-    "ratesUpdated": "Курсы валют успешно обновлены",
-    "updateFailed": "Не удалось обновить курсы валют",
-    "errorFetching": "Ошибка при получении курсов валют",
-    "notAuthenticated": "Пожалуйста, войдите в систему, прежде чем продолжить"
+    "ratesUpdated": "Курсы обмена успешно обновлены",
+    "updateFailed": "Не удалось обновить курсы обмена",
+    "errorFetching": "Ошибка при получении курсов обмена",
+    "notAuthenticated": "Пожалуйста, войдите, прежде чем продолжить"
+  },
+  
+  "Language": {
+    "title": "Управление языками",
+    "subtitle": "Мы рады видеть вас снова!",
+    "addNew": "Добавить новый",
+    "loading": "Загрузка...",
+    "noStringsFound": "Строки не найдены",
+    "confirmDelete": "Вы уверены, что хотите удалить эти языковые данные?",
+    "deleteSuccess": "Языковые данные успешно удалены",
+    "deleteFailed": "Не удалось удалить языковые данные",
+    "saveSuccess": "Языковые данные успешно сохранены",
+    "createSuccess": "Языковые данные успешно созданы",
+    "updateSuccess": "Языковые данные успешно обновлены",
+    "saveFailed": "Не удалось сохранить языковые данные",
+    "loadFailed": "Не удалось загрузить языковые данные",
+    "requiredFieldsMissing": "Отсутствуют обязательные поля",
+    "tabs": {
+      "header": "Заголовок",
+      "home": "Главная",
+      "rent": "Аренда",
+      "blog": "Блог",
+      "about": "О нас",
+      "contact": "Контакты"
+    },
+    "form": {
+      "addTitle": "Добавить строку",
+      "editTitle": "Редактировать строку",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "slug": "Идентификатор",
+      "slugPlaceholder": "например, welcome_message",
+      "slugDescription": "Уникальный идентификатор для строки",
+      "section": "Раздел",
+      "english": "Английский",
+      "englishPlaceholder": "Текст на английском",
+      "thai": "Тайский",
+      "thaiPlaceholder": "Текст на тайском",
+      "chinese": "Китайский",
+      "chinesePlaceholder": "Текст на китайском",
+      "russian": "Русский",
+      "russianPlaceholder": "Текст на русском",
+      "required": "*"
+    },
+    "table": {
+      "slug": "Идентификатор",
+      "english": "Английский",
+      "thai": "Тайский",
+      "chinese": "Китайский",
+      "russian": "Русский",
+      "actions": "Действия"
+    }
   },
   "AddProperty": {
     "addNewProperty": "Добавить новое имущество",
     "updateProperty": "Обновить имущество",
-    "duplicatePropertyTitle": "Копировать имущество",
+    "duplicatePropertyTitle": "Дублировать объект недвижимости",
+    "duplicatePropertySubtitle": "Создать новый объект недвижимости на основе существующего.",
     "duplicateProperty": "Копировать имущество",
     "editProperty": "Редактировать имущество",
     "editPropertyTitle": "Редактировать имущество",
@@ -250,33 +899,68 @@
     "youMustAgreeToTheTerms": "Вы должны согласиться с условиями",
     "iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty": "Я подтверждаю, что предоставленная информация является точной и я имею право разместить эту недвижимость"
   },
+  "Login": {
+    "adminLogin": "Вход для администратора",
+    "loginDescription": "С возвращением! Пожалуйста, войдите в свою учетную запись.",
+    "email": "Электронная почта",
+    "enterEmail": "Введите ваш адрес электронной почты",
+    "password": "Пароль",
+    "enterPassword": "Введите ваш пароль",
+    "rememberMe": "Запомнить меня",
+    "login": "Войти",
+    "loggingIn": "Выполняется вход...",
+    "loginFailed": "Ошибка входа. Пожалуйста, проверьте свои учетные данные.",
+    "errorDuringLogin": "Во время входа произошла непредвиденная ошибка."
+  },
   "Profile":{
+    "title": "Мой профиль",
+    "subtitle": "Управляйте своей личной информацией и настройками учетной записи.",
+    "personalInfo": "Личная информация",
+    "name": "Имя",
+    "firstname": "Имя",
+    "lastname": "Фамилия",
+    "email":"Электронная почта",
+    "phone": "Телефон",
+    "phoneAlt": "Дополнительный телефон",
+    "telMain":"Основной телефон",
+    "telSecondary":"Дополнительный телефон",
+    "optional":"необязательно",
+    "changePassword":"Изменить пароль",
+    "currentPassword": "Текущий пароль",
+    "oldPassword": "Старый пароль",
+    "newPassword":"Новый пароль",
+    "confirmNewPassword":"Подтвердите новый пароль",
+    "updatePassword": "Обновить пароль",
+    "updateProfile":"Обновить профиль",
+    "uploadProfilePicture": "Загрузить фото профиля",
+    "uploadSuccess": "Профиль успешно обновлен!",
+    "uploadError": "Не удалось обновить профиль.",
+    "passwordMismatch": "Новые пароли не совпадают.",
+    "passwordUpdateSuccess": "Пароль успешно обновлен!",
+    "passwordUpdateError": "Не удалось обновить пароль. Пожалуйста, проверьте ваш текущий пароль.",
     "myProfile": "Мой профиль",
     "uploadPhoto":"Загрузить фото",
     "username":"Имя пользователя",
-    "firstName":"Имя",
-    "lastName":"Фамилия",
-    "telMain":"Основной телефон",
-    "telSecondary":"Дополнительный телефон",
-    "optional":"Не указано",
-    "email":"Электронная почта",
     "incorrectOldPassword":"Неверный старый пароль",
-    "updateProfile":"Обновить профиль",
     "updateSocialMedia":"Обновить социальные сети",
     "socialMedia":"Социальные сети",
     "instagram":"Инстаграм",
+    "facebook": "Facebook",
     "facebookMessenger":"Мессенджер",
     "lineId":"Line ID",
-    "wechatId":"wechat",
-    "whatsapp":"whatsapp",
+    "wechatId":"WeChat ID",
+    "whatsapp":"Whatsapp",
     "save":"Сохранить",
-    "cancel":"Отменить",
-    "changePassword":"Изменить пароль",
-    "oldPassword":"Старый пароль",
-    "newPassword":"Новый пароль",
-    "confirmNewPassword":"Подтвердите новый пароль",
-    "updatePassword":"Обновить пароль",
-    "updateFailed":"Обновление не удалось",
-    "updateSuccess":"Обновление успешно"
+    "cancel": "Отмена",
+    "updateFailed": "Ошибка обновления",
+    "updateSuccess": "Обновление успешно",
+    "errorFetchingProfile": "Ошибка при загрузке профиля",
+    "errorUpdatingProfile": "Ошибка при обновлении профиля",
+    "profileUpdated": "Профиль успешно обновлен",
+    "passwordUpdated": "Пароль успешно обновлен",
+    "passwordsDoNotMatch": "Пароли не совпадают",
+    "onlyImageFilesAllowed": "Разрешены только файлы изображений",
+    "fileTooLarge": "Файл слишком большой (макс. 2 МБ)",
+    "updating": "Обновление..."
   }
 }

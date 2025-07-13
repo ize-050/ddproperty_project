@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
 
 const UserProfileMenu = () => {
-  const t = useTranslations('Backoffice');
+  const t = useTranslations('backoffice');
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
@@ -42,7 +42,7 @@ const UserProfileMenu = () => {
       <div className="profile-trigger" onClick={toggleMenu}>
         <Image 
           src="/images/team/1.jpg" 
-          alt={user?.name || 'User Profile'} 
+          alt={user?.name || t('userProfile')} 
           width={40} 
           height={40} 
           className="profile-image" 
@@ -54,13 +54,13 @@ const UserProfileMenu = () => {
           <div className="profile-header">
             <Image 
               src="/images/team/1.jpg" 
-              alt={user?.name || 'User Profile'} 
+              alt={user?.name || t('userProfile')} 
               width={60} 
               height={60} 
               className="profile-image" 
             />
             <div className="profile-info">
-              <h4>{user?.name || 'User'}</h4>
+              <h4>{user?.name || t('user')}</h4>
               <p>{user?.email || 'user@example.com'}</p>
             </div>
           </div>

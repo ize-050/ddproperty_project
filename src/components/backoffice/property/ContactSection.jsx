@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { FaEnvelope, FaPhone, FaLine, FaWeixin, FaWhatsapp, FaFacebookMessenger, FaInstagram } from 'react-icons/fa';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
@@ -9,6 +10,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 
 const ContactSection = () => {
+  const t = useTranslations('backoffice.contact');
   const { formData } = usePropertyFormStore();
   const { register, formState: { errors }, setValue, watch } = useFormContext();
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -27,12 +29,12 @@ const ContactSection = () => {
     if (checked) {
       setLoadingProfile(true);
       try {
-        // ดึงข้อมูล profile จาก API
+        // Fetch profile data from API
         const response = await userService.getMyProfile();
         const userData = response.data;
         
-        console.log("userData", userData)
-        // ใส่ข้อมูลลงในฟอร์ม
+        
+        // Populate form with user data
         if (userData.phone) {
           setValue('contactInfo.phone', userData.phone);
         }
@@ -59,7 +61,7 @@ const ContactSection = () => {
         }
       } catch (error) {
         console.error('Error loading profile data:', error);
-        toast.error('Failed to load profile data');
+        toast.error(t('failedLoad'));
         // Uncheck the checkbox if failed
         e.target.checked = false;
       } finally {
@@ -82,12 +84,12 @@ const ContactSection = () => {
       <div className="section-header">
         <Image 
           src="/images/icons/iconproperty/mail.svg" 
-          alt="Mail" 
+          alt={t('alt')} 
           width={24} 
           height={24} 
           className="section-icon"
         />
-        <h2 className="section-title">Contact</h2>
+        <h2 className="section-title">{t('title')}</h2>
       </div>
       
       <div className="use-profile-data">
@@ -110,10 +112,10 @@ const ContactSection = () => {
           {loadingProfile ? (
             <>
               <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              Loading profile data...
+              {t('loading')}
             </>
           ) : (
-            'Use data from profile'
+            t('useProfile')
           )}
         </label>
       </div>
@@ -121,7 +123,7 @@ const ContactSection = () => {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="phone" className="form-label">
-            Tel. (Main)*
+            {t('phoneMain')}
           </label>
           <input
             type="tel"
@@ -136,7 +138,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="secondaryPhone" className="form-label">
-            Tel. (secondary) (optional)
+            {t('phoneSecondary')}
           </label>
           <input
             type="tel"
@@ -148,7 +150,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="email" className="form-label">
-            E-mail*
+            {t('email')}
           </label>
           <input
             type="email"
@@ -165,7 +167,7 @@ const ContactSection = () => {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="lineId" className="form-label">
-            <FaLine className="icon-line" color="#00B900" /> LINE ID (optional)
+            <FaLine className="icon-line" color="#00B900" /> {t('line')}
           </label>
           <input
             type="text"
@@ -178,7 +180,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="wechatId" className="form-label">
-            <FaWeixin className="icon-wechat" color="#00B900" /> Wechat ID (optional)
+            <FaWeixin className="icon-wechat" color="#00B900" /> {t('wechat')}
           </label>
           <input
             type="text"
@@ -191,7 +193,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="whatsapp" className="form-label">
-            <FaWhatsapp className="icon-whatsapp" color="#00B900" /> WhatsApp (optional)
+            <FaWhatsapp className="icon-whatsapp" color="#00B900" /> {t('whatsapp')}
           </label>
           <input
             type="text"
@@ -206,7 +208,7 @@ const ContactSection = () => {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="facebookMessenger" className="form-label">
-            <FaFacebookMessenger className="icon-messenger" /> Facebook Messenger
+            <FaFacebookMessenger className="icon-messenger" /> {t('facebookMessenger')}
           </label>
           <input
             type="text"
@@ -219,7 +221,7 @@ const ContactSection = () => {
         
         <div className="form-group">
           <label htmlFor="instagram" className="form-label">
-            <FaInstagram className="icon-instagram" /> Instagram
+            <FaInstagram className="icon-instagram" /> {t('instagram')}
           </label>
           <input
             type="text"

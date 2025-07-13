@@ -1,12 +1,12 @@
 {
   "header": {
     "home": "หน้าแรก",
-    "buy": "ซื้อ",
-    "rent": "เช่า",
-    "blog": "บทความ",
-    "about": "เกี่ยวกับเรา",
     "properties": "อสังหาริมทรัพย์",
     "agents": "ตัวแทน",
+    "blog": "บทความ",
+    "about": "เกี่ยวกับเรา",
+    "buy": "ซื้อ",
+    "rent": "เช่า",
     "contact": "ติดต่อเรา",
     "login": "เข้าสู่ระบบ / สมัครสมาชิก",
     "addProperty": "ลงประกาศ"
@@ -15,12 +15,12 @@
     "title": "ค้นหาบ้านในฝันของคุณ",
     "subtitle": "เริ่มต้นเพียงวันละ 10 ดอลลาร์ พร้อมส่วนลดพิเศษในช่วงเวลาจำกัด"
   },
-  "featured": {
-    "title": "ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
-    "subtitle": "Aliquam lacinia diam quis lacus euismod",
-    "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด"
+  "PropertyList": {
+    "discoverOurFeaturedListings": "ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
+    "noPropertiesFound": "ไม่พบอสังหาริมทรัพย์",
+    "tryDifferentFilters": "ลองใช้ตัวกรองอื่น"
   },
-  "Footer": {
+  "footer": {
     "about": "เกี่ยวกับเรา",
     "contact": "ติดต่อเรา",
     "terms": "ข้อกำหนดและเงื่อนไข",
@@ -55,12 +55,107 @@
     "zh": "จีน",
     "ru": "รัสเซีย"
   },
+  "home": {
+    "title": "ยินดีต้อนรับสู่",
+    "d_luck": "D-LUCK PROPERTY",
+    "buy": "ซื้อ",
+    "rent": "เช่า",
+    "price": "ราคา",
+    "select_area": "เลือกพื้นที่",
+    "advance_search": "การค้นหาขั้นสูง",
+    "subtitle": "เว็บไซต์อสังหาริมทรัพย์ที่ดีที่สุดในประเทศไทย",
+    "developer": "ผู้พัฒนาอสังหาริมทรัพย์",
+    "featured": {
+      "title": "อสังหาฯเด่นของเรา",
+      "subtitle": "Aliquam lacinia diam quis lacus euismod",
+      "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด"
+    },
+    "propertyTypes": {
+      "title": "ประเภทอสังหาฯ",
+      "subtitle": "ค้นหาอสังหาฯในพัทยาสำหรับ:ซื้อ, ขายและให้เช่า - คอนโด พูลวิลล่า บ้าน และอสังหาริมทรัพย์เชิงพาณิชย์",
+      "noPropertyTypesFound": "ไม่พบประเภทอสังหาริมทรัพย์"
+    },
+    "ExploreLocations": {
+      "title": "ทำเลยอดนิยมในพัทยา",
+      "subtitle": "ขายและให้เช่าคอนโด บ้าน และพูลวิลล่า ในพัทยาและพื้นที่โดยรอบ: จอมเทียน เขาพระตำหนัก บางเสร่ พัทยาตะวันออก บ้านอำเภอ นาเกลือ และสัตหีบ์",
+      "more": "ดูเพิ่มเติม",
+      "properties": "รายการ",
+      "errorFetching": "เกิดข้อผิดพลาดในการโหลดข้อมูลทำเล โปรดลองอีกครั้งในภายหลัง"
+    },
+    "service": {
+      "title": "เราจะช่วยคุณค้นหาวิธีการขายที่เหมาะสมที่สุด",
+      "subtitle": "พร้อมที่จะซื้อหรือขายอสังหาริมทรัพย์ในพัทยาหรือยัง? เราพร้อมให้ความช่วยเหลือ",
+      "property_management": "การจัดการอสังหาริมทรัพย์",
+      "property_onine": "บริการจัดการการตลาดออนไลน์สำหรับอสังหาริมทรัพย์แบบมืออาชีพ",
+      "mortgate_service": "ความช่วยเหลือด้านการจัดหาเงินทุนจากธนาคารไทยสำหรับผู้ซื้ออสังหาริมทรัพย์",
+      "mortgate_service_description": "เราช่วยคุณหาสินเชื่อที่อยู่อาศัยที่เหมาะสมที่สุดสำหรับอสังหาริมทรัพย์ของคุณ",
+      "legal_service": "บริการด้านกฎหมาย - วีซ่า",
+      "legal_service_description": "ความช่วยเหลือด้านเอกสารทางกฎหมายสำหรับบริการโอนกิจการอสังหาริมทรัพย์"
+    },
+    "meetOurTeam": {
+      "title": "พบกับทีมงานของเรา",
+      "subtitle": "ที่ปรึกษาผู้เชี่ยวชาญของเรายินดีที่จะทำให้ความฝันด้านอสังหาริมทรัพย์ของคุณเป็นจริง",
+      "out_team": "ทีมงานของเรา",
+      "oat": "โอ๊ต - ศุภกร",
+      "oat_description": "CEO & Founder",
+      "emy": "เอมี่ - ธัญญ์นรี",
+      "emy_description": "Sale Director",
+      "ice": "ไอซ์ - ชัญญาภัค",
+      "ice_description": "Sale Manager"
+    },
+    "randomProperties": {
+      "title": "อสังหาฯเด่นของเรา",
+      "subtitle": "ค้นหาอสังหาฯของคุณในพัทยา",
+      "loading": "กำลังโหลดข้อมูล...",
+      "error": "เกิดข้อผิดพลาดในการโหลดข้อมูล",
+      "retry": "ลองใหม่",
+      "bed": "ห้องนอน",
+      "bath": "ห้องน้ำ",
+      "sqm": "ตร.ม."
+    },
+    "Language": {
+      "title": "ภาษา",
+      "subtitle": "จัดการภาษา",
+      "addNewLanguage": "เพิ่มภาษาใหม่",
+      "editLanguage": "แก้ไขภาษา",
+      "deleteLanguage": "ลบภาษา",
+      "language": "ภาษา",
+      "code": "รหัส",
+      "status": "สถานะ",
+      "action": "การกระทำ",
+      "rent": "เช่า",
+      "buy": "ซื้อ",
+      "blog": "บล็อก"
+    },
+    "blogs": {
+      "section": {
+        "title": "บล็อกของเรา",
+        "subtitle": "ค้นพบข้อมูลเชิงลึกที่มีค่าเพื่อช่วยให้คุณตัดสินใจเรื่องอสังหาริมทรัพย์อย่างชาญฉลาด",
+        "viewAll": "ดูบทความทั้งหมด"
+      },
+      "error": {
+        "fetch": "ไม่สามารถโหลดบทความได้ โปรดลองอีกครั้ง"
+      }
+    },
+    "contact": {
+      "title": "ต้องการข้อมูลเพิ่มเติมหรือไม่?",
+      "subtitle": "กรุณาติดต่อเราเพื่อขอข้อมูลเพิ่มเติม",
+      "name": "ชื่อของคุณ *",
+      "lastName": "นามสกุล *",
+      "email": "ที่อยู่อีเมล *",
+      "subject": "หัวข้อ *",
+      "message": "ข้อความของคุณ *",
+      "sendMessage": "ส่งข้อความ",
+      "messageSent": "ข้อความของคุณถูกส่งเรียบร้อยแล้ว!",
+      "messageError": "เกิดข้อผิดพลาดในการส่งข้อความ โปรดลองอีกครั้ง"
+    }
+  },
   "Message": {
     "messages": "ข้อความ",
-    "messageDescription": "เรายินดีที่จะพบคุณอีกครั้ง",
-    "contactForm": "ฟอร์มติดต่อ",
-    "messageTitle": "ข้อความ",
-    "messageSubtitle": "ข้อความทั้งหมด",
+    "description": "เรายินดีที่จะพบคุณอีกครั้ง",
+    "formTitle": "ฟอร์มติดต่อ",
+    "title": "ข้อความ",
+    "subtitle": "ข้อความทั้งหมด",
     "update": "อัปเดต",
     "delete": "ลบ",
     "deleteConfirm": "คุณต้องการลบข้อความนี้หรือไม่?",
@@ -76,7 +171,7 @@
     "filterByStatus": "กรองตามสถานะ",
     "last3Month": "3 เดือนที่ผ่านมา",
     "clear": "ล้าง",
-    "searchByName": "ค้นหาตามชื่อ,อีเมล,เบอร์โทรศัพท์",
+    "searchByName": "ค้นหาตามชื่อ, อีเมล หรือโทรศัพท์",
     "status": "สถานะ",
     "contact": "ติดต่อ",
     "property": "อสังหาริมทรัพย์",
@@ -86,10 +181,10 @@
     "name": "ชื่อ",
     "email": "อีเมล",
     "subject": "หัวข้อ",
-    "message": "ข้อความ",
+    "messageContent": "ข้อความ",
     "send": "ส่งข้อความ",
-    "messageSent": "ข้อความของคุณถูกส่งเรียบร้อยแล้ว!",
-    "messageError": "เกิดข้อผิดพลาดในการส่งข้อความของคุณ โปรดลองอีกครั้ง",
+    "sentSuccess": "ข้อความของคุณถูกส่งเรียบร้อยแล้ว!",
+    "sentError": "เกิดข้อผิดพลาดในการส่งข้อความของคุณ โปรดลองอีกครั้ง",
     "requiredField": "จำเป็นต้องกรอกข้อมูลในช่องนี้",
     "invalidEmail": "กรุณากรอกที่อยู่อีเมลที่ถูกต้อง",
     "inbox": "กล่องขาเข้า",
@@ -97,125 +192,561 @@
     "trash": "ถังขยะ",
     "compose": "เขียนข้อความ",
     "reply": "ตอบกลับ",
-    "forward": "ส่งต่อ"
-  },
-  "home": {
-    "welcome": "ยินดีต้อนรับสู่",
-    "d_luck": "D-LUCK PROPERTY",
-    "buy": "ซื้อ",
-    "rent": "เช่า",
-    "title": "เว็บไซต์อสังหาริมทรัพย์ที่ดีที่สุดในพัทยา ประเทศไทย",
-    "price": "ราคา",
-    "select_area": "เลือกพื้นที่",
-    "advance_search": "การค้นหาขั้นสูง",
-    "developer": "ผู้พัฒนาอสังหาริมทรัพย์",
-    "featured": {
-      "title": "อสังหาฯเด่นของเรา",
-      "subtitle": "Aliquam lacinia diam quis lacus euismod",
-      "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด"
-    },
-    "ExploreLocations": {
-      "title": "ทำเลยอดนิยมในพัทยา",
-      "subtitle": "ขายและให้เช่าคอนโด บ้าน และพูลวิลล่า ในพัทยาและพื้นที่โดยรอบ: จอมเทียน เขาพระตำหนัก บางเสร่ พัทยาตะวันออก บ้านอำเภอ นาเกลือ และสัตหีบ์",
-      "more": "ดูเพิ่มเติม",
-      "properties": "รายการ",
-      "errorFetching": "เกิดข้อผิดพลาดในการโหลดข้อมูลทำเล โปรดลองอีกครั้งในภายหลัง"
-    },
-    "service": {
-      "title": "เราจะช่วยคุณค้นหาวิธีการขายที่เหมาะสมที่สุด",
-      "subtitle": "พร้อมที่จะซื้อหรือขายอสังหาริมทรัพย์ในพัทยาหรือยัง? เราพร้อมให้ความช่วยเหลือ์",
-      "property_management": "การจัดการอสังหาริมทรัพย์",
-      "property_onine": "บริการจัดการการตลาดออนไลน์สำหรับอสังหาริมทรัพย์แบบมืออาชีพ",
-      "mortgate_service": "ความช่วยเหลือด้านการจัดหาเงินทุนจากธนาคารไทยสำหรับผู้ซื้ออสังหาริมทรัพย์",
-      "mortgate_service_description": "เราช่วยคุณหาสินเชื่อที่อยู่อาศัยที่เหมาะสมที่สุดสำหรับอสังหาริมทรัพย์ของคุณ",
-      "legal_service": "บริการด้านกฎหมาย - วีซ่า",
-      "legal_service_description": "ความช่วยเหลือด้านเอกสารทางกฎหมายสำหรับบริการโอนกิจการอสังหาริมทรัพย์์"
-    },
-    "meetOurTeam": {
-      "title": "พบกับทีมงานของเรา",
-      "subtitle": "ที่ปรึกษาผู้เชี่ยวชาญของเรายินดีที่จะทำให้ความฝันด้านอสังหาริมทรัพย์ของคุณเป็นจริง",
-      "out_team": "ทีมงานของเรา",
-      "oat": "โอ๊ต - ศุภกร",
-      "oat_description": "CEO & Founder",
-      "emy": "เอมี่ - ธัญญ์นรี ",
-      "emy_description": "Sale Director",
-      "ice": "ไอซ์ - ชัญญาภัค",
-      "ice_description": "Sale Manager"
-    },
-    "randomProperties": {
-      "title": "อสังหาฯเด่นของเรา",
-      "subtitle": "ค้นหาอสังหาฯของคุณในพัทยา",
-      "loading": "กำลังโหลดข้อมูล...",
-      "seeAll": "ดูอสังหาริมทรัพย์ทั้งหมด",
-      "error": "เกิดข้อผิดพลาดในการโหลดข้อมูล",
-      "retry": "ลองใหม่",
-      "bed": "ห้องนอน",
-      "bath": "ห้องน้ำ",
-      "sqm": "ตร.ม."
-    },
-    "blogs": {
-      "section": {
-        "title": "บล็อกของเรา",
-        "subtitle": "ค้นพบข้อมูลเชิงลึกที่มีค่าเพื่อช่วยให้คุณตัดสินใจเรื่องอสังหาริมทรัพย์อย่างชาญฉลาด",
-        "viewAll": "ดูบทความทั้งหมด"
-      },
-      "error": {
-        "fetch": "ไม่สามารถโหลดบทความได้ โปรดลองอีกครั้ง"
-      }
-    },
-    "contact": {
-      "title": "ต้องการข้อมูลเพิ่มเติมหรือไม่?",
-      "subtitle": "กรุณาติดต่อเราเพื่อข้อข้อมูลเพิ่มเติม",
-      "name": "ชื่อ",
-      "lastName": "นามสกุล",
-      "email": "อีเมล",
-      "subject": "ข้อความของคุณ *",
-      "message": "ข้อความ",
-      "sendMessage": "ส่งข้อความ",
-      "messageSent": "ข้อความของคุณถูกส่งเรียบร้อยแล้ว!",
-      "messageError": "เกิดข้อผิดพลาดในการส่งข้อความ โปรดลองอีกครั้ง"
-    },
-    "propertyTypes": {
-      "title": "ประเภทอสังหาฯ",
-      "subtitle": "ค้นหาอสังหาฯในพัทยาสำหรับ:ซื้อ, ขายและให้เช่า - คอนโด พูลวิลล่า บ้าน และอสังหาริมทรัพย์เชิงพาณิชย์",
-      "noPropertyTypesFound": "ไม่พบประเภทอสังหาริมทรัพย์"
-    },
-    "reation": {}
+    "forward": "ส่งต่อ",
+    "read": "อ่านแล้ว",
+    "replied": "ตอบกลับแล้ว",
+    "archived": "เก็บถาวร",
+    "last6Month": "6 เดือนล่าสุด",
+    "lastYear": "ปีที่แล้ว",
+    "allTime": "ทั้งหมด",
+    "loading": "กำลังโหลดข้อความ...",
+    "error": "เกิดข้อผิดพลาด: {error}",
+    "tryAgain": "ลองอีกครั้ง",
+    "updateStatusSuccess": "อัปเดตสถานะข้อความเป็น {status} สำเร็จแล้ว",
+    "updateStatusError": "ไม่สามารถอัปเดตสถานะข้อความได้",
+    "fetchError": "ไม่สามารถดึงข้อมูลข้อความได้",
+    "unknown": "ไม่รู้จัก",
+    "unknownProperty": "ไม่รู้จักอสังหาริมทรัพย์",
+    "sentMessage": "ส่งข้อความแล้ว",
+    "messageDescription": "เราดีใจที่ได้พบคุณอีกครั้ง"
   },
   "backoffice": {
-    "adminLogin": "เข้าสู่ระบบผู้ดูแล",
-    "loginDescription": "กรุณาเข้าสู่ระบบเพื่อเข้าถึงแผงควบคุมผู้ดูแล",
-    "email": "ที่อยู่อีเมล",
-    "enterEmail": "กรอกที่อยู่อีเมลของคุณ",
-    "password": "รหัสผ่าน",
-    "enterPassword": "กรอกรหัสผ่านของคุณ",
-    "rememberMe": "จดจำฉัน",
-    "loggingIn": "กำลังเข้าสู่ระบบ...",
-    "login": "เข้าสู่ระบบ",
-    "dashboard": "แดชบอร์ด",
-    "message": "ข้อความ",
-    "addProperty": "เพิ่มอสังหาริมทรัพย์",
-    "myProperties": "อสังหาริมทรัพย์ของฉัน",
-    "allPost": "โพสต์ทั้งหมด",
-    "addNewPost": "เพิ่มโพสต์ใหม่",
-    "allUser": "ผู้ใช้ทั้งหมด",
-    "language": "ภาษา",
-    "currency": "สกุลเงิน",
-    "myProfile": "โปรไฟล์ของฉัน",
+    "frontend": "หน้าบ้าน",
+    "paginationOf": "จาก",
+    "coAgent": {
+      "title": "Co-Agent",
+      "accept": "รับ Co-Agent",
+      "alt": "ไอคอน Co-Agent",
+      "commissionPercent": "คอมมิชชั่นตามเปอร์เซ็นต์",
+      "commissionSpecific": "คอมมิชชั่นตามจำนวนเงินที่ระบุ",
+      "commissionRate": "อัตราคอมมิชชั่น",
+      "commissionPercentPlaceholder": "เช่น 3.0",
+      "commissionAmountPlaceholder": "เช่น 50000",
+      "totalCommission": "คอมมิชชั่นทั้งหมด",
+      "currencyTHB": "บาท",
+      "privateNote": "บันทึกส่วนตัวสำหรับ Co-Agent",
+      "privateNoteAlt": "ไอคอนบันทึกส่วนตัว",
+      "privateNotePlaceholder": "ป้อนบันทึกส่วนตัวสำหรับ co-agent ที่นี่ ส่วนนี้จะแสดงให้คุณและพวกเขาเห็นเท่านั้น"
+    },
+    "socialMedia": {
+      "youtubeUrl": "ลิงก์ YouTube",
+      "youtubePlaceholder": "ป้อนลิงก์วิดีโอ YouTube",
+      "tiktokUrl": "ลิงก์ TikTok",
+      "tiktokPlaceholder": "ป้อนลิงก์วิดีโอ TikTok"
+    },
+    "menu": {
+      "main": "เมนูหลัก",
+      "dashboard": "แดชบอร์ด",
+      "message": "ข้อความ",
+      "managelisting": "จัดการรายการ",
+      "addproperty": "เพิ่มอสังหาริมทรัพย์",
+      "my_properties": "อสังหาริมทรัพย์ของฉัน",
+      "allpost": "โพสต์ทั้งหมด",
+      "addnewpost": "เพิ่มโพสต์ใหม่",
+      "setting": "ตั้งค่า",
+      "alluser": "ผู้ใช้ทั้งหมด",
+      "language": "ภาษา",
+      "currency": "สกุลเงิน",
+      "profile": "โปรไฟล์",
+      "myprofile": "โปรไฟล์ของฉัน"
+    },
+    "dashboard": {
+      "title": "แดชบอร์ด",
+      "greeting": "สวัสดี, ยินดีต้อนรับสู่แดชบอร์ดของคุณ",
+      "properties": "อสังหาริมทรัพย์",
+      "messages": "ข้อความ",
+      "views": "ยอดเข้าชม",
+      "reviews": "รีวิว",
+      "recentActivities": "กิจกรรมล่าสุด",
+      "propertyViews": "ยอดเข้าชมอสังหาริมทรัพย์",
+      "noActivities": "ไม่มีกิจกรรมล่าสุด",
+      "failedToFetchRecentActivities": "ไม่สามารถดึงข้อมูลกิจกรรมล่าสุดได้",
+      "errorLoadingData": "เกิดข้อผิดพลาดในการโหลดข้อมูล",
+      "loadingStats": "กำลังโหลดสถิติ...",
+      "errorLoadingStats": "เกิดข้อผิดพลาดในการโหลดสถิติ",
+      "allProperties": "อสังหาริมทรัพย์ทั้งหมด",
+      "totalViews": "ยอดเข้าชมทั้งหมด",
+      "totalEnquiries": "จำนวนผู้ติดต่อทั้งหมด",
+      "activities": {
+        "anonymousUser": "ผู้ใช้ที่ไม่ระบุชื่อ",
+        "noEmailProvided": "ไม่มีอีเมลให้",
+        "noPhoneProvided": "ไม่มีเบอร์โทรศัพท์ให้",
+        "noMessageContent": "ไม่มีเนื้อหาข้อความ",
+        "unknownProperty": "ไม่ทราบชื่ออสังหาริมทรัพย์",
+        "unknownDate": "ไม่ทราบวันที่",
+        "yourListing": "รายการของคุณ",
+        "hasStatus": "มีสถานะ",
+        "leftAReviewOn": "ได้รีวิวใน",
+        "favouritesYour": "เพิ่มในรายการโปรด",
+        "listing": "รายการ"
+      },
+      "apiRequestFailed": "คำขอ API ล้มเหลวด้วยสถานะ {status}",
+      "propertyOverview": "ภาพรวมอสังหาริมทรัพย์",
+      "yearly": "รายปี",
+      "noRecentActivities": "ไม่มีกิจกรรมล่าสุด",
+      "hourly": "รายชั่วโมง",
+      "weekly": "รายสัปดาห์",
+      "monthly": "รายเดือน",
+      "inquiries": "การสอบถาม",
+      "viewMore": "ดูเพิ่มเติม"
+    },
     "manageYourProfile": "จัดการโปรไฟล์ของคุณ",
-    "allProperties": "อสังหาริมทรัพย์ทั้งหมด",
-    "totalViews": "จํานวนการดู",
-    "totalEnquiries": "จํานวนการสอบถาม",
-    "propertyViews": "จํานวนการดูอสังหาริมทรัพย์",
+    "welcomeMessage": "เรายินดีที่ได้พบคุณอีกครั้ง!",
+    "other": "อื่นๆ",
+    "noData": "ไม่มีข้อมูล",
+    "location": {
+      "title": "ตำแหน่งที่ตั้ง",
+      "toggleMap": "แสดงแผนที่เพื่อเลือกตำแหน่ง",
+      "searchAddress": "ค้นหาที่อยู่",
+      "searchPlaceholder": "ป้อนที่อยู่, เมือง, หรือสถานที่สำคัญ",
+      "propertyLocationMarker": "ตำแหน่งทรัพย์สิน",
+      "addressNotFound": "ไม่พบที่อยู่ ลองใช้คำค้นหาอื่น",
+      "addressLabel": "ที่อยู่",
+      "countryLabel": "ประเทศ",
+      "provinceLabel": "จังหวัด / รัฐ",
+      "districtLabel": "อำเภอ / เขต",
+      "subdistrictLabel": "ตำบล / แขวง",
+      "postalCodeLabel": "รหัสไปรษณีย์",
+      "latitudeLabel": "ละติจูด",
+      "longitudeLabel": "ลองจิจูด",
+      "addressPlaceholder": "เช่น 123 ถนนสุขุมวิท",
+      "countryPlaceholder": "เช่น ประเทศไทย",
+      "provincePlaceholder": "เช่น ชลบุรี",
+      "districtPlaceholder": "เช่น บางละมุง",
+      "subdistrictPlaceholder": "เช่น หนองปรือ",
+      "postalCodePlaceholder": "เช่น 20150",
+      "latitudePlaceholder": "เช่น 12.93",
+      "longitudePlaceholder": "เช่น 100.88"
+    },
+    "facilities": {
+      "title": "สิ่งอำนวยความสะดวก",
+      "loading": "กำลังโหลดสิ่งอำนวยความสะดวก...",
+      "error": "เกิดข้อผิดพลาดในการโหลดสิ่งอำนวยความสะดวก: {error}",
+      "fetchError": "ไม่สามารถดึงข้อมูลสิ่งอำนวยความสะดวกได้",
+      "noData": "ไม่มีสิ่งอำนวยความสะดวก",
+      "iconAlt": "ไอคอน {name}",
+      "categoryCommon": "พื้นที่ส่วนกลาง",
+      "categoryDining": "ห้องอาหาร",
+      "categoryFitness": "ฟิตเนส",
+      "categoryPool": "สระว่ายน้ำ",
+      "categoryOther": "อื่นๆ"
+    },
+    "features": {
+      "title": "สิ่งอำนวยความสะดวก",
+      "loading": "กำลังโหลดสิ่งอำนวยความสะดวก...",
+      "error": "เกิดข้อผิดพลาดในการโหลดสิ่งอำนวยความสะดวก: {error}",
+      "fetchError": "ไม่สามารถดึงข้อมูลสิ่งอำนวยความสะดวกได้",
+      "noneAvailable": "ไม่มีสิ่งอำนวยความสะดวกในหมวดหมู่ {category}",
+      "iconAlt": "ไอคอน {name}",
+      "categoryCommon": "พื้นที่ส่วนกลาง",
+      "categoryDining": "ห้องอาหาร",
+      "categoryFitness": "ฟิตเนส",
+      "categoryPool": "สระว่ายน้ำ",
+      "categoryOther": "อื่นๆ"
+    },
+    "property": {
+      "view": {
+        "title": "วิว",
+        "loading": "กำลังโหลดข้อมูลวิว...",
+        "error": "เกิดข้อผิดพลาดในการโหลดข้อมูลวิว: {error}",
+        "noData": "ไม่พบข้อมูลวิว"
+      }
+    },
+    "socialMediaTiktokPlaceholder": "https://www.tiktok.com/@username/video/...",
+    "coAgentTitle": "Co Agent",
+    "photos": {
+      "propertyAlt": "รูปภาพทรัพย์สิน",
+      "maxImagesError": "อนุญาตให้มีรูปภาพสูงสุด 100 รูป คุณกำลังพยายามเพิ่ม {filesLength} รูป แต่มีอยู่แล้ว {propertyImagesLength} รูป กรุณาลบรูปภาพบางส่วนออกก่อน",
+      "compressing": "กำลังบีบอัด {filesLength} รูป...",
+      "invalidFile": "{fileName} ไม่ใช่ไฟล์รูปภาพที่ถูกต้อง",
+      "processError": "ไม่สามารถประมวลผลรูปภาพได้: {errorMessage}",
+      "mediaAlt": "สื่อ",
+      "title": "สื่อ",
+      "galleryTitle": "แกลเลอรีรูปภาพ",
+      "imagesTitle": "รูปภาพทรัพย์สิน ({propertyImagesLength}/100)",
+      "reorderSubtitle": "ลากและวางเพื่อจัดลำดับรูปภาพ",
+      "compressingButton": "กำลังบีบอัด...",
+      "addMoreButton": "เพิ่มรูปภาพเพิ่มเติม",
+      "maxImagesReached": "ถึงจำนวนรูปภาพสูงสุด 100 รูปแล้ว",
+      "uploadTitle": "อัปโหลด/ลากรูปภาพของทรัพย์สินของคุณ",
+      "uploadSubtitle": "รูปภาพต้องเป็นรูปแบบ JPG หรือ PNG และมีขนาดอย่างน้อย 2048x768 (สูงสุด 100 รูป)",
+      "browseFilesButton": "เลือกไฟล์"
+    },
+    "nearby": {
+      "title": "สถานที่ใกล้เคียง",
+      "alt": "ไอคอนสถานที่ใกล้เคียง",
+      "loading": "กำลังโหลดสถานที่ใกล้เคียง...",
+      "error": "เกิดข้อผิดพลาดในการโหลดสถานที่ใกล้เคียง: {error}",
+      "noData": "ไม่พบข้อมูลสถานที่ใกล้เคียง",
+      "iconAlt": "ไอคอน {name}"
+    },
+    "moreRoomType": {
+      "title": "ประเภทห้องเพิ่มเติม",
+      "alt": "ไอคอนประเภทห้องเพิ่มเติม",
+      "duplex": "ดูเพล็กซ์",
+      "penthouse": "เพนท์เฮาส์",
+      "oneBedPlus": "1 ห้องนอน พลัส",
+      "duplexPenthouse": "ดูเพล็กซ์ เพนท์เฮาส์"
+    },
+    "propertyDescription": {
+      "title": "รายละเอียดทรัพย์สิน",
+      "alt": "ไอคอนรายละเอียดทรัพย์สิน",
+      "translateAllButton": "แปลเป็นทุกภาษาอัตโนมัติ",
+      "translateFieldTooltip": "แปลฟิลด์นี้",
+      "form": {
+        "titleLabel": "หัวข้อ*",
+        "titlePlaceholder": "ป้อนหัวข้อทรัพย์สินในภาษา {languageName}",
+        "titleRequiredError": "จำเป็นต้องกรอกหัวข้อทรัพย์สิน",
+        "descriptionLabel": "รายละเอียด*",
+        "descriptionPlaceholder": "ป้อนรายละเอียดทรัพย์สินในภาษา {languageName}",
+        "descriptionRequiredError": "จำเป็นต้องกรอกรายละเอียดทรัพย์สิน",
+        "paymentPlanLabel": "แผนการชำระเงิน (ถ้ามี)",
+        "paymentPlanPlaceholder": "ป้อนรายละเอียดแผนการชำระเงินในภาษา {languageName} (ถ้ามี)"
+      },
+      "languages": {
+        "en": "อังกฤษ (หลัก)",
+        "th": "ไทย",
+        "zh": "จีน",
+        "ru": "รัสเซีย"
+      },
+      "alerts": {
+        "enterEnglishFirst": "กรุณาป้อนเนื้อหาเป็นภาษาอังกฤษก่อน",
+        "translationFailed": "การแปลล้มเหลว กรุณาลองอีกครั้งในภายหลัง",
+        "serviceUnavailable": "บริการแปลภาษาไม่พร้อมใช้งานในขณะนี้ กรุณาลองอีกครั้งในภายหลัง",
+        "enterContentFirst": "กรุณาป้อนเนื้อหาในภาษา {languageName} ก่อน"
+      }
+    },
+    "propertyHighlights": {
+    "title": "จุดเด่นของประกาศ",
+    "labelTitle": "ป้ายกำกับประกาศ",
+    "loading": "กำลังโหลดจุดเด่น...",
+    "error": "เกิดข้อผิดพลาดในการโหลดจุดเด่น: {error}",
+    "fetchError": "ไม่สามารถดึงข้อมูลจุดเด่นของประกาศได้",
+    "noHighlights": "ไม่มีตัวเลือกจุดเด่น",
+    "noLabels": "ไม่มีตัวเลือกป้ายกำกับ"
+  },
+
+  "floorPlan": {
+    "title": "แปลนพื้น",
+    "uploadTitle": "อัปโหลด/ลากรูปภาพของแปลนพื้นของคุณ",
+    "uploadSubtitle": "รูปภาพต้องเป็นรูปแบบ JPG หรือ PNG และมีขนาดอย่างน้อย 2048x768 (สูงสุด 100 รูป)",
+    "browseFilesButton": "เลือกไฟล์"
+  },
+  "contact": {
+    "title": "ข้อมูลติดต่อ",
+    "alt": "ไอคอนติดต่อ",
+    "useProfile": "ใช้ข้อมูลติดต่อจากโปรไฟล์ของฉัน",
+    "loading": "กำลังโหลดโปรไฟล์...",
+    "failedLoad": "ไม่สามารถโหลดข้อมูลโปรไฟล์ได้",
+    "phoneMain": "เบอร์โทรศัพท์หลัก*",
+    "phoneSecondary": "เบอร์โทรศัพท์สำรอง (ถ้ามี)",
+    "email": "อีเมล*",
+    "line": "LINE ID",
+    "wechat": "WeChat ID",
+    "whatsapp": "WhatsApp",
+    "facebookMessenger": "Facebook Messenger",
+    "instagram": "Instagram"
+  },
+  "myProperties": {
+    "title": "รายการของฉัน",
+    "subtitle": "จัดการรายการอสังหาริมทรัพย์ทั้งหมดของคุณในที่เดียว",
+    "searchPlaceholder": "ค้นหาด้วยชื่อหรือรหัสอ้างอิง...",
+    "clear": "ล้างค่า",
+    "addNew": "เพิ่มรายการใหม่",
+    "loading": "กำลังโหลดรายการ...",
+    "retry": "ลองอีกครั้ง",
+    "priceUnit": "/เดือน",
+    "propertyImageAlt": "รูปภาพอสังหาริมทรัพย์",
+    "noImage": "ไม่มีรูปภาพ",
+    "sortBy": {
+      "date": "จัดเรียงตามวันที่",
+      "price": "จัดเรียงตามราคา",
+      "views": "จัดเรียงตามยอดเข้าชม"
+    },
+    "errors": {
+      "authTokenNotFound": "ไม่พบโทเค็นยืนยันตัวตน กรุณาเข้าสู่ระบบอีกครั้ง",
+      "fetchError": "ไม่สามารถดึงข้อมูลรายการได้: {error}"
+    },
+    "deleteDialog": {
+      "title": "คุณแน่ใจหรือไม่?",
+      "text": "การกระทำนี้ไม่สามารถย้อนกลับได้!",
+      "confirmButton": "ใช่, ลบเลย!",
+      "cancelButton": "ยกเลิก"
+    },
+    "errorDialog": {
+      "title": "เกิดข้อผิดพลาด!",
+      "text": "เกิดข้อผิดพลาดที่ไม่คาดคิด"
+    },
+    "toast": {
+      "deleteSuccess": "ลบรายการเรียบร้อยแล้ว!",
+      "deleteError": "ไม่สามารถลบรายการได้",
+      "updateStatusSuccess": "อัปเดตสถานะรายการเป็น {status} แล้ว",
+      "updateStatusError": "ไม่สามารถอัปเดตสถานะรายการได้"
+    },
+    "status": {
+      "published": "เผยแพร่แล้ว",
+      "unpublished": "ไม่ได้เผยแพร่"
+    },
+    "tableHeaders": {
+      "property": "อสังหาริมทรัพย์",
+      "reference": "รหัสอ้างอิง",
+      "operation": "ประเภท",
+      "price": "ราคา",
+      "published": "สถานะเผยแพร่",
+      "displays": "ยอดแสดงผล",
+      "visits": "ยอดเข้าชม",
+      "enquiries": "ยอดสอบถาม",
+      "date": "วันที่",
+      "actions": "จัดการ"
+    },
+    "actions": {
+      "view": "ดู",
+      "duplicate": "ทำซ้ำ",
+      "edit": "แก้ไข",
+      "delete": "ลบ",
+      "toggle": "เปลี่ยนสถานะ"
+    },
+    "noProperties": {
+      "title": "ไม่พบรายการอสังหาริมทรัพย์",
+      "subtitle": "โปรดลองปรับการค้นหาหรือตัวกรอง หรือเพิ่มรายการใหม่"
+    },
+    "pagination": {
+      "page": "หน้า {currentPage} จาก {totalPages}",
+      "itemsPerPage": "{count} / หน้า"
+    }
+  },
+  "unitPlan": {
+    "title": "แปลนห้อง",
+    "alt": "แปลนห้อง",
+    "maxImagesError": "สามารถเพิ่มรูปภาพแปลนห้องได้สูงสุด 100 รูป ขณะนี้คุณมี {count} รูป",
+    "compressing": "กำลังบีบอัด {count} แปลนห้อง...",
+    "invalidFile": "{fileName} ไม่ใช่ไฟล์รูปภาพที่ถูกต้อง",
+    "processError": "ไม่สามารถประมวลผลแปลนห้องได้: {error}",
+    "imagesTitle": "รูปภาพแปลนห้อง ({count}/100)",
+    "reorderSubtitle": "ลากเพื่อจัดลำดับ - รูปแรกจะเป็นแปลนหลัก",
+    "addMore": "เพิ่มแปลนห้องเพิ่มเติม",
+    "compressingButton": "กำลังบีบอัด...",
+    "uploadTitle": "อัปโหลดรูปภาพแปลนห้อง",
+    "uploadSubtitle": "รูปภาพต้องเป็นรูปแบบ JPG หรือ PNG",
+    "browseFiles": "เลือกไฟล์"
+  },
+  "propertyType": {
+      "title": "ประเภททรัพย์สิน*",
+      "alt": "ไอคอนประเภททรัพย์สิน",
+      "loading": "กำลังโหลดประเภททรัพย์สิน...",
+      "noData": "ไม่มีประเภททรัพย์สิน",
+      "toast": {
+        "error": "ไม่สามารถโหลดประเภททรัพย์สินได้"
+      },
+      "validation": {
+        "required": "กรุณาเลือกประเภททรัพย์สิน"
+      }
+    },
+    "view": {
+    "title": "วิว",
+    "loading": "กำลังโหลดข้อมูลวิว...",
+    "error": "เกิดข้อผิดพลาดในการโหลดวิว: {error}"
+  },
+  "pricing": {
+      "title": "การตั้งค่าราคาและโปรโมชั่น",
+      "promotionInfo": "ราคาโปรโมชั่นจะช่วยเพิ่มความน่าสนใจให้กับประกาศของคุณ",
+      "displayedPrice": "ราคาที่แสดงเมื่อเปิดใช้โปรโมชั่น",
+      "labels": {
+        "sellingPrice": "ราคาขาย",
+        "rentalPrice": "ราคาเช่า"
+      },
+      "placeholders": {
+        "sellingPrice": "เช่น 30,000,000",
+        "rentalPrice": "เช่น 80,000"
+      },
+      "units": {
+        "thb": "บาท",
+        "thbPerMonth": "บาท/เดือน"
+      },
+      "shortTerm": {
+        "title": "เช่าระยะสั้น (ไม่บังคับ)",
+        "months3": "3 ด",
+        "months6": "6 ด",
+        "year1": "1 ป"
+      },
+      "validation": {
+        "promotionalPriceRequired": "กรุณาระบุราคาโปรโมชั่นเมื่อเปิดใช้งาน",
+        "priceRequired": "กรุณาระบุราคาขาย",
+        "rentalPriceRequired": "กรุณาระบุราคาเช่า"
+      }
+    },
+    "propertyInfo": {
+      "title": "ข้อมูลทรัพย์สิน*",
+      "alt": "ไอคอนข้อมูลทรัพย์สิน",
+      "labels": {
+        "projectName": "ชื่อโครงการ*",
+        "area": "พื้นที่*",
+        "referenceId": "รหัสอ้างอิง",
+        "propertyDisplay": "การแสดงผลทรัพย์สิน"
+      },
+      "placeholders": {
+        "projectName": "เช่น เดอะ ริเวียร่า จอมเทียน",
+        "selectArea": "เลือกพื้นที่",
+        "referenceId": "เช่น PROP123"
+      },
+      "options": {
+        "normal": "ทรัพย์สินปกติ",
+        "featured": "ทรัพย์สินแนะนำ (แสดงบนหน้าแรก)"
+      },
+      "notes": {
+        "featured": "ทรัพย์สินแนะนำจะปรากฏในส่วนสุ่ม/ยอดนิยมบนหน้าแรก"
+      },
+      "loadingZones": "กำลังโหลดพื้นที่...",
+      "errorLoadingZones": "เกิดข้อผิดพลาดในการโหลดพื้นที่: {error}",
+      "validation": {
+        "projectNameRequired": "กรุณากรอกชื่อโครงการ",
+        "areaRequired": "กรุณาเลือกพื้นที่"
+      }
+    },
+    "propertyDetail": {
+      "title": "รายละเอียดทรัพย์สิน",
+      "alt": "ไอคอนรายละเอียดทรัพย์สิน",
+      "labels": {
+        "propertyId": "รหัสทรัพย์สิน",
+        "ownershipQuota": "โควต้าความเป็นเจ้าของ",
+        "landSize": "ขนาดที่ดิน",
+        "usableArea": "พื้นที่ใช้สอย",
+        "floors": "จำนวนชั้น",
+        "furnishing": "เฟอร์นิเจอร์",
+        "bedrooms": "ห้องนอน",
+        "bathrooms": "ห้องน้ำ",
+        "constructionYear": "ปีที่สร้างเสร็จ",
+        "communityFees": "ค่าส่วนกลาง"
+      },
+      "options": {
+        "ownership": {
+          "freehold": "ถือครองกรรมสิทธิ์ (Freehold)",
+          "leasehold": "สิทธิการเช่า (Leasehold)"
+        },
+        "furnishing": {
+          "fully": "ตกแต่งครบ",
+          "partially": "ตกแต่งบางส่วน",
+          "unfurnished": "ไม่มีเฟอร์นิเจอร์"
+        }
+      },
+      "units": {
+        "rai": "ไร่",
+        "ngan": "งาน",
+        "sqwah": "ตร.ว.",
+        "sqm": "ตร.ม.",
+        "month": "/ เดือน",
+        "perSqm": "/ตร.ม.",
+        "perSqwah": "/ตร.ว."
+      },
+      "validation": {
+        "ownershipRequired": "กรุณาระบุโควต้าความเป็นเจ้าของ",
+        "usableAreaRequired": "กรุณาระบุพื้นที่ใช้สอย",
+        "required": "กรุณากรอกข้อมูลนี้"
+      }
+    },
+    "listingType": {
+      "title": "ประเภทประกาศ",
+      "alt": "ไอคอนประเภทประกาศ",
+      "forSale": "สำหรับขาย",
+      "forRent": "สำหรับเช่า",
+      "forSaleAndRent": "สำหรับขายและเช่า",
+      "required": "กรุณาเลือกประเภทประกาศ",
+      "currentSelection": "รายการที่เลือกปัจจุบัน: {status}",
+      "noSelection": "ไม่มี",
+      "disabled": "ไม่สามารถเปลี่ยนประเภทประกาศในโหมดแก้ไข/ดูได้"
+    },
+    "users": {
+      "title": "ผู้ใช้ทั้งหมด",
+      "subtitle": "จัดการผู้ใช้ทั้งหมดในระบบ",
+      "addUser": "เพิ่มผู้ใช้",
+      "editUser": "แก้ไขผู้ใช้",
+      "deleteUser": "ลบผู้ใช้",
+      "deleteConfirm": "คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้นี้?",
+      "name": "ชื่อ",
+      "email": "อีเมล",
+      "phone": "โทรศัพท์",
+      "role": "บทบาท",
+      "status": "สถานะ",
+      "actions": "การกระทำ",
+      "active": "ใช้งาน",
+      "inactive": "ไม่ใช้งาน",
+      "admin": "ผู้ดูแลระบบ",
+      "user": "ผู้ใช้",
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "update": "อัปเดต",
+      "nameRequired": "กรุณากรอกชื่อ",
+      "emailRequired": "กรุณากรอกอีเมล",
+      "invalidEmail": "รูปแบบอีเมลไม่ถูกต้อง",
+      "invalidPhone": "หมายเลขโทรศัพท์ไม่ถูกต้อง",
+      "roleRequired": "กรุณาเลือกบทบาท"
+    },
+      "passwordRequired": "กรุณากรอกรหัสผ่าน",
+      "currency": "การจัดการสกุลเงิน",
+      "currencyTitle": "อัตราแลกเปลี่ยนสกุลเงิน",
+      "currencySubtitle": "จัดการอัตราแลกเปลี่ยนสกุลเงินสำหรับเว็บไซต์",
+      "loading": "กำลังโหลดข้อมูล...",
+      "updating": "กำลังอัปเดต...",
+      "ratesUpdated": "อัปเดตอัตราแลกเปลี่ยนเรียบร้อยแล้ว",
+      "updateFailed": "ไม่สามารถอัปเดตอัตราแลกเปลี่ยนได้",
+      "errorFetching": "เกิดข้อผิดพลาดในการดึงข้อมูลอัตราแลกเปลี่ยน",
+      "notAuthenticated": "กรุณาเข้าสู่ระบบก่อนดำเนินการต่อ"
+    },
+    "listingType": {
+      "title": "ประเภทประกาศ",
+      "alt": "ไอคอนประเภทประกาศ",
+      "forSale": "สำหรับขาย",
+      "forRent": "สำหรับเช่า",
+      "forSaleAndRent": "สำหรับขายและเช่า",
+      "required": "กรุณาเลือกประเภทประกาศ",
+      "currentSelection": "ที่เลือกอยู่: {status}",
+      "noSelection": "ไม่ได้เลือก",
+      "disabled": "ไม่สามารถเปลี่ยนประเภทประกาศในโหมดแก้ไข/ดูได้"
+    },
+    "floorPlan": {
+      "title": "แปลนพื้น",
+      "alt": "รูปภาพแปลนพื้น",
+      "maxImagesError": "คุณสามารถอัปโหลดรูปภาพได้สูงสุด 100 รูป คุณกำลังพยายามอัปโหลด {filesLength} รูป แต่มีอยู่แล้ว {floorPlanImagesLength} รูป",
+      "compressing": "กำลังบีบอัด {filesLength} รูป...",
+      "invalidFile": "ข้ามไฟล์ที่ไม่ใช่รูปภาพ: {fileName}",
+      "processError": "เกิดข้อผิดพลาดในการประมวลผลรูปภาพ: {errorMessage}",
+      "imagesTitle": "อัปโหลดแล้ว {floorPlanImagesLength} รูป",
+      "reorderSubtitle": "ลากและวางเพื่อจัดลำดับรูปภาพ",
+      "addMoreButton": "เพิ่มอีก",
+      "compressingButton": "กำลังบีบอัด...",
+      "uploadTitle": "อัปโหลด/ลากรูปภาพแปลนพื้น",
+      "uploadSubtitle": "รูปภาพต้องเป็นรูปแบบ JPG หรือ PNG และมีขนาดอย่างน้อย 2048x768 (สูงสุด 100 รูป)",
+      "browseFilesButton": "เลือกไฟล์"
+    },
+    "features": {
+      "title": "สิ่งอำนวยความสะดวกและฟีเจอร์",
+      "loading": "กำลังโหลดฟีเจอร์...",
+      "error": "เกิดข้อผิดพลาดในการโหลดฟีเจอร์: {error}",
+      "fetchError": "ไม่สามารถดึงไอคอนสิ่งอำนวยความสะดวกได้",
+      "noneAvailable": "ไม่มีฟีเจอร์หรือสิ่งอำนวยความสะดวก",
+      "iconAlt": "ไอคอน {name}"
+    },
+    "facilities": {
+      "title": "สิ่งอำนวยความสะดวก",
+      "loading": "กำลังโหลดสิ่งอำนวยความสะดวก...",
+      "error": "เกิดข้อผิดพลาดในการโหลดสิ่งอำนวยความสะดวก: {error}",
+      "fetchError": "ไม่สามารถดึงไอคอนสิ่งอำนวยความสะดวกได้",
+      "noneAvailable": "ไม่มีสิ่งอำนวยความสะดวกสำหรับ {category}",
+      "iconAlt": "ไอคอน {name}",
+      "categoryCommon": "พื้นที่ส่วนกลาง",
+      "categoryDining": "ห้องอาหาร",
+      "categoryFitness": "ฟิตเนส",
+      "categoryPool": "สระว่ายน้ำ",
+      "categoryOther": "อื่นๆ"
+    },
+    "commissionPercentPlaceholder": "5",
+    "commissionAmountPlaceholder": "500000",
     "hourly": "ต่อชั่วโมง",
     "weekly": "ต่อสัปดาห์",
     "monthly": "ต่อเดือน",
-    "recentActivities": "กิจกรรมล่าสุด",
     "views": "การดู",
     "inquiries": "การสอบถาม",
-    "viewMore": "ดูเพิ่มเติม",
     "editProfile": "แก้ไขโปรไฟล์",
-    "property": "อสังหาริมทรัพย์",
     "properties": "อสังหาริมทรัพย์",
     "messages": "ข้อความ",
     "yearly": "ต่อปี",
@@ -232,41 +763,21 @@
     "menu": {
       "dashboard": "แดชบอร์ด",
       "message": "ข้อความ",
-      "addproperty": "เพิ่มโครงการ",
-      "my_properties": "ข้อมูลโครงการ",
+      "addProperty": "เพิ่มโครงการ",
+      "myProperties": "ข้อมูลโครงการ",
       "blog": "ข่าวสาร",
       "main": "หน้าหลัก",
-      "allpost": "ข่าวสารทั้งหมด",
-      "addnewpost": "เพิ่มโพสต์ใหม่",
+      "allPost": "ข่าวสารทั้งหมด",
+      "addNewPost": "เพิ่มโพสต์ใหม่",
       "setting": "ตั้งค่า",
       "managelisting": "จัดการรายการ",
-      "alluser": "ผู้ใช้ทั้งหมด",
+      "allUser": "ผู้ใช้ทั้งหมด",
       "language": "ภาษา",
       "currency": "สกุลเงิน",
       "profile": "จัดการโปรไฟล",
-      "myprofile": "โปรไฟล์ของฉัน",
+      "myProfile": "โปรไฟล์ของฉัน",
       "logout": "ออกจากระบบ"
-    }
-  },
-  "Language": {
-    "title": "ภาษา",
-    "subtitle": "จัดการภาษา",
-    "addNewLanguage": "เพิ่มภาษาใหม่",
-    "editLanguage": "แก้ไขภาษา",
-    "deleteLanguage": "ลบภาษา",
-    "language": "ภาษา",
-    "code": "รหัส",
-    "status": "สถานะ",
-    "action": "การดำเนินการ",
-    "rent": "เช่า",
-    "buy": "ซื้อ",
-    "blog": "บทความ"
-  },
-  "PropertyList": {
-    "discoverOurFeaturedListings": "ค้นพบรายการอสังหาริมทรัพย์แนะนำของเรา",
-    "noPropertiesFound": "ไม่พบอสังหาริมทรัพย์",
-    "tryDifferentFilters": "ลองใช้ตัวกรองอื่นๆ"
-  },
+    },
   "PropertyDetail": {
     "home": "หน้าหลัก",
     "properties": "อสังหาริมทรัพย์",
@@ -276,9 +787,9 @@
     "description": "รายละเอียด",
     "features": "คุณสมบัติ",
     "highlights": "จุดเด่น",
-    "propertyDetails": "รายละเอียดอสังหาริมทรัพย์",
-    "propertyId": "รหัสอสังหาริมทรัพย์",
-    "propertyType": "ประเภทอสังหาริมทรัพย์",
+    "propertyDetails": "รายละเอียดทรัพย์สิน",
+    "propertyId": "รหัสทรัพย์สิน",
+    "propertyType": "ประเภททรัพย์สิน",
     "projectName": "ชื่อโครงการ",
     "totalArea": "พื้นที่ทั้งหมด",
     "usableArea": "พื้นที่ใช้สอย",
@@ -286,13 +797,19 @@
     "bedrooms": "ห้องนอน",
     "bathrooms": "ห้องน้ำ",
     "floors": "จำนวนชั้น",
-    "furnishing": "เฟอร์นิเจอร์",
-    "constructionYear": "ปีที่สร้าง",
+    "furnishing": "การตกแต่ง",
+    "constructionYear": "ปีที่สร้างเสร็จ",
     "communityFee": "ค่าส่วนกลาง",
-    "district": "เขต/อำเภอ",
+    "district": "อำเภอ",
     "city": "เมือง",
     "province": "จังหวัด",
     "zipCode": "รหัสไปรษณีย์",
+    "perMonth": "/ เดือน",
+    "sqm": "ตร.ม.",
+    "rai": "ไร่",
+    "ngan": "งาน",
+    "sqWah": "ตร.วา",
+    "bahtPerMonth": "บาท/เดือน",
     "mapPlaceholder": "คลิกเพื่อดูแผนที่",
     "contactAgent": "ติดต่อตัวแทน",
     "yourName": "ชื่อของคุณ",
@@ -306,29 +823,192 @@
     "propertyNotFound": "ไม่พบข้อมูลอสังหาริมทรัพย์",
     "propertyNotFoundDescription": "ไม่พบข้อมูลอสังหาริมทรัพย์ที่คุณกำลังค้นหา กรุณาลองใหม่อีกครั้ง",
     "goBack": "กลับ",
-    "perMonth": "/ เดือน",
-    "perYear": "/ ปี",
-    "bahtPerMonth": "บาท/เดือน",
-    "sqm": "ตร.ม.",
-    "rai": "ไร่",
-    "ngan": "งาน",
-    "sqWah": "ตร.วา"
+    "perYear": "/ ปี"
+  },
+  "ExploreLocations": {
+    "title": "สำรวจทำเล",
+    "description": "พัทยามีภูมิทัศน์ที่หลากหลายนอกเหนือจากชายหาดและสถานบันเทิงยามค่ำคืน โดยมีสถานที่หลากหลายพร้อมลักษณะเฉพาะที่ตอบสนองความต้องการด้านอสังหาริมทรัพย์และกลยุทธ์การลงทุนที่แตกต่างกัน",
+    "more": "เพิ่มเติม",
+    "properties": "รายการ",
+    "errorFetching": "เกิดข้อผิดพลาดในการโหลดข้อมูลทำเล โปรดลองอีกครั้งในภายหลัง"
+  },
+  "Blog": {
+    "title": "บล็อก",
+    "createNew": "สร้างโพสต์บล็อกใหม่",
+    "createNewSubtitle": "เพิ่มโพสต์บล็อกใหม่พร้อมการสนับสนุนหลายภาษา",
+    "edit": "แก้ไขโพสต์บล็อก",
+    "editSubtitle": "แก้ไขโพสต์บล็อกพร้อมการสนับสนุนหลายภาษา",
+    "viewAll": "โพสต์บล็อกทั้งหมด",
+    "viewAllSubtitle": "จัดการโพสต์บล็อกทั้งหมดของคุณ",
+    "languages": {
+      "en": "อังกฤษ (หลัก)",
+      "th": "ไทย",
+      "zh": "จีน",
+      "ru": "รัสเซีย"
+    },
+    "form": {
+      "titleLabel": "หัวข้อ*",
+      "titlePlaceholder": "ป้อนหัวข้อในภาษา {langName}",
+      "titleRequired": "จำเป็นต้องมีหัวข้อภาษา {langName}",
+      "contentPlaceholder": "ป้อนเนื้อหาในภาษา {langName}",
+      "contentRequired": "จำเป็นต้องมีเนื้อหาภาษา {langName}",
+      "categoryLabel": "หมวดหมู่",
+      "categoryPlaceholder": "ป้อนหมวดหมู่",
+      "featuredImageLabel": "รูปภาพเด่น*",
+      "featuredImagePlaceholder": "อัปโหลด/ลากรูปภาพของบล็อกของคุณ",
+      "featuredImageHint": "ความกว้างที่แนะนำคืออย่างน้อย 1080px",
+      "featuredImageRequired": "จำเป็นต้องมีรูปภาพเด่น",
+      "cancelButton": "ยกเลิก",
+      "createButton": "สร้างบล็อก",
+      "updateButton": "อัปเดตบล็อก"
+    },
+    "toast": {
+      "errorTitle": "เกิดข้อผิดพลาดในการประมวลผลคำแปลหัวข้อ",
+      "errorContent": "เกิดข้อผิดพลาดในการประมวลผลคำแปลเนื้อหา",
+      "errorTags": "เกิดข้อผิดพลาดในการประมวลผลแท็ก",
+      "errorAuth": "คุณต้องเข้าสู่ระบบเพื่อสร้างโพสต์บล็อก",
+      "errorCreate": "ไม่สามารถสร้างโพสต์บล็อกได้ โปรดลองอีกครั้ง",
+      "errorUpdate": "ไม่สามารถอัปเดตโพสต์บล็อกได้ โปรดลองอีกครั้ง",
+      "successCreate": "สร้างโพสต์บล็อกสำเร็จ!",
+      "successUpdate": "อัปเดตโพสต์บล็อกสำเร็จ!",
+      "successDelete": "ลบโพสต์บล็อกสำเร็จ!",
+      "errorDelete": "ไม่สามารถลบโพสต์บล็อกได้"
+    },
+    "table": {
+      "title": "หัวข้อ",
+      "category": "หมวดหมู่",
+      "author": "ผู้เขียน",
+      "date": "วันที่",
+      "actions": "การกระทำ"
+    },
+    "deleteDialog": {
+      "title": "คุณแน่ใจหรือไม่?",
+      "text": "คุณจะไม่สามารถย้อนกลับการกระทำนี้ได้!",
+      "confirmButton": "ใช่, ลบเลย!",
+      "cancelButton": "ยกเลิก"
+    },
+    "pagination": "แสดง {start}-{end} จากทั้งหมด {total} รายการ",
+    "searchPlaceholder": "ค้นหาด้วยชื่อ",
+    "clearButton": "ล้าง",
+    "sortBy": {
+      "date": "เรียงตาม: วันที่",
+      "title": "เรียงตาม: ชื่อเรื่อง",
+      "category": "เรียงตาม: หมวดหมู่"
+    }
   },
   "Currency": {
-    "currency": "จัดการสกุลเงิน",
-    "currencyTitle": "อัตราแลกเปลี่ยนสกุลเงิน",
-    "currencySubtitle": "จัดการอัตราแลกเปลี่ยนสกุลเงินสำหรับเว็บไซต์",
+    "title": "การจัดการสกุลเงิน",
+    "subtitle": "จัดการอัตราแลกเปลี่ยนสกุลเงินสำหรับเว็บไซต์",
     "loading": "กำลังโหลดข้อมูล...",
-    "update": "อัปเดต",
-    "updating": "กำลังอัปเดต...",
-    "ratesUpdated": "อัปเดตอัตราแลกเปลี่ยนเรียบร้อยแล้ว",
-    "updateFailed": "ไม่สามารถอัปเดตอัตราแลกเปลี่ยนได้",
+    "updateButton": "อัปเดต",
+    "updatingButton": "กำลังอัปเดต...",
+    "ratesUpdated": "อัปเดตอัตราแลกเปลี่ยนสำเร็จ",
+    "updateFailed": "อัปเดตอัตราแลกเปลี่ยนไม่สำเร็จ",
     "errorFetching": "เกิดข้อผิดพลาดในการดึงข้อมูลอัตราแลกเปลี่ยน",
-    "notAuthenticated": "กรุณาเข้าสู่ระบบก่อนดำเนินการต่อ"
+    "notAuthenticated": "กรุณาเข้าสู่ระบบก่อนดำเนินการต่อ",
+    "names": {
+      "THB": "บาท",
+      "USD": "ดอลลาร์สหรัฐ",
+      "CNY": "หยวน",
+      "RUB": "รูเบิล",
+      "GBP": "ปอนด์",
+      "EUR": "ยูโร"
+    }
+  },
+  "Users": {
+    "allUser": "ผู้ใช้ทั้งหมด",
+    "manageAllUsers": "จัดการผู้ใช้ทั้งหมดในระบบ",
+    "addUser": "เพิ่มผู้ใช้",
+    "editUser": "แก้ไขผู้ใช้",
+    "searchUsers": "ค้นหาผู้ใช้...",
+    "allRoles": "ทุกบทบาท",
+    "name": "ชื่อ",
+    "email": "อีเมล",
+    "phone": "โทรศัพท์",
+    "role": "บทบาท",
+    "actions": "การกระทำ",
+    "view": "ดู",
+    "edit": "แก้ไข",
+    "delete": "ลบ",
+    "confirmDelete": "ยืนยันการลบ",
+    "deleteUserConfirmation": "คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้นี้? การกระทำนี้ไม่สามารถย้อนกลับได้",
+    "userDeleted": "ลบผู้ใช้เรียบร้อยแล้ว",
+    "userCreated": "สร้างผู้ใช้เรียบร้อยแล้ว",
+    "userUpdated": "อัปเดตผู้ใช้เรียบร้อยแล้ว",
+    "password": "รหัสผ่าน",
+    "confirmPassword": "ยืนยันรหัสผ่าน",
+    "socialMedia": "โซเชียลมีเดีย",
+    "basicInfo": "ข้อมูลพื้นฐาน",
+    "cancel": "ยกเลิก",
+    "create": "สร้าง",
+    "update": "อัปเดต",
+    "nameRequired": "ต้องระบุชื่อ",
+    "emailRequired": "ต้องระบุอีเมล",
+    "invalidEmail": "รูปแบบอีเมลไม่ถูกต้อง",
+    "invalidPhone": "หมายเลขโทรศัพท์ไม่ถูกต้อง",
+    "roleRequired": "ต้องระบุบทบาท",
+    "passwordRequired": "ต้องระบุรหัสผ่าน",
+    "passwordTooShort": "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
+    "confirmPasswordRequired": "กรุณายืนยันรหัสผ่านของคุณ",
+    "passwordsMustMatch": "รหัสผ่านต้องตรงกัน",
+    "leaveEmptyToKeep": "เว้นว่างไว้เพื่อใช้รหัสผ่านปัจจุบัน",
+    "noUsersFound": "ไม่พบผู้ใช้"
+  },
+  "Language": {
+    "title": "การจัดการภาษา",
+    "subtitle": "เราดีใจที่ได้พบคุณอีกครั้ง!",
+    "addNew": "เพิ่มใหม่",
+    "loading": "กำลังโหลด...",
+    "noStringsFound": "ไม่พบข้อความ",
+    "confirmDelete": "คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลภาษานี้?",
+    "deleteSuccess": "ลบข้อมูลภาษาสำเร็จ",
+    "deleteFailed": "ลบข้อมูลภาษาไม่สำเร็จ",
+    "saveSuccess": "บันทึกข้อมูลภาษาสำเร็จ",
+    "createSuccess": "สร้างข้อมูลภาษาสำเร็จ",
+    "updateSuccess": "อัปเดตข้อมูลภาษาสำเร็จ",
+    "saveFailed": "บันทึกข้อมูลภาษาไม่สำเร็จ",
+    "loadFailed": "โหลดข้อมูลภาษาไม่สำเร็จ",
+    "requiredFieldsMissing": "โปรดกรอกข้อมูลที่จำเป็นให้ครบถ้วน",
+    "tabs": {
+      "header": "ส่วนหัว",
+      "home": "หน้าแรก",
+      "rent": "เช่า",
+      "blog": "บล็อก",
+      "about": "เกี่ยวกับเรา",
+      "contact": "ติดต่อ"
+    },
+    "form": {
+      "addTitle": "เพิ่มข้อความ",
+      "editTitle": "แก้ไขข้อความ",
+      "cancel": "ยกเลิก",
+      "save": "บันทึก",
+      "slug": "สลัก",
+      "slugPlaceholder": "เช่น welcome_message",
+      "slugDescription": "ตัวระบุที่ไม่ซ้ำกันสำหรับข้อความ",
+      "section": "ส่วน",
+      "english": "ภาษาอังกฤษ",
+      "englishPlaceholder": "ข้อความภาษาอังกฤษ",
+      "thai": "ภาษาไทย",
+      "thaiPlaceholder": "ข้อความภาษาไทย",
+      "chinese": "ภาษาจีน",
+      "chinesePlaceholder": "ข้อความภาษาจีน",
+      "russian": "ภาษารัสเซีย",
+      "russianPlaceholder": "ข้อความภาษารัสเซีย",
+      "required": "*"
+    },
+    "table": {
+      "slug": "สลัก",
+      "english": "ภาษาอังกฤษ",
+      "thai": "ภาษาไทย",
+      "chinese": "ภาษาจีน",
+      "russian": "ภาษารัสเซีย",
+      "actions": "การกระทำ"
+    }
   },
   "AddProperty": {
     "addNewProperty": "เพิ่มอสังหาริมทรัพย์ใหม่",
     "duplicatePropertyTitle": "คัดลอกอสังหาริมทรัพย์",
+    "duplicatePropertySubtitle": "สร้างอสังหาริมทรัพย์ใหม่โดยอ้างอิงจากรายการที่มีอยู่",
     "updateProperty": "บันทึกข้อมูล",
     "duplicateProperty": "คัดลอกอสังหาริมทรัพย์",
     "editProperty": "แก้ไขอสังหาริมทรัพย์",
@@ -342,19 +1022,20 @@
     "dataSavedSuccessfully": "บันทึกข้อมูลเรียบร้อยแล้ว",
     "invalidData": "ข้อมูลไม่ถูกต้อง",
     "notAuthorized": "ไม่ได้รับอนุญาตให้เข้าถึง API กรุณาเข้าสู่ระบบใหม่",
-    "errorSavingData": "เกิดข้อผิดพลาดในการบันทึกข้อมูล",
-    "cannotConnectToAPI": "ไม่สามารถเชื่อมต่อกับ API ได้ กรุณาตรวจสอบว่า backend server ทำงานอยู่หรือไม่",
-    "pleaseFillInAllRequiredFields": "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน",
-    "pleaseCorrectTheFollowingErrors": "กรุณาแก้ไขข้อผิดพลาดต่อไปนี้",
-    "youMustAgreeToTheTerms": "คุณต้องยอมรับข้อกำหนดและเงื่อนไข",
-    "iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty": "ฉันยืนยันว่าข้อมูลทั้งหมดที่ให้ไว้ถูกต้องและฉันมีสิทธิ์ในการลงประกาศอสังหาริมทรัพย์นี้"
+    "iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty": "ฉันขอยืนยันว่าข้อมูลทั้งหมดที่ให้ไว้มีความถูกต้องและฉันมีสิทธิ์ในการลงประกาศอสังหาริมทรัพย์นี้"
   },
-  "common": {
-    "welcomeMessage": "ยินดีต้อนรับสู่แพลตฟอร์มอสังหาริมทรัพย์ของเรา",
-    "propertyCount_one": "{{count}} รายการ",
-    "propertyCount_other": "{{count}} รายการ",
-    "property_one": "รายการ",
-    "property_other": "รายการ"
+  "Login": {
+    "adminLogin": "เข้าสู่ระบบผู้ดูแล",
+    "loginDescription": "ยินดีต้อนรับกลับ! กรุณาเข้าสู่ระบบบัญชีของคุณ",
+    "email": "อีเมล",
+    "enterEmail": "ป้อนอีเมลของคุณ",
+    "password": "รหัสผ่าน",
+    "enterPassword": "ป้อนรหัสผ่านของคุณ",
+    "rememberMe": "จดจำฉันไว้ในระบบ",
+    "login": "เข้าสู่ระบบ",
+    "loggingIn": "กำลังเข้าสู่ระบบ...",
+    "loginFailed": "การเข้าสู่ระบบล้มเหลว กรุณาตรวจสอบข้อมูลของคุณ",
+    "errorDuringLogin": "เกิดข้อผิดพลาดที่ไม่คาดคิดระหว่างการเข้าสู่ระบบ"
   },
   "propertyTypes": {
     "title": "ประเภทอสังหาริมทรัพย์",

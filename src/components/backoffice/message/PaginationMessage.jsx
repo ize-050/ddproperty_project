@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
+import { useTranslations } from 'next-intl';
 
 const PaginationMessage = ({ totalCount, totalPages, currentPage }) => {
+    const t = useTranslations('backoffice');
    
     const handlePageClick = (page) => {
         setCurrentPage(page);
@@ -62,7 +64,7 @@ const PaginationMessage = ({ totalCount, totalPages, currentPage }) => {
                 </li>
             </ul>
             <p className="mt10 pagination_page_count text-center">
-              {currentPage * 20 - 20 + 1} - {Math.min(currentPage * 20, totalCount)} of {totalCount}
+              {currentPage * 20 - 20 + 1} - {Math.min(currentPage * 20, totalCount)} {t('paginationOf')} {totalCount}
             </p>
         </div>
     );

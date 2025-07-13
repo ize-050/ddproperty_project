@@ -4,18 +4,20 @@ import React, { useState, useEffect } from 'react';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 const MoreRoomTypeSection = () => {
+  const t = useTranslations('backoffice');
   const { formData, setPropertyLabel, initializePropertyLabels } = usePropertyFormStore();
   const [selectedRoomType, setSelectedRoomType] = useState('');
   const { register, setValue, watch } = useFormContext();
 
   // Static room types (not from database)
   const roomTypes = [
-    { key: 'duplex', name: 'Duplex' },
-    { key: 'penthouse', name: 'Penthouse' },
-    { key: '1-bed-plus', name: '1 Bed Plus' },
-    { key: 'duplex-penthouse', name: 'Duplex Penthouse' }
+    { key: 'duplex', name: t('moreRoomType.duplex') },
+    { key: 'penthouse', name: t('moreRoomType.penthouse') },
+    { key: '1-bed-plus', name: t('moreRoomType.oneBedPlus') },
+    { key: 'duplex-penthouse', name: t('moreRoomType.duplexPenthouse') }
   ];
 
   // Watch for property type changes
@@ -74,12 +76,12 @@ const MoreRoomTypeSection = () => {
       <div className="section-header">
         <Image 
           src="/images/icons/iconproperty/property_type.svg" 
-          alt="Room Type" 
+          alt={t('moreRoomType.alt')} 
           width={24} 
           height={24} 
           className="section-icon"
         />
-        <h2 className="section-title">More Room Type</h2>
+        <h2 className="section-title">{t('moreRoomType.title')}</h2>
       </div>
       
       <div className="amenities-grid">

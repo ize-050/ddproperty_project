@@ -53,7 +53,7 @@ const MessagePage = () => {
 
   // Format date from ISO string to a more readable format
   const formatDate = (dateString) => {
-    if (!dateString) return '';
+    if (!dateString) return t('unknownDate');
     const date = new Date(dateString);
     const month = date.toLocaleString('default', { month: 'short' });
     const day = date.getDate();
@@ -67,19 +67,19 @@ const MessagePage = () => {
       id: messageData.id,
       status: messageData.status || 'NEW',
       contact: {
-        name: messageData.name || 'Unknown',
+        name: messageData.name || t('unknown'),
         email: messageData.email || '',
         phone: messageData.phone || ''
       },
       property: {
         id: messageData.property?.id || 0,
-        title: messageData.property?.projectName || 'Unknown Property',
+        title: messageData.property?.projectName || t('unknownProperty'),
         location: messageData.property?.district || '',
         images: `${process.env.NEXT_PUBLIC_IMAGE_URL}${messageData.property?.images[0].url}`
       },
       enquiries: 1, // Default value
       lastActivity: {
-        action: messageData.message?.substring(0, 30) + '...' || 'Sent a message',
+        action: messageData.message?.substring(0, 30) + '...' || t('sentMessage'),
         date: formatDate(messageData.createdAt)
       }
     };
@@ -144,7 +144,7 @@ const MessagePage = () => {
           });
         }
       } else {
-        throw new Error(data.message || 'Failed to fetch messages');
+        throw new Error(data.message || t('fetchError'));
       }
     } catch (err) {
       console.error('Error fetching messages:', err);
@@ -216,14 +216,14 @@ const MessagePage = () => {
       );
       
       // Show success toast notification
-      toast.success(`Message status updated to ${newStatus.charAt(0) + newStatus.slice(1).toLowerCase()}`);
+      toast.success(t('updateStatusSuccess', { status: newStatus.charAt(0) + newStatus.slice(1).toLowerCase() }));
       
       // Reload messages to get fresh data from the server
       await fetchMessages();
       
     } catch (error) {
       console.error('Error updating message status:', error);
-      toast.error('Failed to update message status');
+      toast.error(t('updateStatusError'));
     }
   };
 
@@ -336,10 +336,10 @@ const MessagePage = () => {
                 value={selectedTimeframe}
                 onChange={handleTimeframeFilter}
               >
-                <option value="Last 3 Month">Last 3 Month</option>
-                <option value="Last 6 Month">Last 6 Month</option>
-                <option value="Last Year">Last Year</option>
-                <option value="All Time">All Time</option>
+                <option value="Last 3 Month">{t('last3Month')}</option>
+                <option value="Last 6 Month">{t('last6Month')}</option>
+                <option value="Last Year">{t('lastYear')}</option>
+                <option value="All Time">{t('allTime')}</option>
               </select>
             </div>
 
@@ -348,7 +348,7 @@ const MessagePage = () => {
               onClick={handleClearFilters}
             >
               <FaTimes />
-              Clear
+              {t('clear')}
             </button>
           </div>
         </div>
@@ -360,12 +360,12 @@ const MessagePage = () => {
       {isLoading ? (
         <div className="loading-container">
           <div className="loading-spinner"></div>
-          <p>Loading messages...</p>
+          <p>{t('loading')}</p>
         </div>
       ) : error ? (
         <div className="error-container">
-          <p>Error: {error}</p>
-          <button onClick={() => window.location.reload()}>Try Again</button>
+          <p>{t('error', { error: error })}</p>
+          <button onClick={() => window.location.reload()}>{t('tryAgain')}</button>
         </div>
       ) : (
         <div className="row">

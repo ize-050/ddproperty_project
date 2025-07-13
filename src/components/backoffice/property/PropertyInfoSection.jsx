@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { useTranslations } from 'next-intl';
 import { useFormContext } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import Image from 'next/image';
 
 const PropertyInfoSection = () => {
+  const t = useTranslations('backoffice.propertyInfo');
   const { formData } = usePropertyFormStore();
   const { register, formState: { errors }, setValue, watch } = useFormContext();
   const [zones, setZones] = useState([]);
@@ -69,45 +70,45 @@ const PropertyInfoSection = () => {
       <div className="section-header">
         <Image
           src="/images/icons/iconproperty/property_information.svg"
-          alt="Property Information"
+          alt={t('alt')}
           width={24}
           height={24}
           className="section-icon"
         />
-        <h2 className="section-title">Property Information*</h2>
+        <h2 className="section-title">{t('title')}</h2>
       </div>
       
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="projectName">Project Name*</label>
+          <label htmlFor="projectName">{t('labels.projectName')}</label>
           <input
             type="text"
             id="projectName"
             className={`form-control ${errors.projectName ? 'is-invalid' : ''}`}
             defaultValue={formData.projectName}
-            placeholder="e.g. Chonburi"
-            {...register('projectName', { required: 'Project name is required' })}
+            placeholder={t('placeholders.projectName')}
+            {...register('projectName', { required: t('validation.projectNameRequired') })}
           />
           {errors.projectName && (
             <div className="invalid-feedback">{errors.projectName.message}</div>
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="zone_id">Area*</label>
+          <label htmlFor="zone_id">{t('labels.area')}</label>
           {isLoading ? (
-            <div className="loading-spinner">Loading zones...</div>
+            <div className="loading-spinner">{t('loadingZones')}</div>
           ) : error ? (
-            <div className="error-message">Error loading zones: {error}</div>
+            <div className="error-message">{t('errorLoadingZones', { error })}</div>
           ) : (
             <>
               <select
                 id="zone_id"
                 className={`form-control custom-select ${errors.zone_id || errors.area ? 'is-invalid' : ''}`}
                 defaultValue={formData.zone_id || ''}
-                {...register('zone_id', { required: 'Area is required' })}
+                {...register('zone_id', { required: t('validation.areaRequired') })}
                 onChange={handleZoneChange}
               >
-                <option value="" disabled>Select area</option>
+                <option value="" disabled>{t('placeholders.selectArea')}</option>
                 {zones.map((zone) => (
                   <option key={zone.id} value={zone.id}>
                     {zone.name}
@@ -115,7 +116,7 @@ const PropertyInfoSection = () => {
                 ))}
               </select>
               {/* Hidden field to store area name for backward compatibility */}
-              <input type="hidden" {...register('area', { required: 'Area is required' })} />
+              <input type="hidden" {...register('area', { required: t('validation.areaRequired') })} />
             </>
           )}
           {(errors.zone_id || errors.area) && (
@@ -123,13 +124,13 @@ const PropertyInfoSection = () => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="referenceId">Reference ID</label>
+          <label htmlFor="referenceId">{t('labels.referenceId')}</label>
           <input
             type="text"
             id="referenceId"
             className="form-control"
             defaultValue={formData.referenceId}
-            placeholder="e.g. PROP123"
+            placeholder={t('placeholders.referenceId')}
             {...register('referenceId')}
           />
         </div>
@@ -137,7 +138,7 @@ const PropertyInfoSection = () => {
 
       <div className="form-row">
         <div className="form-group">
-          <label className="form-label">Property Display</label>
+          <label className="form-label">{t('labels.propertyDisplay')}</label>
           <div className="radio-group">
             <div className="form-check">
               <input
@@ -149,7 +150,7 @@ const PropertyInfoSection = () => {
                 {...register('isFeatured')}
               />
               <label htmlFor="featured-no" className="form-check-label">
-                Normal Property
+                {t('options.normal')}
               </label>
             </div>
             <div className="form-check">
@@ -162,12 +163,12 @@ const PropertyInfoSection = () => {
                 {...register('isFeatured')}
               />
               <label htmlFor="featured-yes" className="form-check-label">
-                Featured Property (Show on Homepage)
+                {t('options.featured')}
               </label>
             </div>
           </div>
           <small className="form-text text-muted">
-            Featured properties will appear in the random/popular section on the homepage
+            {t('notes.featured')}
           </small>
         </div>
       </div>

@@ -753,70 +753,45 @@ const usePropertyFormStore = create((set) => ({
   })),
 
   reorderPropertyImages: (sourceIndex, destinationIndex) => set((state) => {
-    const newImages = [...state.propertyImages];
-    const [removed] = newImages.splice(sourceIndex, 1);
-    newImages.splice(destinationIndex, 0, removed);
-
-    // อัปเดต sortOrder ตามลำดับใหม่
-    const updatedImages = newImages.map((image, index) => ({
-      ...image,
-      sortOrder: index
-    }));
-
-    return {
-      propertyImages: updatedImages
-    };
+    const items = Array.from(state.propertyImages);
+    const [reorderedItem] = items.splice(sourceIndex, 1);
+    items.splice(destinationIndex, 0, reorderedItem);
+    return { propertyImages: items };
   }),
 
   // Floor Plan Images Functions
   addFloorPlanImages: (newImages) => set((state) => ({
-    floorPlanImages: [...state.floorPlanImages, ...newImages]
+    floorPlanImages: [...state.floorPlanImages, ...newImages],
   })),
 
   removeFloorPlanImage: (id) => set((state) => ({
-    floorPlanImages: state.floorPlanImages.filter(img => img.id !== id)
+    floorPlanImages: state.floorPlanImages.filter((img) => img.id !== id),
   })),
 
-  reorderFloorPlanImages: (sourceIndex, destinationIndex) => set((state) => {
-    const newImages = [...state.floorPlanImages];
-    const [removed] = newImages.splice(sourceIndex, 1);
-    newImages.splice(destinationIndex, 0, removed);
-
-    // อัปเดต sortOrder ตามลำดับใหม่
-    const updatedImages = newImages.map((image, index) => ({
-      ...image,
-      sortOrder: index
-    }));
-
-    return {
-      floorPlanImages: updatedImages
-    };
-  }),
+  reorderFloorPlanImages: (sourceIndex, destinationIndex) =>
+    set((state) => {
+      const items = Array.from(state.floorPlanImages);
+      const [reorderedItem] = items.splice(sourceIndex, 1);
+      items.splice(destinationIndex, 0, reorderedItem);
+      return { floorPlanImages: items };
+    }),
 
   // Unit Plan Images Functions
   addUnitPlanImages: (newImages) => set((state) => ({
-    unitPlanImages: [...state.unitPlanImages, ...newImages]
+    unitPlanImages: [...state.unitPlanImages, ...newImages],
   })),
 
   removeUnitPlanImage: (id) => set((state) => ({
-    unitPlanImages: state.unitPlanImages.filter(img => img.id !== id)
+    unitPlanImages: state.unitPlanImages.filter((img) => img.id !== id),
   })),
 
-  reorderUnitPlanImages: (sourceIndex, destinationIndex) => set((state) => {
-    const newImages = [...state.unitPlanImages];
-    const [removed] = newImages.splice(sourceIndex, 1);
-    newImages.splice(destinationIndex, 0, removed);
-
-    // อัปเดต sortOrder ตามลำดับใหม่
-    const updatedImages = newImages.map((image, index) => ({
-      ...image,
-      sortOrder: index
-    }));
-
-    return {
-      unitPlanImages: updatedImages
-    };
-  }),
+  reorderUnitPlanImages: (sourceIndex, destinationIndex) =>
+    set((state) => {
+      const items = Array.from(state.unitPlanImages);
+      const [reorderedItem] = items.splice(sourceIndex, 1);
+      items.splice(destinationIndex, 0, reorderedItem);
+      return { unitPlanImages: items };
+    }),
 
   resetForm: () => set({
     formData: {

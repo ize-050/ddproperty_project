@@ -19,14 +19,7 @@ const currencyFlags = {
 };
 
 // Currency names
-const currencyNames = {
-  THB: 'BATH',
-  USD: 'US DOLLAR',
-  CNY: 'YUAN',
-  RUB: 'RUBLE',
-  GBP: 'POUND',
-  EUR: 'EURO',
-};
+
 
 const CurrencyPage = () => {
   const t = useTranslations('Currency');
@@ -103,7 +96,7 @@ const CurrencyPage = () => {
       const currenciesArray = Object.keys(currencyRates).map(code => ({
         currency: code,
         rate: parseFloat(currencyRates[code]),
-        name: currencyNames[code],
+        name: t(`names.${code}`),
         isBase: code === 'THB'
       }));
       
@@ -139,8 +132,8 @@ const CurrencyPage = () => {
   return (
       <div className="currency-page">
         <div className="page-header">
-          <h1>Currency</h1>
-          <p>We are glad to see you again</p>
+          <h1>{t('title')}</h1>
+          <p>{t('subtitle')}</p>
         </div>
         
         {isLoading ? (
@@ -169,7 +162,7 @@ const CurrencyPage = () => {
                     step="0.01"
                     min="0"
                   />
-                  <span className="currency-name">{currencyNames[currency]}</span>
+                  <span className="currency-name">{t(`names.${currency}`)}</span>
                 </div>
               </div>
             ))}
@@ -195,7 +188,7 @@ const CurrencyPage = () => {
               onClick={handleUpdate}
               disabled={isUpdating}
             >
-              {isUpdating ? 'Updating...' : 'Update'}
+              {isUpdating ? t('updatingButton') : t('updateButton')}
             </button>
           </div>
         )}

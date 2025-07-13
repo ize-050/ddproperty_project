@@ -25,7 +25,6 @@
     "subtitle": "Aliquam lacinia diam quis lacus euismod",
     "seeAll": "See All Properties"
   },
-  
   "Footer": {
     "about": "About Us",
     "contact": "Contact Us",
@@ -79,7 +78,7 @@
     "propertyTypes": {
       "title": "Property Types",
       "subtitle": "Discover Pattaya Properties for Sale and Rent - Condos, Pool Villa, House & Commercial Real Estate",
-      "noPropertyTypesFound": "ไม่พบประเภทอสังหาริมทรัพย์"
+      "noPropertyTypesFound": "No property types found"
     },
     "ExploreLocations": {
       "title": "Explore Locations",
@@ -120,18 +119,18 @@
       "sqm": "sqm"
     },
     "Language": {
-      "title": "ภาษา",
-      "subtitle": "จัดการภาษา",
-      "addNewLanguage": "เพิ่มภาษาใหม่",
-      "editLanguage": "แก้ไขภาษา",
-      "deleteLanguage": "ลบภาษา",
-      "language": "ภาษา",
-      "code": "รหัส",
-      "status": "สถานะ",
-      "action": "การดำเนินการ",
-      "rent": "เช่า",
-      "buy": "ซื้อ",
-      "blog": "บทความ"
+      "title": "Language",
+      "subtitle": "Manage Language",
+      "addNewLanguage": "Add New Language",
+      "editLanguage": "Edit Language",
+      "deleteLanguage": "Delete Language",
+      "language": "Language",
+      "code": "Code",
+      "status": "Status",
+      "action": "Action",
+      "rent": "Rent",
+      "buy": "Buy",
+      "blog": "Blog"
     },
     "blogs": {
       "section": {
@@ -158,10 +157,10 @@
   },
   "Message": {
     "messages": "Messages",
-    "messageDescription": "We are glad to see you again",
-    "contactForm": "Contact Form",
-    "messageTitle": "Message",
-    "messageSubtitle": "All Message",
+    "description": "We are glad to see you again",
+    "formTitle": "Contact Form",
+    "title": "Message",
+    "subtitle": "All Message",
     "update": "Update",
     "delete": "Delete",
     "deleteConfirm": "Are you sure you want to delete this message?",
@@ -187,10 +186,10 @@
     "name": "Name",
     "email": "Email",
     "subject": "Subject",
-    "message": "Message",
+    "messageContent": "Message",
     "send": "Send Message",
-    "messageSent": "Your message has been sent successfully!",
-    "messageError": "There was an error sending your message. Please try again.",
+    "sentSuccess": "Your message has been sent successfully!",
+    "sentError": "There was an error sending your message. Please try again.",
     "requiredField": "This field is required",
     "invalidEmail": "Please enter a valid email address",
     "inbox": "Inbox",
@@ -198,104 +197,542 @@
     "trash": "Trash",
     "compose": "Compose",
     "reply": "Reply",
-    "forward": "Forward"
+    "forward": "Forward",
+    "read": "Read",
+    "replied": "Replied",
+    "archived": "Archived",
+    "last6Month": "Last 6 Months",
+    "lastYear": "Last Year",
+    "allTime": "All Time",
+    "loading": "Loading messages...",
+    "error": "Error: {error}",
+    "tryAgain": "Try Again",
+    "updateStatusSuccess": "Message status updated to {status}",
+    "updateStatusError": "Failed to update message status",
+    "fetchError": "Failed to fetch messages",
+    "unknown": "Unknown",
+    "unknownProperty": "Unknown Property",
+    "sentMessage": "Sent a message",
+    "messageDescription": "We are glad to see you again"
   },
   "backoffice": {
-    "dashboard": "Dashboard",
-    "message": "Message",
-    "addProperty": "Add Property",
-    "myProperties": "My Properties",
-    "allPost": "All Post",
-    "addNewPost": "Add New Post",
-    "allUser": "All User",
-    "language": "Language",
-    "currency": "Currency",
-    "myProfile": "My Profile",
-    "manageYourProfile": "Manage your profile",
-    "adminLogin": "Admin Login",
-    "loginDescription": "Please sign in to access the admin panel",
-    "email": "Email Address",
-    "enterEmail": "Enter your email address",
-    "password": "Password",
-    "enterPassword": "Enter your password",
-    "rememberMe": "Remember me",
-    "loggingIn": "Logging in...",
-    "login": "Login",
-    "menu":{
+    "frontend": "Frontend",
+    "paginationOf": "of",
+    "coAgent": {
+      "title": "Co-Agent",
+      "accept": "Accept Co-Agents",
+      "alt": "Co-Agent Icon",
+      "commissionPercent": "Commission by Percentage",
+      "commissionSpecific": "Commission by Specific Amount",
+      "commissionRate": "Commission Rate",
+      "commissionPercentPlaceholder": "e.g., 3.0",
+      "commissionAmountPlaceholder": "e.g., 50000",
+      "totalCommission": "Total Commission",
+      "currencyTHB": "THB",
+      "privateNote": "Private Note for Co-Agents",
+      "privateNoteAlt": "Private Note Icon",
+      "privateNotePlaceholder": "Enter any private notes for co-agents here. This will only be visible to you and them."
+    },
+    "socialMedia": {
+      "youtubeUrl": "YouTube URL",
+      "youtubePlaceholder": "Enter YouTube video URL",
+      "tiktokUrl": "TikTok URL",
+      "tiktokPlaceholder": "Enter TikTok video URL"
+    },
+    "menu": {
+      "main": "Main",
       "dashboard": "Dashboard",
       "message": "Message",
+      "managelisting": "Manage Listing",
       "addproperty": "Add Property",
-      "main": "Main",
       "my_properties": "My Properties",
-      "blog": "Blog",
       "allpost": "All Post",
-      "addnewpost": "Add New Post",
-      "setting": "All User",
       "alluser": "All User",
-      "managelisting": "MANAGE LISTINGS",
       "language": "Language",
       "currency": "Currency",
-      "profile": "Manage Account",
+      "profile": "Profile",
       "myprofile": "My Profile",
+      "addnewpost": "Add New Post",
+      "setting": "Setting",
       "logout": "Logout"
+    },
+    "dashboard": {
+      "loadingStats": "Loading stats...",
+      "errorLoadingStats": "Failed to fetch dashboard stats",
+      "allProperties": "All Properties",
+      "totalViews": "Total Views",
+      "totalEnquiries": "Total Enquiries",
+      "failedToFetchRecentActivities": "Failed to fetch recent activities",
+      "apiRequestFailed": "API request failed with status {status}",
+      "activities": {
+        "anonymousUser": "Anonymous",
+        "noEmailProvided": "No email provided",
+        "noPhoneProvided": "No phone provided",
+        "noMessageContent": "No message content",
+        "unknownProperty": "Unknown Property",
+        "unknownDate": "Unknown date",
+        "yourListing": "Your listing",
+        "hasStatus": "has",
+        "leftAReviewOn": "left a review on",
+        "favouritesYour": "favourites your",
+        "listing": "listing"
+      },
+      "propertyOverview": "Property Overview",
+      "properties": "Property",
+      "yearly": "Yearly",
+      "noRecentActivities": "No recent activities",
+      "messages": "Message",
+      "propertyViews": "Property Views",
+      "hourly": "Hours",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "recentActivities": "Recent Activities",
+      "views": "Views",
+      "inquiries": "Inquiries",
+      "viewMore": "View More"
+    },
+    "myProperties": {
+      "title": "My Properties",
+      "subtitle": "Manage all your property listings in one place.",
+      "searchPlaceholder": "Search by name or reference...",
+      "clear": "Clear",
+      "addNew": "Add New Property",
+      "loading": "Loading properties...",
+      "retry": "Retry",
+      "priceUnit": "/month",
+      "propertyImageAlt": "Property Image",
+      "noImage": "No Image",
+      "sortBy": {
+        "date": "Sort by Date",
+        "price": "Sort by Price",
+        "views": "Sort by Views"
+      },
+      "errors": {
+        "authTokenNotFound": "Authentication token not found. Please log in again.",
+        "fetchError": "Failed to fetch properties: {error}"
+      },
+      "deleteDialog": {
+        "title": "Are you sure?",
+        "text": "You won't be able to revert this!",
+        "confirmButton": "Yes, delete it!",
+        "cancelButton": "Cancel"
+      },
+      "errorDialog": {
+        "title": "Error!",
+        "text": "An unexpected error occurred."
+      },
+      "toast": {
+        "deleteSuccess": "Property deleted successfully!",
+        "deleteError": "Failed to delete property.",
+        "updateStatusSuccess": "Property status updated to {status}.",
+        "updateStatusError": "Failed to update property status."
+      },
+      "status": {
+        "published": "Published",
+        "unpublished": "Unpublished"
+      },
+      "tableHeaders": {
+        "property": "Property",
+        "reference": "Reference",
+        "operation": "Operation",
+        "price": "Price",
+        "published": "Published",
+        "displays": "Displays",
+        "visits": "Visits",
+        "enquiries": "Enquiries",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "duplicate": "Duplicate",
+        "edit": "Edit",
+        "delete": "Delete",
+        "toggle": "Toggle Status"
+      },
+      "noProperties": {
+        "title": "No Properties Found",
+        "subtitle": "Try adjusting your search or filters, or add a new property."
+      },
+      "pagination": {
+        "page": "Page {currentPage} of {totalPages}",
+        "itemsPerPage": "{count} / page"
+      }
+    },
+    "language": "Language",
+    "currency": "Currency",
+    "profile": "Profile",
+    "myprofile": "My Profile",
+    "manageYourProfile": "Manage your profile",
+    "welcomeMessage": "We are glad to see you again!",
+    "other": "Other",
+    "noData": "No data available",
+    "location": {
+      "title": "Location",
+      "toggleMap": "Show map to select location",
+      "searchAddress": "Search for address",
+      "searchPlaceholder": "Enter address, city, or landmark",
+      "propertyLocationMarker": "Property Location",
+      "addressNotFound": "Address not found. Please try a different search term.",
+      "addressLabel": "Address",
+      "countryLabel": "Country",
+      "provinceLabel": "Province / State",
+      "districtLabel": "District / County",
+      "subdistrictLabel": "Sub-district / Town",
+      "postalCodeLabel": "Postal Code",
+      "latitudeLabel": "Latitude",
+      "longitudeLabel": "Longitude",
+      "addressPlaceholder": "Full address from map",
+      "countryPlaceholder": "Country from map",
+      "provincePlaceholder": "Province from map",
+      "districtPlaceholder": "District from map",
+      "subdistrictPlaceholder": "Sub-district from map",
+      "postalCodePlaceholder": "Postal code from map",
+      "latitudePlaceholder": "e.g. 12.93",
+      "longitudePlaceholder": "e.g. 100.88"
+    },
+    "property": {
+      "view": {
+        "title": "View",
+        "loading": "Loading views...",
+        "error": "Error loading views: {error}",
+        "noData": "No views data found"
+      }
+    },
+    "facilities": {
+      "title": "Facilities",
+      "loading": "Loading facilities...",
+      "error": "Error loading facilities: {error}",
+      "fetchError": "Failed to fetch facility data",
+      "noData": "No facilities available",
+      "iconAlt": "{name} icon",
+      "categoryCommon": "Common Area",
+      "categoryDining": "Dining",
+      "categoryFitness": "Fitness",
+      "categoryPool": "Pool",
+      "categoryOther": "Other"
+    },
+    "features": {
+      "title": "Features",
+      "loading": "Loading facilities...",
+      "error": "Error loading facilities: {error}",
+      "fetchError": "Failed to fetch facilities data",
+      "noneAvailable": "No facilities available in the {category} category.",
+      "iconAlt": "{name} icon",
+      "categoryCommon": "Common Area",
+      "categoryDining": "Dining",
+      "categoryFitness": "Fitness",
+      "categoryPool": "Pool",
+      "categoryOther": "Other"
+    },
+    "socialMediaTiktokPlaceholder": "https://www.tiktok.com/@username/video/...",
+    "coAgentTitle": "Co Agent",
+    "photos": {
+      "propertyAlt": "Property photo",
+      "maxImagesError": "A maximum of 100 images are allowed. You are trying to add {filesLength} images, but there are already {propertyImagesLength}. Please remove some images first.",
+      "compressing": "Compressing {filesLength} images...",
+      "invalidFile": "{fileName} is not a valid image file",
+      "processError": "Failed to process images: {errorMessage}",
+      "mediaAlt": "Media",
+      "title": "Media",
+      "galleryTitle": "Photo Gallery",
+      "imagesTitle": "Property Photos ({propertyImagesLength}/100)",
+      "reorderSubtitle": "Drag to reorder - the first image will be the main one",
+      "compressingButton": "Compressing...",
+      "addMoreButton": "Add More Photos",
+      "maxImagesReached": "Maximum number of images (100) reached",
+      "uploadTitle": "Upload/drag photos of your property",
+      "uploadSubtitle": "Photos must be in JPG or PNG format and at least 2048x768 (maximum 100 images)",
+      "browseFilesButton": "Browse Files"
+    },
+    "nearby": {
+      "title": "Nearby Places",
+      "alt": "Nearby Places Icon",
+      "loading": "Loading nearby locations...",
+      "error": "Error loading nearby locations: {error}",
+      "noData": "No Nearby Places data found",
+      "iconAlt": "{name} icon"
+    },
+    "moreRoomType": {
+      "title": "More Room Type",
+      "alt": "More Room Type Icon",
+      "duplex": "Duplex",
+      "penthouse": "Penthouse",
+      "oneBedPlus": "1 Bedroom Plus",
+      "duplexPenthouse": "Duplex Penthouse"
+    },
+    "propertyDescription": {
+      "title": "Property Description",
+      "alt": "Property Description Icon",
+      "translateAllButton": "Auto translate to all languages",
+      "translateFieldTooltip": "Translate this field",
+      "form": {
+        "titleLabel": "Title*",
+        "titlePlaceholder": "Enter property title in {languageName}",
+        "titleRequiredError": "Property title is required",
+        "descriptionLabel": "Description*",
+        "descriptionPlaceholder": "Enter property description in {languageName}",
+        "descriptionRequiredError": "Property description is required",
+        "paymentPlanLabel": "Payment/Payment Plan (Optional)",
+        "paymentPlanPlaceholder": "Enter payment plan details in {languageName} (optional)"
+      },
+      "languages": {
+        "en": "ENGLISH (Main)",
+        "th": "THAI",
+        "zh": "CHINESE",
+        "ru": "RUSSIAN"
+      },
+      "alerts": {
+        "enterEnglishFirst": "Please enter content in English first",
+        "translationFailed": "Translation failed. Please try again later.",
+        "serviceUnavailable": "Translation service is currently unavailable. Please try again later.",
+        "enterContentFirst": "Please enter content in {languageName} first"
+      }
+    },
+    "listingType": {
+      "title": "Listing Type",
+      "alt": "Listing Type Icon",
+      "forSale": "For Sale",
+      "forRent": "For Rent",
+      "forSaleAndRent": "For Sale & Rent",
+      "required": "Please select a listing type",
+      "currentSelection": "Current selection: {status}",
+      "noSelection": "None",
+      "disabled": "Listing type cannot be changed in edit/view mode."
+    },
+    "propertyHighlights": {
+    "title": "Property Highlights",
+    "labelTitle": "Property Label",
+    "loading": "Loading highlights...",
+    "error": "Error loading highlights: {error}",
+    "fetchError": "Failed to fetch property highlights data",
+    "noHighlights": "No highlight options available.",
+    "noLabels": "No label options available."
+  },
+
+  "floorPlan": {
+    "title": "Floor Plan",
+    "uploadTitle": "Upload/drag photos of your floor plan",
+    "uploadSubtitle": "Photos must be in JPG or PNG format and at least 2048x768 (maximum 100 images)",
+    "browseFilesButton": "Browse Files"
+  },
+  "contact": {
+    "title": "Contact Information",
+    "alt": "Contact Icon",
+    "useProfile": "Use contact information from my profile",
+    "loading": "Loading Profile...",
+    "failedLoad": "Failed to load profile data.",
+    "phoneMain": "Main Phone Number*",
+    "phoneSecondary": "Secondary Phone Number (Optional)",
+    "email": "Email*",
+    "myProperties": {
+      "title": "My Properties",
+      "subtitle": "Manage your property listings",
+      "searchPlaceholder": "Search properties...",
+      "sortBy": {
+        "date": "Sort by: Date Added",
+        "price": "Sort by: Price",
+        "views": "Sort by: Views"
+      },
+      "clear": "Clear",
+      "addNew": "Add New Property",
+      "loading": "Loading properties...",
+      "retry": "Retry",
+      "tableHeaders": {
+        "property": "PROPERTY",
+        "reference": "REFERENCE",
+        "operation": "OPERATION",
+        "price": "PRICE",
+        "published": "PUBLISHED",
+        "displays": "DISPLAYS",
+        "visits": "VISITS",
+        "enquiries": "ENQUIRIES",
+        "date": "DATE",
+        "actions": "ACTIONS"
+      },
+      "propertyImageAlt": "Property Image",
+      "noImage": "No Image",
+      "status": {
+        "published": "PUBLISHED",
+        "unpublished": "UNPUBLISHED"
+      },
+      "noProperties": {
+        "title": "No properties found",
+        "subtitle": "Try adjusting your search or filters, or add a new property."
+      },
+      "pagination": {
+        "page": "Page {currentPage} of {totalPages}",
+        "itemsPerPage": "{count} / page"
+      },
+      "priceUnit": "/month",
+      "errors": {
+        "authTokenNotFound": "Authentication token not found",
+        "fetchError": "Error fetching properties: {error}"
+      },
+      "deleteDialog": {
+        "title": "Are you sure?",
+        "text": "You won't be able to revert this!",
+        "confirmButton": "Yes, delete it!",
+        "cancelButton": "Cancel"
+      },
+      "errorDialog": {
+        "title": "Error",
+        "text": "Something went wrong"
+      },
+      "toast": {
+        "deleteSuccess": "Property deleted successfully.",
+        "deleteError": "Failed to delete property.",
+        "updateStatusSuccess": "Property {status} successfully",
+        "updateStatusError": "Failed to update property status"
+      }
+    },
+    "line": "LINE ID",
+    "wechat": "WeChat ID",
+    "whatsapp": "WhatsApp",
+    "facebookMessenger": "Facebook Messenger",
+    "instagram": "Instagram"
+  },
+  "unitPlan": {
+    "title": "Unit Plan",
+    "alt": "Unit Plan",
+    "maxImagesError": "Maximum 100 unit plan images allowed. You have {count}.",
+    "compressing": "Compressing {count} unit plan(s)...",
+    "invalidFile": "{fileName} is not a valid image file.",
+    "processError": "Failed to process unit plans: {error}",
+    "imagesTitle": "Unit Plan Images ({count}/100)",
+    "reorderSubtitle": "Drag to reorder - first image will be the main unit plan",
+    "addMore": "Add More Unit Plans",
+    "compressingButton": "Compressing...",
+    "uploadTitle": "Upload Unit Plan Images",
+    "uploadSubtitle": "Photos must be in JPG or PNG format",
+    "browseFiles": "Browse Files"
+  },
+  "propertyType": {
+      "title": "Property Type*",
+      "alt": "Property Type Icon",
+      "loading": "Loading property types...",
+      "noData": "No property types available",
+      "toast": {
+        "error": "Failed to load property types"
+      },
+      "validation": {
+        "required": "Please select a property type"
+      }
+    },
+    "view": {
+    "title": "View",
+    "loading": "Loading views...",
+    "error": "Error loading views: {error}"
+  },
+  "pricing": {
+      "title": "Pricing and Promotion Settings",
+      "promotionInfo": "Promotional pricing will enhance the attractiveness of your listing.",
+      "displayedPrice": "Displayed price when promotion is enabled",
+      "labels": {
+        "sellingPrice": "Selling Price",
+        "rentalPrice": "Rental Price"
+      },
+      "placeholders": {
+        "sellingPrice": "e.g. 30,000,000",
+        "rentalPrice": "e.g. 80,000"
+      },
+      "units": {
+        "thb": "THB",
+        "thbPerMonth": "THB/Month"
+      },
+      "shortTerm": {
+        "title": "Short Term Rental (optional)",
+        "months3": "3 M",
+        "months6": "6 M",
+        "year1": "1 Y"
+      },
+      "validation": {
+        "promotionalPriceRequired": "Promotional price is required when promotion is enabled",
+        "priceRequired": "Price is required",
+        "rentalPriceRequired": "Rental price is required"
+      }
+    },
+    "propertyInfo": {
+      "title": "Property Information*",
+      "alt": "Property Information Icon",
+      "labels": {
+        "projectName": "Project Name*",
+        "area": "Area*",
+        "referenceId": "Reference ID",
+        "propertyDisplay": "Property Display"
+      },
+      "placeholders": {
+        "projectName": "e.g. The Riviera Jomtien",
+        "selectArea": "Select area",
+        "referenceId": "e.g. PROP123"
+      },
+      "options": {
+        "normal": "Normal Property",
+        "featured": "Featured Property (Show on Homepage)"
+      },
+      "notes": {
+        "featured": "Featured properties will appear in the random/popular section on the homepage"
+      },
+      "loadingZones": "Loading zones...",
+      "errorLoadingZones": "Error loading zones: {error}",
+      "validation": {
+        "projectNameRequired": "Project name is required",
+        "areaRequired": "Area is required"
+      }
+    },
+    "propertyDetail": {
+      "title": "Property Details",
+      "alt": "Property Details Icon",
+      "labels": {
+        "propertyId": "Property ID",
+        "ownershipQuota": "Ownership Quota",
+        "landSize": "Land Size",
+        "usableArea": "Usable Area",
+        "floors": "Floors",
+        "furnishing": "Furnishing",
+        "bedrooms": "Bedrooms",
+        "bathrooms": "Bathrooms",
+        "constructionYear": "Construction Year",
+        "communityFees": "Community Fees"
+      },
+      "options": {
+        "ownership": {
+          "freehold": "Freehold",
+          "leasehold": "Leasehold"
+        },
+        "furnishing": {
+          "fully": "Fully Furnished",
+          "partially": "Partially Furnished",
+          "unfurnished": "Unfurnished"
+        }
+      },
+      "units": {
+        "rai": "Rai",
+        "ngan": "Ngan",
+        "sqwah": "Sq. Wah",
+        "sqm": "Sq.m.",
+        "month": "/ Month",
+        "perSqm": "/sqm",
+        "perSqwah": "/sq.wah"
+      },
+      "validation": {
+        "ownershipRequired": "Ownership is required",
+        "usableAreaRequired": "Usable area is required",
+        "required": "This field is required"
+      }
     }
   },
-  "PropertyDetail": {
-    "home": "Home",
-    "properties": "Properties",
-    "overview": "Overview",
-    "details": "Details",
-    "location": "Location",
-    "description": "Description",
-    "features": "Features",
-    "highlights": "Highlights",
-    "propertyDetails": "Property Details",
-    "propertyId": "Property ID",
-    "propertyType": "Property Type",
-    "projectName": "Project Name",
-    "totalArea": "Total Area",
-    "usableArea": "Usable Area",
-    "landSize": "Land Size",
-    "bedrooms": "Bedrooms",
-    "bathrooms": "Bathrooms",
-    "floors": "Floors",
-    "furnishing": "Furnishing",
-    "constructionYear": "Construction Year",
-    "communityFee": "Community Fee",
-    "district": "District",
-    "city": "City",
-    "province": "Province",
-    "zipCode": "Zip Code",
-    "mapPlaceholder": "Click to view map",
-    "contactAgent": "Contact Agent",
-    "yourName": "Your Name",
-    "yourEmail": "Your Email",
-    "yourPhone": "Your Phone",
-    "message": "Message",
-    "sendMessage": "Send Message",
-    "similarProperties": "Similar Properties",
-    "similarPropertiesNotAvailable": "No similar properties available at the moment",
-    "errorLoadingProperty": "Error Loading Property",
-    "propertyNotFound": "Property Not Found",
-    "propertyNotFoundDescription": "The property you are looking for could not be found. Please try again.",
-    "goBack": "Go Back",
-    "perMonth": "/ month",
-    "sqm": "sqm",
-    "rai": "rai",
-    "ngan": "ngan",
-    "sqWah": "sq.wah",
-    "bahtPerMonth": "baht/month"
-  },
+
   "ExploreLocations": {
     "title": "Explore Locations",
-    "description": "Pattaya's diverse landscape extends beyond its beaches and nightlife, offering a variety of locations with unique characteristics that cater to different real estate needs and investment strategies.",
+    "description": "Beyond its beaches and nightlife, Pattaya boasts a diverse landscape with various locations, each with unique characteristics catering to different real estate needs and investment strategies.",
     "more": "More",
     "properties": "Properties",
     "errorFetching": "Error loading locations. Please try again later."
   },
   "Users": {
     "allUser": "All Users",
-    "manageAllUsers": "Manage all system users",
+    "manageAllUsers": "Manage all users in the system",
     "addUser": "Add User",
     "editUser": "Edit User",
     "searchUsers": "Search users...",
@@ -308,7 +745,7 @@
     "view": "View",
     "edit": "Edit",
     "delete": "Delete",
-    "confirmDelete": "Confirm Delete",
+    "confirmDelete": "Confirm Deletion",
     "deleteUserConfirmation": "Are you sure you want to delete this user? This action cannot be undone.",
     "userDeleted": "User deleted successfully",
     "userCreated": "User created successfully",
@@ -316,7 +753,7 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "socialMedia": "Social Media",
-    "basicInfo": "Basic Information",
+    "basicInfo": "Basic Info",
     "cancel": "Cancel",
     "create": "Create",
     "update": "Update",
@@ -326,28 +763,87 @@
     "invalidPhone": "Invalid phone number",
     "roleRequired": "Role is required",
     "passwordRequired": "Password is required",
-    "passwordTooShort": "Password must be at least 8 characters",
-    "confirmPasswordRequired": "Please confirm your password",
+    "confirmPasswordRequired": "Confirm Password is required",
     "passwordsMustMatch": "Passwords must match",
-    "leaveEmptyToKeep": "Leave empty to keep current password",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "leaveEmptyToKeep": "leave empty to keep current",
     "noUsersFound": "No users found"
   },
   "Currency": {
-    "currency": "Currency Management",
-    "currencyTitle": "Currency Exchange Rates",
-    "currencySubtitle": "Manage currency exchange rates for the website",
+    "title": "Currency Management",
+    "subtitle": "Manage currency exchange rates for the website",
     "loading": "Loading data...",
-    "update": "Update",
-    "updating": "Updating...",
+    "updateButton": "Update",
+    "updatingButton": "Updating...",
     "ratesUpdated": "Exchange rates updated successfully",
     "updateFailed": "Failed to update exchange rates",
     "errorFetching": "Error fetching exchange rates",
-    "notAuthenticated": "Please login before proceeding"
+    "notAuthenticated": "Please login before proceeding",
+    "names": {
+      "THB": "Baht",
+      "USD": "US Dollar",
+      "CNY": "Yuan",
+      "RUB": "Ruble",
+      "GBP": "Pound",
+      "EUR": "Euro"
+    }
+  },
+  "Language": {
+    "title": "Language Management",
+    "subtitle": "We are glad to see you again!",
+    "addNew": "Add New",
+    "loading": "Loading...",
+    "noStringsFound": "No strings found",
+    "confirmDelete": "Are you sure you want to delete this language data?",
+    "deleteSuccess": "Delete language data successfully",
+    "deleteFailed": "Failed to delete language data",
+    "saveSuccess": "Language data saved successfully",
+    "createSuccess": "Create language data successfully",
+    "updateSuccess": "Update language data successfully",
+    "saveFailed": "Failed to save language data",
+    "loadFailed": "Failed to load language data",
+    "requiredFieldsMissing": "Required fields are missing",
+    "tabs": {
+      "header": "Header",
+      "home": "Home",
+      "rent": "Rent",
+      "blog": "Blog",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "form": {
+      "addTitle": "Add String",
+      "editTitle": "Edit String",
+      "cancel": "Cancel",
+      "save": "Save",
+      "slug": "Slug",
+      "slugPlaceholder": "e.g., welcome_message",
+      "slugDescription": "Unique identifier for the string",
+      "section": "Section",
+      "english": "English",
+      "englishPlaceholder": "English text",
+      "thai": "Thai",
+      "thaiPlaceholder": "Thai text",
+      "chinese": "Chinese",
+      "chinesePlaceholder": "Chinese text",
+      "russian": "Russian",
+      "russianPlaceholder": "Russian text",
+      "required": "*"
+    },
+    "table": {
+      "slug": "Slug",
+      "english": "English",
+      "thai": "Thai",
+      "chinese": "Chinese",
+      "russian": "Russian",
+      "actions": "Actions"
+    }
   },
   "AddProperty": {
     "addNewProperty": "Add New Property",
     "updateProperty": "Update Property",
     "duplicatePropertyTitle": "Duplicate Property",
+    "duplicatePropertySubtitle": "Create a new property based on an existing one.",
     "duplicateProperty": "Duplicate Property",
     "editProperty": "Edit Property",
     "editPropertyTitle": "Edit Property",
@@ -372,6 +868,19 @@
     "youMustAgreeToTheTerms": "You must agree to the terms",
     "iConfirmThatAllInformationProvidedIsAccurateAndIHaveRightsToListThisProperty": "I confirm that all information provided is accurate and I have rights to list this property"
   },
+  "Login": {
+    "adminLogin": "Admin Login",
+    "loginDescription": "Welcome back! Please log in to your account.",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "password": "Password",
+    "enterPassword": "Enter your password",
+    "rememberMe": "Remember me",
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "loginFailed": "Login failed. Please check your credentials.",
+    "errorDuringLogin": "An unexpected error occurred during login."
+  },
   "exploreLocations": {
     "title": "Explore Locations",
     "description": "Discover the best areas to invest in real estate",
@@ -387,6 +896,70 @@
     "propertyCount_other": "{{count}} properties",
     "property_one": "Property",
     "property_other": "Properties"
+  },
+  "Blog": {
+    "title": "Blog",
+    "createNew": "Create New Blog Post",
+    "createNewSubtitle": "Add a new blog post with multilingual support",
+    "edit": "Edit Blog Post",
+    "editSubtitle": "Edit the blog post with multilingual support",
+    "viewAll": "All Blog Posts",
+    "viewAllSubtitle": "Manage all your blog posts",
+    "languages": {
+      "en": "ENGLISH (Main)",
+      "th": "THAI",
+      "zh": "CHINESE",
+      "ru": "RUSSIAN"
+    },
+    "form": {
+      "titleLabel": "Title*",
+      "titlePlaceholder": "Enter title in {langName}",
+      "titleRequired": "{langName} title is required",
+      "contentPlaceholder": "Enter content in {langName}",
+      "contentRequired": "{langName} content is required",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "Enter category",
+      "featuredImageLabel": "Feature Image*",
+      "featuredImagePlaceholder": "Upload/Drag photos of your blog",
+      "featuredImageHint": "Recommended width is at least 1080px",
+      "featuredImageRequired": "Featured image is required",
+      "cancelButton": "Cancel",
+      "createButton": "Create Blog",
+      "updateButton": "Update Blog"
+    },
+    "toast": {
+      "errorTitle": "Error processing title translations",
+      "errorContent": "Error processing content translations",
+      "errorTags": "Error processing tags",
+      "errorAuth": "You must be logged in to create a blog post",
+      "errorCreate": "Failed to create blog post. Please try again.",
+      "errorUpdate": "Failed to update blog post. Please try again.",
+      "successCreate": "Blog post created successfully!",
+      "successUpdate": "Blog post updated successfully!",
+      "successDelete": "Blog post deleted successfully!",
+      "errorDelete": "Failed to delete blog post."
+    },
+    "table": {
+      "title": "Title",
+      "category": "Category",
+      "author": "Author",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "deleteDialog": {
+      "title": "Are you sure?",
+      "text": "You won't be able to revert this!",
+      "confirmButton": "Yes, delete it!",
+      "cancelButton": "Cancel"
+    },
+    "pagination": "Showing {start}-{end} of {total} items",
+    "searchPlaceholder": "Search by name",
+    "clearButton": "Clear",
+    "sortBy": {
+      "date": "Sort by: Date",
+      "title": "Sort by: Title",
+      "category": "Sort by: Category"
+    }
   },
   "propertyTypes": {
     "title": "Property Types",

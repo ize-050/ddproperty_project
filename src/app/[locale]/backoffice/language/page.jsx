@@ -12,6 +12,7 @@ import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaFileExport } from 'react-ic
 import '@/styles/backoffice/language.scss';
 
 const LanguagePage = () => {
+  const t = useTranslations('Language');
   
   // State for UI strings data
   const [strings, setStrings] = useState([]);
@@ -38,7 +39,7 @@ const LanguagePage = () => {
       }
     } catch (error) {
       console.error('Error fetching UI strings:', error);
-      toast.error('Failed to load language data');
+      toast.error(t('loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -65,7 +66,7 @@ const LanguagePage = () => {
   
   // Handle deleting string
   const handleDeleteString = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this language data?')) return;
+    if (!window.confirm(t('confirmDelete'))) return;
     
     try {
       const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
@@ -74,11 +75,11 @@ const LanguagePage = () => {
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
       
-      toast.success('Delete language data successfully');
+      toast.success(t('deleteSuccess'));
       fetchStrings();
     } catch (error) {
       console.error('Error deleting UI string:', error);
-      toast.error('Failed to delete language data');
+      toast.error(t('deleteFailed'));
     }
   };
   
@@ -89,7 +90,7 @@ const LanguagePage = () => {
       
       // Validate required fields
       if (!currentString.slug || !currentString.en || !currentString.th) {
-        toast.error('Required fields are missing');
+        toast.error(t('requiredFieldsMissing'));
         return;
       }
       
@@ -100,7 +101,7 @@ const LanguagePage = () => {
           currentString,
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
-        toast.success('Update language data successfully');
+        toast.success(t('updateSuccess'));
       } else {
         // Create new string
         await axios.post(
@@ -108,7 +109,7 @@ const LanguagePage = () => {
           currentString,
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
-        toast.success('Create language data successfully');
+        toast.success(t('createSuccess'));
       }
       
       setEditMode(false);
@@ -116,7 +117,7 @@ const LanguagePage = () => {
       fetchStrings();
     } catch (error) {
       console.error('Error saving UI string:', error);
-      toast.error('Failed to save language data');
+      toast.error(t('saveFailed'));
     }
   };
   
@@ -152,8 +153,8 @@ const LanguagePage = () => {
       <div className="row align-items-center pb40">
         <div className="col-xxl-6">
           <div className="dashboard_title_area">
-            <h2> Language </h2>
-            <p>We are glad to see you again!</p>
+            <h2>{t('title')}</h2>
+            <p>{t('subtitle')}</p>
           </div>
         </div>
         <div className="col-xxl-6 text-end">
@@ -170,7 +171,7 @@ const LanguagePage = () => {
               disabled={editMode}
             >
               <FaPlus className="me-2" />
-              Add New
+              {t('addNew')}
             </button>
           </div>
         </div>
@@ -183,12 +184,12 @@ const LanguagePage = () => {
           className="language-tabs"
         >
           <TabList className="nav nav-tabs">
-            <Tab>Header</Tab>
-            <Tab>Home</Tab>
-            <Tab>Rent</Tab>
-            <Tab>Blog</Tab>
-            <Tab>About</Tab>
-            <Tab>Contact</Tab>
+            <Tab>{t('tabs.header')}</Tab>
+            <Tab>{t('tabs.home')}</Tab>
+            <Tab>{t('tabs.rent')}</Tab>
+            <Tab>{t('tabs.blog')}</Tab>
+            <Tab>{t('tabs.about')}</Tab>
+            <Tab>{t('tabs.contact')}</Tab>
           </TabList>
           
           {sections.map((section, index) => (
@@ -196,34 +197,34 @@ const LanguagePage = () => {
               {editMode ? (
                 <div className="edit-form">
                   <div className="form-header">
-                    <h3>{currentString.id ? 'Edit String' : 'Add String'}</h3>
+                    <h3>{currentString.id ? t('form.editTitle') : t('form.addTitle')}</h3>
                     <div className="form-actions">
                       <button className="btn btn-light me-2" onClick={handleCancel}>
-                        <FaTimes className="me-1" /> Cancel
+                        <FaTimes className="me-1" /> {t('form.cancel')}
                       </button>
                       <button className="btn btn-success" style={{
                         color:'#fff'
                       }} onClick={handleSaveString}>
-                        <FaSave className="me-1"  /> Save
+                        <FaSave className="me-1"  /> {t('form.save')}
                       </button>
                     </div>
                   </div>
                   
                   <div className="row mb-3">
                     <div className="col-md-6">
-                      <label className="form-label">Slug *</label>
+                      <label className="form-label">{t('form.slug')} {t('form.required')}</label>
                       <input
                         type="text"
                         className="form-control"
                         value={currentString.slug}
                         onChange={(e) => handleInputChange('slug', e.target.value)}
-                        placeholder="Slug"
+                        placeholder={t('form.slugPlaceholder')}
                         required
                       />
-                      <small className="form-text text-muted">Slug</small>
+                      <small className="form-text text-muted">{t('form.slugDescription')}</small>
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label">Section</label>
+                      <label className="form-label">{t('form.section')}</label>
                       <select
                         className="form-select"
                         value={currentString.section}
@@ -241,24 +242,24 @@ const LanguagePage = () => {
                   <div className="language-inputs">
                     <div className="row mb-3">
                       <div className="col-md-6">
-                        <label className="form-label">English *</label>
+                        <label className="form-label">{t('form.english')} {t('form.required')}</label>
                         <input
                           type="text"
                           className="form-control"
                           value={currentString.en}
                           onChange={(e) => handleInputChange('en', e.target.value)}
-                          placeholder="English text"
+                          placeholder={t('form.englishPlaceholder')}
                           required
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label">Thai *</label>
+                        <label className="form-label">{t('form.thai')} {t('form.required')}</label>
                         <input
                           type="text"
                           className="form-control"
                           value={currentString.th}
                           onChange={(e) => handleInputChange('th', e.target.value)}
-                          placeholder="Thai text"
+                          placeholder={t('form.thaiPlaceholder')}
                           required
                         />
                       </div>
@@ -266,23 +267,23 @@ const LanguagePage = () => {
                     
                     <div className="row mb-3">
                       <div className="col-md-6">
-                        <label className="form-label">Chinese</label>
+                        <label className="form-label">{t('form.chinese')}</label>
                         <input
                           type="text"
                           className="form-control"
                           value={currentString.zhCN}
                           onChange={(e) => handleInputChange('zhCN', e.target.value)}
-                          placeholder="Chinese text"
+                          placeholder={t('form.chinesePlaceholder')}
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label">Russian</label>
+                        <label className="form-label">{t('form.russian')}</label>
                         <input
                           type="text"
                           className="form-control"
                           value={currentString.ru}
                           onChange={(e) => handleInputChange('ru', e.target.value)}
-                          placeholder="Russian text"
+                          placeholder={t('form.russianPlaceholder')}
                         />
                       </div>
                     </div>
@@ -293,7 +294,7 @@ const LanguagePage = () => {
                   {loading ? (
                     <div className="text-center py-5">
                       <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
+                        <span className="visually-hidden">{t('loading')}</span>
                       </div>
                     </div>
                   ) : (
@@ -301,12 +302,12 @@ const LanguagePage = () => {
                       <table className="language-table">
                         <thead>
                           <tr>
-                            <th>Slug</th>
-                            <th>English</th>
-                            <th>Thai</th>
-                            <th>Chinese</th>
-                            <th>Russian</th>
-                            <th>Actions</th>
+                            <th>{t('table.slug')}</th>
+                            <th>{t('table.english')}</th>
+                            <th>{t('table.thai')}</th>
+                            <th>{t('table.chinese')}</th>
+                            <th>{t('table.russian')}</th>
+                            <th>{t('table.actions')}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -337,7 +338,7 @@ const LanguagePage = () => {
                           ) : (
                             <tr>
                               <td colSpan="6" className="text-center py-4">
-                                No strings found
+                                {t('noStringsFound')}
                               </td>
                             </tr>
                           )}

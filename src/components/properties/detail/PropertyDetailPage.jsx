@@ -44,11 +44,11 @@ const PropertyDetailPage = ({ property }) => {
         desc = property.description || '';
       }
 
-      if(locale != 'en'){
+      if (locale != 'en') {
         const paymentPlan = property.translatedPaymentPlans[locale];
         setPaymentPlan(paymentPlan);
       }
-      else{
+      else {
         const paymentPlan = property.paymentPlan;
         setPaymentPlan(paymentPlan);
       }
@@ -91,6 +91,8 @@ const PropertyDetailPage = ({ property }) => {
       setYoutubeVideo(youtubeUrl);
     }
   }, [property, locale]);
+
+
 
   // ถ้าไม่มีข้อมูล property
   if (!property) {
@@ -266,59 +268,51 @@ const PropertyDetailPage = ({ property }) => {
 
               <hr></hr>
 
-
-             
-         
-
-
               {property?.floorPlans?.length > 0 && (
                 <>
-                <PropertyFloorPlan property={property} />
-                <hr></hr>
+                  <PropertyFloorPlan property={property} />
+                  <hr></hr>
                 </>
               )}
-
-              
 
               {property?.unitPlans?.length > 0 && (
                 <>
-                <PropertyUnitPlan property={property} />
-                <hr></hr>
+                  <PropertyUnitPlan property={property} />
+                  <hr></hr>
                 </>
               )}
 
-{youtubeVideo != '' && (
+              {youtubeVideo != '' && (
                 <>
-                <div className="property-section mb-5">
-                  <h3 className="section-title mb-3">Video</h3>
-                  <div className="video-container" style={{ borderRadius: '8px', overflow: 'hidden' }}>
-                    <iframe
-                      width="100%"
-                      height="450"
-                      src={youtubeVideo}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
+                  <div className="property-section mb-5">
+                    <h3 className="section-title mb-3">Video</h3>
+                    <div className="video-container" style={{ borderRadius: '8px', overflow: 'hidden' }}>
+                      <iframe
+                        width="100%"
+                        height="450"
+                        src={youtubeVideo}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   </div>
-                </div>
-                <hr></hr>
+                  <hr></hr>
                 </>
               )}
-
 
               {paymentPlan && (
                 <>
-                <div className="property-section mb-5">
-                  <h3 className="section-title mb-3">Payment Plan</h3>
-                  <div className="payment-plan-container">
-                    <p>{paymentPlan}</p>
+                  <div className="property-section mb-5">
+                    <h3 className="section-title mb-3">Payment Plan</h3>
+                    <div className="payment-plan-container">
+                      <p>{paymentPlan}</p>
+                    </div>
                   </div>
-                </div>
 
-              <hr></hr>
+                  <hr></hr>
                 </>
-                
+
               )}
 
 

@@ -794,14 +794,13 @@ const EditPropertyForm = ({ propertyId }) => {
 
         <div className="card mb-4">
           <div className="card-body">
-            <PropertyInfoSection />
+            <PropertyTypeSection />
           </div>
         </div>
 
-
         <div className="card mb-4">
           <div className="card-body">
-            <PropertyTypeSection />
+            <PropertyInfoSection />
           </div>
         </div>
 
@@ -814,6 +813,48 @@ const EditPropertyForm = ({ propertyId }) => {
         <div className="card mb-4">
           <div className="card-body">
             <PricingSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyDetailSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <MoreRoomTypeSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <PropertyHighlightsSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <NearbySection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <ViewSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <FacilitiesSection />
+          </div>
+        </div>
+
+        <div className="card mb-4">
+          <div className="card-body">
+            <FeaturesSection />
           </div>
         </div>
 
@@ -838,48 +879,6 @@ const EditPropertyForm = ({ propertyId }) => {
         <div className="card mb-4">
           <div className="card-body">
             <UnitPlanSection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <PropertyDetailSection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <FeaturesSection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <MoreRoomTypeSection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <PropertyHighlightsSection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <FacilitiesSection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <NearbySection />
-          </div>
-        </div>
-
-        <div className="card mb-4">
-          <div className="card-body">
-            <ViewSection />
           </div>
         </div>
 

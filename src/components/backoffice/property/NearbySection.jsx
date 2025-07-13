@@ -6,8 +6,10 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 const NearbySection = () => {
+  const t = useTranslations('backoffice');
   const { formData, setNearby, initializeNearby } = usePropertyFormStore();
   const [nearbyIcons, setNearbyIcons] = useState({});
   const [loading, setLoading] = useState(true);
@@ -80,23 +82,41 @@ const NearbySection = () => {
     color: '#000',
   };
 
-  if (loading) {
+    if (loading) {
     return (
       <section className="form-section">
-        <h2>Nearby</h2>
+        <div className="section-header">
+          <Image 
+            src="/images/icons/iconproperty/nearby.svg" 
+            alt={t('nearby.alt')} 
+            width={24} 
+            height={24} 
+            className="section-icon"
+          />
+          <h2 className="section-title">{t('nearby.title')}</h2>
+        </div>
         <div className="loading-spinner">
-          <FaSpinner className="spinner-icon" /> Loading nearby locations...
+          <FaSpinner className="spinner-icon" /> {t('nearby.loading')}
         </div>
       </section>
     );
   }
 
-  if (error) {
+    if (error) {
     return (
       <section className="form-section">
-        <h2>Nearby</h2>
+        <div className="section-header">
+          <Image 
+            src="/images/icons/iconproperty/nearby.svg" 
+            alt={t('nearby.alt')} 
+            width={24} 
+            height={24} 
+            className="section-icon"
+          />
+          <h2 className="section-title">{t('nearby.title')}</h2>
+        </div>
         <div className="error-message">
-          Error loading nearby locations: {error}
+          {t('nearby.error', { error })}
         </div>
       </section>
     );
@@ -106,9 +126,18 @@ const NearbySection = () => {
 
   const nearbyArray = nearbyIcons?.nearby || [];
 
-  return (
+    return (
     <section className="form-section">
-      <h2>Nearby</h2>
+      <div className="section-header">
+        <Image 
+          src="/images/icons/iconproperty/nearby.svg" 
+          alt={t('nearby.alt')} 
+          width={24} 
+          height={24} 
+          className="section-icon"
+        />
+        <h2 className="section-title">{t('nearby.title')}</h2>
+      </div>
       <div className="amenities-grid">
         {nearbyArray.length > 0 ? (
           nearbyArray.map((icon) => {
@@ -129,7 +158,7 @@ const NearbySection = () => {
                   {icon.iconPath && (
                     <Image
                       src={icon.iconPath}
-                      alt={icon.name}
+                      alt={t('nearby.iconAlt', { name: icon.name })}
                       width={24}
                       height={24}
                     />
@@ -140,7 +169,7 @@ const NearbySection = () => {
             );
           })
         ) : (
-          <div className="no-data">ไม่พบข้อมูล Nearby Places</div>
+          <div className="no-data">{t('nearby.noData')}</div>
         )}
       </div>
     </section>

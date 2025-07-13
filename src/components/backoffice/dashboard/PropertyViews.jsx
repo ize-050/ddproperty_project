@@ -25,7 +25,7 @@ ChartJS.register(
 );
 
 const PropertyViews = () => {
-  const t = useTranslations('backoffice');
+  const t = useTranslations('backoffice.dashboard');
   const [timeRange, setTimeRange] = useState('monthly');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,7 +65,7 @@ const PropertyViews = () => {
         });
         
         if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`);
+          throw new Error(t('apiRequestFailed', { status: response.status }));
         }
         
         const data = await response.json();
@@ -77,7 +77,7 @@ const PropertyViews = () => {
           const messageStatus = data.data.messagesByStatus || [];
           
           // Create labels and data for the chart
-          const labels = propertyTypes.map(item => item.propertyType || 'Other');
+          const labels = propertyTypes.map(item => item.propertyType || t('other'));
           const propertyData = propertyTypes.map(item => item.count);
           
           // Map message counts to property types
@@ -93,7 +93,7 @@ const PropertyViews = () => {
           const archivedMessages = messageStatus.find(item => item.status === 'ARCHIVED')?.count || 0;
           
           setChartData({
-            labels: labels.length > 0 ? labels : ['No Data'],
+            labels: labels.length > 0 ? labels : [t('noData')],
             datasets: [
               {
                 label: t('properties'),
@@ -110,7 +110,7 @@ const PropertyViews = () => {
             ],
           });
         } else {
-          throw new Error(data.message || 'Failed to fetch property data');
+          throw new Error(data.message || t('errorLoadingData'));
         }
       } catch (err) {
         console.error('Error fetching property data:', err);

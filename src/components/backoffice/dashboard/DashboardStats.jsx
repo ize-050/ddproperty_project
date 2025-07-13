@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { FaHome, FaChartLine, FaEnvelope, FaSpinner } from 'react-icons/fa';
 
 const DashboardStats = () => {
-  const t = useTranslations('backoffice');
+  const t = useTranslations('backoffice.dashboard');
   const [stats, setStats] = useState({
     allProperties: 0,
     totalViews: 0,
@@ -32,7 +32,7 @@ const DashboardStats = () => {
         });
         
         if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`);
+          throw new Error(t('apiRequestFailed', { status: response.status }));
         }
         
         const data = await response.json();
@@ -44,7 +44,7 @@ const DashboardStats = () => {
             totalEnquiries: data.data.totalMessages || 0
           });
         } else {
-          throw new Error(data.message || 'Failed to fetch dashboard stats');
+          throw new Error(data.message || t('errorLoadingStats'));
         }
       } catch (err) {
         console.error('Error fetching dashboard stats:', err);

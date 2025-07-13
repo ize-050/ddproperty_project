@@ -98,7 +98,7 @@ const CreateBlogPage = () => {
       formData.append('translated_titles', translatedTitlesJson);
     } catch (e) {
       console.error('Error stringifying translated titles:', e);
-      toast.error('Error processing title translations');
+      toast.error(t('toast.errorTitle'));
       return;
     }
     
@@ -117,7 +117,7 @@ const CreateBlogPage = () => {
       formData.append('translated_contents', translatedContentsJson);
     } catch (e) {
       console.error('Error stringifying translated contents:', e);
-      toast.error('Error processing content translations');
+      toast.error(t('toast.errorContent'));
       return;
     }
     
@@ -145,7 +145,7 @@ const CreateBlogPage = () => {
       formData.append('tags', tagsJson);
     } catch (e) {
       console.error('Error stringifying tags:', e);
-      toast.error('Error processing tags');
+      toast.error(t('toast.errorTags'));
       return;
     }
     
@@ -157,7 +157,7 @@ const CreateBlogPage = () => {
       // ส่งข้อมูลไปยัง API
       const token = localStorage.getItem('auth_token');
       if (!token) {
-        toast.error('You must be logged in to create a blog post');
+        toast.error(t('toast.errorAuth'));
         router.push('/backoffice/login');
         return;
       }
@@ -178,22 +178,22 @@ const CreateBlogPage = () => {
       console.log("response", response);
 
       if (response.status !== 200 && response.status !== 201) {
-        throw new Error('Failed to create blog post');
+        throw new Error(t('toast.errorCreate'));
       }
 
-      toast.success('Blog post created successfully!');
+      toast.success(t('toast.successCreate'));
       router.push('/backoffice/blog');
     } catch (error) {
       console.error('Error creating blog post:', error);
-      toast.error('Failed to create blog post. Please try again.');
+      toast.error(t('toast.errorCreate'));
     }
   };
   return (
       <div className="blog-page">
         <div className="blog-container">
           <div className="page-header">
-            <h1>Create New Blog Post</h1>
-            <p>Add a new blog post with multilingual support</p>
+            <h1>{t('createNew')}</h1>
+            <p>{t('createNewSubtitle')}</p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="blog-form">
@@ -207,14 +207,14 @@ const CreateBlogPage = () => {
                   onClick={() => handleLanguageChange(lang.code)}
                 >
                   <span className="flag">{lang.flag}</span>
-                  <span className="lang-name">{lang.name}</span>
+                  <span className="lang-name">{t(`languages.${lang.code}`)}</span>
                 </button>
               ))}
             </div>
 
             {/* Title Input */}
             <div className="form-group">
-            <label htmlFor="title">Title*</label>
+            <label htmlFor="title">{t('form.titleLabel')}</label>
             {languages.map((lang) => (
               <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
             
@@ -231,7 +231,7 @@ const CreateBlogPage = () => {
                       onChange(e);
                       
                     }}
-                    placeholder={`Enter title in ${languages.find(l => l.code === activeLanguage).name}`}
+                    placeholder={t('form.titlePlaceholder', { langName: t(`languages.${activeLanguage}`) })}
                     className={`form-control ${errors[activeLanguage]?.title ? 'is-invalid' : ''}`}
                   />
                 )}
@@ -240,7 +240,7 @@ const CreateBlogPage = () => {
                         
           ))}
               {errors[activeLanguage]?.title && (
-                <div className="invalid-feedback">{languages.find(l => l.code === activeLanguage).name} title is required</div>
+                <div className="invalid-feedback">{t('form.titleRequired', { langName: t(`languages.${activeLanguage}`) })}</div>
               )}
               </div>
   
@@ -261,20 +261,20 @@ const CreateBlogPage = () => {
                           onChange(value)
                         }}
                         modules={modules}
-                        placeholder={`Enter content in ${lang.name}`}
+                        placeholder={t('form.contentPlaceholder', { langName: t(`languages.${lang.code}`) })}
                       />
                     )}
                   />
                 </div>
               ))}
               {errors[activeLanguage]?.content && (
-                <div className="invalid-feedback">{languages.find(l => l.code === activeLanguage).name} content is required</div>
+                <div className="invalid-feedback">{t('form.contentRequired', { langName: t(`languages.${activeLanguage}`) })}</div>
               )}
             </div>
 
             {/* Category */}
             <div className="form-group">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="category">{t('form.categoryLabel')}</label>
               <Controller
                 name="category"
                 control={control}
@@ -283,7 +283,7 @@ const CreateBlogPage = () => {
                     type="text"
                     id="category"
                     {...field}
-                    placeholder="Enter category"
+                    placeholder={t('form.categoryPlaceholder')}
                     className="form-control"
                   />
                 )}
@@ -292,7 +292,7 @@ const CreateBlogPage = () => {
 
             {/* Featured Image */}
             <div className="form-group">
-              <label>Feature Image*</label>
+              <label>{t('form.featuredImageLabel')}</label>
               <Controller
                 name="featuredImage"
                 control={control}
@@ -300,23 +300,23 @@ const CreateBlogPage = () => {
                   <ImageUploader
                     image={field.value}
                     onImageChange={handleImageUpload}
-                    placeholderText="Upload/Drag photos of your blog"
-                    hintText="Recommended width is at least 1080px"
+                    placeholderText={t('form.featuredImagePlaceholder')}
+                    hintText={t('form.featuredImageHint')}
                   />
                 )}
               />
               {errors.featuredImage && (
-                <div className="invalid-feedback">Featured image is required</div>
+                <div className="invalid-feedback">{t('form.featuredImageRequired')}</div>
               )}
             </div>
 
             {/* Submit Button */}
             <div className="form-actions">
               <button type="button" className="cancel-button" onClick={() => router.push('/backoffice/blog')}>
-                Cancel
+                {t('form.cancelButton')}
               </button>
               <button type="submit" className="submit-button">
-                Create Blog
+                {t('form.createButton')}
               </button>
             </div>
           </form>

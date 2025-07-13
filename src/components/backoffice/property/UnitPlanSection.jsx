@@ -2,80 +2,117 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { FaUpload, FaTrash, FaGripLines, FaArrowUp } from 'react-icons/fa';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { FaUpload, FaTrash, FaGripLines } from 'react-icons/fa';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import usePropertyFormStore from '@/store/propertyFormStore';
-import { compressImage, getImageInfo, isImageFile } from '@/utils/imageCompression';
+import { compressImage, isImageFile } from '@/utils/imageCompression';
 import { toast } from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
+
+// Sortable Unit Plan Item Component
+const SortableUnitPlan = ({ image, onRemove }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: image.id });
+  const t = useTranslations('backoffice.unitPlan');
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 2 : 1,
+    opacity: isDragging ? 0.8 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`image-preview ${isDragging ? 'dragging' : ''}`}
+      {...attributes}
+    >
+      <div className="drag-handle" {...listeners}>
+        <FaGripLines size={16} />
+      </div>
+      <Image
+        src={image.url}
+        alt={t('alt')}
+        width={100}
+        height={100}
+        className="preview-image"
+      />
+      <div className="image-info">
+        <span className="image-name">{image.name}</span>
+        <button
+          type="button"
+          className="remove-image"
+          onClick={() => onRemove(image.id)}
+        >
+          <FaTrash size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const UnitPlanSection = () => {
   const { unitPlanImages, addUnitPlanImages, removeUnitPlanImage, reorderUnitPlanImages } = usePropertyFormStore();
-  const [isDragging, setIsDragging] = useState(false);
   const [isCompressing, setIsCompressing] = useState(false);
+  const t = useTranslations('backoffice.unitPlan');
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
-    
     if (files.length === 0) return;
-    
-    // Check total image limit for unit plans
+
     const totalImages = unitPlanImages.length + files.length;
     if (totalImages > 100) {
-      toast.error(`Maximum 100 unit plan images allowed. You're trying to add ${files.length} images but already have ${unitPlanImages.length}. Please remove some images first.`);
+      toast.error(t('maxImagesError', { count: unitPlanImages.length }));
       e.target.value = '';
       return;
     }
-    
+
     setIsCompressing(true);
-    const loadingToast = toast.loading(`Compressing ${files.length} unit plan image(s)...`);
-    
+    const loadingToast = toast.loading(t('compressing', { count: files.length }));
+
     try {
       const processedImages = [];
-      
       for (const file of files) {
         if (!isImageFile(file)) {
-          toast.error(`${file.name} is not a valid image file`);
+          toast.error(t('invalidFile', { fileName: file.name }));
           continue;
         }
-        
-        // Get original image info
-        const originalInfo = await getImageInfo(file);
-        console.log('Original unit plan info:', originalInfo);
-        
-        // Compress image with settings optimized for unit plans
-        const compressedFile = await compressImage(file, {
-          maxWidth: 2048,      // Higher resolution for unit plans
-          maxHeight: 1536,     // Maintain detail for technical drawings
-          quality: 0.85,       // Higher quality for clarity
-          format: 'jpeg',      
-          maxSizeKB: 800       // Allow larger size for detailed plans
-        });
-        
-        // Get compressed image info
-        const compressedInfo = await getImageInfo(compressedFile);
-        console.log('Compressed unit plan info:', compressedInfo);
-        
-        // Calculate compression results (but don't show individual toast)
-        const compressionRatio = Math.round((1 - compressedFile.size / file.size) * 100);
-        
+        const compressedFile = await compressImage(file, { maxWidth: 2048, quality: 0.85, format: 'jpeg', maxSizeKB: 800 });
         processedImages.push({
           id: String(Math.random().toString(36).substring(2, 11)),
           file: compressedFile,
           url: URL.createObjectURL(compressedFile),
           name: compressedFile.name,
-          originalSize: file.size,
-          compressedSize: compressedFile.size,
-          compressionRatio
         });
       }
-      
       if (processedImages.length > 0) {
         addUnitPlanImages(processedImages);
       }
-      
     } catch (error) {
       console.error('Error processing unit plan images:', error);
-      toast.error('Failed to process unit plan images: ' + error.message);
+      toast.error(t('processError', { error: error.message }));
     } finally {
       setIsCompressing(false);
       toast.dismiss(loadingToast);
@@ -83,37 +120,27 @@ const UnitPlanSection = () => {
     }
   };
 
-  // Handle drag end event
-  const handleDragEnd = (result) => {
-    setIsDragging(false);
-
-    // Dropped outside the list
-    if (!result.destination) {
-      return;
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = unitPlanImages.findIndex((img) => img.id === active.id);
+      const newIndex = unitPlanImages.findIndex((img) => img.id === over.id);
+      reorderUnitPlanImages(oldIndex, newIndex);
     }
-
-    // If the item was dropped in a different position, reorder the images
-    if (result.source.index !== result.destination.index) {
-      reorderUnitPlanImages(result.source.index, result.destination.index);
-    }
-  };
-
-  const handleDragStart = () => {
-    setIsDragging(true);
   };
 
   const handleBrowseFiles = () => {
     if (isCompressing) return;
-    document.getElementById('unitPlanImages').click();
+    document.getElementById('unitPlanImagesInput').click();
   };
 
   return (
     <section className="form-section unit-plan-section">
-      <h2 className="section-title">Unit Plan</h2>
+      <h2 className="section-title">{t('title')}</h2>
       <div className="image-upload-container">
         <input
           type="file"
-          id="unitPlanImages"
+          id="unitPlanImagesInput"
           multiple
           accept="image/*"
           onChange={handleImageUpload}
@@ -123,110 +150,43 @@ const UnitPlanSection = () => {
         {unitPlanImages.length > 0 ? (
           <div className="images-container">
             <h4 className="images-title">
-              Unit Plan Images ({unitPlanImages.length}/100)
+              {t('imagesTitle', { count: unitPlanImages.length })}
             </h4>
-            <p className="images-subtitle">Drag to reorder - first image will be the main unit plan</p>
+            <p className="images-subtitle">{t('reorderSubtitle')}</p>
 
-            <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-              <Droppable droppableId="unit-plan-images" direction="horizontal">
-                {(provided) => (
-                  <div
-                    className={`uploaded-images ${isDragging ? 'dragging' : ''} has-images`}
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {unitPlanImages.map((image, index) => (
-                      <Draggable key={image.id} draggableId={image.id} index={index}>
-                        {(provided, snapshot) => (
-                          <div
-                            className={`image-preview ${snapshot.isDragging ? 'dragging' : ''}`}
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                          >
-                            <div className="drag-handle" {...provided.dragHandleProps}>
-                              <FaGripLines size={16} />
-                            </div>
-                            <Image
-                              src={image.url}
-                              alt="Unit Plan"
-                              width={100}
-                              height={100}
-                              className="preview-image"
-                            />
-                            <div className="image-info">
-                              <span className="image-name">{image.name}</span>
-                              <button
-                                type="button"
-                                className="remove-image"
-                                onClick={() => removeUnitPlanImage(image.id)}
-                              >
-                                <FaTrash size={16} />
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext items={unitPlanImages} strategy={rectSortingStrategy}>
+                <div className={`uploaded-images has-images`}>
+                  {unitPlanImages.map((image) => (
+                    <SortableUnitPlan key={image.id} image={image} onRemove={removeUnitPlanImage} />
+                  ))}
 
-                    {/* Add more photos button */}
-                    {unitPlanImages.length < 100 && (
-                      <div 
-                        className={`add-more-photos ${isCompressing ? 'disabled' : ''}`}
-                        onClick={handleBrowseFiles}
-                      >
-                        <div className="add-icon">
-                          {isCompressing ? (
-                            <div className="spinner-border spinner-border-sm" role="status">
-                              <span className="visually-hidden">Compressing...</span>
-                            </div>
-                          ) : (
-                            <FaUpload size={24} />
-                          )}
-                        </div>
-                        <p>{isCompressing ? 'Compressing...' : 'Add More Unit Plans'}</p>
+                  {unitPlanImages.length < 100 && (
+                    <div 
+                      className={`add-more-photos ${isCompressing ? 'disabled' : ''}`} 
+                      onClick={handleBrowseFiles}
+                    >
+                      <div className="add-icon">
+                        {isCompressing ? <div className="spinner-border spinner-border-sm" role="status"></div> : <FaUpload size={24} />}
                       </div>
-                    )}
-                    
-                    {unitPlanImages.length >= 100 && (
-                      <div className="add-more-photos disabled">
-                        <div className="add-icon">
-                          <span>🏗️</span>
-                        </div>
-                        <p>Maximum 100 unit plans reached</p>
-                      </div>
-                    )}
-
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+                      <p>{isCompressing ? t('compressingButton') : t('addMore')}</p>
+                    </div>
+                  )}
+                </div>
+              </SortableContext>
+            </DndContext>
           </div>
         ) : (
           <div className="upload-area">
-            <div className="icon mb30">
-              <span className="flaticon-upload" style={{
-                fontSize: '60px',
-              }} />
-            </div>
-            <div className="upload-text">
-              <p className="upload-title">Upload/Drag unit plan images</p>
-              <p className="upload-subtitle">Images must be JPG or PNG format and at least 2048x768 (Maximum 100 images)</p>
-            </div>
-            <button
-              type="button"
-              className={`browse-files-btn ${isCompressing ? 'disabled' : ''}`}
-              onClick={handleBrowseFiles}
-              disabled={isCompressing}
-            >
-              {isCompressing ? (
-                <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  Compressing...
-                </>
-              ) : (
-                'Browse Files'
-              )}
+            <div className="icon mb30"><span className="flaticon-upload" style={{ fontSize: '60px' }} /></div>
+            <h6 className="title">{t('uploadTitle')}</h6>
+            <p className="subtitle">{t('uploadSubtitle')}</p>
+            <button type="button" className={`browse-files-btn ${isCompressing ? 'disabled' : ''}`} onClick={handleBrowseFiles} disabled={isCompressing}>
+              {isCompressing ? t('compressingButton') : t('browseFiles')}
             </button>
           </div>
         )}

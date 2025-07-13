@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 export default function MyPropertiesPage() {
   const router = useRouter();
   const locale = useLocale();
-  const t = useTranslations('Backoffice');
+  const t = useTranslations('backoffice.myProperties');
   const [properties, setProperties] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ export default function MyPropertiesPage() {
 
       const token = localStorage.getItem('auth_token');
       if (!token) {
-        throw new Error('Authentication token not found');
+        throw new Error(t('errors.authTokenNotFound'));
       }
 
       const response = await fetch(apiUrl.toString(), {
@@ -65,7 +65,7 @@ export default function MyPropertiesPage() {
       });
 
       if (!response.ok) {
-        throw new Error(`Error fetching properties: ${response.statusText}`);
+        throw new Error(t('errors.fetchError', { error: response.statusText }));
       }
 
       const data = await response.json();
@@ -107,13 +107,14 @@ export default function MyPropertiesPage() {
       const token = localStorage.getItem('auth_token');
 
       Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: t('deleteDialog.title'),
+        text: t('deleteDialog.text'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: t('deleteDialog.confirmButton'),
+        cancelButtonText: t('deleteDialog.cancelButton')
       }).then(async (result) => {
         if (result.isConfirmed) {
 
@@ -122,21 +123,22 @@ export default function MyPropertiesPage() {
               'Authorization': `Bearer ${token}`,
             },
           }).then((response) => {
-            console.log(response);
+            toast.success(t('toast.deleteSuccess'));
+            fetchProperties();
           }).catch((error) => {
             console.log(error);
+            toast.error(t('toast.deleteError'));
           });
 
         }
-        fetchProperties();
       })
 
     }
     catch (err) {
       Swal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'Something went wrong',
+        title: t('errorDialog.title'),
+        text: t('errorDialog.text'),
       })
     }
   }
@@ -184,7 +186,7 @@ export default function MyPropertiesPage() {
     });
 
     return isRent
-      ? `${formatter.format(price)}/month`
+      ? `${formatter.format(price)}${t('priceUnit')}`
       : formatter.format(price);
   };
 
@@ -242,13 +244,14 @@ export default function MyPropertiesPage() {
               : property
           )
         );
-        throw new Error('Failed to update property status');
+        throw new Error(t('toast.updateStatusError'));
       }
-
-      toast.success(`Property ${newIsPublished ? 'published' : 'unpublished'} successfully`);
+     
+      const status = newIsPublished ? t('status.published') : t('status.unpublished');
+      toast.success(t('toast.updateStatusSuccess', { status: status.toLowerCase() }));
     } catch (error) {
       console.error('Error updating property status:', error);
-      toast.error('Failed to update property status');
+      toast.error(t('toast.updateStatusError'));
     }
   }
 
@@ -256,15 +259,15 @@ export default function MyPropertiesPage() {
     <div className="my-properties-page">
       <div className="page-header">
         <div className="header-title">
-          <h2>My Properties</h2>
-          <p>Manage your property listings</p>
+          <h2>{t('title')}</h2>
+          <p>{t('subtitle')}</p>
         </div>
 
         <div className="header-actions">
           <div className="search-container">
             <input
               type="text"
-              placeholder="Search properties..."
+              placeholder={t('searchPlaceholder')}
               value={searchTerm}
               onChange={handleSearch}
               className="search-input"
@@ -280,23 +283,23 @@ export default function MyPropertiesPage() {
               onChange={handleSortChange}
               value={sortBy}
             >
-              <option value="createdAt">Sort by: Date Added</option>
-              <option value="price">Sort by: Price</option>
-              <option value="viewCount">Sort by: Views</option>
+              <option value="createdAt">{t('sortBy.date')}</option>
+              <option value="price">{t('sortBy.price')}</option>
+              <option value="viewCount">{t('sortBy.views')}</option>
             </select>
           </div>
 
           {searchTerm && (
             <button className="clear-btn" onClick={clearSearch}>
               <FaTimes />
-              <span>Clear</span>
+              <span>{t('clear')}</span>
             </button>
           )}
 
           <a href="/backoffice/add-property" className="add-property-btn " style={{
             borderRadius: '10px'
           }}>
-            <span style={{ fontWeight: '500' }}>Add New Property</span>
+            <span style={{ fontWeight: '500' }}>{t('addNew')}</span>
           </a>
         </div>
       </div>
@@ -304,13 +307,13 @@ export default function MyPropertiesPage() {
       {loading ? (
         <div className="loading-container">
           <div className="spinner"></div>
-          <p>Loading properties...</p>
+          <p>{t('loading')}</p>
         </div>
       ) : error ? (
         <div className="error-container">
           <p>{error}</p>
           <button onClick={() => window.location.reload()} className="retry-btn">
-            Retry
+            {t('retry')}
           </button>
         </div>
       ) : (
@@ -326,42 +329,42 @@ export default function MyPropertiesPage() {
                     className="property-col sortable-header" 
                     onClick={() => handleColumnSort('projectName')}
                   >
-                    PROPERTY {getSortIcon('projectName')}
+                    {t('tableHeaders.property')} {getSortIcon('projectName')}
                   </th>
                   <th 
                     className="reference-col sortable-header"
                     onClick={() => handleColumnSort('referenceId')}
                   >
-                    REFERENCE {getSortIcon('referenceId')}
+                    {t('tableHeaders.reference')} {getSortIcon('referenceId')}
                   </th>
-                  <th className="operation-col">OPERATION</th>
+                  <th className="operation-col">{t('tableHeaders.operation')}</th>
                   <th 
                     className="price-col sortable-header"
                     onClick={() => handleColumnSort('price')}
                   >
-                    PRICE {getSortIcon('price')}
+                    {t('tableHeaders.price')} {getSortIcon('price')}
                   </th>
                   <th 
                     className="published-col sortable-header"
                     onClick={() => handleColumnSort('isPublished')}
                   >
-                    PUBLISHED {getSortIcon('isPublished')}
+                    {t('tableHeaders.published')} {getSortIcon('isPublished')}
                   </th>
                   <th 
                     className="displays-col sortable-header"
                     onClick={() => handleColumnSort('viewCount')}
                   >
-                    DISPLAYS {getSortIcon('viewCount')}
+                    {t('tableHeaders.displays')} {getSortIcon('viewCount')}
                   </th>
-                  <th className="visits-col">VISITS</th>
-                  <th className="enquiries-col">ENQUIRIES</th>
+                  <th className="visits-col">{t('tableHeaders.visits')}</th>
+                  <th className="enquiries-col">{t('tableHeaders.enquiries')}</th>
                   <th 
                     className="date-col sortable-header"
                     onClick={() => handleColumnSort('createdAt')}
                   >
-                    DATE {getSortIcon('createdAt')}
+                    {t('tableHeaders.date')} {getSortIcon('createdAt')}
                   </th>
-                  <th className="actions-col">ACTIONS</th>
+                  <th className="actions-col">{t('tableHeaders.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -373,13 +376,13 @@ export default function MyPropertiesPage() {
                           {property.images?.[0] ? (
                             <Image
                               src={process.env.NEXT_PUBLIC_IMAGE_URL + property.images?.[0]?.url}
-                              alt={property.projectName || 'Property Image'}
+                              alt={t('propertyImageAlt')}
                               width={50}
                               height={50}
                               className="property-image"
                             />
                           ) : (
-                            <div className="placeholder-image">No Image</div>
+                            <div className="placeholder-image">{t('noImage')}</div>
                           )}
                         </div>
                         <div className="property-info">
@@ -392,7 +395,7 @@ export default function MyPropertiesPage() {
                       <td className="price-col">{property.listings?.map((listing) => formatPrice(listing.price, listing.isRent)).join(', ')}</td>
                       <td className="published-col">
                         <span className={`status-badge ${property.isPublished ? 'active' : 'inactive'}`}>
-                          {property.isPublished ? 'PUBLISHED' : 'UNPUBLISHED'}
+                          {property.isPublished ? t('status.published') : t('status.unpublished')}
                         </span>
                       </td>
                       <td className="displays-col">{property.viewCount || 0}</td>
@@ -401,46 +404,23 @@ export default function MyPropertiesPage() {
                       <td className="date-col">{property.formattedDate}</td>
                       <td className="actions-col">
                         <div className="action-buttons">
-                          <button 
-                            className="view-btn"
-                            onClick={() => handleViewProperty(property.id)}
-                            style={{
-                              backgroundColor: 'white',
-                              color: '#333',
-                              border: '1px solid #ddd',
-                              padding: '5px 12px',
-                              borderRadius: '4px',
-                              fontSize: '12px',
-                              fontWeight: '500',
-                              cursor: 'pointer',
-                              marginRight: '8px'
-                            }}
-                          >
-                            View
+                          <button className="action-btn view-btn" onClick={() => handleViewProperty(property.id)}>
+                            <FaEye />
                           </button>
-                          <button className="action-btn edit"
-                            onClick={() => handleEditProperty(property.id)}
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            className="action-btn duplicate"
-                            title="Duplicate property"
-                            onClick={() => handleDuplicateProperty(property.id)}
-                          >
+                          <button className="action-btn duplicate-btn" onClick={() => handleDuplicateProperty(property.id)}>
                             <FaCopy />
                           </button>
-                          <button className="action-btn delete"
-                            onClick={() => handleDeleteProperty(property.id)}
-                          >
+                          <button className="action-btn edit-btn" onClick={() => handleEditProperty(property.id)}>
+                            <FaEdit />
+                          </button>
+                          <button className="action-btn delete-btn" onClick={() => handleDeleteProperty(property.id)}>
                             <FaTrash />
                           </button>
                           <button 
-                            className={`action-btn status-toggle ${property.isPublished ? 'active' : 'inactive'}`}
+                            className={`action-btn toggle-publish-btn ${property.isPublished ? 'unpublish' : 'publish'}`}
                             onClick={() => handleTogglePropertyPublished(property.id, property.isPublished)}
-                            title={property.isPublished ? 'Unpublish property' : 'Publish property'}
                           >
-                            {property.isPublished ? <FaEye /> : <FaEyeSlash />}
+                            {property.isPublished ? <FaEyeSlash /> : <FaEye />}
                           </button>
                         </div>
                       </td>
@@ -448,8 +428,13 @@ export default function MyPropertiesPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="10" className="no-properties">
-                      <p>No properties found. Add your first property to get started.</p>
+                    <td colSpan="10" className="no-properties-found">
+                      <h2>{t('noProperties.title')}</h2>
+                      <p>{t('noProperties.subtitle')}</p>
+                      <a href="/backoffice/add-property" className="add-property-btn">
+                        <FaPlus />
+                        <span>{t('addNew')}</span>
+                      </a>
                     </td>
                   </tr>
                 )}
@@ -457,89 +442,37 @@ export default function MyPropertiesPage() {
             </table>
           </div>
 
-          <div className="pagination-container">
-            <div className="pagination-info">
-              <span>Showing {properties.length} of {totalPages * itemsPerPage} entries</span>
+          {properties.length > 0 && (
+            <div className="pagination-container">
+              <div className="pagination-info">
+                <span>{t('pagination.page', { currentPage, totalPages })}</span>
+              </div>
+
+              <div className="pagination">
+                <button className="pagination-arrow" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                  <FaChevronLeft />
+                </button>
+                {/* Placeholder for page numbers if they are to be added later */}
+                <button className="pagination-arrow" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                  <FaChevronRight />
+                </button>
+              </div>
+
+              <div className="pagination-size">
+                <select 
+                  value={itemsPerPage}
+                  onChange={(e) => {
+                    setItemsPerPage(Number(e.target.value));
+                    setCurrentPage(1); // Reset to first page
+                  }}
+                >
+                  {[10, 20, 50].map(n => (
+                    <option key={n} value={n}>{t('pagination.itemsPerPage', { count: n })}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-
-
-            <div className="pagination">
-              <button
-                className="pagination-arrow"
-                onClick={() => handlePageChange(1)}
-                disabled={currentPage === 1}
-              >
-                <span className="pagination-first">First</span>
-              </button>
-
-              <button
-                className="pagination-arrow"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <FaChevronLeft />
-              </button>
-
-              {[...Array(totalPages)].map((_, index) => {
-                const pageNumber = index + 1;
-                if (
-                  pageNumber === 1 ||
-                  pageNumber === totalPages ||
-                  (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
-                ) {
-                  return (
-                    <button
-                      key={index}
-                      className={`pagination-number ${currentPage === pageNumber ? 'active' : ''}`}
-                      onClick={() => handlePageChange(pageNumber)}
-                    >
-                      {pageNumber}
-                    </button>
-                  );
-                } else if (
-                  (pageNumber === 2 && currentPage > 3) ||
-                  (pageNumber === totalPages - 1 && currentPage < totalPages - 2)
-                ) {
-                  return <span key={index} className="pagination-ellipsis">...</span>;
-                }
-                return null;
-              })}
-
-              <button
-                className="pagination-arrow"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                <FaChevronRight />
-              </button>
-
-              <button
-                className="pagination-arrow"
-                onClick={() => handlePageChange(totalPages)}
-                disabled={currentPage === totalPages}
-              >
-                <span className="pagination-last">Last</span>
-              </button>
-            </div>
-
-
-            <div className="pagination-size">
-              <span>Show</span>
-              <select
-                value={itemsPerPage}
-                onChange={(e) => {
-                  setItemsPerPage(Number(e.target.value));
-                  setCurrentPage(1);
-                }}
-              >
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-              <span>entries</span>
-            </div>
-          </div>
+          )}
         </>
       )}
     </div>

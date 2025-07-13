@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 
 const RecentActivities = () => {
-  const t = useTranslations('backoffice');
+  const t = useTranslations('backoffice.dashboard');
   const [activities, setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const RecentActivities = () => {
         });
         
         if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`);
+          throw new Error(t('apiRequestFailed', { status: response.status }));
         }
         
         const data = await response.json();
@@ -42,19 +42,19 @@ const RecentActivities = () => {
           const formattedActivities = recentMessages.map((message, index) => ({
             id: message.id || index,
             type: 'message',
-            name: message.name || 'Anonymous',
-            email: message.email || 'No email provided',
-            phone: message.phone || 'No phone provided',
-            message: message.message || 'No message content',
+            name: message.name || t('activities.anonymousUser'),
+            email: message.email || t('activities.noEmailProvided'),
+            phone: message.phone || t('activities.noPhoneProvided'),
+            message: message.message || t('activities.noMessageContent'),
             status: message.status || 'NEW',
-            property: message.property?.projectName || 'Unknown Property',
-            date: message.createdAt ? format(new Date(message.createdAt), 'dd MMM yyyy') : 'Unknown date',
+            property: message.property?.projectName || t('activities.unknownProperty'),
+            date: message.createdAt ? format(new Date(message.createdAt), 'dd MMM yyyy') : t('activities.unknownDate'),
             icon: <FaEnvelope />
           }));
           
           setActivities(formattedActivities);
         } else {
-          throw new Error(data.message || 'Failed to fetch recent activities');
+          throw new Error(data.message || t('failedToFetchRecentActivities'));
         }
       } catch (err) {
         console.error('Error fetching recent activities:', err);
@@ -82,7 +82,7 @@ const RecentActivities = () => {
           </div>
           <div className="activity-content">
             <p>
-              <span className="highlight">{activity.name}</span> sent a message about <span className="highlight">{activity.property}</span>
+              <span className="highlight">{activity.name}</span> {t('sentMessageAbout')} <span className="highlight">{activity.property}</span>
             </p>
             <p className="activity-message-preview">
               {activity.message.length > 50 ? `${activity.message.substring(0, 50)}...` : activity.message}
@@ -103,7 +103,7 @@ const RecentActivities = () => {
             </div>
             <div className="activity-content">
               <p>
-                <span className="highlight">Your listing</span> {activity.property} <span className="highlight">has {activity.status}</span>
+                <span className="highlight">{t('activities.yourListing')}</span> {activity.property} <span className="highlight">{t('activities.hasStatus')} {activity.status}</span>
               </p>
             </div>
           </div>
@@ -116,7 +116,7 @@ const RecentActivities = () => {
             </div>
             <div className="activity-content">
               <p>
-                <span className="highlight">{activity.user}</span> left a review on <span className="highlight">{activity.property}</span>
+                <span className="highlight">{activity.user}</span> {t('activities.leftAReviewOn')} <span className="highlight">{activity.property}</span>
               </p>
             </div>
           </div>
@@ -129,7 +129,7 @@ const RecentActivities = () => {
             </div>
             <div className="activity-content">
               <p>
-                <span className="highlight">{activity.user}</span> favourites your <span className="highlight">{activity.property}</span> listing
+                <span className="highlight">{activity.user}</span> {t('activities.favouritesYour')} <span className="highlight">{activity.property}</span> {t('activities.listing')}
               </p>
             </div>
           </div>
@@ -182,14 +182,14 @@ const RecentActivities = () => {
   return (
     <div className="recent-activities">
       <div className="activities-header">
-        <h3 className="activities-title">{t('recentMessages')}</h3>
+        <h3 className="activities-title">{t('recentActivities')}</h3>
       </div>
       <div className="activities-list">
         {activities.map(activity => renderActivityItem(activity))}
       </div>
       <div className="activities-footer">
         <Link href="/backoffice/message" className="view-more-link">
-          {t('viewAllMessages')} →
+          {t('viewMore')} →
         </Link>
       </div>
     </div>

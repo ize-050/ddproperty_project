@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { FaEnvelope, FaBell, FaChevronDown, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 // Import UserProfileMenu component
 import UserProfileMenu from './UserProfileMenu';
 

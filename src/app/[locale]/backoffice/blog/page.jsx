@@ -136,13 +136,15 @@ const BlogPagination = ({ pagination, onPageChange }) => {
   const startItem = (currentPage - 1) * perPage + 1;
   const endItem = Math.min(currentPage * perPage, total);
 
+  const t = useTranslations('Blog');
+
   return (
     <div className="mbp_pagination text-center">
       <ul className="page_navigation">
         {renderPaginationItems()}
       </ul>
       <p className="mt10 pagination_page_count text-center">
-        แสดง {startItem}-{endItem} จากทั้งหมด {total} รายการ
+        {t('pagination', { start: startItem, end: endItem, total: total })}
       </p>
     </div>
   );
@@ -261,14 +263,14 @@ const BlogPage = () => {
   const handleDelete = async (id) => {
     // ใช้ SweetAlert2 แทน window.confirm
     Swal.fire({
-      title: 'คุณแน่ใจหรือไม่?',
-      text: "คุณต้องการลบบทความนี้ใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้",
+      title: t('deleteDialog.title'),
+      text: t('deleteDialog.text'),
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'ใช่, ลบเลย!',
-      cancelButtonText: 'ยกเลิก'
+      confirmButtonText: t('deleteDialog.confirmButton'),
+      cancelButtonText: t('deleteDialog.cancelButton')
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -283,8 +285,8 @@ const BlogPage = () => {
           if (response.status === 200 || response.status === 204) {
             // แสดงข้อความแจ้งเตือนว่าลบสำเร็จด้วย SweetAlert2
             Swal.fire(
-              'ลบเรียบร้อย!',
-              'บทความถูกลบเรียบร้อยแล้ว',
+              t('toast.successDeleteTitle'),
+              t('toast.successDelete'),
               'success'
             );
             
@@ -292,16 +294,16 @@ const BlogPage = () => {
             getPosts();
           } else {
             Swal.fire(
-              'เกิดข้อผิดพลาด!',
-              'ไม่สามารถลบบทความได้',
+              t('toast.errorDeleteTitle'),
+              t('toast.errorDelete'),
               'error'
             );
           }
         } catch (error) {
           console.error('Error deleting post:', error);
           Swal.fire(
-            'เกิดข้อผิดพลาด!',
-            error.response?.data?.message || 'ไม่สามารถลบบทความได้',
+            t('toast.errorDeleteTitle'),
+            error.response?.data?.message || t('toast.errorDelete'),
             'error'
           );
         }
@@ -326,15 +328,15 @@ const BlogPage = () => {
       <div className="blog-page">
         <div className="blog-container">
           <div className="page-header">
-            <h1>All Post</h1>
-            <p>We are glad to see you again</p>
+            <h1>{t('viewAll')}</h1>
+            <p>{t('viewAllSubtitle')}</p>
           </div>
           
           <div className="actions-bar">
             <div className="search-container">
               <input
                 type="text"
-                placeholder="Search by name"
+                placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={handleSearch}
               />
@@ -345,7 +347,7 @@ const BlogPage = () => {
                   onClick={handleClear}
                 >
                   <FaTimes />
-                  Clear
+                  {t('clearButton')}
                 </button>
               )}
             </div>
@@ -356,9 +358,9 @@ const BlogPage = () => {
                   value={sortBy}
                   onChange={handleSort}
                 >
-                  <option value="date">Sort by: Date</option>
-                  <option value="title">Sort by: Title</option>
-                  <option value="category">Sort by: Category</option>
+                  <option value="date">{t('sortBy.date')}</option>
+                  <option value="title">{t('sortBy.title')}</option>
+                  <option value="category">{t('sortBy.category')}</option>
                 </select>
                 <FaChevronDown className="select-arrow" />
               </div>
@@ -368,7 +370,7 @@ const BlogPage = () => {
                 className="add-button"
               >
                 <FaPlus />
-                <span>Add New Post</span>
+                <span>{t('createNew')}</span>
               </button>
             </div>
           </div>
@@ -377,9 +379,9 @@ const BlogPage = () => {
             <table className="blog-table">
               <thead>
                 <tr>
-                  <th>TITLE</th>
-                  <th>PUBLISHED DATE</th>
-                  <th>ACTIONS</th>
+                  <th>{t('table.title')}</th>
+                  <th>{t('table.date')}</th>
+                  <th>{t('table.actions')}</th>
                 </tr>
               </thead>
               <tbody>

@@ -41,8 +41,8 @@ const HeaderBackoffice = () => {
             console.error('Failed to fetch user profile:', error);
             // Set default profile if fetch fails
             setUserProfile({
-                firstname: 'Admin',
-                lastname: 'User',
+                firstname: t('admin'),
+                lastname: t('user'),
                 email: 'admin@dluckproperty.com',
                 picture: null
             });
@@ -87,7 +87,7 @@ const HeaderBackoffice = () => {
         if (userProfile?.firstname && userProfile?.lastname) {
             return `${userProfile.firstname} ${userProfile.lastname}`;
         }
-        return userProfile?.firstname || 'Admin User';
+        return userProfile?.firstname || t('adminUser');
     };
 
     return (
@@ -153,7 +153,7 @@ const HeaderBackoffice = () => {
                                             {loading ? (
                                                 <div className="profile-avatar-loading">
                                                     <div className="spinner-border spinner-border-sm" role="status">
-                                                        <span className="visually-hidden">Loading...</span>
+                                                        <span className="visually-hidden">{t('loading')}</span>
                                                     </div>
                                                 </div>
                                             ) : (
@@ -207,7 +207,7 @@ const HeaderBackoffice = () => {
                                         className="ud-btn btn-white add-property bdrs60 ms-4"
                                         href="/"
                                     >
-                                        FRONTEND
+                                        {t('frontend')}
                                         <i className="fal fa-arrow-right-long" />
                                     </a>
                                 </div>

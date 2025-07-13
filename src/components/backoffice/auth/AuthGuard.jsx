@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
  */
 const AuthGuard = ({ children }) => {
   const router = useRouter();
-  const t = useTranslations('Backoffice');
+  const t = useTranslations('backoffice');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useFormContext, Controller } from 'react-hook-form';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import Image from 'next/image';
 
 const CoAgentSection = () => {
+  const t = useTranslations('backoffice.coAgent');
   const { control, watch, setValue, formState: { errors } } = useFormContext();
   const store = usePropertyFormStore();
   
@@ -83,12 +85,12 @@ const CoAgentSection = () => {
       <div className="section-header">
         <Image 
           src="/images/icons/iconproperty/co-agent.svg" 
-          alt="Co-Agent" 
+          alt={t('alt')} 
           width={24} 
           height={24} 
           className="section-icon"
         />
-        <h2 className="section-title">Co-Agent Accept</h2>
+        <h2 className="section-title">{t('accept')}</h2>
         
         <Controller
           name="coAgentAccept"
@@ -125,7 +127,7 @@ const CoAgentSection = () => {
                   onChange={() => handleCommissionTypeChange('percent')}
                 />
                 <span className="radio-checkmark"></span>
-                <span className="commission-title">Commission (Percent)</span>
+                <span className="commission-title">{t('commissionPercent')}</span>
               </label>
             </div>
             
@@ -133,12 +135,12 @@ const CoAgentSection = () => {
               <div className="commission-content">
                 <div className="commission-row">
                   <div className="commission-input-group">
-                    <label className="form-label">Commission Rate</label>
+                    <label className="form-label">{t('commissionRate')}</label>
                     <div className="input-with-percent">
                       <input
                         type="number"
                         className="form-control"
-                        placeholder="5"
+                        placeholder={t('commissionPercentPlaceholder')}
                         value={watchCommissionPercent}
                         onChange={(e) => handleCommissionPercentChange(e.target.value)}
                         min="0"
@@ -150,7 +152,7 @@ const CoAgentSection = () => {
                   </div>
                   
                   <div className="commission-total">
-                    <label className="form-label">Total Commission</label>
+                    <label className="form-label">{t('totalCommission')}</label>
                     <div className="total-amount">
                       ฿ {calculateTotalCommission()}
                     </div>
@@ -172,24 +174,24 @@ const CoAgentSection = () => {
                   onChange={() => handleCommissionTypeChange('amount')}
                 />
                 <span className="radio-checkmark"></span>
-                <span className="commission-title">Commission (Specific numbers)</span>
+                <span className="commission-title">{t('commissionSpecific')}</span>
               </label>
             </div>
             
             {watchCommissionType === 'amount' && (
               <div className="commission-content">
                 <div className="commission-input-group">
-                  <label className="form-label">Commission Rate</label>
+                  <label className="form-label">{t('commissionRate')}</label>
                   <div className="input-with-currency">
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="500000"
+                      placeholder={t('commissionAmountPlaceholder')}
                       value={watchCommissionAmount}
                       onChange={(e) => handleCommissionAmountChange(e.target.value)}
                       min="0"
                     />
-                    <span className="currency-symbol">THB</span>
+                    <span className="currency-symbol">{t('currencyTHB')}</span>
                   </div>
                 </div>
               </div>
@@ -203,12 +205,12 @@ const CoAgentSection = () => {
         <div className="private-note-header">
           <Image 
             src="/images/icons/iconproperty/privatenote.svg" 
-            alt="Private Note" 
+            alt={t('privateNoteAlt')} 
             width={24} 
             height={24} 
             className="section-icon"
           />
-          <span className="private-note-label">Private Note</span>
+          <span className="private-note-label">{t('privateNote')}</span>
         </div>
         
         <Controller
@@ -219,7 +221,7 @@ const CoAgentSection = () => {
             <textarea
               className="form-control private-note-textarea"
               rows="6"
-              placeholder="Enter your private notes here..."
+              placeholder={t('privateNotePlaceholder')}
               value={field.value}
               onChange={(e) => {
                 field.onChange(e.target.value);

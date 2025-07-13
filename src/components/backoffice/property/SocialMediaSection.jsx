@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { FaYoutube, FaTiktok } from 'react-icons/fa';
 import usePropertyFormStore from '@/store/propertyFormStore';
 
 const SocialMediaSection = () => {
+  const t = useTranslations('backoffice');
   const { formData, setSocialMedia } = usePropertyFormStore();
   
   const handleInputChange = (e) => {
@@ -17,7 +19,7 @@ const SocialMediaSection = () => {
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="youtubeUrl" className="form-label">
-            <FaYoutube className="icon-youtube" color="red" /> YouTube URL
+            <FaYoutube className="icon-youtube" color="red" /> {t('socialMedia.youtubeUrl')}
           </label>
           <input
             type="text"
@@ -26,14 +28,14 @@ const SocialMediaSection = () => {
             className="form-control"
             value={formData.socialMedia?.youtubeUrl || ''}
             onChange={handleInputChange}
-            placeholder="https://www.youtube.com/watch?v=..."
+            placeholder={t('socialMedia.youtubePlaceholder')}
 
           />
         </div>
         
         <div className="form-group">
           <label htmlFor="tiktokUrl" className="form-label">
-            <FaTiktok className="icon-tiktok" /> TikTok URL
+            <FaTiktok className="icon-tiktok" /> {t('socialMedia.tiktokUrl')}
           </label>
           <input
             type="text"
@@ -42,7 +44,7 @@ const SocialMediaSection = () => {
             className="form-control"
             value={formData.socialMedia?.tiktokUrl || ''}
             onChange={handleInputChange}
-            placeholder="https://www.tiktok.com/@username/video/..."
+            placeholder={t('socialMedia.tiktokPlaceholder')}
           />
         </div>
       </div>

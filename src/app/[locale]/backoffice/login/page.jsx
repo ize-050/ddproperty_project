@@ -10,7 +10,7 @@ import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 export const dynamic = "force-dynamic";
 
 const LoginPage = () => {
-  const t = useTranslations('');
+  const t = useTranslations('Login');
   const router = useRouter();
   
   const [formData, setFormData] = useState({
@@ -61,7 +61,7 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || t('loginFailed'));
       }
 
       // Store token in localStorage
@@ -71,7 +71,7 @@ const LoginPage = () => {
       // Redirect to dashboard
       window.location.href = '/backoffice';
     } catch (err) {
-      setError(err.message || 'An error occurred during login');
+      setError(err.message || t('errorDuringLogin'));
     } finally {
       setLoading(false);
     }
