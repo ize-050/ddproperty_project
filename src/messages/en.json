@@ -922,6 +922,10 @@
       "zh": "CHINESE",
       "ru": "RUSSIAN"
     },
+    "loading": {
+      "text": "Loading...",
+      "blogData": "Loading blog data..."
+    },
     "form": {
       "titleLabel": "Title*",
       "titlePlaceholder": "Enter title in {langName}",
@@ -936,7 +940,14 @@
       "featuredImageRequired": "Featured image is required",
       "cancelButton": "Cancel",
       "createButton": "Create Blog",
-      "updateButton": "Update Blog"
+      "updateButton": "Update Post"
+    },
+    "sweetAlert": {
+      "successTitle": "Success!",
+      "errorTitle": "Error!",
+      "updateSuccessText": "Blog post updated successfully",
+      "updateErrorText": "Failed to update blog post. Please try again.",
+      "confirmButtonText": "OK"
     },
     "toast": {
       "errorTitle": "Error processing title translations",

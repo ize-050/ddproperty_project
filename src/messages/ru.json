@@ -715,6 +715,10 @@
       "zh": "КИТАЙСКИЙ",
       "ru": "РУССКИЙ"
     },
+    "loading": {
+      "text": "Загрузка...",
+      "blogData": "Загрузка данных блога..."
+    },
     "form": {
       "titleLabel": "Заголовок*",
       "titlePlaceholder": "Введите заголовок на {langName}",
@@ -729,7 +733,14 @@
       "featuredImageRequired": "Требуется главное изображение",
       "cancelButton": "Отмена",
       "createButton": "Создать блог",
-      "updateButton": "Обновить блог"
+      "updateButton": "Обновить запись"
+    },
+    "sweetAlert": {
+      "successTitle": "Успех!",
+      "errorTitle": "Ошибка!",
+      "updateSuccessText": "Запись в блоге успешно обновлена",
+      "updateErrorText": "Не удалось обновить запись в блоге. Пожалуйста, попробуйте еще раз.",
+      "confirmButtonText": "ОК"
     },
     "toast": {
       "errorTitle": "Ошибка обработки переводов заголовков",

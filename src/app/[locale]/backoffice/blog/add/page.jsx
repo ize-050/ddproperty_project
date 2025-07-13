@@ -272,23 +272,7 @@ const CreateBlogPage = () => {
               )}
             </div>
 
-            {/* Category */}
-            <div className="form-group">
-              <label htmlFor="category">{t('form.categoryLabel')}</label>
-              <Controller
-                name="category"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    type="text"
-                    id="category"
-                    {...field}
-                    placeholder={t('form.categoryPlaceholder')}
-                    className="form-control"
-                  />
-                )}
-              />
-            </div>
+
 
             {/* Featured Image */}
             <div className="form-group">

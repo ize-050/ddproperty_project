@@ -266,9 +266,9 @@ const EditBlogPage = () => {
           <div className="blog-page">
             <div className="blog-container text-center py-5">
               <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
+                <span className="visually-hidden">{t('loading.text')}</span>
               </div>
-              <p className="mt-3">Loading blog data...</p>
+              <p className="mt-3">{t('loading.blogData')}</p>
             </div>
           </div>
     );
@@ -278,8 +278,8 @@ const EditBlogPage = () => {
         <div className="blog-page">
           <div className="blog-container">
             <div className="page-header">
-              <h1>Views Blog Post</h1>
-              <p>Update your blog post with multilingual support</p>
+              <h1>{t('viewAll')}</h1>
+              <p>{t('viewAllSubtitle')}</p>
             </div>
 
             <div className="blog-form">
@@ -300,7 +300,7 @@ const EditBlogPage = () => {
 
               {/* Title Input */}
               <div className="form-group">
-                <label htmlFor="title">Title*</label>
+                <label htmlFor="title">{t('form.titleLabel')}</label>
                 {languages.map((lang) => (
                     <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
                       <Controller
@@ -316,7 +316,7 @@ const EditBlogPage = () => {
                                   onChange={(e) => {
                                     onChange(e);
                                   }}
-                                  placeholder={`Enter title in ${languages.find(l => l.code === activeLanguage).name}`}
+                                  placeholder={t('form.titlePlaceholder', { langName: languages.find(l => l.code === activeLanguage).name })}
                                   className={`form-control ${errors[activeLanguage]?.title ? 'is-invalid' : ''}`}
                               />
                           )}
@@ -324,13 +324,12 @@ const EditBlogPage = () => {
                     </div>
                 ))}
                 {errors[activeLanguage]?.title && (
-                    <div className="invalid-feedback">{languages.find(l => l.code === activeLanguage).name} title is required</div>
+                    <div className="invalid-feedback">{t('form.titleRequired', { langName: languages.find(l => l.code === activeLanguage).name })}</div>
                 )}
               </div>
 
               {/* Rich Text Editor */}
               <div className="form-group editor-container">
-                <label htmlFor="content">Content*</label>
                 {languages.map((lang) => (
                     <div key={lang.code} style={{ display: activeLanguage === lang.code ? 'block' : 'none' }}>
                       <Controller
@@ -346,20 +345,20 @@ const EditBlogPage = () => {
                                     onChange(value)
                                   }}
                                   modules={modules}
-                                  placeholder={`Enter content in ${lang.name}`}
+                                  placeholder={t('form.contentPlaceholder', { langName: lang.name })}
                               />
                           )}
                       />
                     </div>
                 ))}
                 {errors[activeLanguage]?.content && (
-                    <div className="invalid-feedback">{languages.find(l => l.code === activeLanguage).name} content is required</div>
+                    <div className="invalid-feedback">{t('form.contentRequired', { langName: languages.find(l => l.code === activeLanguage).name })}</div>
                 )}
               </div>
 
               {/* Featured Image */}
               <div className="form-group">
-                <label>Feature Image</label>
+                <label>{t('form.featuredImageLabel')}</label>
                 <Controller
                     name="featuredImage"
                     control={control}
@@ -367,20 +366,20 @@ const EditBlogPage = () => {
                         <ImageUploader
                             image={field.value || imagePreview}
                             onImageChange={handleImageUpload}
-                            placeholderText="Upload/Drag photos of your blog"
-                            hintText="Recommended width is at least 1080px"
+                            placeholderText={t('form.featuredImagePlaceholder')}
+                            hintText={t('form.featuredImageHint')}
                         />
                     )}
                 />
                 {errors.featuredImage && !imagePreview && (
-                    <div className="invalid-feedback">Featured image is required</div>
+                    <div className="invalid-feedback">{t('form.featuredImageRequired')}</div>
                 )}
               </div>
 
               {/* Submit Button */}
               <div className="form-actions">
                 <button type="button" className="cancel-button" onClick={() => router.push('/backoffice/blog')}>
-                  Cancel
+                  {t('form.cancelButton')}
                 </button>
               </div>
             </div>

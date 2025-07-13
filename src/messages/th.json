@@ -851,6 +851,10 @@
       "zh": "จีน",
       "ru": "รัสเซีย"
     },
+    "loading": {
+      "text": "กำลังโหลด...",
+      "blogData": "กำลังโหลดข้อมูลบล็อก..."
+    },
     "form": {
       "titleLabel": "หัวข้อ*",
       "titlePlaceholder": "ป้อนหัวข้อในภาษา {langName}",
@@ -865,7 +869,14 @@
       "featuredImageRequired": "จำเป็นต้องมีรูปภาพเด่น",
       "cancelButton": "ยกเลิก",
       "createButton": "สร้างบล็อก",
-      "updateButton": "อัปเดตบล็อก"
+      "updateButton": "อัปเดตโพสต์"
+    },
+    "sweetAlert": {
+      "successTitle": "สำเร็จ!",
+      "errorTitle": "เกิดข้อผิดพลาด!",
+      "updateSuccessText": "อัปเดตโพสต์บล็อกสำเร็จ",
+      "updateErrorText": "ไม่สามารถอัปเดตโพสต์บล็อกได้ โปรดลองอีกครั้ง",
+      "confirmButtonText": "ตกลง"
     },
     "toast": {
       "errorTitle": "เกิดข้อผิดพลาดในการประมวลผลคำแปลหัวข้อ",

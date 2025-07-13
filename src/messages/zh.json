@@ -203,6 +203,10 @@
       "zh": "中文",
       "ru": "俄语"
     },
+    "loading": {
+      "text": "加载中...",
+      "blogData": "正在加载博客数据..."
+    },
     "form": {
       "titleLabel": "标题*",
       "titlePlaceholder": "输入 {langName} 标题",
@@ -217,7 +221,14 @@
       "featuredImageRequired": "需要特色图片",
       "cancelButton": "取消",
       "createButton": "创建博客",
-      "updateButton": "更新博客"
+      "updateButton": "更新文章"
+    },
+    "sweetAlert": {
+      "successTitle": "成功！",
+      "errorTitle": "错误！",
+      "updateSuccessText": "博客文章更新成功",
+      "updateErrorText": "更新博客文章失败。请再试一次。",
+      "confirmButtonText": "确定"
     },
     "toast": {
       "errorTitle": "处理标题翻译时出错",
