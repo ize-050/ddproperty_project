@@ -34,7 +34,7 @@ export default function MyPropertiesPage() {
 
   // Fetch properties from API
   useEffect(() => {
-
+    console.log('Fetching with params:', { currentPage, searchTerm, sortBy, sortOrder, itemsPerPage });
     fetchProperties();
   }, [currentPage, searchTerm, sortBy, sortOrder, itemsPerPage]);
 
@@ -287,7 +287,6 @@ export default function MyPropertiesPage() {
             >
               <option value="createdAt">{t('sortBy.date')}</option>
               <option value="price">{t('sortBy.price')}</option>
-              <option value="viewCount">{t('sortBy.views')}</option>
             </select>
           </div>
 
@@ -392,7 +391,7 @@ export default function MyPropertiesPage() {
                           <p className="property-title">{property.title}</p>
                         </div>
                       </td>
-                      <td className="reference-col">{property.reference}</td>
+                      <td className="reference-col">{property.referenceId}</td>
                       <td className="operation-col">{property.listings?.map((listing) => listing.listingType).join(', ')}</td>
                       <td className="price-col">{property.listings?.map((listing) => formatPrice(listing.price, listing.isRent)).join(', ')}</td>
                       <td className="published-col">

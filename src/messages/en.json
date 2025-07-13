@@ -300,7 +300,7 @@
     "myProperties": {
       "title": "My Properties",
       "subtitle": "Manage all your property listings in one place.",
-      "searchPlaceholder": "Search by name or reference...",
+      "searchPlaceholder": "Search by name",
       "clear": "Clear",
       "addNew": "Add New Property",
       "loading": "Loading properties...",
