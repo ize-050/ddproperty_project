@@ -9,6 +9,7 @@ import { FaPlus, FaSearch, FaEye, FaEyeSlash, FaEdit, FaTrash, FaTimes, FaChevro
 import { useLocale } from "next-intl";
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import createSlug from '@/utils/slugify';
 
 //axios
 import axios from 'axios';
@@ -205,8 +206,9 @@ export default function MyPropertiesPage() {
     window.location.href = `/${locale}/backoffice/edit-property/${propertyId}/`;
   }
 
-  const handleViewProperty = (propertyId) => {
-    window.open(`/${locale}/property_detail/${propertyId}`, '_blank');
+  const handleViewProperty = (property) => {
+    const slug = createSlug(property.title);
+    window.open(`/${locale}/property_detail/${property.id}/${slug}`, '_blank');
   }
 
   const handleTogglePropertyPublished = async (propertyId, currentIsPublished) => {
@@ -327,9 +329,9 @@ export default function MyPropertiesPage() {
                 <tr>
                   <th 
                     className="property-col sortable-header" 
-                    onClick={() => handleColumnSort('projectName')}
+                    onClick={() => handleColumnSort('title')}
                   >
-                    {t('tableHeaders.property')} {getSortIcon('projectName')}
+                    {t('tableHeaders.property')} {getSortIcon('title')}
                   </th>
                   <th 
                     className="reference-col sortable-header"
@@ -387,7 +389,7 @@ export default function MyPropertiesPage() {
                         </div>
                         <div className="property-info">
                           <p className="property-type">{property.listings?.map((listing) => listing.listingType).join(', ')}</p>
-                          <p className="property-title">{property.projectName}</p>
+                          <p className="property-title">{property.title}</p>
                         </div>
                       </td>
                       <td className="reference-col">{property.reference}</td>
@@ -404,7 +406,7 @@ export default function MyPropertiesPage() {
                       <td className="date-col">{property.formattedDate}</td>
                       <td className="actions-col">
                         <div className="action-buttons">
-                          <button className="action-btn view-btn" onClick={() => handleViewProperty(property.id)}>
+                                                    <button className="action-btn view-btn" onClick={() => handleViewProperty(property)}>
                             <FaEye />
                           </button>
                           <button className="action-btn duplicate-btn" onClick={() => handleDuplicateProperty(property.id)}>

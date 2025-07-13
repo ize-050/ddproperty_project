@@ -29,7 +29,7 @@ const PropertyGallery = ({ images, property }) => {
     {
       icon: "flaticon-expand",
       label: "Useable Area",
-      value: property.usable_area ?? '-',
+      value: property.usableArea ?? '-',
     },
   ];
 

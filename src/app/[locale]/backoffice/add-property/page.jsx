@@ -56,6 +56,7 @@ const AddNewProperty = () => {
   });
 
   const { handleSubmit, formState: { errors, isDirty }, watch, trigger, setError, getValues, reset } = methods;
+  const watchedStatus = watch('status');
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -141,6 +142,8 @@ const AddNewProperty = () => {
   }, []);
 
   const onSubmit = async (data) => {
+    console.log('Form Data Received on Submit:', data);
+    console.log('Promotional Price Value:', data.promotionalPrice);
     try {
       setValidationSummary([]);
       setFormSubmitted(false);
@@ -194,12 +197,15 @@ const AddNewProperty = () => {
       // แปลงชื่อฟิลด์ให้ตรงกับ backend
       formDataObj.append('title', data.propertyTitle);
       formDataObj.append('zipCode', data.postalCode);
-      
+
       // เพิ่ม land size fields
-      if (data.land_size_rai) formDataObj.append('land_size_rai', data.land_size_rai);
-      if (data.land_size_ngan) formDataObj.append('land_size_ngan', data.land_size_ngan);
-      if (data.land_size_sq_wah) formDataObj.append('land_size_sq_wah', data.land_size_sq_wah);
-      
+      const landSizeFields = ['land_size_rai', 'land_size_ngan', 'land_size_sq_wah', 'landSizeSqm'];
+      landSizeFields.forEach((field) => {
+        if (data[field]) {
+          formDataObj.append(field, data[field]);
+        }
+      });
+
       // เพิ่ม co-agent fields
       formDataObj.append('coAgentAccept', data.coAgentAccept || false);
       if (data.commissionType) formDataObj.append('commissionType', data.commissionType);
@@ -303,7 +309,7 @@ const AddNewProperty = () => {
     } catch (error) {
       console.error('Error creating property:', error);
       setSaving(false);
-      
+
       // Check if it's an image limit error
       if (error.response?.data?.error === 'IMAGE_LIMIT_EXCEEDED') {
         Swal.fire({
@@ -314,16 +320,16 @@ const AddNewProperty = () => {
         });
         return;
       }
-      
+
       Swal.fire({
         icon: 'error',
         title: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
         text: error.response?.data?.message || error.response?.data?.error || error.message || t('errorSavingData'),
         footer: error.response?.data?.errors ? `<pre>${JSON.stringify(error.response.data.errors, null, 2)}</pre>` : ''
       }).then(() => {
-        window.location.reload();
+        // window.location.reload();
       });
-     
+
     }
   };
 
@@ -381,11 +387,13 @@ const AddNewProperty = () => {
           <ListingTypeSection type={"add"} />
           <PropertyTypeSection />
           <PropertyInfoSection />
-      
+
 
           <LocationSection />
           <PricingSection />
-          <PropertyDetailSection />
+          <PropertyDetailSection watchedStatus={watchedStatus} />
+
+
           <MoreRoomTypeSection />
           <PropertyHighlightsSection />
           <NearbySection />
@@ -449,7 +457,7 @@ const AddNewProperty = () => {
 
                     // Add red border to all required fields that are empty
                     // ProjectInfoSection
-                    
+
 
                     if (!getValues('projectName')) {
                       document.getElementById('projectName').style.border = '2px solid #dc3545';
@@ -457,7 +465,7 @@ const AddNewProperty = () => {
                     if (!getValues('area')) {
                       document.getElementById('area').style.border = '2px solid #dc3545';
                     }
-                    
+
                     // LocationSection
                     if (!getValues('address')) {
                       document.getElementById('address').style.border = '2px solid #dc3545';

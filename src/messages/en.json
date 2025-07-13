@@ -54,6 +54,12 @@
     "subscribe": "Subscribe",
     "sitemap": "Sitemap"
   },
+  "alerts": {
+    "fillSourceLanguageFields": "Please enter the title and description in {languageName} first to enable auto-translation.",
+    "translationFailed": "Translation failed. Please try again later.",
+    "translationSuccess": "Translation successful!",
+    "serviceUnavailable": "Translation service is currently unavailable. Please try again later."
+  },
   "language": {
     "en": "English",
     "th": "Thai",
@@ -481,12 +487,6 @@
         "th": "THAI",
         "zh": "CHINESE",
         "ru": "RUSSIAN"
-      },
-      "alerts": {
-        "enterEnglishFirst": "Please enter content in English first",
-        "translationFailed": "Translation failed. Please try again later.",
-        "serviceUnavailable": "Translation service is currently unavailable. Please try again later.",
-        "enterContentFirst": "Please enter content in {languageName} first"
       }
     },
     "listingType": {
@@ -500,6 +500,21 @@
       "noSelection": "None",
       "disabled": "Listing type cannot be changed in edit/view mode."
     },
+    "floorPlan": {
+      "addMoreButton": "Add More",
+      "title": "Floor Plan",
+      "alt": "Floor Plan Image",
+      "maxImagesError": "You can upload a maximum of 100 images. You are trying to upload {filesLength} images, but there are already {floorPlanImagesLength} images.",
+      "compressing": "Compressing {filesLength} images...",
+      "invalidFile": "Skipping non-image file: {fileName}",
+      "processError": "Error processing image: {errorMessage}",
+      "imagesTitle": "{floorPlanImagesLength} images uploaded",
+      "reorderSubtitle": "Drag and drop to reorder images",
+      "compressingButton": "Compressing...",
+      "uploadTitle": "Upload/drag photos of your floor plan",
+      "uploadSubtitle": "Photos must be in JPG or PNG format and at least 2048x768 (maximum 100 images)",
+      "browseFilesButton": "Browse Files"
+    },
     "propertyHighlights": {
     "title": "Property Highlights",
     "labelTitle": "Property Label",
@@ -510,12 +525,7 @@
     "noLabels": "No label options available."
   },
 
-  "floorPlan": {
-    "title": "Floor Plan",
-    "uploadTitle": "Upload/drag photos of your floor plan",
-    "uploadSubtitle": "Photos must be in JPG or PNG format and at least 2048x768 (maximum 100 images)",
-    "browseFilesButton": "Browse Files"
-  },
+
   "contact": {
     "title": "Contact Information",
     "alt": "Contact Icon",
@@ -683,6 +693,7 @@
     "propertyDetail": {
       "title": "Property Details",
       "alt": "Property Details Icon",
+      
       "labels": {
         "propertyId": "Property ID",
         "ownershipQuota": "Ownership Quota",

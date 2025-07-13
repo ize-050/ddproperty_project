@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useLocale } from 'next-intl'
+import createSlug from '@/utils/slugify'
 import './PropertyFiltering.css'
 import ContactModal from '../../../../common/ContactModal/ContactModal'
 import { convertAndFormatPrice, convertAndFormatPriceSync } from '@/utils/currencyUtils'
@@ -95,7 +96,22 @@ export default function PropertyFiltering({ property }) {
 
 
 
-  const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${property.id}`;
+  const getDisplayTitle = () => {
+    if (property.translatedTitles) {
+        try {
+            const titles = JSON.parse(property.translatedTitles);
+            return titles[locale] || titles['en'] || property.title;
+        } catch (e) {
+            // Fallback to default title if parsing fails
+            return property.title;
+        }
+    }
+    return property.title;
+  };
+
+  const displayTitle = getDisplayTitle();
+  const slug = createSlug(property.title); // Slug should be based on the default title for consistent URLs
+  const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${property.id}/${slug}`;
 
   return (
     <div>
@@ -108,7 +124,7 @@ export default function PropertyFiltering({ property }) {
             <div className="image-slider">
               <img
                 src={images[currentImageIndex]}
-                alt={property.projectName || 'Property'}
+                alt={displayTitle || 'Property'}
               />
 
               <button className="slider-nav prev" onClick={prevImage}>
@@ -177,7 +193,7 @@ export default function PropertyFiltering({ property }) {
               <Link href={propertyDetailUrl}></Link>
             </h5>
             <div className="property-name">
-              <h6 className="list-title">{property.projectName}</h6>
+              <h6 className="list-title">{displayTitle}</h6>
 
             </div>
             <div className="property-location">
@@ -192,8 +208,13 @@ export default function PropertyFiltering({ property }) {
                 <i className="fas fa-bath"></i> {property.bathrooms || 1} bath
               </div>
               <div className="feature">
-                <i className="fas fa-vector-square"></i> {property.area || 32} sq.m.
+                <i className="fas fa-ruler-combined"></i> {property.usableArea || 'N/A'} Sqm.
               </div>
+              {property.landArea && (
+                <div className="feature">
+                  <i className="fas fa-vector-square"></i> {property.landArea} Sqm.
+                </div>
+              )}
             </div>
 
             <hr />

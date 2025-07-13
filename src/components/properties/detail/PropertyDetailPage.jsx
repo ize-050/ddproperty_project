@@ -20,6 +20,7 @@ import '@/styles/property-detail.scss';
 import '@/styles/property-detail-sections.scss';
 
 const PropertyDetailPage = ({ property }) => {
+  console.log('--- DEBUG: Property object in PropertyDetailPage ---', JSON.stringify(property, null, 2));
   const t = useTranslations('PropertyDetail');
   const router = useRouter();
   const locale = useLocale();

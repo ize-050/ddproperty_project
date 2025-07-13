@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useTranslations, useLocale } from 'next-intl';
+import createSlug from '@/utils/slugify';
 import { convertAndFormatPrice, convertAndFormatPriceSync, localeToCurrencySymbol } from '@/utils/currencyUtils';
 
 
@@ -156,7 +157,7 @@ const RandomProperties = ({ randomProperties }) => {
                           ) :
                           "/images/listings/default-property.jpg"
                         }
-                        alt={property.projectName}
+                        alt={property.title || 'Property'}
 
                       />
                       <div className="sale-sticker-wrap">
@@ -218,7 +219,7 @@ const RandomProperties = ({ randomProperties }) => {
 
 
                       <div className="list-meta">
-                        <Link href={`/property_detail/${property.id}`} className="list-meta-link">
+                        <Link href={`/${locale !== 'th' ? locale + '/' : ''}property_detail/${property.id}/${createSlug(property.title)}`} className="list-meta-link">
                           <span className="flaticon-fullscreen" />
                         </Link>
                       </div>
@@ -231,7 +232,19 @@ const RandomProperties = ({ randomProperties }) => {
                           : 'Contact for price'}
                       </div>
                       <h6 className="list-title my-1">
-                        <Link href={`/property_detail/${property.id}`}>{property.projectName}</Link>
+                        <Link href={`/${locale !== 'th' ? locale + '/' : ''}property_detail/${property.id}/${createSlug(property.title)}`}>
+                          {(() => {
+                            if (property.translatedTitles) {
+                              try {
+                                const titles = JSON.parse(property.translatedTitles);
+                                return titles[locale] || titles['en'] || property.title;
+                              } catch (e) {
+                                return property.title;
+                              }
+                            }
+                            return property.title;
+                          })()}
+                        </Link>
                       </h6>
                       <p className="list-text"
                         style={{ fontSize: '14px', color: '#fff' }}
@@ -244,7 +257,7 @@ const RandomProperties = ({ randomProperties }) => {
                           <span className="flaticon-shower" /> {property.bathrooms || 0} {t('randomProperties.bath')}
                         </a>
                         <a href="#">
-                          <span className="flaticon-expand" /> {property.area || 0} {t('randomProperties.sqm')}
+                          <span className="flaticon-expand" /> {property.usableArea || 0} {t('randomProperties.sqm')}
                         </a>
                       </div>
                     </div>

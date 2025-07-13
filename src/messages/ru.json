@@ -54,6 +54,11 @@
     "subscribe": "Подписаться",
     "sitemap": "Карта сайта"
   },
+  "alerts": {
+    "fillSourceLanguageFields": "Пожалуйста, заполните поля для {languageName} перед переводом.",
+    "translationFailed": "Перевод не удался. Пожалуйста, попробуйте еще раз.",
+    "translationSuccess": "Перевод выполнен успешно!"
+  },
   "language": {
     "en": "Английский",
     "th": "Тайский",
@@ -326,7 +331,7 @@
     },
     "socialMediaTiktokPlaceholder": "https://www.tiktok.com/@username/video/...",
     "coAgentTitle": "Co Agent",
-    "propertyDetail": {
+    "PropertyDetail": {
       "title": "Детали объекта",
       "alt": "Иконка деталей объекта",
       "labels": {

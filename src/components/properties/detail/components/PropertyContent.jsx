@@ -8,10 +8,21 @@ import ShortTermRental from './ShortTermRental';
 const PropertyContent = ({ property, description, getPropertyTypeText, getFurnishingText }) => {
   const t = useTranslations('PropertyDetail');
 
+  const formatLandSize = () => {
+    const { landSizeRai, landSizeNgan, landSizeSqWah, landSizeSqm } = property;
+    const parts = [];
+    if (landSizeRai > 0) parts.push(`${landSizeRai} Rai`);
+    if (landSizeNgan > 0) parts.push(`${landSizeNgan} Ngan`);
+    if (landSizeSqWah > 0) parts.push(`${landSizeSqWah} Sq.Wah`);
+    if (landSizeSqm > 0) parts.push(`${landSizeSqm} Sqm.`);
+
+    return parts.length > 0 ? parts.join(' ') : 'N/A';
+  };
+
+
   const getCommunityFeeUnit = (propertyTypeName) => {
     if (!propertyTypeName) return '';
     const type = propertyTypeName.trim().toLowerCase();
-
 
     const sqmTypes = ['condo', 'apartment', 'commercial', 'office', 'retail'];
     const sqwahTypes = ['house', 'villa', 'townhouse', 'land'];
@@ -86,32 +97,32 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
           }}>
             <tbody style={{ borderStyle: 'hidden !important' }}>
               <tr style={{ borderStyle: 'hidden !important' }}>
-                <th>Property ID</th>
-                <td>{property.id || 'DP000010'}</td>
+                <th>Property Code</th>
+                <td>{property.propertyCode || 'N/A'}</td>
                 <th>Ownership Quota</th>
-                <td>{property.ownershipQuota || 'Thai'}</td>
+                <td>{property.ownershipQuota || 'N/A'}</td>
               </tr>
               <tr style={{ borderStyle: 'hidden !important' }}>
                 <th>Land Size</th>
-                <td>{property.landSize || '117.8 sq.wah'}</td>
+                <td>{formatLandSize()}</td>
                 <th></th>
                 <td></td>
               </tr>
               <tr>
                 <th>Useable Area</th>
-                <td>{property.area || '400'} sq.m.</td>
+                <td>{property.usableArea ? `${property.usableArea} sq.m.` : 'N/A'}</td>
                 <th>Floor</th>
-                <td>{property.floors || '2'} Floors</td>
+                <td>{property.floors ? `${property.floors} Floors` : 'N/A'}</td>
               </tr>
               <tr>
                 <th>Furnishing</th>
-                <td>{getFurnishingText(property.furnishing) || 'Fully Fitted'}</td>
+                <td>{getFurnishingText(property.furnishing) || 'N/A'}</td>
                 <th>Bedrooms</th>
-                <td>{property.bedrooms || '4'}</td>
+                <td>{property.bedrooms || 'N/A'}</td>
               </tr>
               <tr>
                 <th>Bathrooms</th>
-                <td>{property.bathrooms || '4'}</td>
+                <td>{property.bathrooms || 'N/A'}</td>
                 <th>Construction Year</th>
                 <td>{property.constructionYear || 'N/A'}</td>
               </tr>
@@ -127,13 +138,13 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               )}
               <tr>
                 <th>Area</th>
-                <td>{property.district || 'Banglamung'}</td>
+                <td>{property.district || 'N/A'}</td>
                 <th></th>
                 <td></td>
               </tr>
               <tr>
                 <th>Address</th>
-                <td colSpan="3">{property.address || 'Sukhumvit rd. Banglamung, Thailand'}</td>
+                <td colSpan="3">{property.address || 'N/A'}</td>
               </tr>
             </tbody>
           </table>

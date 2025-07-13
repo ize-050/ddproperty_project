@@ -15,35 +15,36 @@ const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation
 
 // สร้าง metadata แบบ dynamic ตามภาษาและข้อมูล property
 export async function generateMetadata({ params }) {
-  const { id, locale } = params;
-  
+  const { slug, locale } = params;
+  const id = slug[0]; // The ID is the first part of the slug array
+
   try {
     // ดึงข้อมูล property จาก API
     const property = await getPropertyById(id);
 
-    
+
     // ดึงข้อความจาก description ตามภาษา
     let description = '';
-      const descriptionObj = JSON.parse(property.translatedDescriptions || '{}');
-      description = descriptionObj[locale];
+    const descriptionObj = JSON.parse(property.translatedDescriptions || '{}');
+    description = descriptionObj[locale];
 
     const baseUrl = 'https://ddproperty.com';
     const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
-    const propertyUrl = `${localizedUrl}/property_detail/${id}`;
-    
+    const propertyUrl = `${localizedUrl}/property_detail/${slug.join('/')}`;
+
     // สร้าง title ตามภาษาที่เลือก
     const translatedTitles = JSON.parse(property.translatedTitles || '{}');
-    const title = translatedTitles[locale] || translatedTitles['en'] || property.title || property.projectName;
-    
+    const title = translatedTitles[locale] || translatedTitles['en'] || property.title;
+
     return {
       title,
       alternates: {
         canonical: propertyUrl,
         languages: {
-          'th': `${baseUrl}/property_detail/${id}`,
-          'en': `${baseUrl}/en/property_detail/${id}`,
-          'zh': `${baseUrl}/zh/property_detail/${id}`,
-          'ru': `${baseUrl}/ru/property_detail/${id}`,
+          'th': `${baseUrl}/property_detail/${slug.join('/')}`,
+          'en': `${baseUrl}/en/property_detail/${slug.join('/')}`,
+          'zh': `${baseUrl}/zh/property_detail/${slug.join('/')}`,
+          'ru': `${baseUrl}/ru/property_detail/${slug.join('/')}`,
         },
       },
       openGraph: {
@@ -64,7 +65,7 @@ export async function generateMetadata({ params }) {
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
-    
+
     // Default metadata if property not found
     return {
       title: 'Property Detail | DDProperty',
@@ -77,7 +78,6 @@ export async function generateMetadata({ params }) {
 async function getPropertyById(id) {
   try {
     const property = await serverApi.get(`/properties/${id}`);
-
     return property;
   } catch (error) {
     console.error('Error fetching property details:', error);
@@ -87,21 +87,21 @@ async function getPropertyById(id) {
 
 // Component สำหรับดึงข้อมูลและแสดงผล
 async function PropertyDetailContent({ params }) {
-  const { id } = params;
+  const { slug, locale } = params; // ดึง locale มาจาก params
+  const id = slug[0];
   const t = await getTranslations('PropertyDetail');
-  
+
   try {
     const property = await getPropertyById(id);
-    const propertyDataWithTitle = {
-      ...property.data, 
-    };
 
-    console.log("propertyDataWithTitle", propertyDataWithTitle);
+    const propertyData = property.data;
+
+    const translatedTitles = propertyData.translatedTitles || {};
+    propertyData.displayTitle = translatedTitles[locale] || translatedTitles['en'] || propertyData.title;
 
     // ส่งข้อมูลไปให้ component
-    return (
-      <PropertyDetailPage property={propertyDataWithTitle} />
-    );
+    return <PropertyDetailPage property={propertyData} locale={locale} />;
+
   } catch (error) {
     // แสดงข้อความ error ถ้าดึงข้อมูลไม่สำเร็จ
     return (

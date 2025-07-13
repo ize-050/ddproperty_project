@@ -146,6 +146,9 @@ const PricingSection = () => {
                   <div className="invalid-feedback">{errors.price.message}</div>
                 )}
               </div>
+
+              {/* Promotional Price Input - Conditionally Rendered */}
+ 
             </div>
           )}
 

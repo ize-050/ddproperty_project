@@ -43,6 +43,11 @@
     "zh": "中文",
     "ru": "俄语"
   },
+  "alerts": {
+    "fillSourceLanguageFields": "请在翻译前填写 {languageName} 的字段。",
+    "translationFailed": "翻译失败，请重试。",
+    "translationSuccess": "翻译成功！"
+  },
   "home": {
     "welcome": "欢迎来到",
     "d_luck": "D-LUCK PROPERTY",
@@ -397,6 +402,21 @@
       "inquiries": "查询",
       "viewMore": "查看更多"
     },
+    "floorPlan": {
+      "title": "户型图",
+      "alt": "户型图",
+      "maxImagesError": "最多允许 100 张户型图图片。您有 {count} 张。",
+      "compressing": "正在压缩 {count} 张户型图...",
+      "invalidFile": "{fileName} 不是有效的图片文件。",
+      "processError": "处理户型图失败：{error}",
+      "imagesTitle": "户型图图片 ({count}/100)",
+      "reorderSubtitle": "拖放以重新排序 - 第一张图片将是主户型图",
+      "addMore": "添加更多户型图",
+      "compressingButton": "正在压缩...",
+      "uploadTitle": "上传户型图图片",
+      "uploadSubtitle": "照片必须是 JPG 或 PNG 格式",
+      "browseFiles": "浏览文件"
+    },
     "manageYourProfile": "管理您的个人资料",
     "welcomeMessage": "很高兴再次见到您！",
     "other": "其他",
@@ -510,7 +530,7 @@
         "ru": "俄语"
       },
       "alerts": {
-        "enterEnglishFirst": "请先用英语输入内容",
+        "fillSourceLanguageFields": "请先用 {languageName} 输入标题和描述以启用自动翻译。",
         "translationFailed": "翻译失败。请稍后再试。",
         "serviceUnavailable": "翻译服务当前不可用。请稍后再试。",
         "enterContentFirst": "请先用{languageName}输入内容"
@@ -565,12 +585,6 @@
       "loading": "正在加载附近数据...",
       "error": "加载附近数据时出错",
       "iconAlt": "{name} 图标"
-    },
-    "floorPlan": {
-      "title": "楼层平面图",
-      "uploadTitle": "上传/拖放您的楼层平面图照片",
-      "uploadSubtitle": "照片必须是 JPG 或 PNG 格式，尺寸至少为 2048x768（最多100张）",
-      "browseFilesButton": "浏览文件"
     },
     "contact": {
       "title": "联系信息",

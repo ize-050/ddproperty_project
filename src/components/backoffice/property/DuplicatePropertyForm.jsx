@@ -54,7 +54,8 @@ const DuplicatePropertyForm = ({ propertyId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  const { handleSubmit, formState: { errors }, trigger, reset } = useFormContext();
+  const { handleSubmit, formState: { errors }, trigger, reset, watch, register } = useFormContext();
+  const watchedStatus = watch('status');
 
   console.log("DuplicatePropertyForm propertyId:", propertyId);
 
@@ -389,18 +390,24 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             land_size_rai: property.landSizeRai || '',
             land_size_ngan: property.landSizeNgan || '',
             land_size_sq_wah: property.landSizeSqWah || '',
+            landSizeSqm: property.landSizeSqm || ''
           };
 
-          if (property.status === 'RENT' || property.status === 'SALE_RENT') {
-            propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
-            propertyData.rentalPrice = property.listings.find(l => l.listingType === 'RENT')?.price || 0;
-            propertyData.shortTerm3Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm3Months || 0;
-            propertyData.shortTerm6Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm6Months || 0;
-            propertyData.shortTerm1Year = property.listings.find(l => l.listingType === 'RENT')?.shortTerm1Year || 0;
+          const saleListing = property.listings.find(l => l.listingType === 'SALE');
+          const rentListing = property.listings.find(l => l.listingType === 'RENT');
+
+          if (saleListing) {
+            propertyData.price = saleListing.price || 0;
+            propertyData.promotionalPrice = saleListing.promotionalPrice || '';
           }
-          else {
-            propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
+
+          if (rentListing) {
+            propertyData.rentalPrice = rentListing.price || 0;
+            propertyData.shortTerm3Months = rentListing.shortTerm3Months || 0;
+            propertyData.shortTerm6Months = rentListing.shortTerm6Months || 0;
+            propertyData.shortTerm1Year = rentListing.shortTerm1Year || 0;
           }
+          
           // เซ็ตค่า form data ใน store
           setFormData({ ...propertyData });
           reset(propertyData);
@@ -656,9 +663,12 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       formDataObj.append('zipCode', data.postalCode);
       
       // เพิ่ม land size fields
-      if (data.land_size_rai) formDataObj.append('land_size_rai', data.land_size_rai);
-      if (data.land_size_ngan) formDataObj.append('land_size_ngan', data.land_size_ngan);
-      if (data.land_size_sq_wah) formDataObj.append('land_size_sq_wah', data.land_size_sq_wah);
+      const landSizeFields = ['land_size_rai', 'land_size_ngan', 'land_size_sq_wah', 'landSizeSqm'];
+      landSizeFields.forEach((field) => {
+        if (data[field]) {
+          formDataObj.append(field, data[field]);
+        }
+      });
       
       // เพิ่ม co-agent fields
       formDataObj.append('coAgentAccept', data.coAgentAccept || false);
@@ -882,9 +892,11 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">
-          <PropertyDetailSection />
+          <PropertyDetailSection watchedStatus={watchedStatus} />
         </div>
       </div>
+
+
 
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">

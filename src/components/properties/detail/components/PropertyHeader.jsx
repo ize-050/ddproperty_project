@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { localeToCurrencySymbol } from '@/utils/currencyUtils';
@@ -16,6 +16,11 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
     'zh': '¥',
     'ru': '₽'
   };
+
+  useEffect(() => {
+    console.log("propertyHeader", property);
+  }, [property]);
+  
   const currencySymbol = localeToCurrencySymbol(locale) || currencySymbols[locale] || '฿';
 
   return (
@@ -24,7 +29,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
         <div className="row">
           <div className="col-lg-8">
             <div className="single-property-content mb30-md">
-              <h2 className="sp-lg-title text-white">{property.displayTitle || property.title || property.projectName || 'Unnamed Property'}</h2>
+              <h2 className="sp-lg-title text-white">{property.displayTitle || property.title}</h2>
               <div className="pd-meta mb15 d-md-flex align-items-center">
                 <p className="text text-white fz15 mb-0 pr10 bdrrn-sm">
                   <i className="fas fa-map-marker-alt me-2"></i>
@@ -54,18 +59,29 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
             <div className="single-property-content">
               <div className="property-action dark-version text-lg-end">
                 {primaryListing && primaryListing.map((listing) => {
+                  const hasDiscount = listing.promotionalPrice && parseFloat(listing.promotionalPrice) < parseFloat(listing.price);
+                  const displayPrice = hasDiscount ? listing.promotionalPrice : listing.price;
+
                   return (
-                    <>
-                      <h3 className="price mb-0"
-                      style={{
-                        color: listing.listingType === 'RENT' ? 'orange' : '#fff'
-                      }}
-                      >{currencySymbol}{formatPrice(listing.price)}</h3>
-                      {listing.listingType === 'RENT' && (  
-                       <p className="text space fz15 text-white">{t('perMonth')}</p>
+                    <React.Fragment key={listing.id}>
+                      {hasDiscount && (
+                        <h4 className="original-price text-white mb-0" style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '0.7em', lineHeight: '1' }}>
+                          {currencySymbol}{formatPrice(listing.price)}
+                        </h4>
                       )}
-                    </>
-                  )
+                      <h3 className="price mb-0"
+                        style={{
+                          color: listing.listingType === 'RENT' ? 'orange' : '#fff',
+                          lineHeight: '1.2'
+                        }}
+                      >
+                        {currencySymbol}{formatPrice(displayPrice)}
+                      </h3>
+                      {listing.listingType === 'RENT' && (
+                        <p className="text space fz15 text-white">{t('perMonth')}</p>
+                      )}
+                    </React.Fragment>
+                  );
                 })}
               </div>
             </div>

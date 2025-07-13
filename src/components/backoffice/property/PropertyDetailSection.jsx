@@ -6,15 +6,15 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-const PropertyDetailSection = () => {
+const PropertyDetailSection = ({ watchedStatus }) => {
   const t = useTranslations('backoffice.propertyDetail');
   const { formData, setFormData } = usePropertyFormStore();
   const { register, formState: { errors }, setValue, watch } = useFormContext();
-  
+
   const watchedFields = watch();
   const propertyTypeId = watch('propertyTypeId');
   const propertyTypes = watch('propertyTypes');
-  
+
   useEffect(() => {
     const updateStore = () => {
       const fieldsToUpdate = [
@@ -22,22 +22,22 @@ const PropertyDetailSection = () => {
         'usableArea', 'floors', 'furnishing', 'bedrooms', 'bathrooms',
         'constructionYear', 'communityFees'
       ];
-      
+
       const updates = {};
       fieldsToUpdate.forEach(field => {
         if (watchedFields[field] !== undefined && watchedFields[field] !== formData[field]) {
           updates[field] = watchedFields[field];
         }
       });
-      
+
       if (Object.keys(updates).length > 0) {
         setFormData(updates);
       }
     };
-    
+
     updateStore();
   }, [watchedFields, setFormData, formData]);
-  
+
   useEffect(() => {
     Object.entries(formData).forEach(([key, value]) => {
       if (value !== undefined) {
@@ -69,22 +69,23 @@ const PropertyDetailSection = () => {
   return (
     <section className="form-section">
       <div className="section-header">
-        <Image 
-          src="/images/icons/iconproperty/property_information.svg" 
+        <Image
+          src="/images/icons/iconproperty/property_information.svg"
           alt={t('alt')}
-          width={24} 
-          height={24} 
+          width={24}
+          height={24}
           className="section-icon"
         />
         <h2 className="section-title">{t('title')}</h2>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="propertyId">{t('labels.propertyId')}</label>
           <input
             type="text"
             id="propertyId"
+            className="form-control"
             disabled
             {...register('propertyId')}
           />
@@ -135,10 +136,23 @@ const PropertyDetailSection = () => {
               />
               <span className="unit-label">{t('units.sqwah')}</span>
             </div>
+
+            {(watchedStatus === 'RENT' || watchedStatus === 'SALE_RENT') && (
+              <div className="land-size-item">
+                <input
+                  type="number"
+                  id="landSizeSqm"
+                  className="form-control"
+                  placeholder="0"
+                  {...register('landSizeSqm')}
+                />
+                <span className="unit-label">Sqm.</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="usableArea">{t('labels.usableArea')}</label>
@@ -146,6 +160,7 @@ const PropertyDetailSection = () => {
             <input
               type="number"
               id="usableArea"
+              className="form-control"
               {...register('usableArea', { required: t('validation.usableAreaRequired') })}
             />
             <span className="unit">{t('units.sqm')}</span>
@@ -161,7 +176,7 @@ const PropertyDetailSection = () => {
           >
             <option value="">-</option>
             {[...Array(50)].map((_, i) => (
-              <option key={i+1} value={i+1}>{i+1}</option>
+              <option key={i + 1} value={i + 1}>{i + 1}</option>
             ))}
           </select>
           {errors.floors && <p className="error-message">{errors.floors.message}</p>}
@@ -172,7 +187,7 @@ const PropertyDetailSection = () => {
             id="furnishing"
             defaultValue="FULLY_FURNISHED"
             className={`form-control custom-select ${errors.furnishing ? 'is-invalid' : ''}`}
-            {...register('furnishing' , {required: t('validation.required')})}
+            {...register('furnishing', { required: t('validation.required') })}
           >
             <option value="FULLY_FURNISHED">{t('options.furnishing.fully')}</option>
             <option value="PARTIALLY_FURNISHED">{t('options.furnishing.partially')}</option>
@@ -181,7 +196,7 @@ const PropertyDetailSection = () => {
           {errors.furnishing && <p className="error-message">{errors.furnishing.message}</p>}
         </div>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="bedrooms">{t('labels.bedrooms')}</label>
@@ -191,7 +206,7 @@ const PropertyDetailSection = () => {
             className={`form-control custom-select ${errors.bedrooms ? 'is-invalid' : ''}`}
             {...register('bedrooms', { required: t('validation.required') })}
           >
-            
+
             {[...Array(10)].map((_, i) => (
               <option key={i} value={i}>{i}</option>
             ))}
@@ -233,7 +248,7 @@ const PropertyDetailSection = () => {
           {errors.constructionYear && <p className="error-message">{errors.constructionYear.message}</p>}
         </div>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="communityFees">{t('labels.communityFees')}</label>
@@ -241,6 +256,7 @@ const PropertyDetailSection = () => {
             <input
               type="text"
               id="communityFees"
+              className="form-control"
               {...register('communityFees')}
             />
             <span className="unit">{t(getCommunityFeeUnitKey())}</span>

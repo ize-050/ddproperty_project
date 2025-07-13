@@ -55,6 +55,11 @@
     "zh": "จีน",
     "ru": "รัสเซีย"
   },
+  "alerts": {
+    "fillSourceLanguageFields": "กรุณากรอกข้อมูลในช่องสำหรับภาษา {languageName} ก่อนทำการแปล",
+    "translationFailed": "การแปลล้มเหลว กรุณาลองใหม่อีกครั้ง",
+    "translationSuccess": "แปลภาษาสำเร็จ!"
+  },
   "home": {
     "title": "ยินดีต้อนรับสู่",
     "d_luck": "D-LUCK PROPERTY",
@@ -410,7 +415,7 @@
         "ru": "รัสเซีย"
       },
       "alerts": {
-        "enterEnglishFirst": "กรุณาป้อนเนื้อหาเป็นภาษาอังกฤษก่อน",
+        "fillSourceLanguageFields": "กรุณากรอกชื่อและรายละเอียดในภาษา {languageName} ก่อนเพื่อเปิดใช้งานการแปลอัตโนมัติ",
         "translationFailed": "การแปลล้มเหลว กรุณาลองอีกครั้งในภายหลัง",
         "serviceUnavailable": "บริการแปลภาษาไม่พร้อมใช้งานในขณะนี้ กรุณาลองอีกครั้งในภายหลัง",
         "enterContentFirst": "กรุณาป้อนเนื้อหาในภาษา {languageName} ก่อน"

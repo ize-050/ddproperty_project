@@ -59,7 +59,8 @@ const EditPropertyForm = ({ propertyId }) => {
   const [originalFloorPlanCount, setOriginalFloorPlanCount] = useState(0);
   const [originalUnitPlanCount, setOriginalUnitPlanCount] = useState(0);
 
-  const { handleSubmit, formState: { errors }, trigger, reset } = useFormContext();
+  const { handleSubmit, formState: { errors }, trigger, reset, watch, register } = useFormContext();
+  const watchedStatus = watch('status');
 
   // ดึงข้อมูล Property เดิมเมื่อโหลด component
   useEffect(() => {
@@ -382,19 +383,22 @@ const EditPropertyForm = ({ propertyId }) => {
             land_size_rai: property.landSizeRai || '',
             land_size_ngan: property.landSizeNgan || '',
             land_size_sq_wah: property.landSizeSqWah || '',
+            landSizeSqm: property.landSizeSqm || '',
           };
 
-          if (property.status === 'SALE' || property.status === 'SALE_RENT') {
-            propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
-            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || '';
-            propertyData.rentalPrice = property.listings.find(l => l.listingType === 'RENT')?.price || 0;
-            propertyData.shortTerm3Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm3Months || 0;
-            propertyData.shortTerm6Months = property.listings.find(l => l.listingType === 'RENT')?.shortTerm6Months || 0;
-            propertyData.shortTerm1Year = property.listings.find(l => l.listingType === 'RENT')?.shortTerm1Year || 0;
+          const saleListing = property.listings.find(l => l.listingType === 'SALE');
+          const rentListing = property.listings.find(l => l.listingType === 'RENT');
+
+          if (saleListing) {
+            propertyData.price = saleListing.price || 0;
+            propertyData.promotionalPrice = saleListing.promotionalPrice || '';
           }
-          else {
-            propertyData.price = property.listings.find(l => l.listingType === 'SALE')?.price || 0;
-            propertyData.promotionalPrice = property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || '';
+
+          if (rentListing) {
+            propertyData.rentalPrice = rentListing.price || 0;
+            propertyData.shortTerm3Months = rentListing.shortTerm3Months || 0;
+            propertyData.shortTerm6Months = rentListing.shortTerm6Months || 0;
+            propertyData.shortTerm1Year = rentListing.shortTerm1Year || 0;
           }
           console.log("propertyData for form:", propertyData);
           setFormData(propertyData);
@@ -542,9 +546,12 @@ const EditPropertyForm = ({ propertyId }) => {
       formDataObj.append('zipCode', data.postalCode);
       
       // เพิ่ม land size fields
-      if (data.land_size_rai) formDataObj.append('land_size_rai', data.land_size_rai);
-      if (data.land_size_ngan) formDataObj.append('land_size_ngan', data.land_size_ngan);
-      if (data.land_size_sq_wah) formDataObj.append('land_size_sq_wah', data.land_size_sq_wah);
+      const landSizeFields = ['land_size_rai', 'land_size_ngan', 'land_size_sq_wah', 'landSizeSqm'];
+      landSizeFields.forEach((field) => {
+        if (data[field]) {
+          formDataObj.append(field, data[field]);
+        }
+      });
       
       // เพิ่ม co-agent fields
       formDataObj.append('coAgentAccept', data.coAgentAccept || false);
@@ -818,7 +825,7 @@ const EditPropertyForm = ({ propertyId }) => {
 
         <div className="card mb-4">
           <div className="card-body">
-            <PropertyDetailSection />
+            <PropertyDetailSection watchedStatus={watchedStatus} />
           </div>
         </div>
 
