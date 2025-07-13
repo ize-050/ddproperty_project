@@ -708,8 +708,9 @@
       },
       "options": {
         "ownership": {
-          "freehold": "Freehold",
-          "leasehold": "Leasehold"
+          "thaiquota": "Thai Quota",
+          "foreignquota": "Foreigner Quota",
+          "companyname": "Company Name"
         },
         "furnishing": {
           "fully": "Fully Furnished",

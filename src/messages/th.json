@@ -625,8 +625,9 @@
       },
       "options": {
         "ownership": {
-          "freehold": "ถือครองกรรมสิทธิ์ (Freehold)",
-          "leasehold": "สิทธิการเช่า (Leasehold)"
+          "thaiquota": "โคต้าคนไทย",
+          "foreignquota": "โคต้าชาวต่างชาติ",
+          "companyname": "นิติบุคคล"
         },
         "furnishing": {
           "fully": "ตกแต่งครบ",

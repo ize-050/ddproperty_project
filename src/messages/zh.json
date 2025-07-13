@@ -773,8 +773,9 @@
       },
       "options": {
         "ownership": {
-          "freehold": "永久产权",
-          "leasehold": "租赁产权"
+          "thaiquota": "泰国人配额",
+          "foreignquota": "外国人配额",
+          "companyname": "公司名称"
         },
         "furnishing": {
           "fully": "家具齐全",

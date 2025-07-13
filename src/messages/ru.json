@@ -621,8 +621,9 @@
       },
       "options": {
         "ownership": {
-          "freehold": "Свободная собственность",
-          "leasehold": "Собственность на праве аренды"
+          "thaiquota": "Тайская квота",
+          "foreignquota": "Иностранная квота",
+          "companyname": "Название компании"
         },
         "furnishing": {
           "fully": "Полностью меблировано",

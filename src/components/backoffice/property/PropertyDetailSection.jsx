@@ -98,8 +98,9 @@ const PropertyDetailSection = ({ watchedStatus }) => {
             className={`form-control custom-select ${errors.ownershipQuota ? 'is-invalid' : ''}`}
             {...register('ownershipQuota', { required: t('validation.ownershipRequired') })}
           >
-            <option value="freehold">{t('options.ownership.freehold')}</option>
-            <option value="leasehold">{t('options.ownership.leasehold')}</option>
+            <option value="Thai Quota">Thai Quota</option>
+            <option value="Foreign Quota">Foreign Quota</option>
+            <option value="Company Name">Company Name</option>
           </select>
           {errors.ownershipQuota && <p className="error-message">{errors.ownershipQuota.message}</p>}
         </div>
@@ -114,7 +115,7 @@ const PropertyDetailSection = ({ watchedStatus }) => {
                 placeholder="0"
                 {...register('land_size_rai')}
               />
-              <span className="unit-label">{t('units.rai')}</span>
+              <span className="unit-label"> Rai</span>
             </div>
             <div className="land-size-item">
               <input
@@ -124,7 +125,7 @@ const PropertyDetailSection = ({ watchedStatus }) => {
                 placeholder="0"
                 {...register('land_size_ngan')}
               />
-              <span className="unit-label">{t('units.ngan')}</span>
+              <span className="unit-label">Ngan</span>
             </div>
             <div className="land-size-item">
               <input
@@ -134,7 +135,7 @@ const PropertyDetailSection = ({ watchedStatus }) => {
                 placeholder="0"
                 {...register('land_size_sq_wah')}
               />
-              <span className="unit-label">{t('units.sqwah')}</span>
+              <span className="unit-label">Sq.wah</span>
             </div>
 
             {(watchedStatus === 'RENT' || watchedStatus === 'SALE_RENT') && (
@@ -163,7 +164,7 @@ const PropertyDetailSection = ({ watchedStatus }) => {
               className="form-control"
               {...register('usableArea', { required: t('validation.usableAreaRequired') })}
             />
-            <span className="unit">{t('units.sqm')}</span>
+            <span className="unit">Sqm.</span>
           </div>
           {errors.usableArea && <p className="error-message">{errors.usableArea.message}</p>}
         </div>
@@ -189,9 +190,9 @@ const PropertyDetailSection = ({ watchedStatus }) => {
             className={`form-control custom-select ${errors.furnishing ? 'is-invalid' : ''}`}
             {...register('furnishing', { required: t('validation.required') })}
           >
-            <option value="FULLY_FURNISHED">{t('options.furnishing.fully')}</option>
-            <option value="PARTIALLY_FURNISHED">{t('options.furnishing.partially')}</option>
-            <option value="UNFURNISHED">{t('options.furnishing.unfurnished')}</option>
+            <option value="FULLY_FURNISHED">Fully Furnished</option>
+            <option value="PARTIALLY_FURNISHED">Partially Furnished</option>
+            <option value="UNFURNISHED">Unfurnished</option>
           </select>
           {errors.furnishing && <p className="error-message">{errors.furnishing.message}</p>}
         </div>
