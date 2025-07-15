@@ -4,19 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import BackofficeSidebar from '@/components/backoffice/sidebar/BackofficeSidebar';
 import AuthGuard from '@/components/backoffice/auth/AuthGuard';
-import { useAuth, AuthProvider } from '@/components/backoffice/auth/AuthContext';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaEnvelope, FaBell, FaChevronDown, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Import UserProfileMenu component
-import UserProfileMenu from './UserProfileMenu';
-
 const BackofficeLayoutContent = ({ children }) => {
   const t = useTranslations('Backoffice');
-  const { user } = useAuth();
 
   // Check if current path is login page
   const isLoginPage = typeof window !== 'undefined' && window.location.pathname.includes('/login');
@@ -52,15 +48,15 @@ const BackofficeLayoutContent = ({ children }) => {
   );
 };
 
-// Wrapper component that provides AuthContext
+// Main BackofficeLayout component (AuthProvider is handled by BackofficeWrapper)
 const BackofficeLayout = ({ children }) => {
   return (
-    <AuthProvider>
+    <>
       <BackofficeLayoutContent>
         {children}
       </BackofficeLayoutContent>
       <ToastContainer position="top-right" autoClose={3000} />
-    </AuthProvider>
+    </>
   );
 };
 

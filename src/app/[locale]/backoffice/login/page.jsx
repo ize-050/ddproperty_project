@@ -50,7 +50,7 @@ const LoginPage = () => {
 
     try {
       // Connect to the backend authentication API
-      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/auth/login', {
+      const response = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

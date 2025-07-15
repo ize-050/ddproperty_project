@@ -57,9 +57,11 @@ const PropertyDetailPage = ({ property }) => {
 
 
 
-      // รูปภาพทั้งหมดของ property
+      // รูปภาพทั้งหมดของ property (เรียงลำดับตาม sortOrder)
       const imgs = property.images && property.images.length > 0
-        ? property.images.map(img => `${process.env.NEXT_PUBLIC_IMAGE_URL}${img.url}`)
+        ? property.images
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+            .map(img => `${process.env.NEXT_PUBLIC_IMAGE_URL}${img.url}`)
         : ['/images/property/fp1.jpg'];
 
       console.log("images", imgs);

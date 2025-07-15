@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { FaHome, FaChartLine, FaEnvelope, FaSpinner } from 'react-icons/fa';
+import { useAuth } from '@/components/backoffice/auth/AuthContext';
 
 const DashboardStats = () => {
   const t = useTranslations('backoffice.dashboard');
+  const { user } = useAuth();
   const [stats, setStats] = useState({
     allProperties: 0,
     totalViews: 0,
@@ -22,8 +24,14 @@ const DashboardStats = () => {
         // Get token from localStorage or sessionStorage
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
         
+        // Determine API endpoint based on user role
+        const isAdmin = user?.role === 'ADMIN';
+        const apiEndpoint = isAdmin 
+          ? 'http://localhost:5001/api/dashboard/stats' // Admin sees all data
+          : `http://localhost:5001/api/dashboard/stats/user/${user?.id}`; // Non-admin sees only own data
+        
         // Make API request
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats`, {
+        const response = await fetch(apiEndpoint, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

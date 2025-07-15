@@ -9,10 +9,6 @@ import AOSInit from "@/components/Aos/AosComponent";
 // นำเข้า ErrorBoundary แบบ dynamic เพื่อให้ทำงานเฉพาะฝั่ง client
 
 
-const BackofficeLayout = dynamic(() => import('@/components/backoffice/layout/BackofficeLayout'), {
-  ssr: false
-});
-
 const HeaderBackoffice = dynamic(() => import('@/components/backoffice/layout/HeaderBackoffice'), {
   ssr: false
 });
@@ -45,7 +41,7 @@ const TopLoadingBar = dynamic(() => import("@/components/common/TopLoadingBar"),
 });
 
 //backoffice
-const BackofficeSidebar = lazy(() => import("@/components/backoffice/sidebar/BackofficeSidebar"));
+const BackofficeWrapper = lazy(() => import("@/components/backoffice/layout/BackofficeWrapper"));
 
 // import AOSInitializer from "@/components/common/AOSInitializer";
 
@@ -105,6 +101,8 @@ export default async function LocaleLayout({ children, params }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>D&#39;LuckProperty</title>
         <meta name="description" content="D&#39;LuckProperty - Thailand Real Estate Portal" />
+        <link rel="icon" type="image/x-icon" href="/images/dluckfav.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/images/dluckfav.ico" />
         <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
       </head>
       <body
@@ -123,12 +121,7 @@ export default async function LocaleLayout({ children, params }) {
                 <>
                   <HeaderBackoffice />
                   <MobileMenu />
-                  <div className="dashboard_content_wrapper">
-                    <div className="dashboard dashboard_wrapper pr30 pr0-md">
-                      <BackofficeSidebar />
-                      <BackofficeLayout>{children}</BackofficeLayout>
-                    </div>
-                  </div>
+                  <BackofficeWrapper>{children}</BackofficeWrapper>
                 </>
               ) :
                 isLoginPage ? (

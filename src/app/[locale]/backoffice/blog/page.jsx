@@ -255,9 +255,10 @@ const BlogPage = () => {
     router.push(`/backoffice/blog/edit?id=${id}`);
   };
 
-  // ฟังก์ชันสำหรับดูรายละเอียดบทความ
+  // ฟังก์ชันสำหรับดูรายละเอียดบทความ - เปิด tab ใหม่ไปยังหน้า frontend
   const handleView = (id) => {
-    router.push(`/backoffice/blog/view?id=${id}`);
+    // เปิด tab ใหม่ไปยังหน้า frontend blog detail
+    window.open(`/blog/${id}`, '_blank');
   };
 
   const handleDelete = async (id) => {

@@ -21,20 +21,46 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations('home');
-  const [price, setPrice] = useState([500000, 20000000]); // ปรับค่าเริ่มต้นเป็น 500,000 - 20,000,000 บาท
   const { zones } = useZoneStore();
-  // ดึง locale จาก URL path โดยตรง
-
-  // กำหนดช่วงราคาเริ่มต้น (500,000 - 20,000,000 บาท)
-  const [minPrice, setMinPrice] = useState(500000);
-  const [maxPrice, setMaxPrice] = useState(20000000);
+  
+  // กำหนดช่วงราคาแยกตาม listingType
+  const getPriceRangeByType = (type) => {
+    if (type === 'rent') {
+      return {
+        min: 5000,      // 5,000 บาท
+        max: 100000,    // 100,000 บาท
+        default: [10000, 30000]  // 10,000 - 30,000 บาท
+      };
+    } else {
+      // sale หรือ default
+      return {
+        min: 500000,    // 500,000 บาท
+        max: 20000000,  // 20,000,000 บาท
+        default: [1000000, 5000000]  // 1,000,000 - 5,000,000 บาท
+      };
+    }
+  };
+  
+  const currentPriceRange = getPriceRangeByType(listingType);
+  const [price, setPrice] = useState(currentPriceRange.default);
+  const [minPrice, setMinPrice] = useState(currentPriceRange.default[0]);
+  const [maxPrice, setMaxPrice] = useState(currentPriceRange.default[1]);
 
   // สร้าง state สำหรับควบคุมการแสดง/ซ่อน dropdown
   const [isPriceDropdownOpen, setIsPriceDropdownOpen] = useState(false);
+  const [isPropertyTypeDropdownOpen, setIsPropertyTypeDropdownOpen] = useState(false);
 
   // สร้าง state สำหรับเก็บค่าที่เลือก
   const [selectedPropertyType, setSelectedPropertyType] = useState(catOptions[0]);
   const [selectedZone, setSelectedZone] = useState(null);
+  
+  // useEffect เพื่อ reset ราคาเมื่อ listingType เปลี่ยน
+  useEffect(() => {
+    const newPriceRange = getPriceRangeByType(listingType);
+    setPrice(newPriceRange.default);
+    setMinPrice(newPriceRange.default[0]);
+    setMaxPrice(newPriceRange.default[1]);
+  }, [listingType]);
 
   // price range handler
   const handleOnChange = (value) => {
@@ -43,15 +69,18 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
     setMaxPrice(value[1]);
   };
 
-  // ฟังก์ชันสำหรับแปลงราคาให้อยู่ในรูปแบบที่อ่านง่าย
-  const formatPrice = (price) => {
-    if (price >= 1000000) {
-      return `${(price / 1000000).toFixed(1)}M ฿`;
-    } else if (price >= 1000) {
-      return `${(price / 1000).toFixed(0)}K ฿`;
-    }
-    return `${price} ฿`;
+  // ฟังก์ชันปิด dropdown อื่นๆ เมื่อเปิด dropdown ใหม่
+  const handlePriceDropdownToggle = () => {
+    setIsPriceDropdownOpen(!isPriceDropdownOpen);
+    setIsPropertyTypeDropdownOpen(false); // ปิด property type dropdown
   };
+
+  const handlePropertyTypeDropdownToggle = () => {
+    setIsPropertyTypeDropdownOpen(!isPropertyTypeDropdownOpen);
+    setIsPriceDropdownOpen(false); // ปิด price dropdown
+  };
+
+
 
 
   // property type options
@@ -67,18 +96,23 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
   }));
 
   const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#eb6753"
-          : isHovered
-            ? "#eb675312"
-            : isFocused
-              ? "#eb675312"
-              : undefined,
-      };
-    },
+    option: (provided, state) => ({
+      ...provided,
+      color: '#6b7280',
+      cursor: 'pointer',
+      backgroundColor: state.isSelected ? '#eb6753' : state.isFocused ? '#f3f4f6' : 'white',
+      ':hover': {
+        backgroundColor: '#f3f4f6',
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      zIndex: 99999,
+    }),
+    menuPortal: (provided) => ({
+      ...provided,
+      zIndex: 99999,
+    }),
   };
 
   // ฟังก์ชันสำหรับการค้นหา
@@ -114,7 +148,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
   return (
     <div className="filter-items-container">
       <div className="col-md-12">
-        <div className="bootselect-multiselect mb20">
+        <div className="bootselect-multiselect mb20" style={{ position: 'relative', zIndex: isPropertyTypeDropdownOpen ? 9998 : 1 }}>
           <SelectWithInstanceId
             defaultValue={propertyTypeOptions[0]}
             name="propertyType"
@@ -125,39 +159,48 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             instanceId="property-type-select"
             required
             isSearchable={false}
+            menuPortalTarget={document.body}
+            menuPosition="fixed"
             onChange={(option) => setSelectedPropertyType(option)}
+            onMenuOpen={() => {
+              setIsPropertyTypeDropdownOpen(true);
+              setIsPriceDropdownOpen(false); // ปิด price dropdown
+            }}
+            onMenuClose={() => {
+              setIsPropertyTypeDropdownOpen(false);
+            }}
           />
         </div>
       </div>
       {/* End .col-12 */}
       <div className="col-md-12">
-        <div className="dropdown-lists at-home8 mb20">
+        <div className="dropdown-lists at-home8 mb20" style={{ position: 'relative', zIndex: isPriceDropdownOpen ? 9999 : 1 }}>
           <div
             className="btn open-btn drop_btn3 text-start dropdown-toggle"
-            onClick={() => setIsPriceDropdownOpen(!isPriceDropdownOpen)}
+            onClick={handlePriceDropdownToggle}
             style={{ cursor: 'pointer' }}
           >
-            {t('price')}: {formatPrice(price[0])} - {formatPrice(price[1])} <i className="fas fa-caret-down float-end fz11" />
+            {t('price')}: {price[0]} ฿ - {price[1]} ฿ <i className="fas fa-caret-down float-end fz11" />
           </div>
           {isPriceDropdownOpen && (
-            <div className="dropdown-menu show" style={{ display: 'block', position: 'absolute', width: '100%', zIndex: 1000 }}>
+            <div className="dropdown-menu show" style={{ display: 'block', position: 'absolute', width: '100%', zIndex: 10000, backgroundColor: 'white', border: '1px solid #ddd', borderRadius: '4px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', top: '100%', left: 0 }}>
               <div className="widget-wrapper pb20 mb0 pl20 pr20">
                 {/* Range Slider Mobile Version */}
                 <div className="range-slider-style2">
                   <div className="range-wrapper at-home10">
                     <Slider
                       range
-                      max={50000000} // ปรับค่าสูงสุดเป็น 50 ล้านบาท
-                      min={0}
+                      max={currentPriceRange.max}
+                      min={currentPriceRange.min}
                       value={price}
                       onChange={(value) => handleOnChange(value)}
                       id="slider"
-                      step={100000} // ปรับขั้นการเลื่อนเป็น 100,000 บาท
+                      step={listingType === 'rent' ? 1000 : 100000} // ขั้นการเลื่อน: เช่า 1,000 บาท, ขาย 100,000 บาท
                     />
                     <div className="d-flex align-items-center mt-2">
-                      <span id="slider-range-value1">{formatPrice(price[0])}</span>
+                      <span id="slider-range-value1">{price[0]} ฿</span>
                       <span className="mx-0 mx-2">-</span>
-                      <span id="slider-range-value2">{formatPrice(price[1])}</span>
+                      <span id="slider-range-value2">{price[1]} ฿</span>
                     </div>
                   </div>
                 </div>
@@ -168,7 +211,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
       </div>
       {/* End .col-12 */}
       <div className="col-md-12">
-        <div className="bootselect-multiselect mb15 z-index-1">
+        <div className="bootselect-multiselect mb15" style={{ position: 'relative', zIndex: isPropertyTypeDropdownOpen ? 9998 : 1 }}>
           <SelectWithInstanceId
             defaultValue={locationOptions[0]}
             name="propertyType"
@@ -179,7 +222,16 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             instanceId="property-type-select"
             required
             isSearchable={false}
+            menuPortalTarget={document.body}
+            menuPosition="fixed"
             onChange={(option) => setSelectedZone(option)}
+            onMenuOpen={() => {
+              setIsPropertyTypeDropdownOpen(true);
+              setIsPriceDropdownOpen(false); // ปิด price dropdown
+            }}
+            onMenuClose={() => {
+              setIsPropertyTypeDropdownOpen(false);
+            }}
           />
         </div>
       </div>

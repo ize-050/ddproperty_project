@@ -4,10 +4,12 @@ import React from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/components/backoffice/auth/AuthContext";
 
 const SidebarDashboard = () => {
   const pathname = usePathname();
   const t = useTranslations('backoffice');
+  const { user } = useAuth();
 
   // Extract path without locale (e.g., /th/backoffice/dashboard -> /backoffice/dashboard)
   const getPathWithoutLocale = (path) => {
@@ -93,6 +95,12 @@ const SidebarDashboard = () => {
           icon: "currency",
           text: t("menu.currency"),
         },
+        // Company Settings - Only for Admin role
+        ...(user?.role === 'ADMIN' ? [{
+          href: "/backoffice/company-settings",
+          icon: "myprofile",
+          text: t("menu.companySettings"),
+        }] : []),
       ],
     },
     {
@@ -202,6 +210,11 @@ const SidebarDashboard = () => {
                       className={`items-center sidebar-menu-item ${
                         isItemActive ? "-is-active" : ""
                       } `}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // Navigate with full page refresh
+                        window.location.href = item.href;
+                      }}
                     >
                       <div className="sidebar-icon-container">
                         <Image

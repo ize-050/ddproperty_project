@@ -248,6 +248,7 @@
       "my_properties": "อสังหาริมทรัพย์ของฉัน",
       "allpost": "โพสต์ทั้งหมด",
       "addnewpost": "เพิ่มโพสต์ใหม่",
+      "companySettings": "ตั้งค่าบริษัท",
       "setting": "ตั้งค่า",
       "alluser": "ผู้ใช้ทั้งหมด",
       "language": "ภาษา",
@@ -780,6 +781,7 @@
       "allUser": "ผู้ใช้ทั้งหมด",
       "language": "ภาษา",
       "currency": "สกุลเงิน",
+      "companySettings": "ตั้งค่าบริษัท",
       "profile": "จัดการโปรไฟล",
       "myProfile": "โปรไฟล์ของฉัน",
       "logout": "ออกจากระบบ"

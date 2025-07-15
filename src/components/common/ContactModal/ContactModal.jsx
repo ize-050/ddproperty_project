@@ -1,12 +1,38 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { getMessagingSettings, transformSettingsToObject, generatePlatformLink, getDefaultSettings } from '@/services/messagingSettings';
 import './ContactModal.css';
 
 const ContactModal = ({ isOpen, onClose, property }) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [settings, setSettings] = useState(getDefaultSettings());
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Fetch messaging settings on component mount
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getMessagingSettings();
+        const settingsObj = transformSettingsToObject(response.data);
+        
+        // Merge with defaults to ensure all platforms have values
+        const mergedSettings = { ...getDefaultSettings(), ...settingsObj };
+        setSettings(mergedSettings);
+      } catch (error) {
+        console.error('Failed to fetch messaging settings:', error);
+        // Keep default settings on error
+        setSettings(getDefaultSettings());
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSettings();
+  }, []);
   
   if (!isOpen) return null;
 
@@ -132,7 +158,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
             }}
           >
             <div className="contact-option-wrapper">
-              <a href="tel:+66123456789" className="contact-option phone">
+              <a href={settings.whatsapp ? `tel:${settings.whatsapp.replace(/[^\d+]/g, '')}` : "tel:+66123456789"} className="contact-option phone">
                 <i className="fas fa-phone"></i>
               </a>
             </div>

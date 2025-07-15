@@ -36,7 +36,16 @@ const customStyles = {
 export default function AdvancedFilterContent({ onClose, onSearch, type }) {
     const zones = useZoneStore((s) => s.zones);
 
-    const [priceRange, setPriceRange] = useState([0, 15000000]);
+    // กำหนดช่วงราคาเริ่มต้นตาม type
+    const getInitialPriceRange = (listingType) => {
+        if (listingType === 'rent') {
+            return [10000, 30000]; // 10,000 - 30,000 บาท
+        } else {
+            return [1000000, 5000000]; // 1,000,000 - 5,000,000 บาท
+        }
+    };
+    
+    const [priceRange, setPriceRange] = useState(getInitialPriceRange(type));
     const [zone_id, zoneIdHandler] = useState(null);
     const [propertyTypesOptions, setPropertyTypesOptions] = useState([]);
     const locale = useLocale();
@@ -197,7 +206,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
                         <div className="widget-wrapper">
                             <h6 className="list-title mb20">Price Range</h6>
                             <div className="range-slider-style modal-version">
-                                <PriceRange filterFunctions={filterFunctions} />
+                                <PriceRange filterFunctions={filterFunctions} listingType={type} />
                             </div>
                         </div>
                     </div>

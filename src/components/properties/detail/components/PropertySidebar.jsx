@@ -50,7 +50,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
           {/* Phone */}
           <div className="contact-method">
             <div className="icon">
-              <i className="fas fa-phone-alt"></i>
+              <i className="fas fa-phone-alt" style={{ transform: 'scaleX(-1)' }}></i>
             </div>
             <div className="details">
               <h5>Call Us Now</h5>

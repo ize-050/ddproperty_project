@@ -151,11 +151,20 @@ const RandomProperties = ({ randomProperties }) => {
                         width={500}
                         height={465}
                         className="cover"
-                        src={property.images && property.images[0] && property.images[0].url ?
-                          (property.images[0].url.startsWith('http') ?
-                            property.images[0].url : property.images[0].url
-                          ) :
-                          "/images/listings/default-property.jpg"
+                        src={(() => {
+                          // เรียงลำดับรูปภาพตาม sortOrder ก่อนแล้วเอารูปแรก
+                          const sortedImages = property.images && property.images.length > 0 
+                            ? property.images.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+                            : [];
+                          
+                          const firstImage = sortedImages[0];
+                          
+                          return firstImage && firstImage.url ?
+                            (firstImage.url.startsWith('http') ?
+                              firstImage.url : firstImage.url
+                            ) :
+                            "/images/listings/default-property.jpg";
+                        })()
                         }
                         alt={property.title || 'Property'}
 

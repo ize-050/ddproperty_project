@@ -1,5 +1,23 @@
 {
   "manageYourProfile": "จัดการโปรไฟล์ของคุณ",
+  "welcomeMessage": "ยินดีต้อนรับสู่ระบบจัดการ",
+  "menu": {
+    "main": "หลัก",
+    "dashboard": "แดชบอร์ด",
+    "message": "ข้อความ",
+    "managelisting": "จัดการประกาศ",
+    "addproperty": "เพิ่มอสังหาริมทรัพย์",
+    "my_properties": "อสังหาริมทรัพย์ของฉัน",
+    "allpost": "บทความทั้งหมด",
+    "addnewpost": "เพิ่มบทความใหม่",
+    "setting": "การตั้งค่า",
+    "alluser": "ผู้ใช้ทั้งหมด",
+    "language": "ภาษา",
+    "currency": "สกุลเงิน",
+    "companySettings": "ตั้งค่าบริษัท",
+    "profile": "โปรไฟล์",
+    "myprofile": "โปรไฟล์ของฉัน"
+  },
   "dashboard": "แดชบอร์ด",
   "message": "ข้อความ",
   "addNewProperty": "เพิ่มอสังหาริมทรัพย์ใหม่",

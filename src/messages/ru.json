@@ -248,6 +248,7 @@
       "main": "Главное меню",
       "dashboard": "Панель управления",
       "message": "Сообщения",
+      "companySettings":"Компания",
       "managelisting": "Управление списками",
       "addproperty": "Добавить объект",
       "my_properties": "Мои объекты",

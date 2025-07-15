@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Bar } from 'react-chartjs-2';
 import { FaSpinner } from 'react-icons/fa';
+import { useAuth } from '@/components/backoffice/auth/AuthContext';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,6 +27,7 @@ ChartJS.register(
 
 const PropertyViews = () => {
   const t = useTranslations('backoffice.dashboard');
+  const { user } = useAuth();
   const [timeRange, setTimeRange] = useState('monthly');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,8 +57,14 @@ const PropertyViews = () => {
         // Get token from localStorage or sessionStorage
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
         
+        // Determine API endpoint based on user role
+        const isAdmin = user?.role === 'ADMIN';
+        const apiEndpoint = isAdmin 
+          ? 'http://localhost:5001/api/dashboard/stats' // Admin sees all data
+          : `http://localhost:5001/api/dashboard/stats/user/${user?.id}`; // Non-admin sees only own data
+        
         // Make API request
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats`, {
+        const response = await fetch(apiEndpoint, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -76,13 +84,15 @@ const PropertyViews = () => {
           const messagesByType = data.data.messagesByType || [];
           const messageStatus = data.data.messagesByStatus || [];
           
-          // Create labels and data for the chart
-          const labels = propertyTypes.map(item => item.propertyType || t('other'));
+          // Create labels and data for the chart using property type names
+          const labels = propertyTypes.map(item => item.propertyTypeName || item.propertyType || t('other'));
           const propertyData = propertyTypes.map(item => item.count);
           
           // Map message counts to property types
-          const messageData = labels.map(propertyType => {
-            const matchingType = messagesByType.find(item => item.propertyType === propertyType);
+          const messageData = labels.map(propertyTypeName => {
+            const matchingType = messagesByType.find(item => 
+              item.propertyTypeName === propertyTypeName || item.propertyType === propertyTypeName
+            );
             return matchingType ? matchingType.count : 0;
           });
           

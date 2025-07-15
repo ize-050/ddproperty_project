@@ -63,7 +63,9 @@ export default function PropertyFiltering({ property }) {
   // Robust fallback: if images is array and has at least 1 item with url, use them, otherwise use placeholder
   let images = [];
   if (Array.isArray(property.images) && property.images.length > 0 && property.images[0].url) {
-    images = property.images.map(img => img.url);
+    images = property.images
+      .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+      .map(img => img.url);
   }
   if (images.length === 0) {
     images = [
