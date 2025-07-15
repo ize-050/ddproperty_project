@@ -27,8 +27,8 @@ const DashboardStats = () => {
         // Determine API endpoint based on user role
         const isAdmin = user?.role === 'ADMIN';
         const apiEndpoint = isAdmin 
-          ? 'http://localhost:5001/api/dashboard/stats' // Admin sees all data
-          : `http://localhost:5001/api/dashboard/stats/user/${user?.id}`; // Non-admin sees only own data
+          ? `${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats` // Admin sees all data
+          : `${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats/user/${user?.id}`; // Non-admin sees only own data
         
         // Make API request
         const response = await fetch(apiEndpoint, {
