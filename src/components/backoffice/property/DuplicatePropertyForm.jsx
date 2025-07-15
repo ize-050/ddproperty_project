@@ -105,7 +105,7 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       try {
         setIsLoading(true);
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/backoffice/${propertyId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

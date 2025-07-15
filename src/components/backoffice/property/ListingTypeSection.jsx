@@ -102,7 +102,6 @@ const ListingTypeSection = ({type}) => {
         </div>
       </div>
       {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
-      <p className="text-gray-500 text-sm mt-1">{t('listingType.currentSelection', { status: watch('status') || t('listingType.noSelection') })}</p>
       {isDisabled && (
         <p className="text-amber-500 text-sm mt-1">{t('listingType.disabled')}</p>
       )}
