@@ -207,7 +207,7 @@ const CompanySettingsPage = () => {
     return (
       <div className="text-center py-5">
         <h3>Access Denied</h3>
-        <p>You don't have permission to access this page.</p>
+        <p>You don&apos;t have permission to access this page.</p>
       </div>
     );
   }
