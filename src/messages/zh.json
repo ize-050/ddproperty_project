@@ -412,7 +412,8 @@
       "weekly": "每周",
       "monthly": "每月",
       "inquiries": "查询",
-      "viewMore": "查看更多"
+      "viewMore": "查看更多",
+      "sentMessageAbout": "发送消息关于"
     },
     "floorPlan": {
       "title": "户型图",

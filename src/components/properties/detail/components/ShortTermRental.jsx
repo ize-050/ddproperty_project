@@ -35,39 +35,48 @@ const ShortTermRental = ({ property }) => {
     return `${currencySymbol}/Month`;
   };
 
-  // ข้อมูล rental rates (ในอนาคตอาจจะมาจาก database)
-  const rentalRates = [
-    {
+  // ข้อมูล rental rates จาก database
+  const rentalRates = [];
+  
+  // เพิ่มข้อมูล rental rates ถ้ามีข้อมูลใน database
+  if (rentalData?.shortTerm3Months) {
+    rentalRates.push({
       period: {
         th: '3 เดือน',
         en: '3 Months Contract',
         zh: '3个月合同',
         ru: '3-месячный контракт'
       },
-      price: rentalData?.shortTerm3Months || 77000,
+      price: rentalData.shortTerm3Months,
       unit: getCurrencyUnit()
-    },
-    {
+    });
+  }
+  
+  if (rentalData?.shortTerm6Months) {
+    rentalRates.push({
       period: {
         th: '6 เดือน',
         en: '6 Months Contract',
         zh: '6个月合同',
         ru: '6-месячный контракт'
       },
-      price: rentalData?.shortTerm6Months || 77000,
+      price: rentalData.shortTerm6Months,
       unit: getCurrencyUnit()
-    },
-    {
+    });
+  }
+  
+  if (rentalData?.shortTerm1Year) {
+    rentalRates.push({
       period: {
         th: '1 ปี',
         en: '1 Year Contract',
         zh: '1年合同',
         ru: '1-летний контракт'
       },
-      price: rentalData?.shortTerm1Year || 75000,
+      price: rentalData.shortTerm1Year,
       unit: getCurrencyUnit()
-    }
-  ];
+    });
+  }
 
   const sectionTitle = {
     th: 'การเช่าระยะสั้น (ไม่บังคับ)',

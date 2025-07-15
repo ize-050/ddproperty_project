@@ -374,17 +374,23 @@ export default function MyPropertiesPage() {
                     <tr key={property.id} className={index % 2 === 0 ? 'odd-row' : 'even-row'}>
                       <td className="property-col">
                         <div className="property-image-container">
-                          {property.images?.[0] ? (
-                            <Image
-                              src={process.env.NEXT_PUBLIC_IMAGE_URL + property.images?.[0]?.url}
-                              alt={t('propertyImageAlt')}
-                              width={50}
-                              height={50}
-                              className="property-image"
-                            />
-                          ) : (
-                            <div className="placeholder-image">{t('noImage')}</div>
-                          )}
+                          {(() => {
+                            // เรียงรูปภาพตาม sortOrder ก่อนแสดงรูปแรก
+                            const sortedImages = property.images?.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                            const firstImage = sortedImages?.[0];
+                            
+                            return firstImage ? (
+                              <Image
+                                src={process.env.NEXT_PUBLIC_IMAGE_URL + firstImage.url}
+                                alt={t('propertyImageAlt')}
+                                width={50}
+                                height={50}
+                                className="property-image"
+                              />
+                            ) : (
+                              <div className="placeholder-image">{t('noImage')}</div>
+                            );
+                          })()}
                         </div>
                         <div className="property-info">
                           <p className="property-type">{property.listings?.map((listing) => listing.listingType).join(', ')}</p>

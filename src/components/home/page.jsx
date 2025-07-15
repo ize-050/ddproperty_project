@@ -169,9 +169,9 @@ const Page = ({ randomProperties, zones }) => {
               data-wow-delay="300ms"
             >
               <div className="main-title text-center">
-                <h2 className="title">See How Realton Can Help</h2>
+                <h2 className="title">See how D-LUCK PROPERTY Can help section</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                Learn how D-LUCK PROPERTY can help you
                 </p>
               </div>
             </div>

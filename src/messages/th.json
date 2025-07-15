@@ -294,7 +294,8 @@
       "weekly": "รายสัปดาห์",
       "monthly": "รายเดือน",
       "inquiries": "การสอบถาม",
-      "viewMore": "ดูเพิ่มเติม"
+      "viewMore": "ดูเพิ่มเติม",
+      "sentMessageAbout": "ส่งข้อความเกี่ยวกับ"
     },
     "manageYourProfile": "จัดการโปรไฟล์ของคุณ",
     "welcomeMessage": "เรายินดีที่ได้พบคุณอีกครั้ง!",

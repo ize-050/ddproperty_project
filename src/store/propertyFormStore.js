@@ -756,7 +756,14 @@ const usePropertyFormStore = create((set) => ({
     const items = Array.from(state.propertyImages);
     const [reorderedItem] = items.splice(sourceIndex, 1);
     items.splice(destinationIndex, 0, reorderedItem);
-    return { propertyImages: items };
+    
+    // อัปเดต sortOrder ให้ตรงกับตำแหน่งใหม่
+    const updatedItems = items.map((item, index) => ({
+      ...item,
+      sortOrder: index
+    }));
+    
+    return { propertyImages: updatedItems };
   }),
 
   // Floor Plan Images Functions
@@ -773,7 +780,14 @@ const usePropertyFormStore = create((set) => ({
       const items = Array.from(state.floorPlanImages);
       const [reorderedItem] = items.splice(sourceIndex, 1);
       items.splice(destinationIndex, 0, reorderedItem);
-      return { floorPlanImages: items };
+      
+      // อัปเดต sortOrder ให้ตรงกับตำแหน่งใหม่
+      const updatedItems = items.map((item, index) => ({
+        ...item,
+        sortOrder: index
+      }));
+      
+      return { floorPlanImages: updatedItems };
     }),
 
   // Unit Plan Images Functions
@@ -790,7 +804,14 @@ const usePropertyFormStore = create((set) => ({
       const items = Array.from(state.unitPlanImages);
       const [reorderedItem] = items.splice(sourceIndex, 1);
       items.splice(destinationIndex, 0, reorderedItem);
-      return { unitPlanImages: items };
+      
+      // อัปเดต sortOrder ให้ตรงกับตำแหน่งใหม่
+      const updatedItems = items.map((item, index) => ({
+        ...item,
+        sortOrder: index
+      }));
+      
+      return { unitPlanImages: updatedItems };
     }),
 
   resetForm: () => set({

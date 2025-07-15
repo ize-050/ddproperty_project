@@ -129,13 +129,6 @@ const NearbySection = () => {
     return (
     <section className="form-section">
       <div className="section-header">
-        <Image 
-          src="/images/icons/iconproperty/nearby.svg" 
-          alt={t('nearby.alt')} 
-          width={24} 
-          height={24} 
-          className="section-icon"
-        />
         <h2 className="section-title">{t('nearby.title')}</h2>
       </div>
       <div className="amenities-grid">
