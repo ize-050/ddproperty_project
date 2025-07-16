@@ -6,8 +6,9 @@ import { useTranslations } from 'next-intl';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
 import { toast } from 'react-toastify';
 import { useForm, Controller } from 'react-hook-form';
-
+import 'flag-icons/css/flag-icons.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 // Import Components
 import ImageUploader from '@/components/common/ImageUploader';
@@ -46,11 +47,13 @@ const CreateBlogPage = () => {
 
   // Language tabs
   const languages = [
-    { code: 'en', name: 'ENGLISH (Main)', flag: '🇬🇧' },
-    { code: 'th', name: 'THAI', flag: '🇹🇭' },
-    { code: 'zh', name: 'CHINESE', flag: '🇨🇳' },
-    { code: 'ru', name: 'RUSSIAN', flag: '🇷🇺' },
+    { code: 'en', name: 'ENGLISH (Main)', flagCode: 'gb' },
+    { code: 'th', name: 'THAI', flagCode: 'th' },
+    { code: 'zh', name: 'CHINESE', flagCode: 'cn' },
+    { code: 'ru', name: 'RUSSIAN', flagCode: 'ru' },
   ];
+
+
 
   // Rich text editor modules
   const modules = {
@@ -206,7 +209,15 @@ const CreateBlogPage = () => {
                   className={`language-tab ${activeLanguage === lang.code ? 'active' : ''}`}
                   onClick={() => handleLanguageChange(lang.code)}
                 >
-                  <span className="flag">{lang.flag}</span>
+                <span 
+          className={`fi fi-${lang.flagCode}`}
+          style={{
+            width: '20px',
+            height: '15px',
+            borderRadius: '2px',
+            display: 'inline-block'
+          }}
+        ></span>
                   <span className="lang-name">{t(`languages.${lang.code}`)}</span>
                 </button>
               ))}
@@ -222,7 +233,7 @@ const CreateBlogPage = () => {
                     name={`${lang.code}.title`}
                     control={control}
                     rules={{ required: true }}
-                render={({ field: { onChange, ...restField } }) => (
+                  render={({ field: { onChange, ...restField } }) => (
                   <input
                     type="text"
                     id="title"

@@ -4,18 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import BackofficeLayout from '@/components/backoffice/layout/BackofficeLayout';
 import { toast } from 'react-toastify';
+import 'flag-icons/css/flag-icons.min.css';
 
 // Import SCSS
 import '@/styles/backoffice/currency.scss';
 
-// Flag icons for currencies
+// Flag icons for currencies using flag-icons CSS
 const currencyFlags = {
-  THB: '🇹🇭',
-  USD: '🇺🇸',
-  CNY: '🇨🇳',
-  RUB: '🇷🇺',
-  GBP: '🇬🇧',
-  EUR: '🇪🇺',
+  THB: 'th',
+  USD: 'us',
+  CNY: 'cn',
+  RUB: 'ru',
+  GBP: 'gb',
+  EUR: 'eu',
 };
 
 // Currency names
@@ -147,7 +148,16 @@ const CurrencyPage = () => {
             {Object.keys(currencyRates).map((currency) => (
               <div className="currency-rate-item" key={currency}>
                 <div className="currency-flag-code">
-                  <span className="flag">{currencyFlags[currency]}</span>
+                  <span 
+                    className={`fi fi-${currencyFlags[currency]}`}
+                    style={{
+                      width: '20px',
+                      height: '15px',
+                      borderRadius: '2px',
+                      display: 'inline-block',
+                      marginRight: '8px'
+                    }}
+                  ></span>
                   <span className="currency-code">{currency}</span>
                   <span className="equals">=</span>
                 </div>

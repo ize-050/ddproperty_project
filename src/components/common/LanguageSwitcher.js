@@ -3,8 +3,9 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { useState, useEffect, useRef } from 'react';
+import 'flag-icons/css/flag-icons.min.css';
 
-const LanguageSwitcher = () => {
+export default function LanguageSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -59,12 +60,12 @@ const LanguageSwitcher = () => {
     };
   }, []);
 
-  // ข้อมูลภาษาที่รองรับ
+  // ข้อมูลภาษาที่รองรับ - ใช้ flag-icons CSS สำหรับธงชาติจริง
   const languages = [
-    { code: 'th', name: 'ไทย', flag: '🇹🇭' },
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'zh', name: '中文', flag: '🇨🇳' },
-    { code: 'ru', name: 'Русский', flag: '🇷🇺' }
+    { code: 'th', name: 'ไทย', flagCode: 'th' },
+    { code: 'en', name: 'English', flagCode: 'gb' },
+    { code: 'zh', name: '中文', flagCode: 'cn' },
+    { code: 'ru', name: 'Русский', flagCode: 'ru' }
   ];
 
   // หาภาษาปัจจุบัน
@@ -134,7 +135,16 @@ const LanguageSwitcher = () => {
         style={dropdownStyles.button}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span style={dropdownStyles.flagIcon}>{currentLanguage.flag}</span>
+        <span 
+          className={`fi fi-${currentLanguage.flagCode}`}
+          style={{
+            ...dropdownStyles.flagIcon,
+            width: '20px',
+            height: '15px',
+            borderRadius: '2px',
+            display: 'inline-block'
+          }}
+        ></span>
         <span style={dropdownStyles.text}>{currentLanguage.code.toUpperCase()}</span>
         <span style={dropdownStyles.dropdownIcon}>▼</span>
       </button>
@@ -150,13 +160,21 @@ const LanguageSwitcher = () => {
               }}
               onClick={() => handleLanguageChange(language.code)}
             >
-              <span style={{ marginRight: '8px' }}>{language.flag}</span> {language.name}
+              <span 
+                className={`fi fi-${language.flagCode}`}
+                style={{
+                  marginRight: '8px',
+                  width: '18px',
+                  height: '14px',
+                  borderRadius: '2px',
+                  display: 'inline-block'
+                }}
+              ></span> 
+              {language.name}
             </button>
           ))}
         </div>
       )}
     </div>
   );
-};
-
-export default LanguageSwitcher;
+}

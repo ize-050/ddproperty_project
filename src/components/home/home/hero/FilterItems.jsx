@@ -28,15 +28,15 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
     if (type === 'rent') {
       return {
         min: 5000,      // 5,000 บาท
-        max: 100000,    // 100,000 บาท
-        default: [10000, 30000]  // 10,000 - 30,000 บาท
+        max: 1000000,    // 100,000 บาท
+        default: [5000, 300000]  // 10,000 - 30,000 บาท
       };
     } else {
       // sale หรือ default
       return {
-        min: 500000,    // 500,000 บาท
-        max: 20000000,  // 20,000,000 บาท
-        default: [1000000, 5000000]  // 1,000,000 - 5,000,000 บาท
+        min: 700000,    // 500,000 บาท
+        max: 400000000,  // 20,000,000 บาท
+        default: [700000, 20000000]  // 1,000,000 - 5,000,000 บาท
       };
     }
   };
@@ -45,6 +45,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
   const [price, setPrice] = useState(currentPriceRange.default);
   const [minPrice, setMinPrice] = useState(currentPriceRange.default[0]);
   const [maxPrice, setMaxPrice] = useState(currentPriceRange.default[1]);
+  
 
   // สร้าง state สำหรับควบคุมการแสดง/ซ่อน dropdown
   const [isPriceDropdownOpen, setIsPriceDropdownOpen] = useState(false);
@@ -159,7 +160,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             instanceId="property-type-select"
             required
             isSearchable={false}
-            menuPortalTarget={document.body}
+            menuPortalTarget={document?.body}
             menuPosition="fixed"
             onChange={(option) => setSelectedPropertyType(option)}
             onMenuOpen={() => {
@@ -195,7 +196,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
                       value={price}
                       onChange={(value) => handleOnChange(value)}
                       id="slider"
-                      step={listingType === 'rent' ? 1000 : 100000} // ขั้นการเลื่อน: เช่า 1,000 บาท, ขาย 100,000 บาท
+                      step={listingType === 'rent' ? 5000 : 1000000} // ขั้นการเลื่อน: เช่า 1,000 บาท, ขาย 100,000 บาท
                     />
                     <div className="d-flex align-items-center mt-2">
                       <span id="slider-range-value1">{price[0]} ฿</span>
@@ -222,7 +223,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             instanceId="property-type-select"
             required
             isSearchable={false}
-            menuPortalTarget={document.body}
+            menuPortalTarget={document?.body}
             menuPosition="fixed"
             onChange={(option) => setSelectedZone(option)}
             onMenuOpen={() => {
