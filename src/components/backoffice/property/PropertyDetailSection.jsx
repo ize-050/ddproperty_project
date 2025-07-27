@@ -47,10 +47,10 @@ const PropertyDetailSection = ({ watchedStatus }) => {
   }, []);
 
   const getCommunityFeeUnitKey = () => {
-    if (!propertyTypeId || !propertyTypes) return 'units.month';
+    if (!propertyTypeId || !propertyTypes) return 'units.sqm';
 
     const selectedType = propertyTypes.find(pt => pt.id.toString() === propertyTypeId.toString());
-    if (!selectedType) return 'units.month';
+    if (!selectedType) return 'units.sqm';
 
     const typeName = selectedType.nameEn.toLowerCase();
     const sqmTypes = ['condo', 'apartment', 'commercial', 'office', 'retail'];
@@ -63,7 +63,7 @@ const PropertyDetailSection = ({ watchedStatus }) => {
       return 'units.sqwah';
     }
 
-    return 'units.month';
+    return 'units.sqm';
   };
 
   return (
@@ -176,7 +176,7 @@ const PropertyDetailSection = ({ watchedStatus }) => {
             {...register('floors', { required: t('validation.required') })}
           >
             <option value="">-</option>
-            {[...Array(50)].map((_, i) => (
+            {[...Array(59)].map((_, i) => (
               <option key={i + 1} value={i + 1}>{i + 1}</option>
             ))}
           </select>

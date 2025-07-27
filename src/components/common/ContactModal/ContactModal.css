@@ -203,6 +203,27 @@ form {
 .social-icon {
   width: 30px;
   height: 30px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  filter: contrast(1.1) brightness(1.05);
+}
+
+/* FontAwesome icons clarity improvement */
+.contact-option i {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  filter: contrast(1.05);
 }
 
 .property-info {

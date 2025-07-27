@@ -341,6 +341,7 @@
       },
       "tableHeaders": {
         "property": "Property",
+        "propertyCode": "Property Code",
         "reference": "Reference",
         "operation": "Operation",
         "price": "Price",

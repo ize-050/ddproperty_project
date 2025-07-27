@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import Slider, { Range } from "rc-slider";
 
 const PriceRange = ({ filterFunctions, listingType = 'sale' }) => {
+    // Helper function to format numbers with commas (display only)
+    const formatNumberWithCommas = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+    
     // กำหนดช่วงราคาตาม listingType
     const getPriceRangeByType = (type) => {
         if (type === 'rent') {
@@ -50,12 +55,12 @@ const PriceRange = ({ filterFunctions, listingType = 'sale' }) => {
                 />
                 <div className="d-flex align-items-center">
                     <div id="slider-range-value1" className="d-flex justify-content-between" style={{ minWidth: '120px' }}>
-                        <span>{price[0]}</span>
+                        <span>{formatNumberWithCommas(price[0])}</span>
                         <span className="fs12 ms-auto">THB</span>
                     </div>
                     <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
                     <div id="slider-range-value2" className="d-flex justify-content-between" style={{ minWidth: '120px' }}>
-                        <span>{price[1]}</span>
+                        <span>{formatNumberWithCommas(price[1])}</span>
                         <span className="fs12 ms-auto">THB</span>
                     </div>
                 </div>

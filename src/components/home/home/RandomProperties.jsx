@@ -55,10 +55,8 @@ const RandomProperties = ({ randomProperties }) => {
   useEffect(() => {
     try {
       if (randomProperties && Array.isArray(randomProperties) && randomProperties.length > 0) {
-        console.log('Random Properties:', randomProperties);
         setProperties(randomProperties);
       } else {
-        console.log('No random properties data or invalid format:', randomProperties);
         setProperties([]);
       }
     } catch (err) {
@@ -68,6 +66,9 @@ const RandomProperties = ({ randomProperties }) => {
       setLoading(false);
     }
   }, [randomProperties]);
+
+
+ 
 
 
 
@@ -146,7 +147,7 @@ const RandomProperties = ({ randomProperties }) => {
               <SwiperSlide key={property.id}>
                 <div className="item">
                   <div className="listing-style9">
-                    <div className="list-thumb">
+                    <div className="list-thumb" style={{ position: 'relative' }}>
                       <img
                         width={500}
                         height={465}
@@ -169,6 +170,16 @@ const RandomProperties = ({ randomProperties }) => {
                         alt={property.title || 'Property'}
 
                       />
+                      {/* Gradient overlay for text readability */}
+                      <div style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '50%',
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
+                        pointerEvents: 'none'
+                      }}></div>
                       <div className="sale-sticker-wrap">
                         <div className="special-tags">
                           {property.labels?.map((label, index) => (
@@ -234,7 +245,7 @@ const RandomProperties = ({ randomProperties }) => {
                       </div>
                     </div>
 
-                    <div className="list-content">
+                    <div className="list-content" >
                       <div className="list-price">
                         {property.listings?.[0]?.price
                           ? `${currencySymbol}${formattedPrices[`${property.id}-${property.listings[0].id}`] || formatPrice(property.listings[0].price)}`
@@ -256,8 +267,28 @@ const RandomProperties = ({ randomProperties }) => {
                         </Link>
                       </h6>
                       <p className="list-text"
-                        style={{ fontSize: '14px', color: '#fff' }}
-                      >{property.address || property.city}</p>
+                        style={{ 
+                          fontSize: '14px', 
+                          color: '#fff',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                        }}
+                      >{(() => {
+                        if (property.zone) {
+                          switch (locale) {
+                            case 'th':
+                              return property.zone.nameTh || property.zone.nameEn || property.zone.name;
+                            case 'en':
+                              return property.zone.nameEn || property.zone.name;
+                            case 'zh':
+                              return property.zone.nameCh || property.zone.nameEn || property.zone.name;
+                            case 'ru':
+                              return property.zone.nameRu || property.zone.nameEn || property.zone.name;
+                            default:
+                              return property.zone.nameEn || property.zone.name;
+                          }
+                        }
+                        return 'Zone not specified';
+                      })()}</p>
                       <div className="list-meta2 d-flex align-items-center">
                         <a className="mr10" href="#">
                           <span className="flaticon-bed" /> {property.bedrooms || 0} {t('randomProperties.bed')}

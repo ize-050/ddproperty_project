@@ -495,7 +495,8 @@
       "unpublished": "ไม่ได้เผยแพร่"
     },
     "tableHeaders": {
-      "property": "อสังหาริมทรัพย์",
+      "property": "ทรัพย์สิน",
+      "propertyCode": "รหัสทรัพย์สิน",
       "reference": "รหัสอ้างอิง",
       "operation": "ประเภท",
       "price": "ราคา",

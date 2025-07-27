@@ -67,6 +67,7 @@
   "status": "Status",
   "actions": "Actions",
   "featured": "Featured",
+  "propertyCode": "Property Code",
   "beds": "Beds",
   "baths": "Baths",
   "searchProperties": "Search properties...",

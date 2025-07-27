@@ -17,8 +17,8 @@ const Footer = () => {
           <div className="col-md-6">
             <Link href="/">
               <Image
-                width={150}
-                height={60}
+                width={138}
+                height={50}
                 src="/images/logo/logo_footer.png"
                 alt="D'Luck Property"
               />
@@ -55,10 +55,10 @@ const Footer = () => {
                 <Link href="/properties/list?type=rent&propertyType=Condo" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('condoForRent')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=sale&propertyType=VILLA" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForSale')}</Link>
+                <Link href="/properties/list?type=sale&propertyType=Pool Villa" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForSale')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/properties/list?type=rent&propertyType=VILLA" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForRent')}</Link>
+                <Link href="/properties/list?type=rent&propertyType=Pool Villa" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('poolVillaForRent')}</Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
                 <Link href="/properties/list?type=sale&propertyType=HOUSE" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}>{t('houseForSale')}</Link>

@@ -4,6 +4,11 @@ import Slider, { Range } from "rc-slider";
 
 const PriceRange = () => {
   const [price, setPrice] = useState([20, 70987]);
+  
+  // Helper function to format numbers with commas (display only)
+  const formatNumberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
 
   // price range handler
   const handleOnChange = (value) => {
@@ -22,9 +27,9 @@ const PriceRange = () => {
           id="slider"
         />
         <div className="d-flex align-items-center">
-          <span id="slider-range-value1">${price[0]}</span>
+          <span id="slider-range-value1">${formatNumberWithCommas(price[0])}</span>
           <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
-          <span id="slider-range-value2">${price[1]}</span>
+          <span id="slider-range-value2">${formatNumberWithCommas(price[1])}</span>
         </div>
       </div>
     </>

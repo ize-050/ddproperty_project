@@ -62,7 +62,15 @@ const MobileMenu = () => {
             >
               <span className="far fa-times"></span>
             </div>
-            <h4 className="title">DLUCKPROPERTY</h4>
+            <div className="mobile-sidebar-logo">
+              <Image
+                width={120}
+                height={43}
+                src="/images/logo/logo.png"
+                alt="D'LUCK PROPERTY Logo"
+                style={{ maxWidth: '120px', height: 'auto' }}
+              />
+            </div>
           </div>
           {/* End header */}
 

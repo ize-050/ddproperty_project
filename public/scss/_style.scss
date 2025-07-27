@@ -7547,6 +7547,17 @@ li.mm-listitem:focus {
     font-family: var(--title-font-family);
     font-weight: 600;
 }
+.rightside-hidden-bar .hsidebar-header .mobile-sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 50px;
+}
+.rightside-hidden-bar .hsidebar-header .mobile-sidebar-logo img {
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+}
 .rightside-hidden-bar .hsidebar-header .sidebar-close-icon {
     background-color: #f7f7f7;
     border-radius: 50%;

@@ -23,6 +23,11 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
   const t = useTranslations('home');
   const { zones } = useZoneStore();
   
+  // Helper function to format numbers with commas (display only)
+  const formatNumberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+  
   // กำหนดช่วงราคาแยกตาม listingType
   const getPriceRangeByType = (type) => {
     if (type === 'rent') {
@@ -181,7 +186,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             onClick={handlePriceDropdownToggle}
             style={{ cursor: 'pointer' }}
           >
-            {t('price')}: {price[0]} ฿ - {price[1]} ฿ <i className="fas fa-caret-down float-end fz11" />
+            {t('price')}: {formatNumberWithCommas(price[0])} ฿ - {formatNumberWithCommas(price[1])} ฿ <i className="fas fa-caret-down float-end fz11" />
           </div>
           {isPriceDropdownOpen && (
             <div className="dropdown-menu show" style={{ display: 'block', position: 'absolute', width: '100%', zIndex: 10000, backgroundColor: 'white', border: '1px solid #ddd', borderRadius: '4px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', top: '100%', left: 0 }}>
@@ -199,9 +204,9 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
                       step={listingType === 'rent' ? 5000 : 1000000} // ขั้นการเลื่อน: เช่า 1,000 บาท, ขาย 100,000 บาท
                     />
                     <div className="d-flex align-items-center mt-2">
-                      <span id="slider-range-value1">{price[0]} ฿</span>
+                      <span id="slider-range-value1">{formatNumberWithCommas(price[0])} ฿</span>
                       <span className="mx-0 mx-2">-</span>
-                      <span id="slider-range-value2">{price[1]} ฿</span>
+                      <span id="slider-range-value2">{formatNumberWithCommas(price[1])} ฿</span>
                     </div>
                   </div>
                 </div>

@@ -79,10 +79,8 @@ async function getRandomProperties() {
       params: { count: 4 },
       headers: { 'x-api-key': 'dd-property-api-key-2025' } // ใส่ API key สำหรับการเรียก API
     });
-    console.log('Random Properties:', response.data);
     // ตรวจสอบข้อมูลที่ได้รับจาก API
     if (response && response.data) {
-      console.log('Random Properties:', response.data);
       return Array.isArray(response.data) ? response.data : (response.data.data || []);
     }
 

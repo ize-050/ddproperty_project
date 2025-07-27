@@ -6,6 +6,7 @@ import usePropertyFormStore from '@/store/propertyFormStore';
 import { FaGlobe, FaSpinner } from 'react-icons/fa';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import 'flag-icons/css/flag-icons.min.css';
 const PropertyDescriptionSection = () => {
   const t = useTranslations('backoffice.propertyDescription');
   const { formData, setDescription, setTranslatedDescriptions } = usePropertyFormStore();
@@ -20,10 +21,10 @@ const PropertyDescriptionSection = () => {
   });
 
   const languages = [
-    { code: 'en', flag: '🇬🇧' },
-    { code: 'th', flag: '🇹🇭' },
-    { code: 'zh', flag: '🇨🇳' },
-    { code: 'ru', flag: '🇷🇺' },
+    { code: 'en', flagCode: 'gb' },
+    { code: 'th', flagCode: 'th' },
+    { code: 'zh', flagCode: 'cn' },
+    { code: 'ru', flagCode: 'ru' },
   ];
 
   useEffect(() => {
@@ -179,7 +180,16 @@ const PropertyDescriptionSection = () => {
             className={`language-tab ${activeLanguage === lang.code ? 'active' : ''}`}
             onClick={(e) => { e.preventDefault(); setActiveLanguage(lang.code); }}
           >
-            <span className="language-flag">{lang.flag}</span>
+            <span 
+              className={`fi fi-${lang.flagCode}`}
+              style={{
+                width: '20px',
+                height: '15px',
+                borderRadius: '2px',
+                display: 'inline-block',
+                marginRight: '8px'
+              }}
+            ></span>
             <span className="language-name">{t(`languages.${lang.code}`)}</span>
           </button>
         ))}

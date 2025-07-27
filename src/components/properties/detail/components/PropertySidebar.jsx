@@ -49,79 +49,93 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
         <div className="contact-methods">
           {/* Phone */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fas fa-phone-alt" style={{ transform: 'scaleX(-1)' }}></i>
-            </div>
-            <div className="details">
-              <h5>Call Us Now</h5>
-              <p>{agent.phone}</p>
-            </div>
+            <a href={agent.phone ? `tel:${agent.phone.replace(/[^\d+]/g, '')}` : "#"} style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fas fa-phone-alt" style={{ transform: 'scaleX(-1)' }}></i>
+              </div>
+              <div className="details">
+                <h5>Call Us Now</h5>
+                <p>{agent.phone}</p>
+              </div>
+            </a>
           </div>
           
           {/* Email */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fas fa-envelope"></i>
-            </div>
-            <div className="details">
-              <h5>Drop a Mail</h5>
-              <p>{agent.email}</p>
-            </div>
+            <a href={agent.email ? `mailto:${agent.email}` : "#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fas fa-envelope"></i>
+              </div>
+              <div className="details">
+                <h5>Drop a Mail</h5>
+                <p>{agent.email}</p>
+              </div>
+            </a>
           </div>
           
           {/* LINE */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fab fa-line"></i>
-            </div>
-            <div className="details">
-              <h5>LINE</h5>
-              <p>{agent.lineId}</p>
-            </div>
+            <a href={agent.lineId ? `https://line.me/ti/p/${agent.lineId}` : "#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fab fa-line"></i>
+              </div>
+              <div className="details">
+                <h5>LINE</h5>
+                <p>{agent.lineId}</p>
+              </div>
+            </a>
           </div>
           
           {/* WeChat */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fab fa-weixin"></i>
-            </div>
-            <div className="details">
-              <h5>WeChat</h5>
-              <p>{agent.wechatId}</p>
-            </div>
+            <a href={agent.wechatId ? `weixin://dl/chat?${agent.wechatId}` : "#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fab fa-weixin"></i>
+              </div>
+              <div className="details">
+                <h5>WeChat</h5>
+                <p>{agent.wechatId}</p>
+              </div>
+            </a>
           </div>
           
           {/* WhatsApp */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fab fa-whatsapp"></i>
-            </div>
-            <div className="details">
-              <h5>Whatsapp</h5>
-              <p>{agent.whatsapp}</p>
-            </div>
+            <a href={agent.whatsapp ? `https://wa.me/${agent.whatsapp.replace(/[^\d]/g, '')}` : "#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fab fa-whatsapp"></i>
+              </div>
+              <div className="details">
+                <h5>Whatsapp</h5>
+                <p>{agent.whatsapp}</p>
+              </div>
+            </a>
           </div>
           
           {/* Facebook */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fab fa-facebook-messenger"></i>
-            </div>
-            <div className="details">
-              <h5>Facebook Messenger</h5>
-              <p>{agent.facebook}</p>
-            </div>
+            <a href={agent.facebook ? `https://m.me/${agent.facebook}` : "#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fab fa-facebook-messenger"></i>
+              </div>
+              <div className="details">
+                <h5>Facebook Messenger</h5>
+                <p>{agent.facebook}</p>
+              </div>
+            </a>
           </div>
           
           {/* Instagram */}
           <div className="contact-method">
-            <div className="icon">
-              <i className="fab fa-instagram"></i>
-            </div>
-            <div className="details">
-              <h5>Instagram</h5>
-              <p>{agent.instagram}</p>
-            </div>
+            <a href={agent.instagram ? `https://instagram.com/${agent.instagram}` : "#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'contents' }}>
+              <div className="icon">
+                <i className="fab fa-instagram"></i>
+              </div>
+              <div className="details">
+                <h5>Instagram</h5>
+                <p>{agent.instagram}</p>
+              </div>
+            </a>
           </div>
         </div>
         

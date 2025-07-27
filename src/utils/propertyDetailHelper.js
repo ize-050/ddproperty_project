@@ -32,7 +32,7 @@ export const enhancePropertyData = (property) => {
     email: 'info@d-luckproperty.com',
     line: '@dluck',
     wechat: 'dluckproperty',
-    whatsapp: '+66951432345',
+    whatsapp: '095 143 2345',
     facebook: 'facebook.com/dluckproperty',
     instagram: '@dluckproperty',
     avatar: '/images/team/agent.jpg'
