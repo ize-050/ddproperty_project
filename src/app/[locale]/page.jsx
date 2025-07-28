@@ -33,27 +33,37 @@ const Page = lazy(() => import("@/components/home/page"));
 
 
 // สร้าง metadata แบบ dynamic ตามภาษา
-export async function generateMetadata() {
-  // ใช้ getLocale จาก next-intl/server แทนการใช้ params
-  const locale = 'th'; // กำหนดค่าเริ่มต้นเป็นภาษาไทย
+export async function generateMetadata({ params }) {
+  const { locale } = params;
 
   const baseUrl = 'https://ddproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
 
-  // ข้อความสำหรับแต่ละภาษา
-  const titles = {
-    th: "DDProperty - เว็บไซต์อสังหาริมทรัพย์",
-    en: "DDProperty - Real Estate Website",
-    zh: "DDProperty - 房地产网站",
-    ru: "DDProperty - Сайт недвижимости"
+  // SEO-optimized metadata สำหรับแต่ละภาษา
+  const metadataByLocale = {
+    th: {
+      title: 'คอนโด บ้าน วิลล่า พัทยา | ซื้อ ขาย เช่า ลงทุน | D-Luck Property',
+      description: 'ดี-ลัค พร็อพเพอร์ตี้ ผู้เชี่ยวชาญด้านคอนโด บ้าน วิลล่า ให้เช่าและขายในพัทยาและ EEC ค้นหาอสังหาริมทรัพย์เพื่อลงทุน พร้อมผลตอบแทนสูง',
+      keywords: ['ขายคอนโด พัทยา', 'ขายบ้าน พัทยา', 'ขายวิลล่า พัทยา', 'อสังหาริมทรัพย์ พัทยา','ซื้อบ้าน พัทยา','เช่าบ้าน พัทยา','ลงทุนอสังหา พัทยา','คอนโด พัทยา ให้เช่า','บ้าน พัทยา ให้เช่า','โครงการบ้านจัดสรร พัทยา','วิลล่าหรู พัทยา','คอนโดติดทะเล พัทยา','บ้านพร้อมสระว่ายน้ำ พัทยา','อสังหาริมทรัพย์ EEC','นายหน้าอสังหา พัทยา','คอนโดให้เช่ารายเดือน พัทยา','ซื้อคอนโด พัทยา ชาวต่างชาติ','บ้านเช่าพัทยา รายวัน','ขายที่ดิน พัทยา','ลงทุนคอนโด พัทยา ผลตอบแทนสูง','อสังหาริมทรัพย์ พัทยาเหนือ','บ้านพักตากอากาศ พัทยา']
+    },
+    en: {
+      title: 'Pattaya Condo, House & Villa for Sale & Rent',
+      description: 'D-Luck Property: Your trusted expert for condos, houses & villas for sale in Pattaya & EEC. We help you buy, sell & rent prime residential properties with high investment returns.',
+      keywords: ['Pattaya condos for sale', 'Pattaya houses for sale', 'Pattaya villas for sale', 'Pattaya property for sale','Pattaya real estate for sale','Condos for rent Pattaya','Houses for rent Pattaya','Villas for rent Pattaya','Buy condo Pattaya','Buy house Pattaya','Buy villa Pattaya','Sell property Pattaya','Rent property Pattaya','Luxury villas Pattaya','Beachfront condos Pattaya','Pool villas for sale Pattaya','Investment properties Pattaya','Pattaya real estate investment','Property for sale Jomtien','Houses for sale East Pattaya','Condos for sale Na Jomtien','EEC property for sale','Property agents Pattaya','Expats buy property Pattaya','Foreign ownership condo Pattaya','High rental yield Pattaya property','New developments Pattaya condos']
+    },
+    zh: {
+      title: '芭提雅公寓、别墅、房屋出售出租 | D-Luck Property',
+      description: 'D-Luck Property：您在芭提雅及EEC地区的房产专家。查找高投资回报的公寓、别墅、房屋，提供买卖租赁一站式服务',
+      keywords: ['芭提雅房产', '芭提雅公寓出售', '芭提雅别墅出售', '芭提雅房屋出售','芭提雅房产投资','芭提雅公寓出租','芭提雅房屋出租 ','泰国房产','芭提雅置业','芭提雅买房','芭提雅卖房','芭提雅海景公寓 ','芭提雅豪华别墅 ','芭提雅泳池别墅','芭提雅外国人买房','EEC房产','芭提雅房地产中介','芭提雅高回报投资','中天海滩公寓','芭提雅新楼盘','芭提雅民宿出租']
+    },
+    ru: {
+      title: 'Кондо, Дома, Виллы в Паттайе | Продажа, Аренда, Инвестиции',
+      description: 'D-Luck Property: Ваш эксперт по недвижимости в Паттайе и ЕЭС. Купите, продайте или арендуйте кондо, дом или виллу с высоким инвестиционным потенциалом. Помощь с оплатой.',
+      keywords: ['недвижимость Паттайя', 'купить кондо Паттайя', 'купить дом Паттайя', 'купить виллу Паттайя','аренда кондо Паттайя','аренда дома Паттайя','инвестиции в недвижимость Паттайя','недвижимость Таиланд для русских ','продать недвижимость Паттайя','Buy элитная недвижимость Паттайя','виллы с бассейном Паттайя','кондо на берегу моря Паттайя','купить недвижимость в Таиланде россиянам','агентство недвижимости Паттайя','апартаменты Паттайя купить','недвижимость ЕЭС Таиланд','высокий доход от аренды Паттайя','Паттайя купить жилье','инвестиционные объекты Паттайя','недвижимость Джомтьен продажа','дома в Восточной Паттайе']
+    }
   };
 
-  const descriptions = {
-    th: "ค้นหาบ้าน คอนโด และอสังหาริมทรัพย์ที่ดีที่สุดในประเทศไทย",
-    en: "Find the best homes, condos, and real estate in Thailand",
-    zh: "在泰国找到最好的房屋、公寓和房地产",
-    ru: "Найдите лучшие дома, квартиры и недвижимость в Таиланде"
-  };
+  const currentMetadata = metadataByLocale[locale] || metadataByLocale.th;
 
   // สร้าง alternates สำหรับ SEO
   const languages = {};
@@ -62,12 +72,35 @@ export async function generateMetadata() {
   });
 
   return {
-    title: titles[locale] || titles.th,
-    description: descriptions[locale] || descriptions.th,
+    title: currentMetadata.title,
+    description: currentMetadata.description,
+    keywords: currentMetadata.keywords,
     alternates: {
       canonical: localizedUrl,
       languages
-    }
+    },
+    openGraph: {
+      title: currentMetadata.title,
+      description: currentMetadata.description,
+      url: localizedUrl,
+      siteName: 'D-Luck Property',
+      images: [
+        {
+          url: `${baseUrl}/images/logo/logo.png`,
+          width: 1200,
+          height: 630,
+          alt: 'D-Luck Property Logo',
+        },
+      ],
+      locale: locale === 'th' ? 'th_TH' : locale === 'zh' ? 'zh_CN' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: currentMetadata.title,
+      description: currentMetadata.description,
+      images: [`${baseUrl}/images/logo/logo.png`],
+    },
   };
 }
 

@@ -22,19 +22,40 @@ export async function generateMetadata({ params }) {
     // ดึงข้อมูล property จาก API
     const property = await getPropertyById(id);
 
+    if (!property) {
+      throw new Error(`Property with ID ${id} not found`);
+    }
 
     // ดึงข้อความจาก description ตามภาษา
     let description = '';
-    const descriptionObj = JSON.parse(property.translatedDescriptions || '{}');
-    description = descriptionObj[locale];
+    try {
+      const descriptionObj = JSON.parse(property.translatedDescriptions || '{}');
+      description = descriptionObj[locale] || descriptionObj['en'] || property.description || '';
+    } catch (e) {
+      console.warn('Error parsing translatedDescriptions:', e);
+      description = property.description || '';
+    }
 
     const baseUrl = 'https://ddproperty.com';
     const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
     const propertyUrl = `${localizedUrl}/property_detail/${slug.join('/')}`;
 
     // สร้าง title ตามภาษาที่เลือก
-    const translatedTitles = JSON.parse(property.translatedTitles || '{}');
-    const title = translatedTitles[locale] || translatedTitles['en'] || property.title;
+    let propertyTitle = property?.data?.title || '';
+    try {
+      const translatedTitles = property?.data?.translatedTitles;
+      propertyTitle = translatedTitles[locale] || translatedTitles['en'] || property?.data?.title || '';
+    } catch (e) {
+      propertyTitle = property?.data?.title || '';
+    }
+    
+    // ตรวจสอบให้แน่ใจว่า propertyTitle เป็น string
+    propertyTitle = String(propertyTitle || '');
+
+    // ตัด title ให้สั้นลงถ้ายาวเกิน 50 ตัวอักษร
+    const shortTitle = propertyTitle.length > 50 ? propertyTitle.substring(0, 50) + '...' : propertyTitle;
+    const title = `${shortTitle}`;
+
 
     return {
       title,
@@ -68,13 +89,12 @@ export async function generateMetadata({ params }) {
 
     // Default metadata if property not found
     return {
-      title: 'Property Detail | DDProperty',
-      description: 'View property details on DDProperty',
+      title: 'Property Detail - D-Luck Property',
+      description: 'View property details on D-Luck Property',
     };
   }
 }
 
-// ฟังก์ชันสำหรับดึงข้อมูล property จาก API ตาม ID
 async function getPropertyById(id) {
   try {
     const property = await serverApi.get(`/properties/${id}`);

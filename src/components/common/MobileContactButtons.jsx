@@ -103,7 +103,7 @@ const MobileContactButtons = () => {
                                 }}
                             >
                                 <div className="contact-option-wrapper">
-                                    <a href="tel:+66123456789" className="contact-option phone">
+                                    <a href="tel:+66951432345" className="contact-option phone">
                                         <img src="/images/icon/call.svg" alt="call" width={24} height={24} />
                                     </a>
                                 </div>

@@ -154,6 +154,31 @@
   - Contact page form logic
   - API integration comparison
 
+#### 17. SidebarStickyBar - ดึง API ข้อมูลบริษัท ✅
+- **Location**: Homepage Left Sidebar (SidebarStickyBar)
+- **Problem**: ข้อมูลติดต่อ (เบอร์โทร, อีเมล, social media) ใน sidebar ซ้ายหน้าแรกเป็น hardcode
+- **Expected**: 
+  - ดึงข้อมูลจาก API messaging_settings ของบริษัท
+  - เปิด link ใน new tab (target="_blank")
+  - ใช้ข้อมูลจริงจาก backend แทน hardcode
+- **Files to check**:
+  - `/src/components/home/home/SidebarStickyBar.jsx`
+  - Backend messaging_settings API
+  - Company settings integration
+
+#### 18. PropertyDetail - ข้อมูลแสดงผลผิด
+- **Location**: Property Detail Page - Header Information
+- **Problem**: ข้อมูลในหัวข้อ property detail แสดงผิด
+- **Expected**:
+  - **Location**: ดัง location ตามที่แปลง โซน ข้อมูลแสดง ตาม locate property.zone.nameTH ตัวอย่าง "Jomtien" หรือ "Wongamat"
+  - **Property Type**: เพิ่ม "for sale/" หรือ "for rent" ไว้ข้างหน้า property type ที่เป็นจุดส้มๆ ที่แสดง
+  - **ขนาด**: ขนาดแสดงไม่ถูกต้อง
+- **Files to check**:
+  - Property detail page component
+  - Property header/breadcrumb component
+  - Location/zone display logic
+  - Property type display formatting
+
 ---
 
 ## Action Plan

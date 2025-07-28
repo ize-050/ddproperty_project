@@ -16,12 +16,34 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
     'zh': '¥',
     'ru': '₽'
   };
+  const isHotOffer = property.labels.some(label => label.labelType === 'hot-offer');
+  const isNewListing = property.labels.some(label => label.labelType === 'new-listing');
+  const resale = property.labels.some(label => label.labelType === 'resale');
+  const rented = property.labels.some(label => label.labelType === 'rented');
+  const newDevelopment = property.labels.some(label => label.labelType === 'new-development');
+  const reducePrice = property.labels.some(label => label.labelType === 'reduce-price');
+  const sold = property.labels.some(label => label.labelType === 'sold');
+  const underConstruction = property.labels.some(label => label.labelType === 'under-construction');
 
-  useEffect(() => {
-    console.log("propertyHeader", property);
-  }, [property]);
-  
   const currencySymbol = localeToCurrencySymbol(locale) || currencySymbols[locale] || '฿';
+
+  // Helper function to get zone name by locale
+  const getZoneName = (zone) => {
+    if (!zone) return '';
+
+    switch (locale) {
+      case 'th':
+        return zone.nameTh || zone.nameEn || zone.name || '';
+      case 'zh':
+        return zone.nameCh || zone.nameEn || zone.name || '';
+      case 'ru':
+        return zone.nameRu || zone.nameEn || zone.name || '';
+      default:
+        return zone.nameEn || zone.name || '';
+    }
+  };
+
+
 
   return (
     <section className="property-header-section">
@@ -32,28 +54,53 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
               <h2 className="sp-lg-title text-white">{property.displayTitle || property.title}</h2>
               <div className="pd-meta mb15 d-md-flex align-items-center">
                 <p className="text text-white fz15 mb-0 pr10 bdrrn-sm">
-                  <i className="fas fa-map-marker-alt me-2"></i>
-                  {property.zone?.name || property.district || 'Jomtien'}, {property.city || 'Pattaya'}
+                  <i className="fas fa-map-marker-alt me-2" style={{ color: '#e74c3c', fontSize: '18px' }}></i>
+                  {getZoneName(property.zone)}
                 </p>
               </div>
               <div className="property-meta d-flex align-items-center">
-                {primaryListing && (
-                  <a className="ff-heading text-thm fz15 bdrr1 pr10 bdrrn-sm" href="#">
-                    <i className="fas fa-circle fz10 pe-2"></i>
-                    {getListingTypeText(primaryListing.listingType)}
-                  </a>
-                )}
+
                 <a className="ff-heading text-white bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm" href="#">
+                  FOR {property.listings.map((listing) => listing.listingType).join(', ') ?? '-'}
+                </a>
+
+                <a className="ff-heading text-white  fz15 pr10 ml10 ml0-sm " href="#">
                   <i className="fas fa-building pe-2"></i>
-                  {getPropertyTypeText(property.propertyType?.nameEn)}
+                  {property.propertyType?.nameEn}
                 </a>
-                <a className="ff-heading text-white ml10 ml0-sm fz15" href="#">
-                  <i className="fas fa-vector-square pe-2 align-text-top"></i>
-                  {property.area || 0} {t('sqm')}
-                </a>
+
               </div>
             </div>
+
+            <div className="special-tags mt-2">
+              {isHotOffer && (
+                <div className="tag hot-offer">HOT OFFER</div>
+              )}
+              {isNewListing && (
+                <div className="tag new-listing">NEW LISTING</div>
+              )}
+              {resale && (
+                <div className="tag resale">RESALE</div>
+              )}
+              {rented && (
+                <div className="tag rented">RENTED</div>
+              )}
+              {newDevelopment && (
+                <div className="tag new-development">NEW DEVELOPMENT</div>
+              )}
+              {reducePrice && (
+                <div className="tag reduce-price">REDUCE PRICE</div>
+              )}
+              {sold && (
+                <div className="tag sold">SOLD</div>
+              )}
+              {underConstruction && (
+                <div className="tag under-construction">UNDER CONSTRUCTION</div>
+              )}
+            </div>
           </div>
+
+
 
           <div className="col-lg-4">
             <div className="single-property-content">

@@ -11,7 +11,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
   const [settings, setSettings] = useState(getDefaultSettings());
   const [isLoading, setIsLoading] = useState(true);
 
-  const [contactAgent, setContactAgent] = useState(property.contactInfo);
+  const [contactAgent, setContactAgent] = useState(property?.contactInfo);
 
   // Fetch messaging settings on component mount
 

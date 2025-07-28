@@ -32,7 +32,7 @@ const Agents = () => {
     {
     id: 4,
     name: "Bam - Bamrung",
-    position : "Property Consultant",
+    position : "Graphic Designer",
     image: "/images/staff/bam.jpg",
     },
     {
@@ -44,7 +44,7 @@ const Agents = () => {
     {
     id: 6,
     name: "Tine - Jintana",
-    position : "Marketing Specialist",
+    position : "Rental Management",
     image: "/images/staff/tine.jpg",
     },
 ]

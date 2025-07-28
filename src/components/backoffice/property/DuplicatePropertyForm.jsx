@@ -54,7 +54,7 @@ const DuplicatePropertyForm = ({ propertyId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  const { handleSubmit, formState: { errors }, trigger, reset, watch, register } = useFormContext();
+  const { handleSubmit, formState: { errors }, trigger, reset, watch, register, setValue } = useFormContext();
   const watchedStatus = watch('status');
 
   console.log("DuplicatePropertyForm propertyId:", propertyId);
@@ -82,7 +82,8 @@ const DuplicatePropertyForm = ({ propertyId }) => {
       if (data.success && data.propertyCode) {
         setFormData({ ...formData, propertyId: data.propertyCode });
         setPropertyReference(data.propertyCode);
-        methods.setValue('propertyId', data.propertyCode);
+        setValue('propertyId', data.propertyCode);
+        console.log('New property code generated:', data.propertyCode);
       }
     } catch (error) {
       console.error('Error fetching next property code:', error);
@@ -96,6 +97,8 @@ const DuplicatePropertyForm = ({ propertyId }) => {
     addPropertyImages([])
     addFloorPlanImages([])
     addUnitPlanImages([])
+    // Generate new property code immediately when duplicating
+    fetchNextPropertyCode();
   }, [propertyId])
 
   useEffect(() => {

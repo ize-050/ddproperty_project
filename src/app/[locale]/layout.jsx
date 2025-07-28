@@ -99,7 +99,7 @@ export default async function LocaleLayout({ children, params }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>D&#39;LuckProperty</title>
+        {/* <title>D&#39;LuckProperty</title> */}
         <meta name="description" content="D&#39;LuckProperty - Thailand Real Estate Portal" />
         <link rel="icon" type="image/x-icon" href="/images/dluckfav.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/images/dluckfav.ico" />
