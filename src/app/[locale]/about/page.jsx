@@ -147,7 +147,17 @@ const About = () => {
                     <div className="col-12 mb-4">
                       <div className="d-flex align-items-start">
                         <div className="flex-shrink-0 me-3">
-                          <img src="/images/icons/rents.png" alt="Rental Management" width="30" height="25" />
+                          <div className="icon-circle" style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            backgroundColor: '#f9edeb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                            <img src="/images/about/1.svg" alt="Rental Management" width="24" height="24" />
+                          </div>
                         </div>
                         <div className="flex-grow-1">
                           <h5 className="mb-1 fw-bold" style={{ fontSize: '16px' }}>Rental Management</h5>
@@ -160,7 +170,17 @@ const About = () => {
                     <div className="col-12 mb-4">
                       <div className="d-flex align-items-start">
                         <div className="flex-shrink-0 me-3">
-                          <img src="/images/icons/buy.png" alt="Property Management" width="30" height="25" />
+                        <div className="icon-circle" style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            backgroundColor: '#f9edeb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                            <img src="/images/about/2.svg" alt="Property Management" width="24" height="24" />
+                          </div>
                         </div>
                         <div className="flex-grow-1">
                           <h5 className="mb-1 fw-bold" style={{ fontSize: '16px' }}>Property Management</h5>
@@ -173,7 +193,17 @@ const About = () => {
                     <div className="col-12 mb-4">
                       <div className="d-flex align-items-start">
                         <div className="flex-shrink-0 me-3">
-                          <img src="/images/icons/icon-finance.png" alt="Finance Realestate with Bank" width="30" height="25" />
+                        <div className="icon-circle" style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            backgroundColor: '#f9edeb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                            <img src="/images/about/3.svg" alt="Finance Realestate with Bank" width="24" height="24" />
+                          </div>
                         </div>
                         <div className="flex-grow-1">
                           <h5 className="mb-1 fw-bold" style={{ fontSize: '16px' }}>Finance Realestate with Bank</h5>
@@ -186,7 +216,17 @@ const About = () => {
                     <div className="col-12 mb-4">
                       <div className="d-flex align-items-start">
                         <div className="flex-shrink-0 me-3">
-                          <img src="/images/icons/icon-finance.png" alt="Online Marketing" width="30" height="25" />
+                        <div className="icon-circle" style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            backgroundColor: '#f9edeb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                            <img src="/images/about/4.svg" alt="Online Marketing" width="24" height="24" />
+                          </div>
                         </div>
                         <div className="flex-grow-1">
                           <h5 className="mb-1 fw-bold" style={{ fontSize: '16px' }}>Online Marketing</h5>
@@ -199,7 +239,17 @@ const About = () => {
                     <div className="col-12 mb-4">
                       <div className="d-flex align-items-start">
                         <div className="flex-shrink-0 me-3">
-                          <img src="/images/icons/rents.png" alt="Build-in & Decorate" width="30" height="25" />
+                        <div className="icon-circle" style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            backgroundColor: '#f9edeb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                            <img src="/images/about/5.svg" alt="Build-in & Decorate" width="24" height="24"  />
+                          </div>
                         </div>
                         <div className="flex-grow-1">
                           <h5 className="mb-1 fw-bold" style={{ fontSize: '16px' }}>Build-in & Decorate</h5>

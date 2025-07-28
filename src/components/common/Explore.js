@@ -6,21 +6,21 @@ const Explore = () => {
   const iconboxData = [
     {
       id: 1,
-      icon: "/images/icon/property-buy.svg",
+      icon: "/images/home-about/1.svg",
       title: "Rental Management",
       text: "We help you secure quality tenants at optimal rental rates",
       linkText: "Find a home",
     },
     {
       id: 2,
-      icon: "/images/icon/property-sell.svg",
+      icon: "/images/home-about/2.svg",
       title: "Decoration and Build-in Furniture",
       text: "We specialize in room decoration and built-in furniture solutions",
       linkText: "Place an ad",
     },
     {
       id: 3,
-      icon: "/images/icon/property-rent.svg",
+      icon: "/images/home-about/3.svg",
       title: "Online Property Marketing with Free Media",
       text: "We help you market your property online and across all media",
       linkText: "Find a rental",

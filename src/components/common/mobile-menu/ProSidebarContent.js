@@ -18,6 +18,24 @@ const ProSidebarContent = () => {
 
   const typeParam = searchParams.get('type');
 
+  // Function to close mobile sidebar
+  const closeMobileSidebar = () => {
+    // ใช้ Bootstrap offcanvas API เพื่อปิด sidebar
+    const offcanvasElement = document.getElementById('mobileMenu');
+    if (offcanvasElement) {
+      const offcanvas = window.bootstrap?.Offcanvas?.getInstance(offcanvasElement);
+      if (offcanvas) {
+        offcanvas.hide();
+      } else {
+        // Fallback: ใช้ data-bs-dismiss
+        const closeButton = offcanvasElement.querySelector('[data-bs-dismiss="offcanvas"]');
+        if (closeButton) {
+          closeButton.click();
+        }
+      }
+    }
+  };
+
   const isActive = (href) => {
     if (pathname === href) return true;
 
@@ -51,6 +69,7 @@ const ProSidebarContent = () => {
               <Link
                 className={item.href == path ? "active" : ""}
                 href={item.href}
+                onClick={closeMobileSidebar}
               />
             }
           >

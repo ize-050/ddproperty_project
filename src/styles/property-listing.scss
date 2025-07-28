@@ -558,23 +558,23 @@
       font-weight: 700;
       color: #333;
       
-      .call-button {
-        width: 40px;
-        height: 40px;
-        background-color: #9e0b0f;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      // .call-button {
+      //   width: 40px;
+      //   height: 40px;
+      //   background-color: #9e0b0f;
+      //   border-radius: 50%;
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: center;
         
-        i {
-          color: #fff;
-        }
+      //   i {
+      //     color: #fff;
+      //   }
         
-        &:hover {
-          background-color: darken(#9e0b0f, 10%);
-        }
-      }
+      //   &:hover {
+      //     background-color: darken(#9e0b0f, 10%);
+      //   }
+      // }
     }
   }
 }

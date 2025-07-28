@@ -306,9 +306,11 @@ export default function PropertyFiltering({ property }) {
                   )}
                 </div>
               )}
+              <div className="contact-option-wrapper">
               <a
                 href={`tel:+66123456789`}
-                className="call-button"
+                className="contact-option phone"
+            
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -317,6 +319,7 @@ export default function PropertyFiltering({ property }) {
               >
                 <i className="fas fa-phone"></i>
               </a>
+              </div>
             </div>
 
 

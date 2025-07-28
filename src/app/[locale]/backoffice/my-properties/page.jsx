@@ -551,7 +551,7 @@ function MyPropertiesPage() {
                         </td>
                         <td className="displays-col">{property.viewCount || 0}</td>
                         <td className="visits-col">{property.viewCount || 0}</td>
-                        <td className="enquiries-col">{property.inquiryCount || 0}</td>
+                        <td className="enquiries-col">{property.interestedCount || 0}</td>
                         <td className="date-col">{property.formattedDate}</td>
                         <td className="actions-col">
                           <div className="action-buttons">

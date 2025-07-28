@@ -32,8 +32,31 @@ const PropertyDetailPage = ({ property }) => {
   const [youtubeVideo, setYoutubeVideo] = useState('');
   const [paymentPlan, setPaymentPlan] = useState('');
 
+  // Function to track property view
+  const trackPropertyView = async (propertyId) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}/view`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': process.env.NEXT_PUBLIC_API_KEY
+        }
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('View tracked:', result);
+      }
+    } catch (error) {
+      console.error('Error tracking view:', error);
+      // Don't throw error - view tracking shouldn't break the page
+    }
+  };
+
   useEffect(() => {
     if (property) {
+      // Track property view when component mounts
+      trackPropertyView(property.id);
 
       let desc = '';
       if (locale != 'en') {
@@ -289,10 +312,23 @@ const PropertyDetailPage = ({ property }) => {
                 <>
                   <div className="property-section mb-5">
                     <h3 className="section-title mb-3">Video</h3>
-                    <div className="video-container" style={{ borderRadius: '8px', overflow: 'hidden' }}>
+                    <div className="video-container" style={{
+                      position: 'relative',
+                      paddingBottom: '56.25%', // 16:9 aspect ratio
+                      height: 0,
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
+                    }}>
                       <iframe
-                        width="100%"
-                        height="450"
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          border: 'none'
+                        }}
                         src={youtubeVideo}
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
