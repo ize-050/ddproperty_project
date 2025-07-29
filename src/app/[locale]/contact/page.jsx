@@ -94,10 +94,24 @@ async function getContactTranslations(locale) {
 
 const Contact = async ({ params }) => {
     // Get locale from params
-    const locale = params.locale || 'en';
-    
-    // Fetch translations
+    const { locale } = params;
     const contactTranslations = await getContactTranslations(locale);
+    
+    // Map frontend locale to database field name
+    const getLocaleField = (locale) => {
+        switch (locale) {
+            case 'zh':
+                return 'zhCN'; // Database field for Chinese
+            case 'th':
+                return 'th';
+            case 'ru':
+                return 'ru';
+            default:
+                return 'en';
+        }
+    };
+    
+    const dbLocale = getLocaleField(locale);
     return (
         <>
             {/* Initialize translations in the client */}
@@ -125,7 +139,7 @@ const Contact = async ({ params }) => {
                             <div className="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">
                                 <h4 className="form-title mb25">
                                     {/* Use translation from API */}
-                                    {contactTranslations.find(t => t.slug === 'need_more_info')?.[locale] || 
+                                    {contactTranslations.find(t => t.slug === 'need_more_info')?.[dbLocale] || 
                                      contactTranslations.find(t => t.slug === 'need_more_info')?.en || 
                                      'Need more information?'}
                                 </h4>
@@ -136,13 +150,13 @@ const Contact = async ({ params }) => {
                         <div className="col-lg-5 offset-lg-2">
                             <h2 className="mb-4">
                                 {/* Use translation from API */}
-                                {contactTranslations.find(t => t.slug === 'contact_consultant')?.[locale] || 
+                                {contactTranslations.find(t => t.slug === 'contact_consultant')?.[dbLocale] || 
                                  contactTranslations.find(t => t.slug === 'contact_consultant')?.en || 
                                  'Contact our Property Consultant'}
                             </h2>
                             <p className="mb-4">
                                 {/* Use translation from API */}
-                                {contactTranslations.find(t => t.slug === 'contact_description')?.[locale] || 
+                                {contactTranslations.find(t => t.slug === 'contact_description')?.[dbLocale] || 
                                  contactTranslations.find(t => t.slug === 'contact_description')?.en || 
                                  'Please do not hesitate to contact us if you have any questions about the condo & properties buying, selling or leasing process and for would like to schedule an appointment to view properties in Pattaya.'}
                             </p>
@@ -160,8 +174,16 @@ const Contact = async ({ params }) => {
                             <div className="mb-3">
                                 <img src="/images/contact/icon-call-us.png" alt="Call Us" width="60" height="60" />
                             </div>
-                            <h5 className="mb-0">Call Us Now</h5>
-                            <p className="small text-muted">+66(0)95 1432 2345</p>
+                            <h5 className="mb-0">
+                                {contactTranslations.find(t => t.slug === 'call_us_title')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'call_us_title')?.en || 
+                                 'Call Us Now'}
+                            </h5>
+                            <p className="small text-muted">
+                                {contactTranslations.find(t => t.slug === 'phone_number')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'phone_number')?.en || 
+                                 '+66(0)95 1432 2345'}
+                            </p>
                         </a>
                     </div>
 
@@ -170,8 +192,16 @@ const Contact = async ({ params }) => {
                             <div className="mb-3">
                                 <img src="/images/contact/icon-drop-a-mail.png" alt="Email Us" width="60" height="60" />
                             </div>
-                            <h5 className="mb-0">Drop a Mail</h5>
-                            <p className="small text-muted">info@d-luckproperty.com</p>
+                            <h5 className="mb-0">
+                                {contactTranslations.find(t => t.slug === 'drop_mail_title')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'drop_mail_title')?.en || 
+                                 'Drop a Mail'}
+                            </h5>
+                            <p className="small text-muted">
+                                {contactTranslations.find(t => t.slug === 'email_address_contact')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'email_address_contact')?.en || 
+                                 'info@d-luckproperty.com'}
+                            </p>
                         </a>
                     </div>
 
@@ -180,8 +210,16 @@ const Contact = async ({ params }) => {
                             <div className="mb-3">
                                 <img src="/images/contact/icon-add-friend.png" alt="Line" width="60" height="60" />
                             </div>
-                            <h5 className="mb-0">Add Friend</h5>
-                            <p className="small text-muted">Line ID : @dluck or Click</p>
+                            <h5 className="mb-0">
+                                {contactTranslations.find(t => t.slug === 'add_friend_title')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'add_friend_title')?.en || 
+                                 'Add Friend'}
+                            </h5>
+                            <p className="small text-muted">
+                                {contactTranslations.find(t => t.slug === 'line_id_text')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'line_id_text')?.en || 
+                                 'Line ID : @dluck or Click'}
+                            </p>
                         </a>
                     </div>
                 </div>

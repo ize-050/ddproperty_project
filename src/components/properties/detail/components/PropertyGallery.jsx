@@ -2,34 +2,36 @@
 
 import React from 'react';
 import { Gallery, Item } from 'react-photoswipe-gallery';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import 'photoswipe/dist/photoswipe.css';
 import '@/styles/property-detail-gallery.scss';
 
 
 const PropertyGallery = ({ images, property }) => {
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const galleryImages = images && images.length > 0 ? images : ['/images/property/fp1.jpg'];
 
 
   const overviewData = [
     {
       icon: "flaticon-home-1",
-      label: "Property Type",
+      label: dynamicT('property-type', 'Property Type'),
       value: property.listings.map((listing) => listing.listingType).join(', ') ?? '-',
     },
     {
       icon: "flaticon-bed",
-      label: "Bedroom",
+      label: dynamicT('bedroom', 'Bedroom'),
       value: property.bedrooms ?? '-',
     },
     {
       icon: "flaticon-shower",
-      label: "Bath",
+      label: dynamicT('bath', 'Bath'),
       value: property.bathrooms ?? '-',
     },
     {
       icon: "flaticon-expand",
-      label: "Useable Area",
-      value: property.usableArea + " " +  'sq m.' ?? '-',
+      label: dynamicT('useable-area', 'Useable Area'),
+      value: property.usableArea + " " + 'sq m.' ?? '-',
     },
   ];
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
+import useDynamicTranslations  from "@/hooks/useDynamicTranslations";
 import { useEmail } from "@/hooks/useEmail";
 
 const Contact = () => {
@@ -11,7 +11,7 @@ const Contact = () => {
     subject: ""
   });
   
-  const t = useTranslations('home');
+  const { t } = useDynamicTranslations('home');
   
   // Email hook
   const { loading, error, success, sendContactForm, reset } = useEmail();
@@ -63,7 +63,7 @@ const Contact = () => {
       {success && (
         <div className="alert alert-success mb-3" role="alert">
           <i className="fas fa-check-circle me-2"></i>
-          {t('contact.messageSentSuccess') || 'Message sent successfully! We will get back to you soon.'}
+          {t('contact-message-sent-success') || 'Message sent successfully! We will get back to you soon.'}
         </div>
       )}
       
@@ -71,7 +71,7 @@ const Contact = () => {
         <div className="col-lg-6">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-                {t('contact.name')}
+                {t('contact-name')}
             </label>
             <input
               type="text"
@@ -90,7 +90,7 @@ const Contact = () => {
         <div className="col-lg-6">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              {t('contact.lastName')}
+              {t('contact-last-name')}
             </label>
             <input
               type="text"
@@ -108,7 +108,7 @@ const Contact = () => {
 
         <div className="col-md-12">
           <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">{t('contact.email')}</label>
+            <label className="heading-color ff-heading fw600 mb10">{t('contact-email')}</label>
             <input
               type="email"
               name="email"
@@ -126,7 +126,7 @@ const Contact = () => {
         <div className="col-md-12">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              {t('contact.subject')}
+              {t('contact-subject')}
             </label>
             <textarea
               name="subject"
@@ -135,7 +135,7 @@ const Contact = () => {
               rows={4}
               value={formData.subject}
               onChange={handleChange}
-              placeholder={t('contact.subjectPlaceholder') || 'Enter your message or inquiry'}
+              placeholder={t('contact-subject-placeholder') || 'Enter your message or inquiry'}
               required
               disabled={loading}
             />
@@ -149,11 +149,11 @@ const Contact = () => {
               {loading ? (
                 <>
                   <i className="fas fa-spinner fa-spin me-2"></i>
-                  {t('contact.sending') || 'Sending...'}
+                  {t('contact-sending') || 'Sending...'}
                 </>
               ) : (
                 <>
-                  {t('contact.sendMessage')}
+                  {t('contact-send-message')}
                   <i className="fal fa-arrow-right-long" />
                 </>
               )}

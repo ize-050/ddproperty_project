@@ -3,10 +3,12 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import { localeToCurrencySymbol } from '@/utils/currencyUtils';
 
 const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPropertyTypeText, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const locale = useLocale();
 
   // สัญลักษณ์สกุลเงินตามภาษา
@@ -61,7 +63,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
               <div className="property-meta d-flex align-items-center">
 
                 <a className="ff-heading text-white bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm" href="#">
-                  FOR {property.listings.map((listing) => listing.listingType).join(', ') ?? '-'}
+                  {dynamicT('for', 'FOR')} {property.listings.map((listing) => listing.listingType).join(', ') ?? '-'}
                 </a>
 
                 <a className="ff-heading text-white  fz15 pr10 ml10 ml0-sm " href="#">
@@ -74,28 +76,28 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
 
             <div className="special-tags mt-2">
               {isHotOffer && (
-                <div className="tag hot-offer">HOT OFFER</div>
+                <div className="tag hot-offer">{dynamicT('hot-offer', 'HOT OFFER')}</div>
               )}
               {isNewListing && (
-                <div className="tag new-listing">NEW LISTING</div>
+                <div className="tag new-listing">{dynamicT('new-listing', 'NEW LISTING')}</div>
               )}
               {resale && (
-                <div className="tag resale">RESALE</div>
+                <div className="tag resale">{dynamicT('resale', 'RESALE')}</div>
               )}
               {rented && (
-                <div className="tag rented">RENTED</div>
+                <div className="tag rented">{dynamicT('rented', 'RENTED')}</div>
               )}
               {newDevelopment && (
-                <div className="tag new-development">NEW DEVELOPMENT</div>
+                <div className="tag new-development">{dynamicT('new-development', 'NEW DEVELOPMENT')}</div>
               )}
               {reducePrice && (
-                <div className="tag reduce-price">REDUCE PRICE</div>
+                <div className="tag reduce-price">{dynamicT('reduce-price', 'REDUCE PRICE')}</div>
               )}
               {sold && (
-                <div className="tag sold">SOLD</div>
+                <div className="tag sold">{dynamicT('sold', 'SOLD')}</div>
               )}
               {underConstruction && (
-                <div className="tag under-construction">UNDER CONSTRUCTION</div>
+                <div className="tag under-construction">{dynamicT('under-construction', 'UNDER CONSTRUCTION')}</div>
               )}
             </div>
           </div>
@@ -125,7 +127,7 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
                         {currencySymbol}{formatPrice(displayPrice)}
                       </h3>
                       {listing.listingType === 'RENT' && (
-                        <p className="text space fz15 text-white">{t('perMonth')}</p>
+                        <p className="text space fz15 text-white">{dynamicT('mo', '/mo')}</p>
                       )}
                     </React.Fragment>
                   );

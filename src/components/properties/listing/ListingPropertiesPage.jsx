@@ -9,6 +9,7 @@ import PropertyFilter from './PropertyFilter';
 import useZoneStore from '@/store/useZoneStore';
 import LoadingAnimation from '@/components/common/LoadingAnimation';
 import PropertyFilteringSuspense from './PropertyFilteringSuspense';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 
 
 // Import custom styles
@@ -20,6 +21,7 @@ import '@/styles/property-listing-search.scss';
 
 const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], searchParams = {} }) => {
   const t = useTranslations('PropertyList');
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const router = useRouter();
   const pathname = usePathname();
   const searchParamsObj = useSearchParams();
@@ -235,7 +237,7 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                           </div>
                         ))
                       ) : (
-                        <div className="col-12 text-center">ไม่พบข้อมูล</div>
+                        <div className="col-12 text-center">{dynamicT('no-data-found', 'No data found')}</div>
                       )
                     )}
                   </div>
@@ -243,7 +245,13 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
 
                 <div className="col-12 text-center mt-4 mb-5">
                   <div className="results-count">
-                    <p>1-{propertyItems?.length} of {paginationItems?.total || 0} property available</p>
+                    <p>
+                      {dynamicT('results-showing', '{start}-{end} of {total}')
+                        .replace('{start}', '1')
+                        .replace('{end}', propertyItems?.length || '0')
+                        .replace('{total}', paginationItems?.total || '0')
+                      } {dynamicT('property-available', 'property available')}
+                    </p>
                   </div>
 
                   <div className="simple-pagination">

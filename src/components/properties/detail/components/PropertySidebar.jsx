@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import Image from 'next/image';
 import ContactModal from '../../../common/ContactModal/ContactModal';
 
 
 const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
   const t = useTranslations('PropertyDetail');
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const propertyAgent = property.contactInfo;
   const userAgent = property.user;
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -31,7 +33,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
     }}>
       {/* Contact Agent Widget */}
       <div className="sidebar-widget contact-agent">
-        <h3 className="widget-title">{t('contactAgent')}</h3>
+        <h3 className="widget-title">{dynamicT('contact-agent', 'Contact Agent')}</h3>
         
         <div className="agent-profile">
           <div className="agent-avatar">
@@ -54,7 +56,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fas fa-phone-alt" style={{ transform: 'scaleX(-1)' }}></i>
               </div>
               <div className="details">
-                <h5>Call Us Now</h5>
+                <h5>{dynamicT('call-us-now', 'Call Us Now')}</h5>
                 <p>{agent.phone}</p>
               </div>
             </a>
@@ -67,7 +69,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fas fa-envelope"></i>
               </div>
               <div className="details">
-                <h5>Drop a Mail</h5>
+                <h5>{dynamicT('drop-a-mail', 'Drop a Mail')}</h5>
                 <p>{agent.email}</p>
               </div>
             </a>
@@ -80,7 +82,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fab fa-line"></i>
               </div>
               <div className="details">
-                <h5>LINE</h5>
+                <h5>{dynamicT('line', 'LINE')}</h5>
                 <p>{agent.lineId}</p>
               </div>
             </a>
@@ -93,7 +95,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fab fa-weixin"></i>
               </div>
               <div className="details">
-                <h5>WeChat</h5>
+                <h5>{dynamicT('wechat', 'WeChat')}</h5>
                 <p>{agent.wechatId}</p>
               </div>
             </a>
@@ -106,7 +108,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fab fa-whatsapp"></i>
               </div>
               <div className="details">
-                <h5>Whatsapp</h5>
+                <h5>{dynamicT('whatsapp', 'Whatsapp')}</h5>
                 <p>{agent.whatsapp}</p>
               </div>
             </a>
@@ -119,7 +121,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fab fa-facebook-messenger"></i>
               </div>
               <div className="details">
-                <h5>Facebook Messenger</h5>
+                <h5>{dynamicT('facebook-messenger', 'Facebook Messenger')}</h5>
                 <p>{agent.facebook}</p>
               </div>
             </a>
@@ -132,7 +134,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
                 <i className="fab fa-instagram"></i>
               </div>
               <div className="details">
-                <h5>Instagram</h5>
+                <h5>{dynamicT('instagram', 'Instagram')}</h5>
                 <p>{agent.instagram}</p>
               </div>
             </a>
@@ -146,7 +148,7 @@ const PropertySidebar = ({ property, primaryListing, formatPrice }) => {
           }}
           onClick={() => setIsContactModalOpen(true)}
         >
-         Send a Message Now 
+         {dynamicT('send-a-message-now', 'Send a Message Now')}
         </button>
 
         {/* Contact Modal */}

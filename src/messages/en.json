@@ -824,7 +824,9 @@
       "rent": "Rent",
       "blog": "Blog",
       "about": "About",
-      "contact": "Contact"
+      "contact": "Contact",
+      "listing": "Listing",
+      "footer": "Footer"
     },
     "form": {
       "addTitle": "Add String",

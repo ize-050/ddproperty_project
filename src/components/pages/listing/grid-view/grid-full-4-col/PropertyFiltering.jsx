@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import createSlug from '@/utils/slugify'
+import useSimpleTranslations from '@/hooks/useSimpleTranslations'
 import './PropertyFiltering.css'
 import ContactModal from '../../../../common/ContactModal/ContactModal'
 import { convertAndFormatPrice, convertAndFormatPriceSync } from '@/utils/currencyUtils'
@@ -30,6 +31,7 @@ const promotionalPriceStyles = `
 
 export default function PropertyFiltering({ property }) {
   const locale = useLocale();
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [salePriceFormatted, setSalePriceFormatted] = useState('');
@@ -100,13 +102,13 @@ export default function PropertyFiltering({ property }) {
 
   const getDisplayTitle = () => {
     if (property.translatedTitles) {
-        try {
-            const titles = JSON.parse(property.translatedTitles);
-            return titles[locale] || titles['en'] || property.title;
-        } catch (e) {
-            // Fallback to default title if parsing fails
-            return property.title;
-        }
+      try {
+        const titles = JSON.parse(property.translatedTitles);
+        return titles[locale] || titles['en'] || property.title;
+      } catch (e) {
+        // Fallback to default title if parsing fails
+        return property.title;
+      }
     }
     return property.title;
   };
@@ -137,32 +139,32 @@ export default function PropertyFiltering({ property }) {
               </button>
             </div>
 
-          
+
             <div className="special-tags">
-             {isHotOffer && (
-            <div className="tag hot-offer">HOT OFFER</div>  
-            )}
-            {isNewListing && (
-            <div className="tag new-listing">NEW LISTING</div>
-            )}
-            {resale && (
-            <div className="tag resale">RESALE</div>
-            )}
-            {rented && (
-            <div className="tag rented">RENTED</div>
-            )}
-            {newDevelopment && (
-            <div className="tag new-development">NEW DEVELOPMENT</div>
-            )}
-            {reducePrice && (
-            <div className="tag reduce-price">REDUCE PRICE</div>
-            )}
-            {sold && (
-            <div className="tag sold">SOLD</div>
-            )}
-            {underConstruction && (
-            <div className="tag under-construction">UNDER CONSTRUCTION</div>
-            )}
+              {isHotOffer && (
+                <div className="tag hot-offer">HOT OFFER</div>
+              )}
+              {isNewListing && (
+                <div className="tag new-listing">NEW LISTING</div>
+              )}
+              {resale && (
+                <div className="tag resale">RESALE</div>
+              )}
+              {rented && (
+                <div className="tag rented">RENTED</div>
+              )}
+              {newDevelopment && (
+                <div className="tag new-development">NEW DEVELOPMENT</div>
+              )}
+              {reducePrice && (
+                <div className="tag reduce-price">REDUCE PRICE</div>
+              )}
+              {sold && (
+                <div className="tag sold">SOLD</div>
+              )}
+              {underConstruction && (
+                <div className="tag under-construction">UNDER CONSTRUCTION</div>
+              )}
             </div>
 
             <div className="property-type">
@@ -204,17 +206,17 @@ export default function PropertyFiltering({ property }) {
 
             <div className="property-features">
               <div className="feature">
-                <i className="fas fa-bed"></i> {property.bedrooms || 1} bed
+                <i className="fas fa-bed"></i> {property.bedrooms || 1} {dynamicT('bed', 'bed')}
               </div>
               <div className="feature">
-                <i className="fas fa-bath"></i> {property.bathrooms || 1} bath
+                <i className="fas fa-bath"></i> {property.bathrooms || 1} {dynamicT('bath', 'bath')}
               </div>
               <div className="feature">
-                <i className="fas fa-ruler-combined"></i> {property.usableArea || 'N/A'} Sqm.
+                <i className="fas fa-ruler-combined"></i> {property.usableArea || 'N/A'} {dynamicT('sqm', 'Sqm.')}
               </div>
               {property.landArea && (
                 <div className="feature">
-                  <i className="fas fa-vector-square"></i> {property.landArea} Sqm.
+                  <i className="fas fa-vector-square"></i> {property.landArea} {dynamicT('sqm', 'Sqm.')}
                 </div>
               )}
             </div>
@@ -231,17 +233,17 @@ export default function PropertyFiltering({ property }) {
                     {property.listings.some(listing => listing.listingType === 'SALE' && listing.promotionalPrice) ? (
                       <div className="price-row">
                         <span className="price-value promotional-price">
-                          { convertAndFormatPriceSync(property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0, locale) }
+                          {convertAndFormatPriceSync(property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0, locale)}
                         </span>
-                        <span className="price-value original-price"> 
-                          { salePriceFormatted || convertAndFormatPriceSync(
+                        <span className="price-value original-price">
+                          {salePriceFormatted || convertAndFormatPriceSync(
                             property.listings.find(l => l.listingType === 'SALE')?.price || 0, locale
                           )}
                         </span>
                       </div>
                     ) : (
-                      <span className="price-value"> 
-                        { salePriceFormatted || convertAndFormatPriceSync(
+                      <span className="price-value">
+                        {salePriceFormatted || convertAndFormatPriceSync(
                           property.listings.find(l => l.listingType === 'SALE')?.price || 0, locale
                         )}
                       </span>
@@ -254,18 +256,18 @@ export default function PropertyFiltering({ property }) {
                         <span className="price-value promotional-price">
                           {convertAndFormatPriceSync(property.listings.find(l => l.listingType === 'RENT')?.promotionalPrice || 0, locale)}
                         </span>
-                        <span className="price-value original-price"> 
+                        <span className="price-value original-price">
                           {rentPriceFormatted || convertAndFormatPriceSync(
                             property.listings.find(l => l.listingType === 'RENT')?.price || 0, locale
                           )}
                         </span>
-                        <span>/ mo</span>
+                        <span>{dynamicT('mo', '/ mo')}</span>
                       </div>
                     ) : (
-                      <span className="price-value"> 
+                      <span className="price-value">
                         {rentPriceFormatted || convertAndFormatPriceSync(
                           property.listings.find(l => l.listingType === 'RENT')?.price || 0, locale
-                        )} / mo
+                        )} {dynamicT('mo', '/ mo')}
                       </span>
                     )}
                   </div>
@@ -281,14 +283,14 @@ export default function PropertyFiltering({ property }) {
                           <span className="price-value promotional-price">
                             {convertAndFormatPriceSync(property.listings.find(l => l.listingType === 'SALE')?.promotionalPrice || 0, locale)}
                           </span>
-                          <span className="price-value original-price"> 
+                          <span className="price-value original-price">
                             {salePriceFormatted || convertAndFormatPriceSync(
                               property.listings.find(l => l.listingType === 'SALE')?.price || 0, locale
                             )}
                           </span>
                         </div>
                       ) : (
-                        <span className="price-value"> 
+                        <span className="price-value">
                           {salePriceFormatted || convertAndFormatPriceSync(
                             property.listings.find(l => l.listingType === 'SALE')?.price || 0, locale
                           )}
@@ -301,24 +303,24 @@ export default function PropertyFiltering({ property }) {
                       <span className="price-label"></span>
                       <span className="price-value"> {rentPriceFormatted || convertAndFormatPriceSync(
                         property.listings.find(l => l.listingType === 'RENT')?.price || 0, locale
-                      )} / mo </span>
+                      )} {dynamicT('mo', '/ mo')} </span>
                     </div>
                   )}
                 </div>
               )}
               <div className="contact-option-wrapper">
-              <a
-                href={`tel:+66123456789`}
-                className="contact-option phone"
-            
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setIsModalOpen(true);
-                }}
-              >
-                <i className="fas fa-phone"></i>
-              </a>
+                <a
+                  href={`tel:+66123456789`}
+                  className="contact-option phone"
+
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsModalOpen(true);
+                  }}
+                >
+                  <i className="fas fa-phone"></i>
+                </a>
               </div>
             </div>
 

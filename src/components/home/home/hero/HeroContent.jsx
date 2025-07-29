@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import FilterItems from "./FilterItems";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 import usePropertyFilterStore from "@/store/usePropertyFilterStore";
 
 const HeroContent = ({ propertyTypes }) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("buy");
   const t = useTranslations('home');
+  const { t: dynamicT } = useDynamicTranslations('listing');
   
   // Use store instead of local state
   const { advancedSearchVisible, setAdvancedSearchVisible } = usePropertyFilterStore();
@@ -70,7 +72,7 @@ const HeroContent = ({ propertyTypes }) => {
                       type="button"
                       onClick={() => setAdvancedSearchVisible(true)}
                     >
-                      <span className="flaticon-settings" /> Advanced
+                      <span className="flaticon-settings" /> {dynamicT('advanced', 'Advanced')}
                     </button>{" "}
                   </div>
 

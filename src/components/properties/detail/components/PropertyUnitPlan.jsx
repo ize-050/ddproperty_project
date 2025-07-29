@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -8,6 +9,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const PropertyUnitPlan = ({ property }) => {
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (!property?.floorPlans || property.floorPlans.length === 0) {
@@ -16,7 +18,7 @@ const PropertyUnitPlan = ({ property }) => {
 
   return (
     <div className="property-section floor-plan-section mb-5">
-      <h3 className="section-title mb-3">Unit Plans</h3>
+      <h3 className="section-title mb-3">{dynamicT('unit-plans', 'Unit Plans')}</h3>
       <div className="floor-plan-container">
         <Swiper
           spaceBetween={30}

@@ -22,7 +22,7 @@ const LanguagePage = () => {
   const [currentString, setCurrentString] = useState(null);
   
   // Sections corresponding to tabs
-  const sections = ['header', 'home', 'rent', 'blog', 'about', 'contact'];
+  const sections = ['header', 'home', 'rent', 'blog', 'aboutus', 'contact', 'listing', 'footer'];
   
   // Fetch UI strings from API
   const fetchStrings = async () => {
@@ -190,6 +190,8 @@ const LanguagePage = () => {
             <Tab>{t('tabs.blog')}</Tab>
             <Tab>{t('tabs.about')}</Tab>
             <Tab>{t('tabs.contact')}</Tab>
+            <Tab>{t('tabs.listing')}</Tab>
+            <Tab>{t('tabs.footer')}</Tab>
           </TabList>
           
           {sections.map((section, index) => (

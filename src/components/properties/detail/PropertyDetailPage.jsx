@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { convertAndFormatPrice } from '@/utils/currencyUtils';
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 
 // Import components
 import PropertyBreadcrumb from './components/PropertyBreadcrumb';
@@ -20,10 +21,17 @@ import '@/styles/property-detail.scss';
 import '@/styles/property-detail-sections.scss';
 
 const PropertyDetailPage = ({ property }) => {
-  console.log('--- DEBUG: Property object in PropertyDetailPage ---', JSON.stringify(property, null, 2));
   const t = useTranslations('PropertyDetail');
   const router = useRouter();
   const locale = useLocale();
+  
+  // Use dynamic translations hook for listing section
+  const { 
+    t: dynamicT, 
+    getPropertyTypeText, 
+    getListingTypeText, 
+    loading: translationsLoading 
+  } = useDynamicTranslations('listing');
 
   const [activeTab, setActiveTab] = useState('overview');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -42,7 +50,7 @@ const PropertyDetailPage = ({ property }) => {
           'X-API-Key': process.env.NEXT_PUBLIC_API_KEY
         }
       });
-      
+
       if (response.ok) {
         const result = await response.json();
         console.log('View tracked:', result);
@@ -83,8 +91,8 @@ const PropertyDetailPage = ({ property }) => {
       // รูปภาพทั้งหมดของ property (เรียงลำดับตาม sortOrder)
       const imgs = property.images && property.images.length > 0
         ? property.images
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
-            .map(img => `${process.env.NEXT_PUBLIC_IMAGE_URL}${img.url}`)
+          .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+          .map(img => `${process.env.NEXT_PUBLIC_IMAGE_URL}${img.url}`)
         : ['/images/property/fp1.jpg'];
 
       console.log("images", imgs);
@@ -157,70 +165,6 @@ const PropertyDetailPage = ({ property }) => {
   // ฟังก์ชันสำหรับเลือกรูปโดยตรง
   const selectImage = (index) => {
     setCurrentImageIndex(index);
-  };
-
-  // แปลงประเภท listing เป็นข้อความ
-  const getListingTypeText = (listingType) => {
-    const types = {
-      SALE: {
-        th: 'ขาย',
-        en: 'For Sale',
-        zh: '出售',
-        ru: 'Продажа'
-      },
-      RENT: {
-        th: 'เช่า',
-        en: 'For Rent',
-        zh: '出租',
-        ru: 'Аренда'
-      }
-    };
-
-    return types[listingType]?.[locale] || types[listingType]?.en || listingType;
-  };
-
-  // แปลงประเภท property เป็นข้อความ
-  const getPropertyTypeText = (propertyType) => {
-    const types = {
-      CONDO: {
-        th: 'คอนโดมิเนียม',
-        en: 'Condominium',
-        zh: '公寓',
-        ru: 'Кондоминиум'
-      },
-      HOUSE: {
-        th: 'บ้านเดี่ยว',
-        en: 'House',
-        zh: '独立屋',
-        ru: 'Дом'
-      },
-      TOWNHOUSE: {
-        th: 'ทาวน์เฮาส์',
-        en: 'Townhouse',
-        zh: '联排别墅',
-        ru: 'Таунхаус'
-      },
-      LAND: {
-        th: 'ที่ดิน',
-        en: 'Land',
-        zh: '土地',
-        ru: 'Земля'
-      },
-      APARTMENT: {
-        th: 'อพาร์ทเมนท์',
-        en: 'Apartment',
-        zh: '公寓',
-        ru: 'Апартаменты'
-      },
-      COMMERCIAL: {
-        th: 'อาคารพาณิชย์',
-        en: 'Commercial Building',
-        zh: '商业建筑',
-        ru: 'Коммерческое здание'
-      }
-    };
-
-    return types[propertyType]?.[locale] || types[propertyType]?.en || propertyType;
   };
 
   // แปลงข้อมูลการตกแต่งเป็นข้อความ
@@ -311,7 +255,7 @@ const PropertyDetailPage = ({ property }) => {
               {youtubeVideo != '' && (
                 <>
                   <div className="property-section mb-5">
-                    <h3 className="section-title mb-3">Video</h3>
+                    <h3 className="section-title mb-3">{dynamicT('video', 'Video')}</h3>
                     <div className="video-container" style={{
                       position: 'relative',
                       paddingBottom: '56.25%', // 16:9 aspect ratio
@@ -339,11 +283,10 @@ const PropertyDetailPage = ({ property }) => {
                   <hr></hr>
                 </>
               )}
-
               {paymentPlan && (
                 <>
                   <div className="property-section mb-5">
-                    <h3 className="section-title mb-3">Payment Plan</h3>
+                    <h3 className="section-title mb-3">{dynamicT('payment-plan', 'Payment Plan')}</h3>
                     <div className="payment-plan-container">
                       <p>{paymentPlan}</p>
                     </div>
@@ -353,11 +296,7 @@ const PropertyDetailPage = ({ property }) => {
                 </>
 
               )}
-
-
             </div>
-
-
             {/* Right Sidebar */}
             <div className="col-lg-4">
               <PropertySidebar

@@ -91,15 +91,51 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
 
   // property type options
 
-  const propertyTypeOptions = propertyTypes.map((propertyType) => ({
-    value: propertyType.name,
-    label: propertyType[`name${locale.charAt(0).toUpperCase()}${locale.slice(1)}`],
-  }));
+  const propertyTypeOptions = propertyTypes.map((propertyType) => {
+    // Map locale to correct field name for property types
+    let fieldName = 'nameEn'; // default fallback
+    switch (locale) {
+      case 'th':
+        fieldName = 'nameTh';
+        break;
+      case 'zh':
+        fieldName = 'nameCh'; // จีนใช้ nameCh ไม่ใช่ nameZh
+        break;
+      case 'ru':
+        fieldName = 'nameRu';
+        break;
+      default:
+        fieldName = 'nameEn';
+    }
+    
+    return {
+      value: propertyType.name,
+      label: propertyType[fieldName] || propertyType.nameEn || propertyType.name,
+    };
+  });
 
-  const locationOptions = zones.map((zone) => ({
-    value: zone.id,
-    label: zone[`name${locale.charAt(0).toUpperCase()}${locale.slice(1)}`],
-  }));
+  const locationOptions = zones.map((zone) => {
+    // Map locale to correct field name for zones
+    let fieldName = 'name_en'; // default fallback
+    switch (locale) {
+      case 'th':
+        fieldName = 'name_th';
+        break;
+      case 'zh':
+        fieldName = 'name_ch'; // จีนใช้ name_ch ไม่ใช่ name_zh
+        break;
+      case 'ru':
+        fieldName = 'name_ru';
+        break;
+      default:
+        fieldName = 'name_en';
+    }
+    
+    return {
+      value: zone.id,
+      label: zone[fieldName] || zone.name_en || zone.name_th,
+    };
+  });
 
   const customStyles = {
     option: (provided, state) => ({

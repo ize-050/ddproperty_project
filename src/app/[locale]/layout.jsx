@@ -29,7 +29,7 @@ import { supportedLocales } from '../../i18n';
 const Header = lazy(() => import("@/components/home/home/Header"));
 const HeaderSSR = lazy(() => import("@/components/home/home/HeaderSSR"))
 const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
-const Footer = lazy(() => import("@/components/common/Footer"));
+const Footer = lazy(() => import("@/components/common/DynamicFooter"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
 const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 const MobileContactButtons = dynamic(() => import("@/components/common/MobileContactButtons"), {

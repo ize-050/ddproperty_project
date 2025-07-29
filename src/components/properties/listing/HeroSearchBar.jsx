@@ -3,6 +3,7 @@ import { FiSearch, FiMenu } from "react-icons/fi";
 import usePropertyFilterStore from '@/store/usePropertyFilterStore';
 import { useSearchParams } from "next/navigation";
 import AdvanceFilterContent from "./AdvancedFilterContent";
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 
 export default function HeroSearchBar({
   onSearch,
@@ -24,9 +25,11 @@ export default function HeroSearchBar({
     return initialListingType;
   };
 
+  const { t } = useDynamicTranslations('listing');
+
   const tabs = [
-    { id: "buy", label: "Buy" },
-    { id: "rent", label: "Rent" },
+    { id: "buy", label: t('buy', 'Buy') },
+    { id: "rent", label: t('rent', 'Rent') },
   ];
 
   const [listingType, setListingType] = useState(getInitialListingType());
@@ -89,9 +92,9 @@ export default function HeroSearchBar({
   return (
     <>
       <div className="inner-banner-style1 text-center">
-        <h2 className="hero-title animate-up-1 ">Find Your Dream Home</h2>
+        <h2 className="hero-title animate-up-1 ">{t('find-your-dream-home', 'Find Your Dream Home')}</h2>
         <p className="hero-text fz15 animate-up-2">
-          We’ve more than 745,000 apartments, place & plot.
+          {t('apartments-available-text', "We've more than 745,000 apartments, place & plot.")}
         </p> 
       </div>
 
@@ -154,7 +157,7 @@ export default function HeroSearchBar({
                             className="form-control bgc-f7 bdrs12"
                             type="text"
                             name="search"
-                            placeholder={`Search for ${tab.label}...`}
+                            placeholder={tab.id === 'buy' ? t('search-for-buy', 'Search for Buy...') : t('search-for-rent', 'Search for Rent...')}
                             onChange={(e) => setSearchQuery(e.target.value)}
                           />
                         </div>
@@ -170,7 +173,7 @@ export default function HeroSearchBar({
                         type="button"
                         onClick={() => setAdvancedSearchVisible(true)}
                       >
-                        <span className="flaticon-settings" /> Advanced
+                        <span className="flaticon-settings" /> {t('advanced', 'Advanced')}
                       </button>
                       <button
                         className="advance-search-icon ud-btn btn-dark ms-4"

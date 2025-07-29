@@ -3,9 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 
 const PropertyBreadcrumb = ({ property }) => {
-  const t = useTranslations('PropertyDetail');
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const locale = useLocale();
   
   return (
@@ -17,12 +18,12 @@ const PropertyBreadcrumb = ({ property }) => {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link href={`/${locale !== 'th' ? locale : ''}`}>
-                    {t('home')}
+                    {dynamicT('home', 'Home')}
                   </Link>
                 </li>
                 <li className="breadcrumb-item">
                   <Link href={`/${locale !== 'th' ? locale + '/' : ''}properties/list`}>
-                    {t('properties')}
+                    {dynamicT('property', 'Properties')}
                   </Link>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">

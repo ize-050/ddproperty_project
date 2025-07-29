@@ -17,6 +17,7 @@ import PriceRange from './PriceRange';
 import getProperties from '@/utils/properties';
 import propertyTypeService from '@/services/propertyTypeService';
 import { useLocale } from 'next-intl';
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 
 const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -35,6 +36,7 @@ const customStyles = {
 
 export default function AdvancedFilterContent({ onClose, onSearch, type }) {
     const zones = useZoneStore((s) => s.zones);
+    const { t } = useDynamicTranslations('listing');
 
     // กำหนดช่วงราคาเริ่มต้นตาม type
     const getInitialPriceRange = (listingType) => {
@@ -95,12 +97,28 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
 
     useEffect(() => {
         setDataZone(zones.map((zone) => {
+            // Map locale to correct field name
+            let fieldName = 'name_en'; // default fallback
+            switch (locale) {
+                case 'th':
+                    fieldName = 'name_th';
+                    break;
+                case 'zh':
+                    fieldName = 'name_ch'; 
+                    break;
+                case 'ru':
+                    fieldName = 'name_ru';
+                    break;
+                default:
+                    fieldName = 'name_en';
+            }
+            
             return {
                 value: zone.id,
-                label: zone[`name_${locale}`],
+                label: zone[fieldName] || zone.name_en || zone.name_th, // fallback
             }
         }))
-    }, [zones])
+    }, [zones, locale])
 
     useEffect(() => {
         const fetchPropertyTypes = async () => {
@@ -187,9 +205,9 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
     return (
         <>
             <div className="modal-header pl30 pr30">
-                <h5 className="modal-title" id="exampleModalLabel">
-                    More Filter
-                </h5>
+                <h4 className="modal-title" id="advanceSeachModalLabel">
+                    {t('advanced-filter', 'Advanced Filter')}
+                </h4>
                 <button
                     type="button"
                     className="btn-close"
@@ -216,7 +234,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
                 <div className="row">
                     <div className="col-sm-6">
                         <div className="widget-wrapper">
-                            <h6 className="list-title">Type</h6>
+                            <h6 className="list-title">{t('type', 'Type')}</h6>
                             <div className="form-style2 input-group">
                                 <Select
                                     defaultValue={propertyTypesOptions[0]}
@@ -238,7 +256,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
                     {/* End .col-6 */}
                     <div className="col-sm-6">
                         <div className="widget-wrapper">
-                            <h6 className="list-title">Location</h6>
+                            <h6 className="list-title">{t('location', 'Location')}</h6>
                             <div className="form-style2 input-group">
                                 <Select
                                     defaultValue={dataZone[0]}
@@ -263,7 +281,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
                 <div className="row">
                     <div className="col-sm-6">
                         <div className="widget-wrapper">
-                            <h6 className="list-title">Bedrooms</h6>
+                            <h6 className="list-title">{t('bedrooms', 'Bedrooms')}</h6>
                             <div className="d-flex">
                                 <Bedroom filterFunctions={filterFunctions} />
                             </div>
@@ -273,7 +291,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
 
                     <div className="col-sm-6">
                         <div className="widget-wrapper">
-                            <h6 className="list-title">Bathrooms</h6>
+                            <h6 className="list-title">{t('bathrooms', 'Bathrooms')}</h6>
                             <div className="d-flex">
                                 <Bathroom filterFunctions={filterFunctions} />
                             </div>
@@ -292,7 +310,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
                     onClick={() => resetFilters()}
                 >
                     <span className="flaticon-turn-back" />
-                    <u>Reset all filters</u>
+                    <u>{t('reset-all-filters', 'Reset all filters')}</u>
                 </button>
                 <div className="btn-area">
                     <button type="submit" onClick={handleSearch}
@@ -302,7 +320,7 @@ export default function AdvancedFilterContent({ onClose, onSearch, type }) {
                         }}
                         className="ud-btn btn-thm">
                         <span className="flaticon-search align-text-top pr10" />
-                        Search
+                        {t('search', 'Search')}
                     </button>
                 </div>
             </div>

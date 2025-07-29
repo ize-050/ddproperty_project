@@ -8,6 +8,7 @@ import Image from "next/image";
 
 // Import our custom translation hook instead of next-intl
 import useTranslation from '@/hooks/useTranslation';
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 
 
 // ใช้ dynamic import เพื่อแก้ไขปัญหา hydration error
@@ -29,6 +30,7 @@ const Page = ({ randomProperties, zones }) => {
 
   // Use our custom translation hook instead of next-intl
   const { getString } = useTranslation('home');
+  const { t: dynamicT } = useDynamicTranslations('home');
 
   // นำข้อมูล zones ไปเก็บใน Zustand store
   const setZones = useZoneStore(state => state.setZones);
@@ -169,9 +171,9 @@ const Page = ({ randomProperties, zones }) => {
               data-wow-delay="300ms"
             >
               <div className="main-title text-center">
-                <h2 className="title">See how D-LUCK PROPERTY Can help section</h2>
+                <h2 className="title">{dynamicT('learn_dluck_help', 'Learn how D-LUCK PROPERTY can help you')}</h2>
                 <p className="paragraph">
-                Learn how D-LUCK PROPERTY can help you
+                  {dynamicT('we_provide_services', 'We provide services for customer who buy and rent property')}
                 </p>
               </div>
             </div>
@@ -259,9 +261,9 @@ const Page = ({ randomProperties, zones }) => {
           <div className="row">
             <div className="col-md-6 offset-md-6 position-relative">
               <div className="home8-contact-form bdrs12 p40 p30-md bgc-white">
-                <h2 className="form-title">{getString('contact.title', 'Contact Us')}</h2>
+                <h2 className="form-title">{dynamicT('contact-title') || 'Contact Us'}</h2>
                 <p className="text ">
-                  {getString('contact.subtitle', 'Get in touch with our team for any inquiries.')}
+                  {dynamicT('contact-subtitle') || 'Get in touch with our team for any inquiries.'}
                 </p>
                 <Contact />
               </div>

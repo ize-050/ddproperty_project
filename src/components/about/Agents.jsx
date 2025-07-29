@@ -3,48 +3,56 @@ import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import useSimpleTranslations from "@/hooks/useSimpleTranslations";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
 
 const Agents = () => {
+  const { t, loading, error } = useSimpleTranslations('aboutus');
 
   const  dataAgentMockup = [
     {
     id: 1,
     name: "Oat - Supakorn",
-    position : "CEO & Founder",
+    position : "ceo_founderab",
+    positionFallback: "CEO & Founder",
     image: "/images/staff/oat.jpg",
     },
     {
     id: 2,
     name: "Amy - Thannaree",
-    position : "Sale Director",
+    position : "sale_directorab",
+    positionFallback: "Sale Director",
     image: "/images/staff/amy.jpg",
     },
     {
     id: 3,
     name: "ize - Chanyapak",
-    position : "Sale Manager",
+    position : "sale_managerab",
+    positionFallback: "Sale Manager",
     image: "/images/staff/ize.jpg",
     },
     {
     id: 4,
     name: "Bam - Bamrung",
-    position : "Graphic Designer",
+    position : "onlinemedia_designab",
+    positionFallback: "Online Media Design",
     image: "/images/staff/bam.jpg",
     },
     {
     id: 5,
     name: "Min - Wanvisa",
-    position : "Rental Management",
+    position : "rental_managementab",
+    positionFallback: "Rental Management",
     image: "/images/staff/min.jpg",
     },
     {
     id: 6,
     name: "Tine - Jintana",
-    position : "Rental Management",
+    position : "rental_managementab",
+    positionFallback: "Rental Management",
     image: "/images/staff/tine.jpg",
     },
 ]
@@ -75,7 +83,7 @@ const Agents = () => {
                     </div>
                     <div className="team-content pt20">
                       <h6 className="name mb-1">{agent.name}</h6>
-                      <p className="text fz15 mb-0">{agent.position}</p>
+                      <p className="text fz15 mb-0">{t(agent.position, agent.positionFallback)}</p>
                     </div>
                   </div>
                 </Link>
@@ -101,7 +109,7 @@ const Agents = () => {
                     </div>
                     <div className="team-content pt20">
                       <h6 className="name mb-1">{agent.name}</h6>
-                      <p className="text fz15 mb-0">{agent.position}</p>
+                      <p className="text fz15 mb-0">{t(agent.position, agent.positionFallback)}</p>
                     </div>
                   </div>
                 </Link>
@@ -134,7 +142,7 @@ const Agents = () => {
                   </div>
                   <div className="team-content pt20">
                     <h6 className="name mb-1">{agent.name}</h6>
-                    <p className="text fz15 mb-0">{agent.position}</p>
+                    <p className="text fz15 mb-0">{t(agent.position, agent.positionFallback)}</p>
                   </div>
                 </div>
               </Link>

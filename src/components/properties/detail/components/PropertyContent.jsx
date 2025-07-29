@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import PropertyMap from './PropertyMap';
 import ShortTermRental from './ShortTermRental';
 
 const PropertyContent = ({ property, description, getPropertyTypeText, getFurnishingText }) => {
   const t = useTranslations('PropertyDetail');
+  const { t: dynamicT } = useSimpleTranslations('listing');
 
   const formatLandSize = () => {
     const { landSizeRai, landSizeNgan, landSizeSqWah, landSizeSqm } = property;
@@ -50,7 +52,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
       {/* Highlights Section */}
       <div className="property-section mb-5">
-        <h3 className="section-title mb-3">Highlights</h3>
+        <h3 className="section-title mb-3">{dynamicT('highlights', 'Highlights')}</h3>
         <div className="property-highlights">
           <ul className="row g-3">
             {property?.highlights?.length > 0 ? (
@@ -80,7 +82,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
       {/* Description Section */}
       <div className="property-section mb-5">
-        <h3 className="section-title mb-3">Description</h3>
+        <h3 className="section-title mb-3">{dynamicT('basic-detail', 'Description')}</h3>
         <div className="property-description">
           <p>{description || 'No description available for this property.'}</p>
         </div>
@@ -90,45 +92,45 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
       {/* Details Section */}
       <div className="property-section mb-5">
-        <h3 className="section-title mb-3">Details</h3>
+        <h3 className="section-title mb-3">{dynamicT('details', 'Details')}</h3>
         <div className="property-details-table border-0">
           <table className="table" style={{
             borderStyle: 'none'
           }}>
             <tbody style={{ borderStyle: 'hidden !important' }}>
               <tr style={{ borderStyle: 'hidden !important' }}>
-                <th>Property Code</th>
+                <th>{dynamicT('property-code', 'Property Code')}</th>
                 <td>{property.propertyCode || 'N/A'}</td>
-                <th>Ownership Quota</th>
+                <th>{dynamicT('ownership-quota', 'Ownership Quota')}</th>
                 <td>{property.ownershipQuota || 'N/A'}</td>
               </tr>
               <tr style={{ borderStyle: 'hidden !important' }}>
-                <th>Land Size</th>
+                <th>{dynamicT('land-size', 'Land Size')}</th>
                 <td>{formatLandSize()}</td>
                 <th></th>
                 <td></td>
               </tr>
               <tr>
-                <th>Useable Area</th>
+                <th>{dynamicT('usable-area', 'Useable Area')}</th>
                 <td>{property.usableArea ? `${property.usableArea} sq.m.` : 'N/A'}</td>
-                <th>Floor</th>
+                <th>{dynamicT('floor', 'Floor')}</th>
                 <td>{property.floors ? `${property.floors} Floors` : 'N/A'}</td>
               </tr>
               <tr>
-                <th>Furnishing</th>
+                <th>{dynamicT('furnishing', 'Furnishing')}</th>
                 <td>{getFurnishingText(property.furnishing) || 'N/A'}</td>
-                <th>Bedrooms</th>
+                <th>{dynamicT('bedrooms', 'Bedrooms')}</th>
                 <td>{property.bedrooms || 'N/A'}</td>
               </tr>
               <tr>
-                <th>Bathrooms</th>
+                <th>{dynamicT('bathrooms', 'Bathrooms')}</th>
                 <td>{property.bathrooms || 'N/A'}</td>
-                <th>Construction Year</th>
+                <th>{dynamicT('construction-year', 'Construction Year')}</th>
                 <td>{property.constructionYear || 'N/A'}</td>
               </tr>
               {property.communityFee > 0 && (
                 <tr>
-                  <th>Community Fees</th>
+                  <th>{dynamicT('community-fees', 'Community Fees')}</th>
                   <td>
                     {`${property.communityFee} ${getCommunityFeeUnit(property.propertyType?.nameEn)}`}
                   </td>
@@ -137,13 +139,13 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 </tr>
               )}
               <tr>
-                <th>Area</th>
+                <th>{dynamicT('area', 'Area')}</th>
                 <td>{property.district || 'N/A'}</td>
                 <th></th>
                 <td></td>
               </tr>
               <tr>
-                <th>Address</th>
+                <th>{dynamicT('address', 'Address')}</th>
                 <td colSpan="3">{property.address || 'N/A'}</td>
               </tr>
             </tbody>
@@ -162,7 +164,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
       <hr></hr>
 
       <div className="property-section mb-5">
-        <h3 className="section-title mb-4">Near By</h3>
+        <h3 className="section-title mb-4">{dynamicT('near-by', 'Near By')}</h3>
         <div className="nearby-items">
           <div className="row g-3">
 
@@ -187,7 +189,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
       {/* View Section */}
       <div className="property-section mb-5">
-        <h3 className="section-title mb-4">View</h3>
+        <h3 className="section-title mb-4">{dynamicT('view', 'View')}</h3>
         <div className="view-items">
           <div className="row g-3">
             {property?.views?.length > 0 ? (
@@ -202,7 +204,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               ))
             ) : (
               <div className="col-12">
-                <p>No views specified for this property.</p>
+                <p>{dynamicT('no-views-specified', 'No views specified for this property.')}</p>
               </div>
             )}
           </div>
@@ -213,7 +215,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
       {/* Facilities Section */}
       <div className="property-section mb-5">
-        <h3 className="section-title mb-4">Facilities</h3>
+        <h3 className="section-title mb-4">{dynamicT('facilities', 'Facilities')}</h3>
         <div className="facility-items">
           <div className="row g-3">
             {property.facilities && property.facilities.length > 0 ? (
@@ -229,7 +231,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               ))
             ) : (
               <div className="col-12">
-                <p>No facilities available for this property.</p>
+                <p>{dynamicT('no-facilities-available', 'No facilities available for this property.')}</p>
               </div>
             )}
           </div>
@@ -240,7 +242,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
 
       {/* Amenity Section */}
       <div className="property-section mb-5">
-        <h3 className="section-title mb-4">Amenity</h3>
+        <h3 className="section-title mb-4">{dynamicT('amenity', 'Amenity')}</h3>
         <div className="amenity-items">
           <div className="row g-3">
             {property.amenities && property.amenities.length > 0 ? (
@@ -256,7 +258,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               ))
             ) : (
               <div className="col-12">
-                <p>No amenities available for this property.</p>
+                <p>{dynamicT('no-amenities-available', 'No amenities available for this property.')}</p>
               </div>
             )}
           </div>

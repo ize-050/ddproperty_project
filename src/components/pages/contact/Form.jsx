@@ -20,13 +20,29 @@ const Form = ({ translations, locale }) => {
   // Email hook
   const { loading, error, success, sendContactForm, reset } = useEmail();
   
+  // Map frontend locale to database field name
+  const getLocaleField = (locale) => {
+    switch (locale) {
+      case 'zh':
+        return 'zhCN'; // Database field for Chinese
+      case 'th':
+        return 'th';
+      case 'ru':
+        return 'ru';
+      default:
+        return 'en';
+    }
+  };
+  
+  const dbLocale = getLocaleField(locale);
+  
   // Helper function to get translation by slug
   const getContactText = (slug, fallback) => {
     // First try from props (server-side)
     if (translations) {
       const found = translations.find(t => t.slug === slug);
       if (found) {
-        return found[locale] || found.en || fallback;
+        return found[dbLocale] || found.en || fallback;
       }
     }
     
@@ -167,7 +183,7 @@ const Form = ({ translations, locale }) => {
       
       <div className="mb-3">
         <label htmlFor="message" className="form-label">
-          {getContactText('message', 'Message')}
+          {getContactText('your_message', 'Message')}
         </label>
         <textarea 
           className="form-control" 

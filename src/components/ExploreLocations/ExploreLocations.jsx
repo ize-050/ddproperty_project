@@ -6,6 +6,7 @@ import Link from 'next/link';
 import zoneService from '@/services/zoneService';
 import styles from './ExploreLocations.module.css';
 import { useTranslations,useLocale } from 'next-intl';
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 
@@ -15,6 +16,7 @@ const ExploreLocations = () => {
   const [error, setError] = useState(null);
   const t = useTranslations('home');
   const locale = useLocale();
+  const { t: dynamicT } = useDynamicTranslations('listing');
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -100,8 +102,25 @@ const ExploreLocations = () => {
                     />
                   </div>
                   <div className="feature-content pt20">
-                    <h6 className="title mb-1">{location[`name_${locale}`]}</h6>
-                    <p className="text fz15">{location.propertyCount} Properties</p>
+                    <h6 className="title mb-1">{(() => {
+                      // Map locale to correct field name for zones
+                      let fieldName = 'name_en'; // default fallback
+                      switch (locale) {
+                        case 'th':
+                          fieldName = 'name_th';
+                          break;
+                        case 'zh':
+                          fieldName = 'name_ch'; // จีนใช้ name_ch ไม่ใช่ name_zh
+                          break;
+                        case 'ru':
+                          fieldName = 'name_ru';
+                          break;
+                        default:
+                          fieldName = 'name_en';
+                      }
+                      return location[fieldName] || location.name_en || location.name_th;
+                    })()}</h6>
+                    <p className="text fz15">{location.propertyCount} {dynamicT('properties', 'Properties')}</p>
                   </div>
                 </div>
               </Link>

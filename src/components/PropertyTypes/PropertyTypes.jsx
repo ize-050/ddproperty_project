@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import propertyTypeService from '@/services/propertyTypeService';
@@ -21,6 +22,7 @@ const PropertyTypes = () => {
   const t = useTranslations('home.propertyTypes');
   const commonT = useTranslations('common');
   const locale = useLocale();
+  const { t: dynamicT } = useDynamicTranslations('listing');
 
 
 
@@ -55,7 +57,22 @@ const PropertyTypes = () => {
 
   // Get the localized name based on current locale
   const getLocalizedName = (propertyType) => {
-    return locale === 'th' ? propertyType.nameTh : propertyType.name;
+    // Map locale to correct field name for property types
+    let fieldName = 'name'; // default fallback (English)
+    switch (locale) {
+      case 'th':
+        fieldName = 'nameTh';
+        break;
+      case 'zh':
+        fieldName = 'nameCh'; // จีนใช้ nameCh ไม่ใช่ nameZh
+        break;
+      case 'ru':
+        fieldName = 'nameRu';
+        break;
+      default:
+        fieldName = 'name';
+    }
+    return propertyType[fieldName] || propertyType.name || propertyType.nameTh;
   };
 
 
@@ -96,9 +113,9 @@ const PropertyTypes = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">{t('title')}</h2>
+                <h2 className="title">{dynamicT('property-types-title', 'Property Types')}</h2>
                 <p className="paragraph">
-                  {t('subtitle')}
+                  {dynamicT('property-types-subtitle', 'Discover various types of properties available')}
                 </p>
               </div>
             </div>
@@ -178,7 +195,7 @@ const PropertyTypes = () => {
                             </div>
                             <div className="apartment-content">
                               <h6 className="title mb-0" style={{ fontSize: '16px' ,color:"#fff" }}>{getLocalizedName(propertyType)}</h6>
-                              <p className="text mb-0" style={{ fontSize: '14px' ,color:"#fff" }}>{propertyType.count} {propertyType.count === 1 ? 'Property' : 'Properties'}</p>
+                              <p className="text mb-0" style={{ fontSize: '14px' ,color:"#fff" }}>{propertyType.count} {propertyType.count === 1 ? dynamicT('property', 'Property') : dynamicT('properties', 'Properties')}</p>
                             </div>
                           </div>
                         </Link>

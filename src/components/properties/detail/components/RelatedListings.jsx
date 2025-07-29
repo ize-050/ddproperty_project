@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { convertAndFormatPriceSync } from '@/utils/currencyUtils';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import ContactModal from '@/components/common/ContactModal/ContactModal';
 import './RelatedListing.scss'
 // Import Swiper styles
@@ -14,6 +15,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const RelatedListings = ({ property }) => {
+  const { t: dynamicT } = useSimpleTranslations('listing');
   const [relatedProperties, setRelatedProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,8 +56,8 @@ const RelatedListings = ({ property }) => {
   if (loading) {
     return (
       <div className="related-listings-section">
-        <h4 className="mb-4">Discover Our Featured Listings</h4>
-        <div className="loading-spinner">Loading...</div>
+        <h4 className="mb-4">{dynamicT('discover-featured-listings', 'Discover Our Featured Listings')}</h4>
+        <div className="loading-spinner">{dynamicT('loading', 'Loading...')}</div>
       </div>
     );
   }
@@ -74,7 +76,7 @@ const RelatedListings = ({ property }) => {
   return (
     <div className="related-listings-section">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="mb-0">Discover Our Featured Listings</h4>
+        <h4 className="mb-0">{dynamicT('discover-featured-listings', 'Discover Our Featured Listings')}</h4>
         <div className="col-auto mb30">
           <div className="row align-items-center justify-content-center">
             <div className="col-auto">
@@ -146,13 +148,13 @@ const RelatedListings = ({ property }) => {
                           <>
                             {prop.listings.some(listing => listing.listingType === 'SALE') &&
                               prop.listings.some(listing => listing.listingType === 'RENT') && (
-                                <div className="for-rent">For Sale/Rent</div>
+                                <div className="for-rent">{dynamicT('for-sale-rent', 'For Sale/Rent')}</div>
                               )}
                             {prop.listings.every(listing => listing.listingType === 'SALE') && (
-                              <div className="for-sale">For Sale</div>
+                              <div className="for-sale">{dynamicT('for-sale', 'For Sale')}</div>
                             )}
                             {prop.listings.every(listing => listing.listingType === 'RENT') && (
-                              <div className="for-rent">For Rent</div>
+                              <div className="for-rent">{dynamicT('for-rent', 'For Rent')}</div>
                             )}
                           </>
                         )}
@@ -169,13 +171,13 @@ const RelatedListings = ({ property }) => {
 
                       <div className="property-features">
                         <div className="feature">
-                          <i className="flaticon-bed"></i> {prop.bedrooms || 0} bed
+                          <i className="flaticon-bed"></i> {prop.bedrooms || 0} {dynamicT('bed', 'bed')}
                         </div>
                         <div className="feature">
-                          <i className="flaticon-shower"></i> {prop.bathrooms || 0} bath
+                          <i className="flaticon-shower"></i> {prop.bathrooms || 0} {dynamicT('bath', 'bath')}
                         </div>
                         <div className="feature">
-                          <i className="flaticon-expand"></i> {prop.size || 0} sqm
+                          <i className="flaticon-expand"></i> {prop.size || 0} {dynamicT('sqm', 'sqm')}
                         </div>
                       </div>
 
@@ -189,7 +191,7 @@ const RelatedListings = ({ property }) => {
                         )}
                         {rentPrice > 0 && (
                           <div className="rent-price">
-                            <span className="price-value">฿{convertAndFormatPriceSync(rentPrice, 'THB', locale)}/mo</span>
+                            <span className="price-value">฿{convertAndFormatPriceSync(rentPrice, 'THB', locale)}{dynamicT('mo', '/mo')}</span>
                           </div>
                         )}
                         <a
