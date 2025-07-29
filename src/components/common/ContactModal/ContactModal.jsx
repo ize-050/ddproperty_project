@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import  useDynamicTranslations  from '@/hooks/useDynamicTranslations';
 import { getMessagingSettings, transformSettingsToObject, generatePlatformLink, getDefaultSettings } from '@/services/messagingSettings';
 import './ContactModal.css';
 
@@ -10,6 +11,9 @@ const ContactModal = ({ isOpen, onClose, property }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [settings, setSettings] = useState(getDefaultSettings());
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Dynamic translations
+  const { t } = useDynamicTranslations('listing');
 
   const [contactAgent, setContactAgent] = useState(property?.contactInfo);
 
@@ -90,7 +94,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
         <button className="close-button" onClick={onClose}>×</button>
 
         <div className="modal-header">
-          <h3>FOR MORE INFOMATION</h3>
+          <h3>{t('for-more-information') || 'For More Information'}</h3>
 
         </div>
 
@@ -98,8 +102,8 @@ const ContactModal = ({ isOpen, onClose, property }) => {
           <div className="form-group">
             <input
               type="text"
-              placeholder="Name"
-              {...register("name", { required: "Name is required" })}
+              placeholder={t('name-placeholder') || 'Name'}
+              {...register("name", { required: t('name-required') || "Name is required" })}
             />
             {errors.name && <span className="error">{errors.name.message}</span>}
           </div>
@@ -107,12 +111,12 @@ const ContactModal = ({ isOpen, onClose, property }) => {
           <div className="form-group phone-group">
             <input
               type="email"
-              placeholder="Email"
+              placeholder={t('email-placeholder') || 'Email'}
               {...register("email", {
-                required: "Email is required",
+                required: t('email-required') || "Email is required",
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "Please enter a valid email"
+                  message: t('email-invalid') || "Please enter a valid email"
                 }
               })}
             />
@@ -122,12 +126,12 @@ const ContactModal = ({ isOpen, onClose, property }) => {
           <div className="form-group phone-group">
             <input
               type="tel"
-              placeholder="Phone Number"
+              placeholder={t('phone-placeholder') || 'Phone Number'}
               {...register("phone", {
-                required: "Phone number is required",
+                required: t('phone-required') || "Phone number is required",
                 pattern: {
                   value: /^[0-9]{9,10}$/,
-                  message: "Please enter a valid phone number"
+                  message: t('phone-invalid') || "Please enter a valid phone number"
                 }
               })}
             />
@@ -136,8 +140,8 @@ const ContactModal = ({ isOpen, onClose, property }) => {
 
           <div className="form-group">
             <textarea
-              placeholder="Massage"
-              {...register("message", { required: "Message is required" })}
+              placeholder={t('message-placeholder') || 'Message'}
+              {...register("message", { required: t('message-required') || "Message is required" })}
               rows={4}
             />
             {errors.message && <span className="error">{errors.message.message}</span>}
@@ -148,7 +152,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
             className="send-button"
             disabled={isSubmitting}
           >
-            <i className="far fa-comment-dots"></i> {isSubmitting ? 'Sending...' : 'Send Massage'}
+            <i className="far fa-comment-dots"></i> {isSubmitting ? (t('sending') || 'Sending...') : (t('send-message') || 'Send Message')}
           </button>
         </form>
 
@@ -166,7 +170,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
               </a>
             </div>
 
-            <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>Call Now</span>
+            <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>{t('call-now') || 'Call Now'}</span>
           </div>
 
           <div style={{

@@ -170,8 +170,7 @@ const AboutContent = () => {
               >
                 <div className="mb30">
                   <h2 className="title text-capitalize">
-                    Let's find the right <br className="d-none d-md-block" />{" "}
-                    selling option for you
+                    {t('lets-find-right-selling-option', 'Let&apos;s find the right selling option for you')}
                   </h2>
                 </div>
                 <div className="why-chose-list style2">

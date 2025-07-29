@@ -22,7 +22,7 @@ const LanguagePage = () => {
   const [currentString, setCurrentString] = useState(null);
   
   // Sections corresponding to tabs
-  const sections = ['header', 'home', 'rent', 'blog', 'aboutus', 'contact', 'listing', 'footer'];
+  const sections = ['header', 'home', 'blog', 'aboutus', 'contact', 'listing', 'footer'];
   
   // Fetch UI strings from API
   const fetchStrings = async () => {
@@ -45,18 +45,18 @@ const LanguagePage = () => {
     }
   };
   
-  // Handle adding new string
-  const handleAddString = () => {
-    setCurrentString({
-      section: sections[activeTab],
-      slug: '',
-      en: '',
-      th: '',
-      zhCN: '',
-      ru: ''
-    });
-    setEditMode(true);
-  };
+  // Handle adding new string - DISABLED
+  // const handleAddString = () => {
+  //   setCurrentString({
+  //     section: sections[activeTab],
+  //     slug: '',
+  //     en: '',
+  //     th: '',
+  //     zhCN: '',
+  //     ru: ''
+  //   });
+  //   setEditMode(true);
+  // };
   
   // Handle editing string
   const handleEditString = (string) => {
@@ -64,24 +64,24 @@ const LanguagePage = () => {
     setEditMode(true);
   };
   
-  // Handle deleting string
-  const handleDeleteString = async (id) => {
-    if (!window.confirm(t('confirmDelete'))) return;
-    
-    try {
-      const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/ui-strings/${id}`,
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
-      
-      toast.success(t('deleteSuccess'));
-      fetchStrings();
-    } catch (error) {
-      console.error('Error deleting UI string:', error);
-      toast.error(t('deleteFailed'));
-    }
-  };
+  // Handle deleting string - DISABLED
+  // const handleDeleteString = async (id) => {
+  //   if (!window.confirm(t('confirmDelete'))) return;
+  //   
+  //   try {
+  //     const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+  //     await axios.delete(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/ui-strings/${id}`,
+  //       { headers: { 'Authorization': `Bearer ${token}` } }
+  //     );
+  //     
+  //     toast.success(t('deleteSuccess'));
+  //     fetchStrings();
+  //   } catch (error) {
+  //     console.error('Error deleting UI string:', error);
+  //     toast.error(t('deleteFailed'));
+  //   }
+  // };
   
   // Handle saving string (create or update)
   const handleSaveString = async () => {
@@ -157,24 +157,7 @@ const LanguagePage = () => {
             <p>{t('subtitle')}</p>
           </div>
         </div>
-        <div className="col-xxl-6 text-end">
-          <div className="d-flex justify-content-end gap-2">
-        
-            <button 
-              className="btn btn-primary" 
-              style={{
-                color:'#fff',
-                background:'#dc3545',
-                border: '1px #dc3545 solid'
-              }}
-              onClick={handleAddString}
-              disabled={editMode}
-            >
-              <FaPlus className="me-2" />
-              {t('addNew')}
-            </button>
-          </div>
-        </div>
+        {/* Add button removed - view only mode */}
       </div>
       
       <div className="language-container">
@@ -186,7 +169,6 @@ const LanguagePage = () => {
           <TabList className="nav nav-tabs">
             <Tab>{t('tabs.header')}</Tab>
             <Tab>{t('tabs.home')}</Tab>
-            <Tab>{t('tabs.rent')}</Tab>
             <Tab>{t('tabs.blog')}</Tab>
             <Tab>{t('tabs.about')}</Tab>
             <Tab>{t('tabs.contact')}</Tab>
@@ -323,17 +305,12 @@ const LanguagePage = () => {
                                 <td>{string.ru || '-'}</td>
                                 <td className="actions-cell">
                                   <button
-                                    className="btn btn-sm btn-outline-primary me-2"
+                                    className="btn btn-sm btn-outline-primary"
                                     onClick={() => handleEditString(string)}
                                   >
                                     <FaEdit />
                                   </button>
-                                  <button
-                                    className="btn btn-sm btn-outline-danger"
-                                    onClick={() => handleDeleteString(string.id)}
-                                  >
-                                    <FaTrash />
-                                  </button>
+                                  {/* Delete button removed - view/edit only mode */}
                                 </td>
                               </tr>
                             ))
