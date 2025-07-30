@@ -334,21 +334,15 @@ function MyPropertiesPage() {
           width: 100%;
         }
         .mbp_pagination .page-item {
-          border-radius: 50%;
           display: inline-block;
           margin-right: 6px;
           transition: all 0.4s ease;
         }
-        .mbp_pagination .page-item:hover {
-          background-color: #ededed;
-        }
-        .mbp_pagination .page-item:first-child,
-        .mbp_pagination .page-item:last-child {
-          background-color: #ffffff;
-          box-shadow: 0px 1px 4px rgba(24, 26, 32, 0.07);
+        .mbp_pagination .page-item:hover:not(.ellipsis) {
+          background-color: #f5f5f5;
         }
         .mbp_pagination .page-item.active .page-link {
-          background-color: #ff6b35;
+          background-color: #eb6753;
           color: #ffffff;
           box-shadow: none;
         }
@@ -357,15 +351,36 @@ function MyPropertiesPage() {
           border: none;
           border-radius: 50%;
           color: #333;
-          font-weight: 400;
-          font-size: 15px;
+          font-weight: 600;
+          font-size: 14px;
           height: 40px;
           line-height: 40px;
           overflow: hidden;
           padding: 0;
           text-align: center;
           width: 40px;
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+        .mbp_pagination .page-link.page-nav {
+          background-color: #ffffff;
+          box-shadow: 0px 1px 4px rgba(24, 26, 32, 0.1);
+          color: #999;
+        }
+        .mbp_pagination .page-link.page-nav:hover:not([style*="opacity: 0.5"]) {
+          color: #666;
+          transform: scale(1.05);
+        }
+        .mbp_pagination .page-link.page-nav i {
+          font-size: 12px;
+        }
+        .mbp_pagination .page-link.page-number {
+          background-color: transparent;
+        }
+        .mbp_pagination .page-link.page-number:hover {
+          background-color: #f5f5f5;
         }
         .mbp_pagination .ellipsis {
           display: inline-block;
@@ -374,7 +389,12 @@ function MyPropertiesPage() {
           height: 40px;
           line-height: 40px;
           text-align: center;
-          color: #666;
+        }
+        .mbp_pagination .ellipsis .page-ellipsis {
+          color: #999;
+          font-weight: 600;
+          font-size: 14px;
+          user-select: none;
         }
         .mt10 {
           margin-top: 10px;
@@ -502,12 +522,6 @@ function MyPropertiesPage() {
                     </th>
                     <th className="visits-col">{t('tableHeaders.visits')}</th>
                     <th className="enquiries-col">{t('tableHeaders.enquiries')}</th>
-                    <th
-                      className="date-col sortable-header"
-                      onClick={() => handleColumnSort('createdAt')}
-                    >
-                      {t('tableHeaders.date')} {getSortIcon('createdAt')}
-                    </th>
                     <th className="actions-col">{t('tableHeaders.actions')}</th>
                   </tr>
                 </thead>
@@ -552,7 +566,7 @@ function MyPropertiesPage() {
                         <td className="displays-col">{property.viewCount || 0}</td>
                         <td className="visits-col">{property.viewCount || 0}</td>
                         <td className="enquiries-col">{property.interestedCount || 0}</td>
-                        <td className="date-col">{property.formattedDate}</td>
+                      
                         <td className="actions-col">
                           <div className="action-buttons">
                             <button className="action-btn view-btn" onClick={() => handleViewProperty(property)}>
@@ -600,7 +614,7 @@ function MyPropertiesPage() {
                   {/* Previous button */}
                   <li className="page-item">
                     <span
-                      className="page-link pointer"
+                      className="page-link pointer page-nav"
                       onClick={() => {
                         if (currentPage > 1) {
                           handlePageChange(currentPage - 1);
@@ -608,57 +622,97 @@ function MyPropertiesPage() {
                       }}
                       style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
                     >
-                      <span className="fas fa-angle-left" />
+                      <i className="fas fa-chevron-left" />
                     </span>
                   </li>
 
-                  {/* Always show page 1 */}
-                  <li 
-                    className={currentPage === 1 ? "active page-item" : "page-item"} 
-                    onClick={() => handlePageChange(1)}
-                  >
-                    <span className="page-link pointer">1</span>
-                  </li>
-
-                  {/* Show page 2 if total pages > 1 */}
-                  {totalPages > 1 && (
-                    <li 
-                      className={currentPage === 2 ? "active page-item" : "page-item"} 
-                      onClick={() => handlePageChange(2)}
-                    >
-                      <span className="page-link pointer">2</span>
-                    </li>
-                  )}
-
-                  {/* Show page 3 if total pages > 2 */}
-                  {totalPages > 2 && (
-                    <li 
-                      className={currentPage === 3 ? "active page-item" : "page-item"} 
-                      onClick={() => handlePageChange(3)}
-                    >
-                      <span className="page-link pointer">3</span>
-                    </li>
-                  )}
-
-                  {/* Show ellipsis if there are more than 4 pages */}
-                  {totalPages > 4 && (
-                    <li className="ellipsis"><span>...</span></li>
-                  )}
-
-                  {/* Show last page if total pages > 3 */}
-                  {totalPages > 3 && (
-                    <li 
-                      className={currentPage === totalPages ? "active page-item" : "page-item"} 
-                      onClick={() => handlePageChange(totalPages)}
-                    >
-                      <span className="page-link pointer">{totalPages}</span>
-                    </li>
-                  )}
+                  {/* Smart pagination with ellipsis */}
+                  {(() => {
+                    const pages = [];
+                    
+                    if (totalPages <= 7) {
+                      // แสดงทุกหน้าถ้าไม่เกิน 7 หน้า
+                      for (let i = 1; i <= totalPages; i++) {
+                        pages.push(
+                          <li 
+                            key={i}
+                            className={currentPage === i ? "active page-item" : "page-item"} 
+                            onClick={() => handlePageChange(i)}
+                          >
+                            <span className="page-link pointer page-number">{i}</span>
+                          </li>
+                        );
+                      }
+                    } else {
+                      // Smart pagination สำหรับหน้าเยอะ
+                      // หน้าแรก
+                      pages.push(
+                        <li 
+                          key={1}
+                          className={currentPage === 1 ? "active page-item" : "page-item"} 
+                          onClick={() => handlePageChange(1)}
+                        >
+                          <span className="page-link pointer page-number">1</span>
+                        </li>
+                      );
+                      
+                      // Ellipsis ซ้าย
+                      if (currentPage > 4) {
+                        pages.push(
+                          <li key="ellipsis-left" className="ellipsis">
+                            <span className="page-ellipsis">...</span>
+                          </li>
+                        );
+                      }
+                      
+                      // หน้าปัจจุบันและข้างเคียง
+                      const start = Math.max(2, currentPage - 1);
+                      const end = Math.min(totalPages - 1, currentPage + 1);
+                      
+                      for (let i = start; i <= end; i++) {
+                        if (i !== 1 && i !== totalPages) {
+                          pages.push(
+                            <li 
+                              key={i}
+                              className={currentPage === i ? "active page-item" : "page-item"} 
+                              onClick={() => handlePageChange(i)}
+                            >
+                              <span className="page-link pointer page-number">{i}</span>
+                            </li>
+                          );
+                        }
+                      }
+                      
+                      // Ellipsis ขวา
+                      if (currentPage < totalPages - 3) {
+                        pages.push(
+                          <li key="ellipsis-right" className="ellipsis">
+                            <span className="page-ellipsis">...</span>
+                          </li>
+                        );
+                      }
+                      
+                      // หน้าสุดท้าย
+                      if (totalPages > 1) {
+                        pages.push(
+                          <li 
+                            key={totalPages}
+                            className={currentPage === totalPages ? "active page-item" : "page-item"} 
+                            onClick={() => handlePageChange(totalPages)}
+                          >
+                            <span className="page-link pointer page-number">{totalPages}</span>
+                          </li>
+                        );
+                      }
+                    }
+                    
+                    return pages;
+                  })()}
 
                   {/* Next button */}
                   <li className="page-item">
                     <span
-                      className="page-link pointer"
+                      className="page-link pointer page-nav"
                       onClick={() => {
                         if (currentPage < totalPages) {
                           handlePageChange(currentPage + 1);
@@ -666,7 +720,7 @@ function MyPropertiesPage() {
                       }}
                       style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
                     >
-                      <span className="fas fa-angle-right" />
+                      <i className="fas fa-chevron-right" />
                     </span>
                   </li>
                 </ul>

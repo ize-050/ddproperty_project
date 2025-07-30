@@ -266,19 +266,98 @@ const ListingPropertiesPage = ({ properties = [], pagination = {}, zones = [], s
                       <i className="fas fa-chevron-left"></i>
                     </button>
 
-                    {/* แสดงปุ่มหมายเลขหน้าตามจำนวนหน้าที่มีจริง */}
-                    {[...Array(Math.max(1, paginationItems?.pages || 1))].map((_, i) => (
-                      <button
-                        key={i}
-                        className={`page-number ${parseInt(paginationItems?.page || 1) === i + 1 ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handlePageChange(i + 1);
-                        }}
-                      >
-                        {i + 1}
-                      </button>
-                    ))}
+                    {/* Smart pagination with ellipsis */}
+                    {(() => {
+                      const currentPage = parseInt(paginationItems?.page || 1);
+                      const totalPages = Math.max(1, paginationItems?.pages || 1);
+                      const pages = [];
+                      
+                      if (totalPages <= 7) {
+                        // แสดงทุกหน้าถ้าไม่เกิน 7 หน้า
+                        for (let i = 1; i <= totalPages; i++) {
+                          pages.push(
+                            <button
+                              key={i}
+                              className={`page-number ${currentPage === i ? 'active' : ''}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handlePageChange(i);
+                              }}
+                            >
+                              {i}
+                            </button>
+                          );
+                        }
+                      } else {
+                        // Smart pagination สำหรับหน้าเยอะ
+                        // หน้าแรก
+                        pages.push(
+                          <button
+                            key={1}
+                            className={`page-number ${currentPage === 1 ? 'active' : ''}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handlePageChange(1);
+                            }}
+                          >
+                            1
+                          </button>
+                        );
+                        
+                        // Ellipsis ซ้าย
+                        if (currentPage > 4) {
+                          pages.push(
+                            <span key="ellipsis-left" className="page-ellipsis">...</span>
+                          );
+                        }
+                        
+                        // หน้าปัจจุบันและข้างเคียง
+                        const start = Math.max(2, currentPage - 1);
+                        const end = Math.min(totalPages - 1, currentPage + 1);
+                        
+                        for (let i = start; i <= end; i++) {
+                          if (i !== 1 && i !== totalPages) {
+                            pages.push(
+                              <button
+                                key={i}
+                                className={`page-number ${currentPage === i ? 'active' : ''}`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handlePageChange(i);
+                                }}
+                              >
+                                {i}
+                              </button>
+                            );
+                          }
+                        }
+                        
+                        // Ellipsis ขวา
+                        if (currentPage < totalPages - 3) {
+                          pages.push(
+                            <span key="ellipsis-right" className="page-ellipsis">...</span>
+                          );
+                        }
+                        
+                        // หน้าสุดท้าย
+                        if (totalPages > 1) {
+                          pages.push(
+                            <button
+                              key={totalPages}
+                              className={`page-number ${currentPage === totalPages ? 'active' : ''}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handlePageChange(totalPages);
+                              }}
+                            >
+                              {totalPages}
+                            </button>
+                          );
+                        }
+                      }
+                      
+                      return pages;
+                    })()}
 
                     <button
                       className="page-nav next"

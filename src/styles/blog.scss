@@ -99,51 +99,101 @@
     }
   }
 
-  // Pagination styles
+  // Smart Pagination styles
   .pagination-container {
     margin-top: 40px;
     display: flex;
     justify-content: center;
 
-    .pagination {
-      display: flex;
+    .page_navigation {
+      margin: 20px 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      padding: 5px;
+      border-radius: 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       list-style: none;
-      padding: 0;
-      margin: 0;
-
+      
       .page-item {
-        margin: 0 5px;
-
+        display: inline-block;
+        margin-right: 6px;
+        transition: all 0.4s ease;
+        
+        &:hover:not(.ellipsis) {
+          background-color: #f5f5f5;
+        }
+        
+        &.active .page-link {
+          background-color: #eb6753;
+          color: #ffffff;
+          box-shadow: none;
+        }
+        
         .page-link {
-          display: flex;
+          background-color: transparent;
+          border: none;
+          border-radius: 50%;
+          color: #333;
+          font-weight: 600;
+          font-size: 14px;
+          height: 40px;
+          line-height: 40px;
+          overflow: hidden;
+          padding: 0;
+          text-align: center;
+          width: 40px;
+          display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background-color: #fff;
-          color: #333;
-          text-decoration: none;
           transition: all 0.3s ease;
-          font-weight: 500;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-          &:hover {
-            background-color: #f0f8ff;
-            color: #1e73be;
+          text-decoration: none;
+          
+          &.page-nav {
+            background-color: #ffffff;
+            box-shadow: 0px 1px 4px rgba(24, 26, 32, 0.1);
+            color: #999;
+            
+            &:hover:not(.disabled) {
+              color: #666;
+              transform: scale(1.05);
+            }
+            
+            &.disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+              pointer-events: none;
+            }
+            
+            i {
+              font-size: 12px;
+            }
+          }
+          
+          &.page-number {
+            background-color: transparent;
+            
+            &:hover {
+              background-color: #f5f5f5;
+            }
           }
         }
-
-        &.active .page-link {
-          background-color: #1e73be;
-          color: #fff;
-        }
-
-        &:first-child .page-link,
-        &:last-child .page-link {
-          width: auto;
-          padding: 0 15px;
-          border-radius: 20px;
+      }
+      
+      .ellipsis {
+        display: inline-block;
+        margin-right: 6px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        
+        .page-ellipsis {
+          color: #999;
+          font-weight: 600;
+          font-size: 14px;
+          user-select: none;
         }
       }
     }
