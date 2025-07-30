@@ -1,17 +1,14 @@
 import { Suspense } from 'react';
-import { lazy } from 'react';
 import serverApi from '@/utils/serverApi';
 import { getTranslations } from 'next-intl/server';
 import { enhancePropertyData } from '@/utils/propertyDetailHelper';
+import PropertyDetailPage from '@/components/properties/detail/PropertyDetailPage';
+import LoadingAnimation from '@/components/common/LoadingAnimation';
 
 // บังคับให้โหลดข้อมูลใหม่ทุกครั้งที่เข้าหน้า รวมถึงตอนกดปุ่ม Back
 export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
-
-// ใช้ lazy import แบบมี suspense เพื่อแก้ไขปัญหา hydration error
-const PropertyDetailPage = lazy(() => import("@/components/properties/detail/PropertyDetailPage"));
-const LoadingAnimation = lazy(() => import("@/components/common/LoadingAnimation"));
 
 // สร้าง metadata แบบ dynamic ตามภาษาและข้อมูล property
 export async function generateMetadata({ params }) {

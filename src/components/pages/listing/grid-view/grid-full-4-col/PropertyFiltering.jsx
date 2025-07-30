@@ -29,6 +29,24 @@ const promotionalPriceStyles = `
   }
 `;
 
+// Helper function สำหรับ zone name mapping ที่ปลอดภัยจาก error
+const getZoneName = (zone, locale) => {
+  if (!zone) return '';
+  
+  // Map locale to correct field name
+  const localeFieldMap = {
+    'en': 'name_en',
+    'th': 'name_th', 
+    'zh': 'name_ch',
+    'ru': 'name_ru'
+  };
+  
+  const fieldName = localeFieldMap[locale] || 'name_en';
+  
+  // Return zone name or fallback to English or empty string
+  return zone[fieldName] || zone.name_en || zone.name || '';
+};
+
 export default function PropertyFiltering({ property }) {
   const locale = useLocale();
   const { t: dynamicT } = useSimpleTranslations('listing');
@@ -172,19 +190,19 @@ export default function PropertyFiltering({ property }) {
                 <>
                   {property.listings.some(listing => listing.listingType === 'SALE') &&
                     property.listings.some(listing => listing.listingType === 'RENT') && (
-                      <div className="for-rent">For Sale/Rent</div>
+                      <div className="for-rent">{dynamicT('for-sale-rent', 'For Sale/Rent')}</div>
                     )}
                   {property.listings.every(listing => listing.listingType === 'SALE') && (
-                    <div className="for-sale">For Sale</div>
+                    <div className="for-sale">{dynamicT('for-sale', 'For Sale')}</div>
                   )}
                   {property.listings.every(listing => listing.listingType === 'RENT') && (
-                    <div className="for-rent">For Rent</div>
+                    <div className="for-rent">{dynamicT('for-rent', 'For Rent')}</div>
                   )}
                 </>
               ) : property.listings && property.listings[0]?.listingType && (
                 <>
                   <div className={property.listings[0].listingType === 'SALE' ? "for-sale" : "for-rent"}>
-                    {property.listings[0].listingType === 'SALE' ? 'For Sale' : 'For Rent'}
+                    {property.listings[0].listingType === 'SALE' ? dynamicT('for-sale', 'For Sale') : dynamicT('for-rent', 'For Rent')}
                   </div>
                 </>
               )}
@@ -201,7 +219,7 @@ export default function PropertyFiltering({ property }) {
 
             </div>
             <div className="property-location">
-              {property.zone[`name_${locale}`]}
+              {getZoneName(property?.zone, locale)}
             </div>
 
             <div className="property-features">

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { convertAndFormatPrice } from '@/utils/currencyUtils';
@@ -9,7 +9,7 @@ import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 // Import components
 import PropertyBreadcrumb from './components/PropertyBreadcrumb';
 import PropertyHeader from './components/PropertyHeader';
-import PropertyGallery from './components/PropertyGallery';
+import PropertyGalleryWithSuspense from './components/PropertyGalleryWithSuspense';
 import PropertyContent from './components/PropertyContent';
 import PropertySidebar from './components/PropertySidebar';
 import PropertyUnitPlan from './components/PropertyUnitPlan';
@@ -39,10 +39,28 @@ const PropertyDetailPage = ({ property }) => {
   const [propertyDescription, setPropertyDescription] = useState('');
   const [youtubeVideo, setYoutubeVideo] = useState('');
   const [paymentPlan, setPaymentPlan] = useState('');
+  
+  // Ref to track if view has been tracked for this property
+  const viewTrackedRef = useRef(new Set());
 
-  // Function to track property view
+  // Function to track property view (with persistent duplicate prevention)
   const trackPropertyView = async (propertyId) => {
+    const sessionKey = `property_view_tracked_${propertyId}`;
+    
+    // Check if view has already been tracked for this property in this session
+    if (sessionStorage.getItem(sessionKey)) {
+      console.log('View already tracked for property in this session:', propertyId);
+      return;
+    }
+    
+    // Also check ref for immediate duplicate prevention
+    if (viewTrackedRef.current.has(propertyId)) {
+      console.log('View already tracked for property (ref check):', propertyId);
+      return;
+    }
+    
     try {
+      console.log('Tracking view for property:', propertyId);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}/view`, {
         method: 'POST',
         headers: {
@@ -53,7 +71,10 @@ const PropertyDetailPage = ({ property }) => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('View tracked:', result);
+        console.log('View tracked successfully:', result);
+        // Mark this property as tracked in both ref and sessionStorage
+        viewTrackedRef.current.add(propertyId);
+        sessionStorage.setItem(sessionKey, 'true');
       }
     } catch (error) {
       console.error('Error tracking view:', error);
@@ -63,25 +84,22 @@ const PropertyDetailPage = ({ property }) => {
 
   useEffect(() => {
     if (property) {
-      // Track property view when component mounts
+      // Track property view when component mounts (only once per property)
       trackPropertyView(property.id);
 
       let desc = '';
-      if (locale != 'en') {
-        const descriptionObj = property.translatedDescriptions[locale];
-        desc = descriptionObj;
-
-      }
-      else {
+      if (locale !== 'en') {
+        const descriptionObj = property.translatedDescriptions?.[locale];
+        desc = descriptionObj || property.description || '';
+      } else {
         desc = property.description || '';
       }
 
-      if (locale != 'en') {
-        const paymentPlan = property.translatedPaymentPlans[locale];
+      if (locale !== 'en') {
+        const paymentPlan = property.translatedPaymentPlans?.[locale] || property.paymentPlan || '';
         setPaymentPlan(paymentPlan);
-      }
-      else {
-        const paymentPlan = property.paymentPlan;
+      } else {
+        const paymentPlan = property.paymentPlan || '';
         setPaymentPlan(paymentPlan);
       }
 
@@ -124,7 +142,7 @@ const PropertyDetailPage = ({ property }) => {
       console.log("youtubeUrl (embed)", youtubeUrl);
       setYoutubeVideo(youtubeUrl);
     }
-  }, [property, locale]);
+  }, [property]);
 
 
 
@@ -152,20 +170,7 @@ const PropertyDetailPage = ({ property }) => {
 
 
 
-  // ฟังก์ชันสำหรับเลื่อนไปรูปถัดไป
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % propertyImages.length);
-  };
 
-  // ฟังก์ชันสำหรับเลื่อนไปรูปก่อนหน้า
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + propertyImages.length) % propertyImages.length);
-  };
-
-  // ฟังก์ชันสำหรับเลือกรูปโดยตรง
-  const selectImage = (index) => {
-    setCurrentImageIndex(index);
-  };
 
   // แปลงข้อมูลการตกแต่งเป็นข้อความ
   const getFurnishingText = (furnishing) => {
@@ -218,7 +223,7 @@ const PropertyDetailPage = ({ property }) => {
       />
 
       {/* Property Gallery Section */}
-      <PropertyGallery
+      <PropertyGalleryWithSuspense
         images={propertyImages}
         property={property}
       />

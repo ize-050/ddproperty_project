@@ -1,6 +1,7 @@
 /**
  * Utility functions for currency conversion and formatting
  */
+
 import { getCookie } from 'cookies-next';
 
 // Map locale to currency code (fallback if no currency cookie is set)

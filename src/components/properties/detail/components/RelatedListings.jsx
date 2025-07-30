@@ -186,12 +186,12 @@ const RelatedListings = ({ property }) => {
                       <div className="property-price">
                         {salePrice > 0 && (
                           <div className="sale-price">
-                            <span className="price-value">฿{convertAndFormatPriceSync(salePrice, 'THB', locale)}</span>
+                            <span className="price-value">{convertAndFormatPriceSync(salePrice, 'THB', locale)}</span>
                           </div>
                         )}
                         {rentPrice > 0 && (
                           <div className="rent-price">
-                            <span className="price-value">฿{convertAndFormatPriceSync(rentPrice, 'THB', locale)}{dynamicT('mo', '/mo')}</span>
+                            <span className="price-value">{convertAndFormatPriceSync(rentPrice, 'THB', locale)}{dynamicT('mo', '/mo')}</span>
                           </div>
                         )}
                         <a
