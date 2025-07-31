@@ -18,6 +18,10 @@ const nextConfig = {
     ],
   },
   reactStrictMode: false,
+  // Remove console.log in production
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
   async redirects() {
     return [
       {
@@ -25,8 +29,6 @@ const nextConfig = {
         destination: '/:locale/properties/list',
         permanent: true,
       },
-      // ไม่จำเป็นต้องมี redirects สำหรับ /properties/list อีกต่อไป
-      // เนื่องจากเราจัดการด้วย middleware แล้ว
     ];
   },
 };

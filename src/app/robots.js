@@ -1,6 +1,6 @@
 // Next.js App Router Dynamic Robots.txt
 export default function robots() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ddproperty.com';
+  const baseUrl = "https://www.d-luckproperty.com";
   
   return {
     rules: [

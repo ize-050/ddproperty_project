@@ -216,6 +216,7 @@
     "messageDescription": "เราดีใจที่ได้พบคุณอีกครั้ง"
   },
   "backoffice": {
+    "verifyingAuth": "กำลังตรวจสอบการยืนยันตัวตน...",
     "frontend": "หน้าบ้าน",
     "paginationOf": "จาก",
     "coAgent": {

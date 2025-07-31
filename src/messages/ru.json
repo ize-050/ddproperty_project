@@ -221,6 +221,7 @@
     "messageDescription": "Мы рады видеть вас снова"
   },
   "backoffice": {
+    "verifyingAuth": "Проверка аутентификации...",
     "frontend": "Интерфейс",
     "paginationOf": "из",
     "coAgent": {

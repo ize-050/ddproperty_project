@@ -324,7 +324,13 @@
     "sentMessage": "已发送消息",
     "messageDescription": "很高兴再次见到您"
   },
+  "PropertyList": {
+    "discoverOurFeaturedListings": "发现我们的精选房源",
+    "noPropertiesFound": "没有找到房源",
+    "tryDifferentFilters": "尝试使用其他过滤器"
+  },
   "backoffice": {
+    "verifyingAuth": "正在验证身份...",
     "frontend": "前端",
     "paginationOf": "的",
     "coAgent": {

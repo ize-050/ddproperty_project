@@ -207,7 +207,7 @@ const DynamicFooter = () => {
               <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0 }}>info@d-luckproperty.com</p>
             </div>
             
-            <div>
+            {/* <div>
               <h5 style={{ color: 'white', fontSize: '16px', marginBottom: '10px' }}>
                 {getTranslation('get-promo-with-newsletter', 'getPromoWithNewsletter')}
               </h5>
@@ -235,7 +235,7 @@ const DynamicFooter = () => {
                   {getTranslation('subscribe', 'subscribe')}
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         

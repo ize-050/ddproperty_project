@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { FaSearch, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '@/components/backoffice/auth/AuthContext';
 
 import Image from 'next/image';
 
@@ -29,6 +30,7 @@ const initialStatsData = {
 
 const MessagePage = () => {
   const t = useTranslations('Message');
+  const { user } = useAuth();
 
   // State for messages data
   const [messages, setMessages] = useState([]);
@@ -97,7 +99,13 @@ const MessagePage = () => {
       // Get token from localStorage or sessionStorage
       const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/messages/user?page=1&limit=50`, {
+      // Determine API endpoint based on user role
+      const isAdmin = user?.role === 'ADMIN';
+      const apiEndpoint = isAdmin 
+        ? `${process.env.NEXT_PUBLIC_API_URL}/messages?page=1&limit=50` // Admin sees all messages
+        : `${process.env.NEXT_PUBLIC_API_URL}/messages/user?page=1&limit=50`; // Non-admin sees only own messages
+
+      const response = await fetch(apiEndpoint, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -112,19 +120,22 @@ const MessagePage = () => {
       const data = await response.json();
 
       if (data.success) {
+        // Get messages from response (backend sends data directly, not data.data)
+        const messages = data.data || [];
+        
         // Format the messages data
-        const formattedMessages = data.data.map(formatMessageData);
+        const formattedMessages = messages.map(formatMessageData);
 
         // Create a new stats object
         const newStatsData = {
-          leadsReceived: data.data.length,
-          inquiriesReceived: data.data.length,
-          new: data.data.filter(m => m.status === 'NEW').length,
-          contacted: data.data.filter(m => m.status === 'CONTACTED').length,
-          visit: data.data.filter(m => m.status === 'VISIT').length,
-          proposal: data.data.filter(m => m.status === 'PROPOSAL').length,
-          won: data.data.filter(m => m.status === 'WON').length,
-          lost: data.data.filter(m => m.status === 'LOST').length
+          leadsReceived: messages.length,
+          inquiriesReceived: messages.length,
+          new: messages.filter(m => m.status === 'NEW').length,
+          contacted: messages.filter(m => m.status === 'CONTACTED').length,
+          visit: messages.filter(m => m.status === 'VISIT').length,
+          proposal: messages.filter(m => m.status === 'PROPOSAL').length,
+          won: messages.filter(m => m.status === 'WON').length,
+          lost: messages.filter(m => m.status === 'LOST').length
         };
         
         // Update the stats state

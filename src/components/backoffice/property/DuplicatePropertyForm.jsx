@@ -411,8 +411,9 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             propertyData.shortTerm1Year = rentListing.shortTerm1Year || 0;
           }
           
-          // เซ็ตค่า form data ใน store
-          setFormData({ ...propertyData });
+          // เซ็ตค่า form data ใน store (เหมือน EditPropertyForm)
+          console.log("propertyData for duplicate form:", propertyData);
+          setFormData(propertyData);
           reset(propertyData);
 
           // Handle property images

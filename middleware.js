@@ -22,9 +22,35 @@ function getLocaleFromHeader(request) {
   return defaultLocale;
 }
 
+// ฟังก์ชันตรวจสอบว่า pathname มี locale หรือไม่
+function getLocaleFromPathname(pathname) {
+  const segments = pathname.split('/');
+  const firstSegment = segments[1];
+  return locales.includes(firstSegment) ? firstSegment : null;
+}
+
+// ฟังก์ชันลบ locale prefix จาก pathname
+function removeLocaleFromPathname(pathname, locale) {
+  if (locale && pathname.startsWith(`/${locale}`)) {
+    return pathname.slice(`/${locale}`.length) || '/';
+  }
+  return pathname;
+}
+
+// ฟังก์ชันตรวจสอบว่าเป็น static file หรือไม่
+function isStaticFile(pathname) {
+  return /\.(ico|png|jpg|jpeg|gif|svg|css|js|woff|woff2|ttf|eot|webp)$/i.test(pathname);
+}
+
 export function middleware(request) {
   // ดึง pathname จาก URL
   const pathname = request.nextUrl.pathname;
+  
+  // ตรวจสอบว่าเป็น sitemap.xml หรือ robots.txt
+  if (pathname === '/sitemap.xml' || pathname === '/robots.txt') {
+    console.log('Middleware: Excluding from locale handling:', pathname);
+    return NextResponse.next();
+  }
   
   // ตรวจสอบว่า pathname มีภาษาหรือไม่
   const pathnameHasLocale = locales.some(
@@ -59,6 +85,20 @@ export function middleware(request) {
 }
 
 export const config = {
-  // ใช้กับทุกเส้นทางยกเว้น api, _next, และไฟล์สถิต
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - sitemap.xml (sitemap file)
+     * - robots.txt (robots file)
+     * - images (public images)
+     * - css (public css)
+     * - fonts (public fonts)
+     * - scss (public scss)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|images|css|fonts|scss).*)',
+  ],
 };

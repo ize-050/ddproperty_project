@@ -222,6 +222,7 @@
     "messageDescription": "We are glad to see you again"
   },
   "backoffice": {
+    "verifyingAuth": "Verifying authentication...",
     "frontend": "Frontend",
     "paginationOf": "of",
     "coAgent": {

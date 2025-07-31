@@ -5,6 +5,8 @@ import { lazy } from 'react';
 import dynamic from 'next/dynamic';
 import { headers } from "next/headers";
 import AOSInit from "@/components/Aos/AosComponent";
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
+import { generateOrganizationSchema, generateWebsiteSchema } from '@/utils/schemaGenerator';
 
 // นำเข้า ErrorBoundary แบบ dynamic เพื่อให้ทำงานเฉพาะฝั่ง client
 
@@ -94,6 +96,10 @@ export default async function LocaleLayout({ children, params }) {
 
   const messages = await getMessages({ locale })
 
+  // สร้าง Schema.org markup สำหรับ SEO
+  const organizationSchema = generateOrganizationSchema(locale);
+  const websiteSchema = generateWebsiteSchema(locale);
+
   return (
     <html lang={locale}>
       <head>
@@ -104,6 +110,20 @@ export default async function LocaleLayout({ children, params }) {
         <link rel="icon" type="image/x-icon" href="/images/dluckfav.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/images/dluckfav.ico" />
         <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+        
+        {/* Schema.org markup สำหรับ SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
       </head>
       <body
         className={`body ${poppins.variable} ${dmSans.variable}`}
@@ -113,6 +133,7 @@ export default async function LocaleLayout({ children, params }) {
         }}
       >
         <React.Fragment>
+          <GoogleAnalytics />
           <AOSInit />
           <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="wrapper ovh">

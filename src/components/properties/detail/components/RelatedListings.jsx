@@ -8,6 +8,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { convertAndFormatPriceSync } from '@/utils/currencyUtils';
 import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import ContactModal from '@/components/common/ContactModal/ContactModal';
+import createSlug from '@/utils/slugify';
 import './RelatedListing.scss'
 // Import Swiper styles
 import 'swiper/css';
@@ -28,7 +29,7 @@ const RelatedListings = ({ property }) => {
 
       try {
         setLoading(true);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/zones/${property.zoneId}/properties?limit=6`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/zones/${property.zoneId}/properties?limit=9`, {
           headers: {
             'Content-Type': 'application/json',
             'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
@@ -128,7 +129,8 @@ const RelatedListings = ({ property }) => {
           {relatedProperties.map((prop) => {
             const salePrice = prop.listings?.find(l => l.listingType === 'SALE')?.price || 0;
             const rentPrice = prop.listings?.find(l => l.listingType === 'RENT')?.price || 0;
-            const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${prop.id}`;
+            const slug = createSlug(prop.title); // Create slug from property title
+            const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${prop.id}/${slug}`;
 
             return (
               <SwiperSlide key={prop.id}>
@@ -163,7 +165,7 @@ const RelatedListings = ({ property }) => {
 
                     <div className="property-content">
                       <div className="property-name">
-                        <h6 className="list-title">{prop.projectName}</h6>
+                        <h6 className="list-title">{prop.title}</h6>
                       </div>
                       <div className="property-location">
                         {prop.zone?.[`name_${locale}`] || prop.zone?.name}
@@ -177,7 +179,7 @@ const RelatedListings = ({ property }) => {
                           <i className="flaticon-shower"></i> {prop.bathrooms || 0} {dynamicT('bath', 'bath')}
                         </div>
                         <div className="feature">
-                          <i className="flaticon-expand"></i> {prop.size || 0} {dynamicT('sqm', 'sqm')}
+                          <i className="flaticon-expand"></i> {prop.usableArea || 0} {dynamicT('sqm', 'sqm')}
                         </div>
                       </div>
 

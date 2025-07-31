@@ -261,7 +261,7 @@ function MyPropertiesPage() {
   };
 
   const handleEditProperty = (propertyId) => {
-    window.location.href = `/${locale}/backoffice/edit-property/${propertyId}/`;
+    window.open(`/${locale}/backoffice/edit-property/${propertyId}/`, '_blank');
   }
 
   const handleViewProperty = (property) => {

@@ -12,6 +12,7 @@ const LatestBlogs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const locale = useLocale();
+  const t = useTranslations('blog');
 
   useEffect(() => {
     const fetchLatestBlogs = async () => {
@@ -23,7 +24,7 @@ const LatestBlogs = () => {
         setError(null);
       } catch (err) {
         console.error('Error fetching latest blogs:', err);
-        setError(t('error.fetch'));
+        setError('Failed to fetch blogs');
       } finally {
         setLoading(false);
       }
@@ -34,14 +35,27 @@ const LatestBlogs = () => {
 
   // Get localized title based on current locale
   const getLocalizedTitle = (blog) => {
+    let translatedTitles = null;
+    
+    // Parse translatedTitles if it's a JSON string
+    if (blog.translatedTitles) {
+      try {
+        translatedTitles = typeof blog.translatedTitles === 'string' 
+          ? JSON.parse(blog.translatedTitles) 
+          : blog.translatedTitles;
+      } catch (error) {
+        console.error('Error parsing translatedTitles:', error);
+      }
+    }
+
     // First try to get title from translatedTitles object based on current locale
-    if (blog.translatedTitles && blog.translatedTitles[locale]) {
-      return blog.translatedTitles[locale];
+    if (translatedTitles && translatedTitles[locale]) {
+      return translatedTitles[locale];
     }
 
     // Fallback to English if current locale not available
-    if (blog.translatedTitles && blog.translatedTitles.en) {
-      return blog.translatedTitles.en;
+    if (translatedTitles && translatedTitles.en) {
+      return translatedTitles.en;
     }
 
     // Fallback to main title field if translations not available
@@ -50,10 +64,10 @@ const LatestBlogs = () => {
     }
 
     // Last resort - try any available language
-    if (blog.translatedTitles) {
-      const availableLanguage = Object.keys(blog.translatedTitles)[0];
+    if (translatedTitles) {
+      const availableLanguage = Object.keys(translatedTitles)[0];
       if (availableLanguage) {
-        return blog.translatedTitles[availableLanguage];
+        return translatedTitles[availableLanguage];
       }
     }
 
@@ -63,14 +77,27 @@ const LatestBlogs = () => {
 
   // Get localized content based on current locale
   const getLocalizedContent = (blog) => {
+    let translatedContents = null;
+    
+    // Parse translatedContents if it's a JSON string
+    if (blog.translatedContents) {
+      try {
+        translatedContents = typeof blog.translatedContents === 'string' 
+          ? JSON.parse(blog.translatedContents) 
+          : blog.translatedContents;
+      } catch (error) {
+        console.error('Error parsing translatedContents:', error);
+      }
+    }
+
     // First try to get content from translatedContents object based on current locale
-    if (blog.translatedContents && blog.translatedContents[locale]) {
-      return blog.translatedContents[locale];
+    if (translatedContents && translatedContents[locale]) {
+      return translatedContents[locale];
     }
 
     // Fallback to English if current locale not available
-    if (blog.translatedContents && blog.translatedContents.en) {
-      return blog.translatedContents.en;
+    if (translatedContents && translatedContents.en) {
+      return translatedContents.en;
     }
 
     // Fallback to main content field if translations not available
@@ -79,10 +106,10 @@ const LatestBlogs = () => {
     }
 
     // Last resort - try any available language
-    if (blog.translatedContents) {
-      const availableLanguage = Object.keys(blog.translatedContents)[0];
+    if (translatedContents) {
+      const availableLanguage = Object.keys(translatedContents)[0];
       if (availableLanguage) {
-        return blog.translatedContents[availableLanguage];
+        return translatedContents[availableLanguage];
       }
     }
 
@@ -157,10 +184,10 @@ const LatestBlogs = () => {
                 </span>
               </div>
               <a className="tag" href="#">
-                {blog.title}
+                {getLocalizedTitle(blog)}
               </a>
               <h6 className="title mt-1">
-                <Link href={`/blog/${blog.id}`}>{blog.title}</Link>
+                <Link href={`/blog/${blog.id}`}>{getLocalizedTitle(blog)}</Link>
               </h6>
 
             </div>
