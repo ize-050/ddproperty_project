@@ -36,8 +36,9 @@ const Page = lazy(() => import("@/components/home/page"));
 export async function generateMetadata({ params }) {
   const { locale } = params;
 
-  const baseUrl = 'https://www.d-luckproperty.com';
-  const localizedUrl = locale === 'th' ? `${baseUrl}` : `${baseUrl}/${locale}`;
+  // Force production URL และไม่พึ่งพา environment variables
+  const baseUrl = 'https://dluckproperty.com';
+  const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
 
   // SEO-optimized metadata สำหรับแต่ละภาษา
   const metadataByLocale = {
@@ -68,15 +69,15 @@ export async function generateMetadata({ params }) {
   // สร้าง alternates สำหรับ SEO
   const languages = {};
   ['th', 'en', 'zh', 'ru'].forEach(lang => {
-    languages[lang] = lang === 'th' ? baseUrl : `${baseUrl}/${lang}`;
+    const langUrl = lang === 'th' ? baseUrl : `${baseUrl}/${lang}`;
+    languages[lang] = ``;
   });
-
   return {
     title: currentMetadata.title,
     description: currentMetadata.description,
     keywords: currentMetadata.keywords,
     alternates: {
-      canonical: localizedUrl,
+      canonical: `${localizedUrl}`,
       languages
     },
     openGraph: {
@@ -206,18 +207,41 @@ async function getLanguage(section = 'home') {
 
 
 export default async function HomeContent({ params }) {
-  // ดึงข้อมูล properties แบบสุ่มจาก API
-  const randomProperties = await getRandomProperties();
-  // ดึงข้อมูล Zone ทั้งหมดจาก API
-  const zones = await getAllZones();
-
   // Get the current locale from params
   const locale = params?.locale || 'en';
 
-  // Get all home section translations
-  const homeTranslations = await getLanguage('home');
+  // ดึงข้อมูลทั้งหมดพร้อม error handling
+  let randomProperties = [];
+  let zones = [];
+  let homeTranslations = {};
+  let propertyTypes = [];
 
-  const propertyTypes = await getAllpropertyTypes();
+  try {
+    // ดึงข้อมูล properties แบบสุ่มจาก API
+    randomProperties = await getRandomProperties();
+  } catch (error) {
+    console.error('Failed to fetch random properties:', error);
+  }
+
+  try {
+    // ดึงข้อมูล Zone ทั้งหมดจาก API
+    zones = await getAllZones();
+  } catch (error) {
+    console.error('Failed to fetch zones:', error);
+  }
+
+  try {
+    // Get all home section translations
+    homeTranslations = await getLanguage('home');
+  } catch (error) {
+    console.error('Failed to fetch home translations:', error);
+  }
+
+  try {
+    propertyTypes = await getAllpropertyTypes();
+  } catch (error) {
+    console.error('Failed to fetch property types:', error);
+  }
 
   console.log("homeTranslations", homeTranslations)
 

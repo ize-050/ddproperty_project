@@ -68,7 +68,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title,
         url: propertyUrl,
-        siteName: 'DDProperty',
+        siteName: 'D-Luck Property',
         images: [
           {
             url: property.featuredImage?.url || '/images/logo/logo.png',

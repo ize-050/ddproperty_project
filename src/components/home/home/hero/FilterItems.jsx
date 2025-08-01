@@ -201,7 +201,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             instanceId="property-type-select"
             required
             isSearchable={false}
-            menuPortalTarget={document?.body}
+            menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
             menuPosition="fixed"
             onChange={(option) => setSelectedPropertyType(option)}
             onMenuOpen={() => {
@@ -264,7 +264,7 @@ const FilterItems = forwardRef(({ listingType = "sale", propertyTypes }, ref) =>
             instanceId="property-type-select"
             required
             isSearchable={false}
-            menuPortalTarget={document?.body}
+            menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
             menuPosition="fixed"
             onChange={(option) => setSelectedZone(option)}
             onMenuOpen={() => {
