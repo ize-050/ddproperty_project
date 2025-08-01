@@ -68,7 +68,7 @@ export async function generateMetadata({ params }) {
   // สร้าง alternates สำหรับ SEO
   const languages = {};
   ['th', 'en', 'zh', 'ru'].forEach(lang => {
-    languages[lang] = lang === 'th' ? `${baseUrl}/` : `${baseUrl}/${lang}/`;
+    languages[lang] = lang === 'th' ? baseUrl : `${baseUrl}/${lang}`;
   });
 
   return {
