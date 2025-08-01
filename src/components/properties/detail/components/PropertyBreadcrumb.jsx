@@ -27,7 +27,7 @@ const PropertyBreadcrumb = ({ property }) => {
                   </Link>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
-                  {property.projectName || property.title || 'Property Detail'}
+                  {property.displayTitle|| 'Property Detail'}
                 </li>
               </ol>
             </nav>

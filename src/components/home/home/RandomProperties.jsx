@@ -6,6 +6,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useTranslations, useLocale } from 'next-intl';
 import createSlug from '@/utils/slugify';
+import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import { convertAndFormatPrice, convertAndFormatPriceSync, localeToCurrencySymbol } from '@/utils/currencyUtils';
 
 
@@ -17,6 +18,7 @@ const RandomProperties = ({ randomProperties }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formattedPrices, setFormattedPrices] = useState({});
+  const { t: dynamicT } = useSimpleTranslations('listing');
 
   // สัญลักษณ์สกุลเงินตามภาษา
   const currencySymbol = localeToCurrencySymbol(locale);
@@ -68,7 +70,7 @@ const RandomProperties = ({ randomProperties }) => {
   }, [randomProperties]);
 
 
- 
+
 
 
 
@@ -154,12 +156,12 @@ const RandomProperties = ({ randomProperties }) => {
                         className="cover"
                         src={(() => {
                           // เรียงลำดับรูปภาพตาม sortOrder ก่อนแล้วเอารูปแรก
-                          const sortedImages = property.images && property.images.length > 0 
+                          const sortedImages = property.images && property.images.length > 0
                             ? property.images.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
                             : [];
-                          
+
                           const firstImage = sortedImages[0];
-                          
+
                           return firstImage && firstImage.url ?
                             (firstImage.url.startsWith('http') ?
                               firstImage.url : firstImage.url
@@ -184,96 +186,97 @@ const RandomProperties = ({ randomProperties }) => {
                         <div className="special-tags">
                           {property.labels?.map((label, index) => (
                             <React.Fragment key={`${property.id}-${label.labelType}-${index}`}>
-                              {label.labelType === 'hot-offer' && (
-                                <div className="tag hot-offer">HOT OFFER</div>
+                              {label.isHotOffer && (
+                                <div className="tag hot-offer">{dynamicT('hot-offer', 'HOT OFFER')}</div>
                               )}
-                              {label.labelType === 'new-listing' && (
-                                <div className="tag new-listing">NEW LISTING</div>
+                              {label.isNewListing && (
+                                <div className="tag new-listing">{dynamicT('new-listing', 'NEW LISTING')}</div>
                               )}
-                              {label.labelType === 'resale' && (
-                                <div className="tag resale">RESALE</div>
+                              {label.resale && (
+                                <div className="tag resale">{dynamicT('resale', 'RESALE')}</div>
                               )}
-                              {label.labelType === 'rented' && (
-                                <div className="tag rented">RENTED</div>
+                              {label.rented && (
+                                <div className="tag rented">{dynamicT('rented', 'RENTED')}</div>
                               )}
-                              {label.labelType === 'new-development' && (
-                                <div className="tag new-development">NEW DEVELOPMENT</div>
+                              {label.newDevelopment && (
+                                <div className="tag new-development">{dynamicT('new-development', 'NEW DEVELOPMENT')}</div>
                               )}
-                              {label.labelType === 'reduce-price' && (
-                                <div className="tag reduce-price">REDUCE PRICE</div>
+                              {label.reducePrice && (
+                                <div className="tag reduce-price">{dynamicT('reduce-price', 'REDUCE PRICE')}</div>
                               )}
-                              {label.labelType === 'sold' && (
-                                <div className="tag sold">SOLD</div>
+                              {label.sold && (
+                                <div className="tag sold">{dynamicT('sold', 'SOLD')}</div>
                               )}
-                              {label.labelType === 'under-construction' && (
-                                <div className="tag under-construction">UNDER CONSTRUCTION</div>
+                              {label.underConstruction && (
+                                <div className="tag under-construction">{dynamicT('under-construction', 'UNDER CONSTRUCTION')}</div>
                               )}
+
                             </React.Fragment>
                           ))}
-                        
-                        <div className="property-type">
-                          {property.listings && property.listings.length > 1 ? (
-                            <>
-                              {property.listings.some(listing => listing.listingType === 'SALE') &&
-                                property.listings.some(listing => listing.listingType === 'RENT') && (
-                                  <div className="for-rent">{(() => {
+
+                          <div className="property-type">
+                            {property.listings && property.listings.length > 1 ? (
+                              <>
+                                {property.listings.some(listing => listing.listingType === 'SALE') &&
+                                  property.listings.some(listing => listing.listingType === 'RENT') && (
+                                    <div className="for-rent">{(() => {
+                                      const translations = {
+                                        'en': 'For Sale/Rent',
+                                        'th': 'ขาย/เช่า',
+                                        'zh': '出售/租赁',
+                                        'ru': 'Продажа/Аренда'
+                                      };
+                                      return translations[locale] || translations['en'];
+                                    })()}</div>
+                                  )}
+                                {property.listings.every(listing => listing.listingType === 'SALE') && (
+                                  <div className="for-sale">{(() => {
                                     const translations = {
-                                      'en': 'For Sale/Rent',
-                                      'th': 'ขาย/เช่า',
-                                      'zh': '出售/租赁',
-                                      'ru': 'Продажа/Аренда'
-                                    };
-                                    return translations[locale] || translations['en'];
-                                  })()}</div>
-                                )}
-                              {property.listings.every(listing => listing.listingType === 'SALE') && (
-                                <div className="for-sale">{(() => {
-                                  const translations = {
-                                    'en': 'For Sale',
-                                    'th': 'ขาย',
-                                    'zh': '出售',
-                                    'ru': 'Продажа'
-                                  };
-                                  return translations[locale] || translations['en'];
-                                })()}</div>
-                              )}
-                              {property.listings.every(listing => listing.listingType === 'RENT') && (
-                                <div className="for-rent">{(() => {
-                                  const translations = {
-                                    'en': 'For Rent',
-                                    'th': 'เช่า',
-                                    'zh': '租赁',
-                                    'ru': 'Аренда'
-                                  };
-                                  return translations[locale] || translations['en'];
-                                })()}</div>
-                              )}
-                            </>
-                          ) : property.listings && property.listings[0]?.listingType && (
-                            <>
-                              <div className={property.listings[0].listingType === 'SALE' ? "for-sale" : "for-rent"}>
-                                {(() => {
-                                  const listingType = property.listings[0].listingType;
-                                  const translations = {
-                                    'SALE': {
                                       'en': 'For Sale',
                                       'th': 'ขาย',
                                       'zh': '出售',
                                       'ru': 'Продажа'
-                                    },
-                                    'RENT': {
+                                    };
+                                    return translations[locale] || translations['en'];
+                                  })()}</div>
+                                )}
+                                {property.listings.every(listing => listing.listingType === 'RENT') && (
+                                  <div className="for-rent">{(() => {
+                                    const translations = {
                                       'en': 'For Rent',
                                       'th': 'เช่า',
                                       'zh': '租赁',
                                       'ru': 'Аренда'
-                                    }
-                                  };
-                                  return translations[listingType]?.[locale] || translations[listingType]?.['en'] || listingType;
-                                })()}
-                              </div>
-                            </>
-                          )}
-                        </div>
+                                    };
+                                    return translations[locale] || translations['en'];
+                                  })()}</div>
+                                )}
+                              </>
+                            ) : property.listings && property.listings[0]?.listingType && (
+                              <>
+                                <div className={property.listings[0].listingType === 'SALE' ? "for-sale" : "for-rent"}>
+                                  {(() => {
+                                    const listingType = property.listings[0].listingType;
+                                    const translations = {
+                                      'SALE': {
+                                        'en': 'For Sale',
+                                        'th': 'ขาย',
+                                        'zh': '出售',
+                                        'ru': 'Продажа'
+                                      },
+                                      'RENT': {
+                                        'en': 'For Rent',
+                                        'th': 'เช่า',
+                                        'zh': '租赁',
+                                        'ru': 'Аренда'
+                                      }
+                                    };
+                                    return translations[listingType]?.[locale] || translations[listingType]?.['en'] || listingType;
+                                  })()}
+                                </div>
+                              </>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -308,8 +311,8 @@ const RandomProperties = ({ randomProperties }) => {
                         </Link>
                       </h6>
                       <p className="list-text"
-                        style={{ 
-                          fontSize: '14px', 
+                        style={{
+                          fontSize: '14px',
                           color: '#fff',
                           textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
                         }}
