@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
   const { locale } = params;
 
   const baseUrl = 'https://www.d-luckproperty.com';
-  const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
+  const localizedUrl = locale === 'th' ? `${baseUrl}` : `${baseUrl}/${locale}`;
 
   // SEO-optimized metadata สำหรับแต่ละภาษา
   const metadataByLocale = {
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }) {
   // สร้าง alternates สำหรับ SEO
   const languages = {};
   ['th', 'en', 'zh', 'ru'].forEach(lang => {
-    languages[lang] = lang === 'th' ? baseUrl : `${baseUrl}/${lang}`;
+    languages[lang] = lang === 'th' ? `${baseUrl}/` : `${baseUrl}/${lang}/`;
   });
 
   return {
