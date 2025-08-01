@@ -157,8 +157,33 @@ export default function PropertyFiltering({ property }) {
               </button>
             </div>
 
-
-            <div className="special-tags">
+            <div className="special-tags mt-2">
+              {isHotOffer && (
+                <div className="tag hot-offer">{dynamicT('hot-offer', 'HOT OFFER')}</div>
+              )}
+              {isNewListing && (
+                <div className="tag new-listing">{dynamicT('new-listing', 'NEW LISTING')}</div>
+              )}
+              {resale && (
+                <div className="tag resale">{dynamicT('resale', 'RESALE')}</div>
+              )}
+              {rented && (
+                <div className="tag rented">{dynamicT('rented', 'RENTED')}</div>
+              )}
+              {newDevelopment && (
+                <div className="tag new-development">{dynamicT('new-development', 'NEW DEVELOPMENT')}</div>
+              )}
+              {reducePrice && (
+                <div className="tag reduce-price">{dynamicT('reduce-price', 'REDUCE PRICE')}</div>
+              )}
+              {sold && (
+                <div className="tag sold">{dynamicT('sold', 'SOLD')}</div>
+              )}
+              {underConstruction && (
+                <div className="tag under-construction">{dynamicT('under-construction', 'UNDER CONSTRUCTION')}</div>
+              )}
+            </div>
+            {/* <div className="special-tags">
               {isHotOffer && (
                 <div className="tag hot-offer">HOT OFFER</div>
               )}
@@ -183,7 +208,7 @@ export default function PropertyFiltering({ property }) {
               {underConstruction && (
                 <div className="tag under-construction">UNDER CONSTRUCTION</div>
               )}
-            </div>
+            </div> */}
 
             <div className="property-type">
               {property.listings && property.listings.length > 1 ? (

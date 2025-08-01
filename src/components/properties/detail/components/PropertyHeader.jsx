@@ -70,12 +70,50 @@ const PropertyHeader = ({ property, primaryListing, getListingTypeText, getPrope
               <div className="property-meta d-flex align-items-center">
 
                 <a className="ff-heading text-white bdrr1 fz15 pr10 ml10 ml0-sm bdrrn-sm" href="#">
-                  {dynamicT('for', 'FOR')} {property.listings.map((listing) => listing.listingType).join(', ') ?? '-'}
+                  {dynamicT('for', 'FOR')} {property.listings.map((listing) => {
+                    // Multi-language support for listing types
+                    const listingTypeTranslations = {
+                      'RENT': {
+                        'en': 'RENT',
+                        'th': 'เช่า',
+                        'zh': '租赁',
+                        'ru': 'АРЕНДА'
+                      },
+                      'SALE': {
+                        'en': 'SALE',
+                        'th': 'ขาย',
+                        'zh': '出售',
+                        'ru': 'ПРОДАЖА'
+                      },
+                      'SALE_RENT': {
+                        'en': 'SALE/RENT',
+                        'th': 'ขาย/เช่า',
+                        'zh': '出售/租赁',
+                        'ru': 'ПРОДАЖА/АРЕНДА'
+                      }
+                    };
+                    return listingTypeTranslations[listing.listingType]?.[locale] || listing.listingType;
+                  }).join(', ') ?? '-'}
                 </a>
 
                 <a className="ff-heading text-white  fz15 pr10 ml10 ml0-sm " href="#">
                   <i className="fas fa-building pe-2"></i>
-                  {property.propertyType?.nameEn}
+                  {(() => {
+                    const propertyType = property.propertyType;
+                    if (!propertyType) return '';
+                    
+                    // Get localized property type name from database fields
+                    switch (locale) {
+                      case 'th':
+                        return propertyType.nameTh || propertyType.nameEn || '';
+                      case 'zh':
+                        return propertyType.nameCh || propertyType.nameEn || '';
+                      case 'ru':
+                        return propertyType.nameRu || propertyType.nameEn || '';
+                      default:
+                        return propertyType.nameEn || '';
+                    }
+                  })()}
                 </a>
 
               </div>

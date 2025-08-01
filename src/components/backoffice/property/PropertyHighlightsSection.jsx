@@ -1,15 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { getIconsByPrefix } from '@/services/iconService';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
 import Image from 'next/image';
+import { getLocalizedIconName, getIconAltText } from '@/utils/iconUtils';
 
 const PropertyHighlightsSection = () => {
   const t = useTranslations('backoffice.propertyHighlights');
+  const locale = useLocale();
   const { formData, setHighlight, initializeHighlights, setPropertyLabel, initializePropertyLabels } = usePropertyFormStore();
   const [highlightIcons, setHighlightIcons] = useState({});
   const [labelIcons, setLabelIcons] = useState({});
@@ -76,7 +78,7 @@ const PropertyHighlightsSection = () => {
                   onClick={() => handleItemClick(type, icon.key, isActive, icon.id)}
                 >
                   <input type="hidden" {...register(fieldName)} value={isActive.toString()} />
-                  <span className="amenity-label">{icon.name}</span>
+                  <span className="amenity-label">{getLocalizedIconName(icon, locale)}</span>
                 </div>
               );
             })}

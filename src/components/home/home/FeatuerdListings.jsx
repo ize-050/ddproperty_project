@@ -4,11 +4,13 @@ import listings from "@/data/listings";
 import Link from "next/link";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useLocale } from 'next-intl';
 
 import { useEffect, useState } from "react";
 
 const FeaturedListings = () => {
   const [isClient, setIsClient] = useState(false);
+  const locale = useLocale();
   
   useEffect(() => {
     setIsClient(true);
@@ -76,7 +78,15 @@ const FeaturedListings = () => {
                         FEATURED
                       </div>
                     )}
-                    <div className="list-tag2 rounded-0 fz12">FOR SALE</div>
+                    <div className="list-tag2 rounded-0 fz12">{(() => {
+                      const translations = {
+                        'en': 'FOR SALE',
+                        'th': 'ขาย',
+                        'zh': '出售',
+                        'ru': 'ПРОДАЖА'
+                      };
+                      return translations[locale] || translations['en'];
+                    })()}</div>
                   </div>
 
                   <div className="list-meta">

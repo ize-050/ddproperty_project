@@ -42,7 +42,7 @@ const RelatedListings = ({ property }) => {
 
         const data = await response.json();
         // Filter out the current property
-        const filteredProperties = data.data.filter(r=>r.id!=property.id);
+        const filteredProperties = data.data.filter(r => r.id != property.id);
         setRelatedProperties(filteredProperties);
       } catch (error) {
         console.error('Error fetching related properties:', error);
@@ -150,13 +150,37 @@ const RelatedListings = ({ property }) => {
                           <>
                             {prop.listings.some(listing => listing.listingType === 'SALE') &&
                               prop.listings.some(listing => listing.listingType === 'RENT') && (
-                                <div className="for-rent">{dynamicT('for-sale-rent', 'For Sale/Rent')}</div>
+                                <div className="for-rent">{(() => {
+                                  const translations = {
+                                    'en': 'For Sale/Rent',
+                                    'th': 'ขาย/เช่า',
+                                    'zh': '出售/租赁',
+                                    'ru': 'Продажа/Аренда'
+                                  };
+                                  return translations[locale] || translations['en'];
+                                })()}</div>
                               )}
                             {prop.listings.every(listing => listing.listingType === 'SALE') && (
-                              <div className="for-sale">{dynamicT('for-sale', 'For Sale')}</div>
+                              <div className="for-sale">{(() => {
+                                const translations = {
+                                  'en': 'For Sale',
+                                  'th': 'ขาย',
+                                  'zh': '出售',
+                                  'ru': 'Продажа'
+                                };
+                                return translations[locale] || translations['en'];
+                              })()}</div>
                             )}
                             {prop.listings.every(listing => listing.listingType === 'RENT') && (
-                              <div className="for-rent">{dynamicT('for-rent', 'For Rent')}</div>
+                              <div className="for-rent">{(() => {
+                                const translations = {
+                                  'en': 'For Rent',
+                                  'th': 'เช่า',
+                                  'zh': '租赁',
+                                  'ru': 'Аренда'
+                                };
+                                return translations[locale] || translations['en'];
+                              })()}</div>
                             )}
                           </>
                         )}

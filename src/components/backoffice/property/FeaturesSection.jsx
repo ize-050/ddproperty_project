@@ -2,14 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { getIconsByPrefix } from '@/services/iconService';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import { useFormContext } from 'react-hook-form';
 import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
+import { getLocalizedIconName, getIconAltText } from '@/utils/iconUtils';
 
 const FeaturesSection = () => {
   const t = useTranslations('backoffice.features');
+  const locale = useLocale();
   const { formData, setAmenity, initializeAmenities } = usePropertyFormStore();
   const [amenityIcons, setAmenityIcons] = useState({});
   const [loading, setLoading] = useState(true);
@@ -138,13 +140,13 @@ const FeaturesSection = () => {
                   {icon.iconPath && (
                     <Image
                       src={icon.iconPath}
-                      alt={icon.name}
+                      alt={getIconAltText(icon, locale)}
                       width={24}
                       height={24}
                     />
                   )}
                 </span>
-                <span className="amenity-label">{icon.name}</span>
+                <span className="amenity-label">{getLocalizedIconName(icon, locale)}</span>
               </div>
             );
           })

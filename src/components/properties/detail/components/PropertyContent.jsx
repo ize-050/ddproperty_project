@@ -1,13 +1,15 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import PropertyMap from './PropertyMap';
 import ShortTermRental from './ShortTermRental';
+import { getLocalizedIconName, getIconAltText } from '@/utils/iconUtils';
 
 const PropertyContent = ({ property, description, getPropertyTypeText, getFurnishingText }) => {
   const t = useTranslations('PropertyDetail');
+  const locale = useLocale();
   const { t: dynamicT } = useSimpleTranslations('listing');
 
   const formatLandSize = () => {
@@ -65,7 +67,7 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                    <h6 style={{ margin: 0 }}>{item.Icon.name}</h6>
+                    <h6 style={{ margin: 0 }}>{getLocalizedIconName(item.Icon, locale)}</h6>
                   </div>
                 </div>
               ))
@@ -173,9 +175,9 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <div className="nearby-item">
                   {item?.Icon?.iconPath && (
                     <>
-                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={getIconAltText(item?.Icon, locale)} className="img-fluid" width={25} height={25} />
 
-                      <span className={"span-items"} style={{ marginLefปt: '10px' }}>{item?.Icon?.name}</span>
+                      <span className={"span-items"} style={{ marginLeft: '10px' }}>{getLocalizedIconName(item?.Icon, locale)}</span>
                     </>
                   )}
                 </div>
@@ -197,8 +199,8 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <div className="col-6 col-md-4" key={`view-${index}`}>
                   <div className="view-item">
 
-                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
-                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{item?.Icon?.name}</span>
+                    <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={getIconAltText(item?.Icon, locale)} className="img-fluid" width={25} height={25} />
+                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{getLocalizedIconName(item?.Icon, locale)}</span>
                   </div>
                 </div>
               ))
@@ -223,9 +225,9 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <div className="col-6 col-md-4" key={`facility-${index}`}>
                   <div className="facility-item">
                     {item?.Icon?.iconPath && (
-                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={getIconAltText(item?.Icon, locale)} className="img-fluid" width={25} height={25} />
                     )}
-                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{item?.Icon?.name}</span>
+                    <span className={"span-items"} style={{ marginLeft: '10px' }}>{getLocalizedIconName(item?.Icon, locale)}</span>
                   </div>
                 </div>
               ))
@@ -250,9 +252,9 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
                 <div className="col-6 col-md-4" key={`amenity-${index}`}>
                   <div className="amenity-item">
                     {item?.Icon?.iconPath && (
-                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={item.name} className="img-fluid" width={25} height={25} />
+                      <img src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item?.Icon?.iconPath}`} alt={getIconAltText(item?.Icon, locale)} className="img-fluid" width={25} height={25} />
                     )}
-                    <span className="span-items" style={{ marginLeft: '10px' }}>{item?.Icon?.name}</span>
+                    <span className="span-items" style={{ marginLeft: '10px' }}>{getLocalizedIconName(item?.Icon, locale)}</span>
                   </div>
                 </div>
               ))

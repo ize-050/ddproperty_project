@@ -216,19 +216,60 @@ const RandomProperties = ({ randomProperties }) => {
                             <>
                               {property.listings.some(listing => listing.listingType === 'SALE') &&
                                 property.listings.some(listing => listing.listingType === 'RENT') && (
-                                  <div className="for-rent">For Sale/Rent</div>
+                                  <div className="for-rent">{(() => {
+                                    const translations = {
+                                      'en': 'For Sale/Rent',
+                                      'th': 'ขาย/เช่า',
+                                      'zh': '出售/租赁',
+                                      'ru': 'Продажа/Аренда'
+                                    };
+                                    return translations[locale] || translations['en'];
+                                  })()}</div>
                                 )}
                               {property.listings.every(listing => listing.listingType === 'SALE') && (
-                                <div className="for-sale">For Sale</div>
+                                <div className="for-sale">{(() => {
+                                  const translations = {
+                                    'en': 'For Sale',
+                                    'th': 'ขาย',
+                                    'zh': '出售',
+                                    'ru': 'Продажа'
+                                  };
+                                  return translations[locale] || translations['en'];
+                                })()}</div>
                               )}
                               {property.listings.every(listing => listing.listingType === 'RENT') && (
-                                <div className="for-rent">For Rent</div>
+                                <div className="for-rent">{(() => {
+                                  const translations = {
+                                    'en': 'For Rent',
+                                    'th': 'เช่า',
+                                    'zh': '租赁',
+                                    'ru': 'Аренда'
+                                  };
+                                  return translations[locale] || translations['en'];
+                                })()}</div>
                               )}
                             </>
                           ) : property.listings && property.listings[0]?.listingType && (
                             <>
                               <div className={property.listings[0].listingType === 'SALE' ? "for-sale" : "for-rent"}>
-                                {property.listings[0].listingType === 'SALE' ? 'For Sale' : 'For Rent'}
+                                {(() => {
+                                  const listingType = property.listings[0].listingType;
+                                  const translations = {
+                                    'SALE': {
+                                      'en': 'For Sale',
+                                      'th': 'ขาย',
+                                      'zh': '出售',
+                                      'ru': 'Продажа'
+                                    },
+                                    'RENT': {
+                                      'en': 'For Rent',
+                                      'th': 'เช่า',
+                                      'zh': '租赁',
+                                      'ru': 'Аренда'
+                                    }
+                                  };
+                                  return translations[listingType]?.[locale] || translations[listingType]?.['en'] || listingType;
+                                })()}
                               </div>
                             </>
                           )}

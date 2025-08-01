@@ -1,15 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { getIconsByPrefix } from '@/services/iconService';
 import usePropertyFormStore from '@/store/propertyFormStore';
 import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 import { useFormContext } from 'react-hook-form';
+import { getLocalizedIconName, getIconAltText } from '@/utils/iconUtils';
 
 const FacilitiesSection = () => {
   const t = useTranslations('backoffice.facilities');
+  const locale = useLocale();
   const { formData, setFacility, initializeFacilities } = usePropertyFormStore();
   const [facilityIcons, setFacilityIcons] = useState({});
   const [loading, setLoading] = useState(true);
@@ -95,13 +97,13 @@ const FacilitiesSection = () => {
                 {icon.iconPath && (
                   <Image
                     src={icon.iconPath}
-                    alt={t('iconAlt', { name: icon.name })}
+                    alt={getIconAltText(icon, locale)}
                     width={24}
                     height={24}
                   />
                 )}
               </span>
-              <span className="amenity-label">{icon.name}</span>
+              <span className="amenity-label">{getLocalizedIconName(icon, locale)}</span>
             </div>
           );
         })}
