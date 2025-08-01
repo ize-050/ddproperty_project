@@ -36,7 +36,7 @@ const Page = lazy(() => import("@/components/home/page"));
 export async function generateMetadata({ params }) {
   const { locale } = params;
 
-  const baseUrl = 'https://ddproperty.com';
+  const baseUrl = 'https://www.d-luckproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
 
   // SEO-optimized metadata สำหรับแต่ละภาษา

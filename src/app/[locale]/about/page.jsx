@@ -13,7 +13,7 @@ const Agents = dynamic(() => import("@/components/about/Agents"), { ssr: false }
 
 // Dynamic metadata generation for About page
 export async function generateMetadata({ params: { locale } }) {
-  const baseUrl = 'https://ddproperty.com';
+  const baseUrl = 'https://www.d-luckproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
   const currentUrl = `${localizedUrl}/about`;
   

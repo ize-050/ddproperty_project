@@ -107,7 +107,7 @@ async function getAllZones() {
 }
 
 export async function generateMetadata({ params: { locale }, searchParams }) {
-  const baseUrl = 'https://ddproperty.com';
+  const baseUrl = 'https://www.d-luckproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
   
   // ตรวจสอบ type parameter (sale/rent)

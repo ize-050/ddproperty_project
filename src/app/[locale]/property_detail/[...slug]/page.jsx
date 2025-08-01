@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
       description = property.description || '';
     }
 
-    const baseUrl = 'https://ddproperty.com';
+    const baseUrl = 'https://www.d-luckproperty.com';
     const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
     const propertyUrl = `${localizedUrl}/property_detail/${slug.join('/')}`;
 

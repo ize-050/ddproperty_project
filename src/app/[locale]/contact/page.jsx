@@ -5,7 +5,7 @@ import { TranslationInitializer } from "@/components/Translation/page";
 
 // Dynamic metadata generation for Contact page
 export async function generateMetadata({ params: { locale } }) {
-  const baseUrl = 'https://ddproperty.com';
+  const baseUrl = 'https://www.d-luckproperty.com';
   const localizedUrl = locale === 'th' ? baseUrl : `${baseUrl}/${locale}`;
   const currentUrl = `${localizedUrl}/contact`;
   
