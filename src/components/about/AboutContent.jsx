@@ -124,11 +124,10 @@ const AboutContent = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="breadcumb-style1">
+              <div className="breadcumb-style">
                 <h2 className="title">{t('aboutus_ab', 'About Us')}</h2>
                 <div className="breadcumb-list">
                   <a href="#">{t('home_ab', 'Home')}</a>
-                  <a href="#">{t('aboutus_ab', 'About')}</a>
                 </div>
               </div>
             </div>

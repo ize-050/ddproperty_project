@@ -6727,6 +6727,11 @@ textarea:focus {
     color: #ffffff;
 }
 
+.btn-dark:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
 .ud-btn:before,
 .btn-gray:before,
 .btn-dark:before,
@@ -6771,7 +6776,6 @@ textarea:focus {
 }
 .ud-btn:hover:before,
 .btn-gray:hover:before,
-.btn-dark:hover:before,
 .btn-thm:hover:before,
 .btn-thm2:hover:before,
 .btn-thm3:hover:before,

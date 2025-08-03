@@ -80,8 +80,6 @@ async function getContactTranslations(locale) {
     // Fetch contact section translations from API
     const response = await LanguageApi.getUiStringsBySection('contact', {
         serverSide: true,
-        cache: 'no-store',
-        next: { revalidate: 3600 } // Cache for 1 hour
     });
 
     if (!response.success) {
@@ -180,8 +178,8 @@ const Contact = async ({ params }) => {
                                  'Call Us Now'}
                             </h5>
                             <p className="small text-muted">
-                                {contactTranslations.find(t => t.slug === 'phone_number')?.[dbLocale] || 
-                                 contactTranslations.find(t => t.slug === 'phone_number')?.en || 
+                                {contactTranslations.find(t => t.slug === 'phone_contact')?.[dbLocale] || 
+                                 contactTranslations.find(t => t.slug === 'phone_contact')?.en || 
                                  '+66(0)95 1432 2345'}
                             </p>
                         </a>

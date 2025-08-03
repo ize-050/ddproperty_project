@@ -8,6 +8,7 @@ const Contact = () => {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     subject: ""
   });
   
@@ -31,7 +32,7 @@ const Contact = () => {
     const emailData = {
       name: `${formData.firstName} ${formData.lastName}`,
       email: formData.email,
-      phone: "", // Homepage form doesn't have phone field
+      phone: formData.phone || "", // Phone field from homepage form
       subject: formData.subject || 'Homepage Contact Form Inquiry',
       message: formData.subject, // Use subject as message for homepage form
     };
@@ -117,6 +118,22 @@ const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
+            />
+          </div>
+        </div>
+        {/* End .col */}
+
+        <div className="col-md-12">
+          <div className="mb20">
+            <label className="heading-color ff-heading fw600 mb10">{t('contact-phone')}</label>
+            <input
+              type="tel"
+              name="phone"
+              className="form-control"
+              placeholder=""
+              value={formData.phone}
+              onChange={handleChange}
               disabled={loading}
             />
           </div>

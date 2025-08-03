@@ -23,6 +23,26 @@ const RelatedListings = ({ property }) => {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const locale = useLocale();
 
+  const getDisplayTitle = () => {
+    if (property.translatedTitles) {
+      try {
+        const titles = property.translatedTitles;
+        return titles[locale] || titles['en'] || property.title;
+      } catch (e) {
+        // Fallback to default title if parsing fails
+        return property.title;
+      }
+    }
+    return property.title;
+  };
+
+  useEffect(()=>{
+    console.log("property12333",property)
+  },[property])
+
+  const displayTitle = getDisplayTitle();
+
+
   useEffect(() => {
     const fetchRelatedProperties = async () => {
       if (!property?.zoneId) return;
@@ -54,6 +74,13 @@ const RelatedListings = ({ property }) => {
     fetchRelatedProperties();
   }, [property]);
 
+  useEffect(()=>{
+    console.log("relatedProperties",relatedProperties)
+  },[relatedProperties])
+
+
+
+  
   if (loading) {
     return (
       <div className="related-listings-section">
@@ -131,7 +158,7 @@ const RelatedListings = ({ property }) => {
             const rentPrice = prop.listings?.find(l => l.listingType === 'RENT')?.price || 0;
             const slug = createSlug(prop.title); // Create slug from property title
             const propertyDetailUrl = `/${locale !== 'th' ? locale + '/' : ''}property_detail/${prop.id}/${slug}`;
-
+            
             return (
               <SwiperSlide key={prop.id}>
                 <Link href={propertyDetailUrl} className="property-card-link">
@@ -189,7 +216,7 @@ const RelatedListings = ({ property }) => {
 
                     <div className="property-content">
                       <div className="property-name">
-                        <h6 className="list-title">{prop.title}</h6>
+                        <h6 className="list-title">{displayTitle}</h6>
                       </div>
                       <div className="property-location">
                         {prop.zone?.[`name_${locale}`] || prop.zone?.name}

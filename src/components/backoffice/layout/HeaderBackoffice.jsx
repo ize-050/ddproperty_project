@@ -111,21 +111,7 @@ const HeaderBackoffice = () => {
                                         </Link>
                                     </div>
 
-                                    <a
-                                        className="dashboard_sidebar_toggle_icon text-thm1 vam"
-                                        href="#"
-                                        data-bs-toggle="offcanvas"
-                                        data-bs-target="#SidebarPanel"
-                                        aria-controls="SidebarPanelLabel"
-                                    >
-                                        <Image
-                                            width={25}
-                                            height={9}
-                                            className="img-1"
-                                            src="/images/dark-nav-icon.svg"
-                                            alt="humberger menu"
-                                        />
-                                    </a>
+                               
 
                                     {/* End Logo */}
 

@@ -36,12 +36,12 @@ const LatestBlogs = () => {
   // Get localized title based on current locale
   const getLocalizedTitle = (blog) => {
     let translatedTitles = null;
-    
+
     // Parse translatedTitles if it's a JSON string
     if (blog.translatedTitles) {
       try {
-        translatedTitles = typeof blog.translatedTitles === 'string' 
-          ? JSON.parse(blog.translatedTitles) 
+        translatedTitles = typeof blog.translatedTitles === 'string'
+          ? JSON.parse(blog.translatedTitles)
           : blog.translatedTitles;
       } catch (error) {
         console.error('Error parsing translatedTitles:', error);
@@ -76,46 +76,36 @@ const LatestBlogs = () => {
   };
 
   // Get localized content based on current locale
-  const getLocalizedContent = (blog) => {
-    let translatedContents = null;
+  const getLocalizedContent = (blog, field, locale) => {
+    try {
+      if (field === 'title' && blog.translatedTitles) {
+        let translatedTitles = blog.translatedTitles;
+        if (typeof translatedTitles === 'string') {
+          translatedTitles = JSON.parse(translatedTitles);
+        }
+        return translatedTitles[locale] || blog.title;
+      }
+      
+      if (field === 'content' && blog.translatedContents) {
+        let translatedContents = blog.translatedContents;
+        if (typeof translatedContents === 'string') {
+          translatedContents = JSON.parse(translatedContents);
+        }
+        return translatedContents[locale] || blog.content;
+      }
+      
+      if (field === 'title') return blog.title;
+      if (field === 'content') return blog.content;
+      
+    } catch (error) {
+      console.error('Error parsing translated content:', error);
+      if (field === 'title') return blog.title;
+      if (field === 'content') return blog.content;
+    }
     
-    // Parse translatedContents if it's a JSON string
-    if (blog.translatedContents) {
-      try {
-        translatedContents = typeof blog.translatedContents === 'string' 
-          ? JSON.parse(blog.translatedContents) 
-          : blog.translatedContents;
-      } catch (error) {
-        console.error('Error parsing translatedContents:', error);
-      }
-    }
-
-    // First try to get content from translatedContents object based on current locale
-    if (translatedContents && translatedContents[locale]) {
-      return translatedContents[locale];
-    }
-
-    // Fallback to English if current locale not available
-    if (translatedContents && translatedContents.en) {
-      return translatedContents.en;
-    }
-
-    // Fallback to main content field if translations not available
-    if (blog.content) {
-      return blog.content;
-    }
-
-    // Last resort - try any available language
-    if (translatedContents) {
-      const availableLanguage = Object.keys(translatedContents)[0];
-      if (availableLanguage) {
-        return translatedContents[availableLanguage];
-      }
-    }
-
-    // If all else fails
     return '';
   };
+
 
   // Format date to display
   const formatDate = (dateString) => {
@@ -183,12 +173,12 @@ const LatestBlogs = () => {
                   {new Date(blog.createdAt).toLocaleString('default', { month: 'short' })}
                 </span>
               </div>
-              <a className="tag" href="#">
-                {getLocalizedTitle(blog)}
-              </a>
-              <h6 className="title mt-1">
-                <Link href={`/blog/${blog.id}`}>{getLocalizedTitle(blog)}</Link>
-              </h6>
+              <h5 className="title">
+                <a href={`/blog/${blog.slug}`}>{getLocalizedContent(blog, 'title', locale)}</a>
+              </h5>
+              <p className="excerpt">
+                {getLocalizedContent(blog, 'content', locale)?.replace(/<[^>]*>/g, '').substring(0, 100)}...
+              </p>
 
             </div>
           </div>

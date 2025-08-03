@@ -256,9 +256,9 @@ const BlogPage = () => {
   };
 
   // ฟังก์ชันสำหรับดูรายละเอียดบทความ - เปิด tab ใหม่ไปยังหน้า frontend
-  const handleView = (id) => {
+  const handleView = (slug) => {
     // เปิด tab ใหม่ไปยังหน้า frontend blog detail
-    window.open(`/blog/${id}`, '_blank');
+    window.open(`/blog/${slug}`, '_blank');
   };
 
   const handleDelete = async (id) => {
@@ -401,11 +401,11 @@ const BlogPage = () => {
                         <span className="post-title">{post.title}</span>
                       </div>
                     </td>
-                    <td className="date-cell">{format(post?.createdAt,'dd/mm/yyyy')}</td>
+                    <td className="date-cell">{post?.createdAt ? format(new Date(post.createdAt), 'dd/MM/yyyy') : 'N/A'}</td>
                     <td className="actions-cell">
                       <div className="flex space-x-2">
                         <a
-                          onClick={() => handleView(post.id)}
+                          onClick={() => handleView(post.slug)}
                           className="mr-5"
                           style={{  marginRight:'5px', cursor:'pointer'}}
                           title="View"

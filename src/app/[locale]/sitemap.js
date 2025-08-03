@@ -49,15 +49,25 @@ export default async function sitemap() {
       priority: 0.9,
     });
     
+    // เพิ่มหน้า Privacy Policy
+    urls.push({
+      url: `${baseUrl}/${locale}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    });
+    
+    // เพิ่มหน้า Terms and Conditions
+    urls.push({
+      url: `${baseUrl}/${locale}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    });
+    
+    // เพิ่มหน้า Blog Index
     urls.push({
       url: `${baseUrl}/${locale}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    });
-
-    urls.push({
-      url: `${baseUrl}/${locale}/blog/[id]`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -66,16 +76,55 @@ export default async function sitemap() {
 
   
   
-  // เพิ่ม property detail pages
+  // เพิ่ม blog posts
   try {
     // ตรวจสอบว่า API URL มีอยู่หรือไม่
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     if (!apiUrl) {
-      console.warn('NEXT_PUBLIC_API_URL not found, skipping property detail pages');
+      console.warn('NEXT_PUBLIC_API_URL not found, skipping dynamic pages');
       return urls;
     }
     
-    const fullApiUrl = `${apiUrl}/properties?page=1&limit=1000&isPublished=true`;
+    // ดึง blog posts
+    const blogApiUrl = `${apiUrl}/blogs?page=1&limit=1000&isPublished=true`;
+    
+    const blogResponse = await fetch(blogApiUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': process.env.NEXT_PUBLIC_API_KEY || '',
+      },
+      signal: AbortSignal.timeout(10000), // 10 seconds timeout
+    });
+    
+    if (blogResponse.ok) {
+      const blogData = await blogResponse.json();
+      const blogs = blogData.blogs || blogData.data || [];
+      
+      // สร้าง blog detail URLs สำหรับทุกภาษา
+      blogs.forEach(blog => {
+        if (blog.id && blog.title) {
+          // สร้าง slug จาก title
+          const slug = blog.title
+            .toLowerCase()
+            .replace(/[^a-z0-9\u0E00-\u0E7F\u4E00-\u9FFF]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+          
+          locales.forEach(locale => {
+            urls.push({
+              url: `${baseUrl}/${locale}/blog/${blog.id}/${slug}`,
+              lastModified: blog.updatedAt ? new Date(blog.updatedAt) : new Date(),
+              changeFrequency: 'weekly',
+              priority: 0.7,
+            });
+          });
+        }
+      });
+    } else {
+      console.warn(`Blog API request failed: ${blogResponse.status} ${blogResponse.statusText}`);
+    }
+    
+    const fullApiUrl = `${apiUrl}/properties?page=1&limit=2000&isPublished=true`;
     
     const response = await fetch(fullApiUrl, {
       headers: {

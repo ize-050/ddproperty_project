@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import  useDynamicTranslations  from '@/hooks/useDynamicTranslations';
+import useDynamicTranslations from '@/hooks/useDynamicTranslations';
 import { getMessagingSettings, transformSettingsToObject, generatePlatformLink, getDefaultSettings } from '@/services/messagingSettings';
 import './ContactModal.css';
 
@@ -11,16 +11,34 @@ const ContactModal = ({ isOpen, onClose, property }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [settings, setSettings] = useState(getDefaultSettings());
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [contactAgent, setContactAgent] = useState(null);
   // Dynamic translations
   const { t } = useDynamicTranslations('listing');
 
-  const [contactAgent, setContactAgent] = useState(property?.contactInfo);
 
-  // Fetch messaging settings on component mount
+  useEffect(() => {
+    if (property?.contactInfo) {
+      // ตรวจสอบว่าเป็น string หรือไม่
+      if (typeof property.contactInfo === 'string') {
+        try {
+          setContactAgent(JSON.parse(property.contactInfo));
+        } catch (error) {
+          console.error('Error parsing contactInfo:', error);
+          setContactAgent(null);
+        }
+      } else {
+        // ถ้าไม่ใช่ string ก็ใช้ค่าปกติ
+        setContactAgent(property.contactInfo);
+      }
+    } else {
+      setContactAgent(null);
+    }
+  }, [property?.contactInfo]);
 
 
-
+ useEffect(()=>{
+  console.log("property12212",property)
+ },[property])
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -165,7 +183,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
             }}
           >
             <div className="contact-option-wrapper">
-              <a href={contactAgent.phone ? `tel:${contactAgent.phone.replace(/[^\d+]/g, '')}` : "tel:+66123456789"} className="contact-option phone">
+              <a href={contactAgent?.phone ? `tel:${contactAgent.phone.replace(/[^\d+]/g, '')}` : "tel:+66123456789"} className="contact-option phone">
                 <i className="fas fa-phone"></i>
               </a>
             </div>
@@ -187,7 +205,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
             </div>
 
             <div className="contact-option-wrapper">
-              <a href={contactAgent?.wechatId ? `weixin://dl/chat?${contactAgent.wechatId}` : "#"} className="" target="_blank" rel="noopener noreferrer">
+              <a href={contactAgent?.wechatId ? `weixin://dl/chat?username=${contactAgent.wechatId}` : "#"} className="" target="_blank" rel="noopener noreferrer">
                 <img src="/images/new_icons/wechat.svg" alt="WeChat" className="social-icon" />
               </a>
             </div>
@@ -200,7 +218,7 @@ const ContactModal = ({ isOpen, onClose, property }) => {
 
             <div className="contact-option-wrapper">
               <a href={contactAgent?.facebookMessenger ? `https://m.me/${contactAgent.facebookMessenger}` : "#"} className="" target="_blank" rel="noopener noreferrer">
-                 <img src="/images/new_icons/message.svg" alt="Messenger" className="social-icon" />
+                <img src="/images/new_icons/message.svg" alt="Messenger" className="social-icon" />
               </a>
             </div>
           </div>

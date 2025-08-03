@@ -43,13 +43,13 @@ const DynamicFooter = () => {
           {/* Social Media Icons ด้านขวา */}
           <div className="col-md-6">
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '15px' }}>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" style={{ color: 'white' }}>
+              <a href="https://www.facebook.com/dluckproperty" target="_blank" rel="noreferrer" aria-label="Facebook" style={{ color: 'white' }}>
                 <FaFacebookF />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok" style={{ color: 'white' }}>
+              <a href="https://www.tiktok.com/@dluckproperty" target="_blank" rel="noreferrer" aria-label="TikTok" style={{ color: 'white' }}>
                 <FaTiktok />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" style={{ color: 'white' }}>
+              <a href="https://www.instagram.com/dluckproperty" target="_blank" rel="noreferrer" aria-label="Instagram" style={{ color: 'white' }}>
                 <FaInstagram />
               </a>
             </div>
@@ -197,14 +197,14 @@ const DynamicFooter = () => {
               <h5 style={{ color: 'white', fontSize: '16px', marginBottom: '10px' }}>
                 {getTranslation('call-us-now', 'callUsNow')}
               </h5>
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0 }}>+66(0)38 543 2345</p>
+              <a href="tel:+66865432345" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0 }}>+66(0)86 543 2345</a>
             </div>
             
             <div style={{ marginBottom: '20px' }}>
               <h5 style={{ color: 'white', fontSize: '16px', marginBottom: '10px' }}>
                 {getTranslation('drop-email', 'dropEmail')}
               </h5>
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0 }}>info@d-luckproperty.com</p>
+              <a href="mailto:info@d-luckproperty.com" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', margin: 0, hover: 'rgba(255,255,255,1)' }}>info@d-luckproperty.com</a>
             </div>
             
             {/* <div>
@@ -261,14 +261,6 @@ const DynamicFooter = () => {
                     style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}
                   >
                     {getTranslation('terms', 'terms')}
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/sitemap" 
-                    style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '14px' }}
-                  >
-                    {getTranslation('sitemap', 'sitemap')}
                   </Link>
                 </li>
               </ul>

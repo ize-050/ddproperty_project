@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Gallery, Item } from 'react-photoswipe-gallery';
+import { useLocale } from 'next-intl';
 import useSimpleTranslations from '@/hooks/useSimpleTranslations';
 import 'photoswipe/dist/photoswipe.css';
 import '@/styles/property-detail-gallery.scss';
@@ -9,14 +10,46 @@ import '@/styles/property-detail-gallery.scss';
 
 const PropertyGallery = ({ images, property }) => {
   const { t: dynamicT } = useSimpleTranslations('listing');
+  const locale = useLocale();
   const galleryImages = images && images.length > 0 ? images : ['/images/property/fp1.jpg'];
+
+  // Function to get localized listing type
+  const getLocalizedListingType = (listingTypes) => {
+    if (!listingTypes || listingTypes.length === 0) return '-';
+    
+    return listingTypes.map(listingType => {
+      const translations = {
+        'SALE': {
+          'en': 'For Sale',
+          'th': 'ขาย',
+          'zh': '出售',
+          'ru': 'Продажа'
+        },
+        'RENT': {
+          'en': 'For Rent',
+          'th': 'เช่า',
+          'zh': '租赁',
+          'ru': 'Аренда'
+        },
+        'SALE_RENT': {
+          'en': 'For Sale/Rent',
+          'th': 'ขาย/เช่า',
+          'zh': '出售/租赁',
+          'ru': 'Продажа/Аренда'
+        }
+      };
+      
+      const typeTranslations = translations[listingType];
+      return typeTranslations ? (typeTranslations[locale] || typeTranslations['en']) : listingType;
+    }).join(', ');
+  };
 
 
   const overviewData = [
     {
       icon: "flaticon-home-1",
       label: dynamicT('property-type', 'Property Type'),
-      value: property.listings.map((listing) => listing.listingType).join(', ') ?? '-',
+      value: getLocalizedListingType(property.listings?.map(listing => listing.listingType)),
     },
     {
       icon: "flaticon-bed",
@@ -31,7 +64,7 @@ const PropertyGallery = ({ images, property }) => {
     {
       icon: "flaticon-expand",
       label: dynamicT('useable-area', 'Useable Area'),
-      value: property.usableArea + " " + 'sq m.' ?? '-',
+      value: property.usableArea + " " + dynamicT('sqm', 'sqm') ?? '-',
     },
   ];
 
@@ -47,11 +80,11 @@ const PropertyGallery = ({ images, property }) => {
                     <div className="preview-img-1 sp-img">
                       <Item
                         original={galleryImages[0]}
-                        thumbnail={galleryImages}
+                        thumbnail={galleryImages[0]}
                         width={1200}
                         height={800}
                         title={property.projectName || 'Property'}
-                      >
+                      > 
                         {({ ref, open }) => (
                           <img
                             ref={ref}
@@ -74,10 +107,9 @@ const PropertyGallery = ({ images, property }) => {
                           <Item
                             key={`hidden-item-${idx + 1}`}
                             original={image}
-                            thumbnail={image[idx + 1]}
+                            thumbnail={image}
                             width={1200}
                             height={800}
-
                             title={`Property image ${idx + 2}`}
                           >
                             {({ ref, open }) => (

@@ -303,14 +303,14 @@ export default async function HomeContent({ params }) {
                 </div>
 
                 <div className="mt20">
-                  <h4>โอกาสการลงทุนอสังหาริมทรัพย์พัทยา</h4>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>โอกาสการลงทุนอสังหาริมทรัพย์พัทยา</h3>
                   <p>
                     กำลังมองหาการลงทุนอสังหาริมทรัพย์พัทยา? เราช่วยนักลงทุนค้นหาอสังหาริมทรัพย์ที่ให้ผลตอบแทนสูงและมีศักยภาพในการให้เช่าที่แข็งแกร่ง โดยตั้งเป้าผลตอบแทนปีละ 8% ขึ้นไป ผู้เชี่ยวชาญด้านการลงทุนของเรามุ่งเน้นคอนโดติดหาด โครงการใหม่ และอสังหาริมทรัพย์ให้เช่าที่มีผู้เช่าอยู่แล้ว
                   </p>
                 </div>
 
                 <div className="mt20">
-                  <h4>บริการลงประกาศขายและให้เช่าอสังหาริมทรัพย์แบบมืออาชีพ</h4>
+                  <h1 style={{ fontSize: '1.25rem', fontWeight: '600' }}>บริการลงประกาศขายและให้เช่าอสังหาริมทรัพย์แบบมืออาชีพ</h1>
                   <p>
                     เจ้าของอสังหาริมทรัพย์สามารถเพิ่มการเข้าถึงได้สูงสุดผ่านบริการลงประกาศที่ครบครันของเรา เรานำเสนอการถ่ายภาพแบบมืออาชีพ การตลาดผ่านหลายแพลตฟอร์ม และการวิเคราะห์ราคาจากผู้เชี่ยวชาญ เพื่อขายหรือให้เช่าอสังหาริมทรัพย์พัทยาของคุณอย่างรวดเร็วและทำกำไร
                   </p>
@@ -339,14 +339,14 @@ export default async function HomeContent({ params }) {
                 </div>
 
                 <div className="mt20">
-                  <h4>Pattaya Property Investment Opportunities</h4>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>Pattaya Property Investment Opportunities</h3>
                   <p>
                     Looking to invest in Pattaya real estate? We help investors find high-yield properties with strong rental potential, targeting 8%+ annual returns. Our investment specialists focus on beachfront condos, off-plan developments, and established rental properties.
                   </p>
                 </div>
 
                 <div className="mt20">
-                  <h4>Professional Property Listing Services</h4>
+                  <h1 style={{ fontSize: '1.25rem', fontWeight: '600' }}>Professional Property Listing Services</h1>
                   <p>
                     Property owners can maximize their exposure through our comprehensive listing services. We offer professional photography, multi-platform marketing, and expert pricing analysis to sell or rent your Pattaya property quickly and profitably.
                   </p>
@@ -382,14 +382,14 @@ export default async function HomeContent({ params }) {
                 </div>
 
                 <div className="mt20">
-                  <h4>Инвестиционные возможности в недвижимость Паттайи</h4>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>Инвестиционные возможности в недвижимость Паттайи</h3>
                   <p>
                   Ищете инвестиции в недвижимость Паттайи? Мы помогаем инвесторам найти высокодоходную недвижимость с сильным арендным потенциалом, нацеливаясь на годовую доходность от 8%. Наши специалисты по инвестициям сосредоточены на прибрежных кондоминиумах, проектах на стадии строительства и готовой арендной недвижимости с существующими арендаторами.
                   </p>
                 </div>
 
                 <div className="mt20">
-                  <h4>Профессиональные услуги размещения объявлений</h4>
+                  <h1 style={{ fontSize: '1.25rem', fontWeight: '600' }}>Профессиональные услуги размещения объявлений</h1>
                   <p>
                   Владельцы недвижимости могут максимизировать охват через наши комплексные услуги размещения. Мы предлагаем профессиональную фотосъемку, маркетинг на множественных платформах и экспертный анализ ценообразования для быстрой и прибыльной продажи или аренды вашей недвижимости в Паттайе.
                   </p>
@@ -425,14 +425,14 @@ export default async function HomeContent({ params }) {
                 </div>
 
                 <div className="mt20">
-                  <h4>芭提雅房地产投资机会</h4>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>芭提雅房地产投资机会</h3>
                   <p>
                     寻找芭提雅房地产投资机会？我们帮助投资者找到具有强劲租赁潜力的高收益房产，目标年回报率达8%以上。我们的投资专家专注于海滨公寓、期房项目和已有租客的成熟租赁房产。
                   </p>
                 </div>
 
                 <div className="mt20">
-                  <h4>专业房产挂牌服务</h4>
+                  <h1 style={{ fontSize: '1.25rem', fontWeight: '600' }}>专业房产挂牌服务</h1>
                   <p>
                     房产业主可通过我们全面的挂牌服务最大化曝光度。我们提供专业摄影、多平台营销和专家定价分析，帮助您快速且盈利地出售或出租芭提雅房产。
                   </p>

@@ -44,6 +44,11 @@ const MessagePage = () => {
   const [selectedProperty, setSelectedProperty] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedTimeframe, setSelectedTimeframe] = useState('Last 3 Month');
+  
+  // Autocomplete states
+  const [propertySearchTerm, setPropertySearchTerm] = useState('');
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [showPropertyDropdown, setShowPropertyDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
@@ -189,11 +194,53 @@ const MessagePage = () => {
     filterMessages(term, selectedProperty, selectedStatus, selectedTimeframe);
   };
 
-  // Handle property filter
+  // Handle property filter (legacy - keep for compatibility)
   const handlePropertyFilter = (e) => {
     const property = e.target.value;
     setSelectedProperty(property);
     filterMessages(searchTerm, property, selectedStatus, selectedTimeframe);
+  };
+
+  // Handle property search input for autocomplete
+  const handlePropertySearchChange = (e) => {
+    const term = e.target.value;
+    setPropertySearchTerm(term);
+    
+    console.log('Property search term:', term);
+    console.log('Available properties:', properties.length);
+    
+    if (term.length >= 3) {
+      const filtered = properties.filter(property => {
+        const projectName = property.projectName || '';
+        const district = property.district || '';
+        const searchMatch = projectName.toLowerCase().includes(term.toLowerCase()) ||
+                           district.toLowerCase().includes(term.toLowerCase());
+        return searchMatch;
+      });
+      
+      console.log('Filtered properties:', filtered.length, filtered);
+      setFilteredProperties(filtered);
+      setShowPropertyDropdown(filtered.length > 0);
+    } else {
+      setFilteredProperties([]);
+      setShowPropertyDropdown(false);
+    }
+  };
+
+  // Handle property selection from autocomplete
+  const handlePropertySelect = (property) => {
+    setSelectedProperty(property.id);
+    setPropertySearchTerm(property.projectName);
+    setShowPropertyDropdown(false);
+    filterMessages(searchTerm, property.id, selectedStatus, selectedTimeframe);
+  };
+
+  // Clear property filter
+  const handleClearPropertyFilter = () => {
+    setSelectedProperty('');
+    setPropertySearchTerm('');
+    setShowPropertyDropdown(false);
+    filterMessages(searchTerm, '', selectedStatus, selectedTimeframe);
   };
 
   // Handle status filter
@@ -213,9 +260,15 @@ const MessagePage = () => {
   // Clear all filters
   const handleClearFilters = () => {
     setSearchTerm('');
-    setStatusFilter('all');
+    setSelectedProperty('');
+    setSelectedStatus('');
+    setSelectedTimeframe('Last 3 Month');
     setPropertyFilter('all');
-    setDateFilter('all');
+    // Clear autocomplete states
+    setPropertySearchTerm('');
+    setFilteredProperties([]);
+    setShowPropertyDropdown(false);
+    filterMessages('', '', '', 'Last 3 Month');
   };
 
   const handleStatusChange = async (messageId, newStatus) => {
@@ -254,13 +307,15 @@ const MessagePage = () => {
   const filterMessages = (term, property, status, timeframe) => {
     let filtered = messages;
 
-    // Filter by search term
+    // Filter by search term (search in contact name, email, phone, and property title)
     if (term) {
       const lowerTerm = term.toLowerCase();
       filtered = filtered.filter(message =>
         message.contact.name.toLowerCase().includes(lowerTerm) ||
         (message.contact.email && message.contact.email.toLowerCase().includes(lowerTerm)) ||
-        (message.contact.phone && message.contact.phone.includes(lowerTerm))
+        (message.contact.phone && message.contact.phone.includes(lowerTerm)) ||
+        (message.property.title && message.property.title.toLowerCase().includes(lowerTerm)) ||
+        (message.property.location && message.property.location.toLowerCase().includes(lowerTerm))
       );
     }
 
@@ -310,20 +365,80 @@ const MessagePage = () => {
               />
             </div>
 
-            <div className="filter-box">
-              <select
-                className="filter-select"
-                value={selectedProperty}
-                onChange={handlePropertyFilter}
-              >
-                <option value="">{t('filterByProperty')}</option>
-                {properties.length > 0 && properties.map(property => (
-                  <option key={property.id} value={property.id}>
-                    {property.projectName}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* <div className="filter-box property-autocomplete-container position-relative">
+              <div className="d-flex align-items-center">
+                <input
+                  type="text"
+                  className="filter-select property-search-input"
+                  placeholder="Search property (min 3 chars)..."
+                  value={propertySearchTerm}
+                  onChange={handlePropertySearchChange}
+                  onFocus={() => {
+                    if (propertySearchTerm.length >= 3 && filteredProperties.length > 0) {
+                      setShowPropertyDropdown(true);
+                    }
+                  }}
+                  onBlur={() => {
+                    // Delay hiding to allow click on dropdown items
+                    setTimeout(() => setShowPropertyDropdown(false), 300);
+                  }}
+                  autoComplete="off"
+                />
+                {selectedProperty && (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-outline-secondary ms-2 px-2 py-1"
+                    onClick={handleClearPropertyFilter}
+                    title="Clear property filter"
+                    style={{height: '32px', minWidth: '32px'}}
+                  >
+                    <FaTimes size={12} />
+                  </button>
+                )}
+              </div>
+              
+              {showPropertyDropdown && filteredProperties.length > 0 && (
+                <div 
+                  className="property-dropdown position-absolute w-100 bg-white border rounded shadow mt-1" 
+                  style={{
+                    zIndex: 9999, 
+                    maxHeight: '250px', 
+                    overflowY: 'auto',
+                    top: '100%',
+                    left: 0,
+                    right: 0
+                  }}
+                >
+                  {filteredProperties.map(property => (
+                    <div
+                      key={property.id}
+                      className="property-option p-3 border-bottom"
+                      onClick={() => handlePropertySelect(property)}
+                      style={{
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#f8f9fa';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'white';
+                      }}
+                    >
+                      <div className="fw-bold text-dark mb-1">{property.projectName}</div>
+                      {property.district && (
+                        <small className="text-muted">{property.district}</small>
+                      )}
+                    </div>
+                  ))}
+                  {filteredProperties.length === 0 && propertySearchTerm.length >= 3 && (
+                    <div className="p-3 text-muted text-center">
+                      No properties found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div> */}
 
             <div className="filter-box">
               <select

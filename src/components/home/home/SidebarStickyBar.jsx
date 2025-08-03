@@ -5,9 +5,8 @@ import React, { useState, useEffect } from "react";
 // Default fallback data
 const defaultSocialIcons = [
   { icon: "fab fa-facebook-f", url: "#", platform: "messenger" },
-  { icon: "fab fa-twitter", url: "#", platform: "twitter" },
+  { icon: "fab fa-twitter", url: "https://x.com/dluckproperty", platform: "twitter" },
   { icon: "fab fa-instagram", url: "#", platform: "instagram" },
-  { icon: "fab fa-linkedin-in", url: "#", platform: "linkedin" },
 ];
 
 const defaultContactInfo = {
@@ -75,15 +74,7 @@ const SidebarStickyBar = () => {
                 if (setting.platformValue && setting.isEnabled) {
                   const twitterIndex = updatedSocialIcons.findIndex(icon => icon.platform === 'twitter');
                   if (twitterIndex !== -1) {
-                    updatedSocialIcons[twitterIndex].url = 'https://twitter.com/' + setting.platformValue;
-                  }
-                }
-                break;
-              case 'linkedin':
-                if (setting.platformValue && setting.isEnabled) {
-                  const linkedinIndex = updatedSocialIcons.findIndex(icon => icon.platform === 'linkedin');
-                  if (linkedinIndex !== -1) {
-                    updatedSocialIcons[linkedinIndex].url = 'https://www.linkedin.com/in/' + setting.platformValue;
+                    updatedSocialIcons[twitterIndex].url = 'https://x.com/dluckproperty';
                   }
                 }
                 break;

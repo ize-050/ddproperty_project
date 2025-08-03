@@ -15,10 +15,10 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
   const formatLandSize = () => {
     const { landSizeRai, landSizeNgan, landSizeSqWah, landSizeSqm } = property;
     const parts = [];
-    if (landSizeRai > 0) parts.push(`${landSizeRai} Rai`);
-    if (landSizeNgan > 0) parts.push(`${landSizeNgan} Ngan`);
-    if (landSizeSqWah > 0) parts.push(`${landSizeSqWah} Sq.Wah`);
-    if (landSizeSqm > 0) parts.push(`${landSizeSqm} Sqm.`);
+    if (landSizeRai > 0) parts.push(`${landSizeRai} ${dynamicT('rai', 'Rai')}`);
+    if (landSizeNgan > 0) parts.push(`${landSizeNgan} ${dynamicT('ngan', 'Ngan')}`);
+    if (landSizeSqWah > 0) parts.push(`${landSizeSqWah} ${dynamicT('sq-wah', 'Sq.Wah')}`);
+    if (landSizeSqm > 0) parts.push(`${landSizeSqm} ${dynamicT('sqm', 'Sqm')}`);
 
     return parts.length > 0 ? parts.join(' ') : 'N/A';
   };
@@ -32,11 +32,11 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
     const sqwahTypes = ['house', 'villa', 'townhouse', 'land'];
 
     if (sqmTypes.includes(type)) {
-      return '/sqm.';
+      return `/${dynamicT('sqm', 'sqm')}`;
     }
 
     if (sqwahTypes.includes(type)) {
-      return '/sqwah.';
+      return `/${dynamicT('sqwah', 'sqwah')}`;
     }
 
     return ''; // Default case, no unit
@@ -86,7 +86,11 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
       <div className="property-section mb-5">
         <h3 className="section-title mb-3">{dynamicT('basic-detail', 'Description')}</h3>
         <div className="property-description">
-          <p>{description || 'No description available for this property.'}</p>
+          <div 
+            dangerouslySetInnerHTML={{ 
+              __html: (description || 'No description available for this property.').replace(/\n/g, '<br>') 
+            }}
+          />
         </div>
       </div>
 
@@ -114,9 +118,9 @@ const PropertyContent = ({ property, description, getPropertyTypeText, getFurnis
               </tr>
               <tr>
                 <th>{dynamicT('usable-area', 'Useable Area')}</th>
-                <td>{property.usableArea ? `${property.usableArea} sq.m.` : 'N/A'}</td>
+                <td>{property.usableArea ? `${property.usableArea} ${dynamicT('sqm', 'sqm')}` : 'N/A'}</td>
                 <th>{dynamicT('floor', 'Floor')}</th>
-                <td>{property.floors ? `${property.floors} Floors` : 'N/A'}</td>
+                <td>{property.floors ? `${property.floors} ${dynamicT('floors-unit', 'Floors')}` : 'N/A'}</td>
               </tr>
               <tr>
                 <th>{dynamicT('furnishing', 'Furnishing')}</th>

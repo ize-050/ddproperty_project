@@ -293,7 +293,11 @@ const PropertyDetailPage = ({ property }) => {
                   <div className="property-section mb-5">
                     <h3 className="section-title mb-3">{dynamicT('payment-plan', 'Payment Plan')}</h3>
                     <div className="payment-plan-container">
-                      <p>{paymentPlan}</p>
+                      <div 
+                        dangerouslySetInnerHTML={{ 
+                          __html: paymentPlan.replace(/\n/g, '<br>') 
+                        }}
+                      />
                     </div>
                   </div>
 

@@ -99,7 +99,7 @@ const DynamicBlogContent = ({ children, blogs, currentPageBlogs, latestPosts, to
                       </div>
                       <div className="blog-content">
                         <h5 className="title">
-                          <a href={`/blog/${blog.id}`}>{getLocalizedContent(blog, 'title', locale)}</a>
+                          <a href={`/blog/${blog.slug}`}>{getLocalizedContent(blog, 'title', locale)}</a>
                         </h5>
                         <p className="excerpt">
                           {getLocalizedContent(blog, 'content', locale)?.replace(/<[^>]*>/g, '').substring(0, 120)}...
@@ -221,7 +221,7 @@ const DynamicBlogContent = ({ children, blogs, currentPageBlogs, latestPosts, to
                   const postDate = formatDate(post.createdAt);
                   return (
                     <div className="post-item" key={post.id}>
-                      <a href={`/blog/${post.id}`}>
+                      <a href={`/blog/${post.slug}`}>
                         <img
                           width={90}
                           height={80}
@@ -232,7 +232,7 @@ const DynamicBlogContent = ({ children, blogs, currentPageBlogs, latestPosts, to
                       </a>
                       <div className="media-body">
                         <h6>
-                          <a href={`/blog/${post.id}`}>{getLocalizedContent(post, 'title', locale)}</a>
+                          <a href={`/blog/${post.slug}`}>{getLocalizedContent(post, 'title', locale)}</a>
                         </h6>
                         <p>{postDate.month} {postDate.day}</p>
                       </div>

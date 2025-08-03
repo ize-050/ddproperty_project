@@ -10,47 +10,56 @@ import "swiper/css";
 import "swiper/css/autoplay";
 
 const Agents = () => {
-  const { t, loading, error } = useSimpleTranslations('aboutus');
-
+  const { t, loading, error, translations } = useSimpleTranslations('aboutus');
+  
+  // Debug logging
+  
+ 
   const  dataAgentMockup = [
     {
     id: 1,
-    name: "Oat - Supakorn",
+    name: "oat_supakornab",
+    nameFallback: "Oat - Supakorn",
     position : "ceo_founderab",
     positionFallback: "CEO & Founder",
     image: "/images/staff/oat.jpg",
     },
     {
     id: 2,
-    name: "Amy - Thannaree",
+    name: "amy_thannareeab",
+    nameFallback: "Amy - Thannaree",
     position : "sale_directorab",
     positionFallback: "Sale Director",
     image: "/images/staff/amy.jpg",
     },
     {
     id: 3,
-    name: "ize - Chanyapak",
+    name: "ize_chanyapakab",
+    nameFallback: "Ize - Chanyapak",
     position : "sale_managerab",
     positionFallback: "Sale Manager",
     image: "/images/staff/ize.jpg",
     },
     {
     id: 4,
-    name: "Bam - Bamrung",
+    name: "bamboo_kunyalukab",
+    nameFallback: "Bamboo - Kunyaluk",
     position : "onlinemedia_designab",
     positionFallback: "Online Media Design",
     image: "/images/staff/bam.jpg",
     },
     {
     id: 5,
-    name: "Min - Wanvisa",
+    name: "min_wanvisaab",
+    nameFallback: "Min - Wanvisa",
     position : "rental_managementab",
     positionFallback: "Rental Management",
     image: "/images/staff/min.jpg",
     },
     {
     id: 6,
-    name: "Tine - Jintana",
+    name: "tine_jintanaab",
+    nameFallback: "Tine - Jintana",
     position : "rental_managementab",
     positionFallback: "Rental Management",
     image: "/images/staff/tine.jpg",
@@ -82,7 +91,7 @@ const Agents = () => {
                       />
                     </div>
                     <div className="team-content pt20">
-                      <h6 className="name mb-1">{agent.name}</h6>
+                      <h6 className="name mb-1">{t(agent.name, agent.nameFallback)}</h6>
                       <p className="text fz15 mb-0">{t(agent.position, agent.positionFallback)}</p>
                     </div>
                   </div>
@@ -108,7 +117,7 @@ const Agents = () => {
                       />
                     </div>
                     <div className="team-content pt20">
-                      <h6 className="name mb-1">{agent.name}</h6>
+                      <h6 className="name mb-1">{t(agent.name, agent.nameFallback)}</h6>
                       <p className="text fz15 mb-0">{t(agent.position, agent.positionFallback)}</p>
                     </div>
                   </div>
@@ -141,7 +150,10 @@ const Agents = () => {
                     />
                   </div>
                   <div className="team-content pt20">
-                    <h6 className="name mb-1">{agent.name}</h6>
+                    <h6 className="name mb-1">{(() => {
+                      const result = t(agent.name, agent.nameFallback);
+                      return result;
+                    })()}</h6>
                     <p className="text fz15 mb-0">{t(agent.position, agent.positionFallback)}</p>
                   </div>
                 </div>
