@@ -359,7 +359,7 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             pricePerSqm: property.pricePerSqm,
             amenities: amenitiesObj,
             propertyLabels: labelObj,
-            facilities: facilitiesObj,
+            facilities: facilityIcons,
             nearby: nearbyObj,
             highlights: highlightsObj,
             views: viewsObj,
@@ -411,8 +411,6 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             propertyData.shortTerm1Year = rentListing.shortTerm1Year || 0;
           }
           
-          // เซ็ตค่า form data ใน store (เหมือน EditPropertyForm)
-          console.log("propertyData for duplicate form:", propertyData);
           setFormData(propertyData);
           reset(propertyData);
 
@@ -872,6 +870,59 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">
+          <PropertyDetailSection watchedStatus={watchedStatus} />
+        </div>
+      </div>
+
+
+    
+ 
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <MoreRoomTypeSection />
+        </div>
+      </div>
+
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <PropertyHighlightsSection />
+        </div>
+      </div>
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <NearbySection />
+        </div>
+      </div>
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <ViewSection />
+        </div>
+      </div>
+
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <FacilitiesSection />
+        </div>
+      </div>
+
+
+
+
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
+          <FeaturesSection />
+        </div>
+      </div>
+
+     
+      
+      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
+        <div className="card-body">
           <PropertyDescriptionSection />
         </div>
       </div>
@@ -894,49 +945,9 @@ const DuplicatePropertyForm = ({ propertyId }) => {
         </div>
       </div>
 
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <PropertyDetailSection watchedStatus={watchedStatus} />
-        </div>
-      </div>
 
 
-
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <FeaturesSection />
-        </div>
-      </div>
-
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <MoreRoomTypeSection />
-        </div>
-      </div>
-
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <PropertyHighlightsSection />
-        </div>
-      </div>
-
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <FacilitiesSection />
-        </div>
-      </div>
-
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <NearbySection />
-        </div>
-      </div>
-
-      <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
-        <div className="card-body">
-          <ViewSection />
-        </div>
-      </div>
+      
 
       <div className="card mb-4" style={{ opacity: isLoading ? 0.6 : 1, transition: 'opacity 0.3s' }}>
         <div className="card-body">

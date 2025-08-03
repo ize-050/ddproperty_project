@@ -187,7 +187,7 @@ export async function generateMetadata({ params: { locale }, searchParams }) {
       title: currentMetadata.title,
       description: currentMetadata.description,
       url: currentUrl,
-      siteName: 'D-Luck Property',
+      siteName: currentMetadata.title,
       images: [
         {
           url: `${baseUrl}/images/logo/logo.png`,
