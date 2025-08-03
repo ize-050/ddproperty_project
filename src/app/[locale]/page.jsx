@@ -84,7 +84,7 @@ export async function generateMetadata({ params }) {
       title: currentMetadata.title,
       description: currentMetadata.description,
       url: localizedUrl,
-      siteName: 'D-Luck Property',
+      siteName: currentMetadata.title,
       images: [
         {
           url: `${baseUrl}/images/logo/logo.png`,
