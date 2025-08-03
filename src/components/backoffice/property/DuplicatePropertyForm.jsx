@@ -57,11 +57,11 @@ const DuplicatePropertyForm = ({ propertyId }) => {
   const { handleSubmit, formState: { errors }, trigger, reset, watch, register, setValue } = useFormContext();
   const watchedStatus = watch('status');
 
-  console.log("DuplicatePropertyForm propertyId:", propertyId);
 
   const fetchNextPropertyCode = async () => {
     try {
       // Get token
+ 
       const token = localStorage.getItem('auth_token') || sessionStorage.getItem('token');
 
       // Call API to get next property code
@@ -73,22 +73,29 @@ const DuplicatePropertyForm = ({ propertyId }) => {
         }
       });
 
+    
+
       if (!response.ok) {
         throw new Error('Failed to fetch next property code');
       }
 
       const data = await response.json();
 
+
       if (data.success && data.propertyCode) {
-        setFormData({ ...formData, propertyId: data.propertyCode });
         setPropertyReference(data.propertyCode);
-        setValue('propertyId', data.propertyCode);
-        console.log('New property code generated:', data.propertyCode);
+        return data.propertyCode; // Return the property code for chaining
+      } else {
+        throw new Error('No property code received from API');
       }
     } catch (error) {
       console.error('Error fetching next property code:', error);
+      throw error; // Re-throw error for proper error handling in chain
     }
   };
+
+
+
 
 
   useEffect(() => {
@@ -98,7 +105,7 @@ const DuplicatePropertyForm = ({ propertyId }) => {
     addFloorPlanImages([])
     addUnitPlanImages([])
     // Generate new property code immediately when duplicating
-    fetchNextPropertyCode();
+   
   }, [propertyId])
 
   useEffect(() => {
@@ -168,8 +175,11 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             'other': {}
           };
 
-          if (property.facilities && Array.isArray(property.facilities)) {
-            property.facilities.forEach(facility => {
+
+          console.log("property?.facilities",property?.facilities)
+
+          if (property?.facilities && Array.isArray(property?.facilities)) {
+            property?.facilities.forEach(facility => {
               Object.keys(facilityIcons).forEach(key => {
                 if (facility?.Icon?.sub_name === key) {
                   facilityIcons[key] = facilityIcons[key] || {};
@@ -287,7 +297,7 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
 
           let propertyData = {
-            property_code: property.propertyCode,
+            // property_code: property.propertyCode,
             projectName: property.projectName || '',
             referenceId: property.referenceId || '',
             propertyTitle: property.propertyTitle || property.title || '',
@@ -357,12 +367,26 @@ const DuplicatePropertyForm = ({ propertyId }) => {
             longTerm1Year: property.longTerm1Year || '',
             propertyPriceTypeId: property.propertyPriceTypeId || '',
             pricePerSqm: property.pricePerSqm,
+          
+
             amenities: amenitiesObj,
             propertyLabels: labelObj,
+
+            // Facilities
             facilities: facilityIcons,
+
+            // Nearby places
             nearby: nearbyObj,
+
+            // Property highlights
             highlights: highlightsObj,
+
+
+            // Views
             views: viewsObj,
+
+
+            
             contactInfo: {
               phone: parsedContactInfo?.phone || '',
               email: parsedContactInfo?.email || '',
@@ -413,6 +437,10 @@ const DuplicatePropertyForm = ({ propertyId }) => {
           
           setFormData(propertyData);
           reset(propertyData);
+
+         
+         
+          
 
           // Handle property images
           if (property.images && property.images.length > 0) {
@@ -570,10 +598,13 @@ const DuplicatePropertyForm = ({ propertyId }) => {
 
     if (propertyId) {
       resetForm();
-      fetchPropertyData();
-      fetchNextPropertyCode();
+      fetchPropertyData().then(() => {
+         fetchNextPropertyCode().then((propertyReference) => {
+          setValue('propertyId', propertyReference);
+        })  
+      })
     }
-  }, [propertyId]);
+  }, [propertyId]); // Remove propertyReference from dependency to prevent multiple executions
 
   useEffect(() => {
     if (formSubmitted && Object.keys(errors).length > 0) {
