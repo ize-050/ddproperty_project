@@ -12,6 +12,7 @@ const PropertyGallery = ({ images, property }) => {
   const { t: dynamicT } = useSimpleTranslations('listing');
   const locale = useLocale();
   const galleryImages = images && images.length > 0 ? images : ['/images/property/fp1.jpg'];
+  const [imageDimensions, setImageDimensions] = React.useState({});
 
   // Function to get localized listing type
   const getLocalizedListingType = (listingTypes) => {
@@ -71,7 +72,21 @@ const PropertyGallery = ({ images, property }) => {
   return (
     <section className="property-gallery-section">
       <div className="container">
-        <Gallery>
+        <Gallery options={{
+          showHideAnimationType: 'zoom',
+          bgOpacity: 0.9,
+          spacing: 0.1,
+          allowPanToNext: true,
+          loop: true,
+          zoom: true,
+          close: true,
+          counter: true,
+          arrowKeys: true,
+          escKey: true,
+          clickToCloseNonZoomable: true,
+          imageClickAction: 'zoom-or-close',
+          tapAction: 'zoom-or-close'
+        }}>
           <div className="row">
             {galleryImages.length > 0 && (
               <>
@@ -81,8 +96,6 @@ const PropertyGallery = ({ images, property }) => {
                       <Item
                         original={galleryImages[0]}
                         thumbnail={galleryImages[0]}
-                        width={1200}
-                        height={800}
                         title={property.projectName || 'Property'}
                       > 
                         {({ ref, open }) => (
@@ -108,8 +121,6 @@ const PropertyGallery = ({ images, property }) => {
                             key={`hidden-item-${idx + 1}`}
                             original={image}
                             thumbnail={image}
-                            width={1200}
-                            height={800}
                             title={`Property image ${idx + 2}`}
                           >
                             {({ ref, open }) => (
@@ -128,6 +139,7 @@ const PropertyGallery = ({ images, property }) => {
                                     className="thumb-more-overlay"
                                     style={{
                                       position: 'absolute',
+                                      
                                       top: 0,
                                       left: 0,
                                       width: '100%',
@@ -161,8 +173,6 @@ const PropertyGallery = ({ images, property }) => {
                     key={`hidden-item-${idx + 5}`}
                     original={image}
                     thumbnail={image}
-                    width={1200}
-                    height={800}
                     title={`Property image ${idx + 6}`}
                   >
                     {({ ref }) => (

@@ -1,3 +1,30 @@
+// PhotoSwipe Custom Styles for Better Image Display
+.pswp__img {
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+  object-fit: contain !important;
+  margin: auto !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.pswp__zoom-wrap {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.pswp__container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+// Gallery Grid Styles
 .thumbs-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
