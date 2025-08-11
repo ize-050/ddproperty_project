@@ -248,7 +248,7 @@ const Page = ({ randomProperties, zones }) => {
           loading="lazy"
           width={1920}
           height={900}
-          src="/images/home/bg-photo-home-01.png"
+          src="/images/home/bg-photo-home-01.jpg"
           title="London Eye, London, United Kingdom"
           aria-label="London Eye, London, United Kingdom"
         />

@@ -124,7 +124,7 @@ const Contact = async ({ params }) => {
                     loading="lazy"
                     width={1920}
                     height={1080}
-                    src="/images/contact/banner-contact-us.png"
+                    src="/images/contact/banner-contact-us.jpg"
                     title="Contact Us - D-LUCK PROPERTY"
                     aria-label="Contact Us Banner"
                 />

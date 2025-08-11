@@ -2,7 +2,7 @@
 
 .home-banner-style8 {
   /* Keep the existing styles */
-  background-image: url(../../../public/images/banner/banner.png);
+  background-image: url(../../../public/images/home/main-banner.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -33,7 +33,7 @@
     &::before {
       opacity: 0;
     }
-    background-image: url(../images/home/home-8.jpg);
+    background-image: url(../../../public/images/home/main-banner.jpg);
   }
   
   /* Content should be above the preload image */

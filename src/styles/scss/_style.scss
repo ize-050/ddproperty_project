@@ -453,13 +453,13 @@ li {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background-image: url(../../../public/images/about/banner-about.png);
+    background-image: url(../../../public/images/about/banner-about-us.jpg);
     background-size: cover;
     background-position: center;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 450px;
+    height: 400px;
 }
 
 .breadcumb-section3 {
@@ -472,7 +472,7 @@ li {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 450px;
+    height: 400px;
 }
 @media (max-width: 991.98px) {
     .breadcumb-section3 {
@@ -3918,7 +3918,7 @@ li {
 
 /*Home 1 Banner Content*/
 .home-banner-style8 {
-    background-image: url(../../../public/images/banner/banner.png);
+    background-image: url(../../../public/images/home/main-banner.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -3929,7 +3929,7 @@ li {
     &::before {
       opacity: 0;
     }
-    background-image: url(../../../public/images/banner/banner.png);
+    background-image: url(../../../public/images/home/main-banner.jpg);
 }
 .home-banner-style8 .home-style8 {
     -webkit-box-align: center;
@@ -4000,7 +4000,7 @@ li {
 }
 
 .property-banner-style2 {
-    background-image: url('/images/properties-list/banner-listing.png');
+    background-image: url('/images/listings/banner-listing.jpg');
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
