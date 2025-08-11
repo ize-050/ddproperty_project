@@ -1,7 +1,11 @@
 // src/hooks/useDynamicTranslations.js
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocale } from 'next-intl';
+
+// In-memory cache to prevent duplicate API calls
+const translationCache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 /**
  * Custom hook for dynamic translations from database
@@ -12,10 +16,29 @@ const useDynamicTranslations = (section = 'listing') => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const locale = useLocale();
+  const fetchedRef = useRef(false);
 
-  // Fetch translations from backend API
+  // Fetch translations from backend API with caching
   useEffect(() => {
     const fetchTranslations = async () => {
+      const cacheKey = `translations-${section}`;
+      const now = Date.now();
+      
+      // Check cache first
+      const cached = translationCache.get(cacheKey);
+      if (cached && (now - cached.timestamp) < CACHE_DURATION) {
+        setTranslations(cached.data);
+        setLoading(false);
+        setError(null);
+        return;
+      }
+
+      // Prevent duplicate API calls
+      if (fetchedRef.current) {
+        return;
+      }
+      fetchedRef.current = true;
+
       try {
         setLoading(true);
         const response = await fetch(
@@ -23,7 +46,10 @@ const useDynamicTranslations = (section = 'listing') => {
           {
             headers: {
               'Content-Type': 'application/json',
-            }
+            },
+            // Add cache headers
+            cache: 'force-cache',
+            next: { revalidate: 300 } // 5 minutes
           }
         );
 
@@ -46,6 +72,12 @@ const useDynamicTranslations = (section = 'listing') => {
           });
         }
 
+        // Cache the result
+        translationCache.set(cacheKey, {
+          data: translationMap,
+          timestamp: now
+        });
+
         setTranslations(translationMap);
         setError(null);
       } catch (err) {
@@ -55,11 +87,12 @@ const useDynamicTranslations = (section = 'listing') => {
         setTranslations({});
       } finally {
         setLoading(false);
+        fetchedRef.current = false;
       }
     };
 
     fetchTranslations();
-  }, [section]);
+  }, [section]); // Remove locale from dependencies as it doesn't affect API call
 
   /**
    * Get translated text for a given key with fallback mechanism

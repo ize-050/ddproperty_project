@@ -22,6 +22,40 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  async headers() {
+    return [
+      {
+        // Cache static assets (images, icons, fonts)
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable', // 1 year
+          },
+        ],
+      },
+      {
+        // Cache favicon and other root assets
+        source: '/(favicon.ico|robots.txt|sitemap.xml)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400', // 1 day
+          },
+        ],
+      },
+      {
+        // Cache API responses with shorter duration
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, s-maxage=300', // 5 minutes
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       {

@@ -63,8 +63,8 @@ class LanguageApi {
         const response = await fetch(url, {
           method: 'GET',
           headers,
-          cache: options.cache || 'no-store',
-          next: options.next || { revalidate: 3600 }, // Default cache for 1 hour
+          cache: options.cache || 'force-cache',
+          next: options.next || { revalidate: 300 }, // Default cache for 5 minutes
         });
         
         if (!response.ok) {
@@ -98,8 +98,8 @@ class LanguageApi {
         const response = await fetch(url, {
           method: 'GET',
           headers,
-          cache: options.cache || 'no-store',
-          next: options.next || { revalidate: 3600 },
+          cache: options.cache || 'force-cache',
+          next: options.next || { revalidate: 300 },
         });
         
         if (!response.ok) {
@@ -134,8 +134,8 @@ class LanguageApi {
         const response = await fetch(url, {
           method: 'GET',
           headers,
-          cache: options.cache || 'no-store',
-          next: options.next || { revalidate: 3600 },
+          cache: options.cache || 'force-cache',
+          next: options.next || { revalidate: 300 },
         });
         
         if (!response.ok) {
@@ -168,8 +168,8 @@ class LanguageApi {
         const response = await fetch(url, {
           method: 'GET',
           headers,
-          cache: options.cache || 'no-store',
-          next: options.next || { revalidate: 3600 },
+          cache: options.cache || 'force-cache',
+          next: options.next || { revalidate: 300 },
         });
         
         if (!response.ok) {
