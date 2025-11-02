@@ -67,6 +67,13 @@
   },
   "home": {
     "title": "ДОБРО ПОЖАЛОВАТЬ НА",
+    "welcome": {
+      "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et risus dapibus erat pellentesque molestie. Morbi malesuada congue sem. Quisque sagittis in eros vel vehicula. Quisque arcu augue, pellentesque placerat pharetra non, ultricies vitae libero. Nam quis lacus condimentum, lobortis mauris ut, sodales libero. Sed sed b",
+      "section1Title": "Услуги по покупке, продаже и аренде недвижимости в Паттайе",
+      "section1Description": "Fusce feugiat at velit vitae interdum. Ut non commodo justo, at amet pulvinar est. Pellentesque ornare velit non urna bibendum mattis. Nullam vel turpis ex. Praesent sodales sem in erat placerat, bibendum ullamcorper ac sit amet tellus. Etiam vel sodales turpis, ut convallis tellus. Integer vitae tellus a felis semper elementum vel sed metus. Donec pellentesque turpis id nibh elementum bibendum.",
+      "section2Title": "Инвестиционные возможности в недвижимость Паттайи",
+      "section2Description": "Cras at augue et ex euismod ullamcorper ac sit amet tellus. Nam arcu lacus, tincidunt et aliquam at, facilisis eget velit. Maecenas fermentum erat vel quam interdum, vitae maximus sem convallis. Mauris lobortis justo sed sapien ultrices, id mattis eros tincidunt. Integer accumsan arcu id est interdum, at sodales dolor eleifend. Suspendisse lorem tortor, posuere a fringilla quis, suscipit vel augue. Vestibulum pretium vel orci in venenatis."
+    },
     "d_luck": "D-LUCK PROPERTY",
     "buy": "Купить",
     "rent": "Аренда",

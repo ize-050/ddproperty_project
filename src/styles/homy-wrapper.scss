@@ -1,0 +1,23 @@
+// Homy Theme Wrapper - Isolated Styles
+.homy-wrapper {
+  // Import Homy theme styles
+  @import './homy/index.scss';
+  
+  // Reset any conflicting styles from main project
+  * {
+    box-sizing: border-box;
+  }
+  
+  // Ensure Homy styles take precedence
+  font-family: var(--body-font-family);
+  
+  // Override any main project styles that might interfere
+  .container,
+  .container-fluid {
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

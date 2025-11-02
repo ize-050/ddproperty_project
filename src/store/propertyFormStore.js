@@ -272,8 +272,6 @@ const usePropertyFormStore = create((set) => ({
         });
       }
 
-      console.log('Updated facilities data:', updatedFacilities);
-
       return {
         formData: {
           ...state.formData,

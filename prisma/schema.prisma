@@ -72,6 +72,24 @@ model Blog {
   user            User     @relation(fields: [userId], references: [id])
 }
 
+// ตารางไอคอน
+model Icon {
+  id        Int      @id @default(autoincrement())
+  prefix    String   // amenity, facility, highlight, nearby, property-label, views
+  name      String   // ชื่อไอคอนภาษาอังกฤษ (เดิม)
+  name_th   String?  // ชื่อไอคอนภาษาไทย
+  name_ch   String?  // ชื่อไอคอนภาษาจีน
+  name_ru   String?  // ชื่อไอคอนภาษารัสเซีย
+  key       String   // key สำหรับใช้ในโค้ด (slug format)
+  icon_path String   // path ของไฟล์ไอคอน
+  sub_name  String?  // หมวดหมู่ย่อย
+  active    Boolean  @default(true) // สถานะการใช้งาน
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("icons")
+}
+
 // ตารางอัตราแลกเปลี่ยนสกุลเงิน
 model Currency {
   code      String   @id // THB, USD, CNY, RUB

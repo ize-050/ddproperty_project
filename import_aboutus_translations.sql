@@ -1,0 +1,145 @@
+-- Import About Us translations into ui_string table
+-- Section: aboutus
+
+INSERT INTO ui_string (section, slug, en, th, zhCN, ru, created_at, updated_at) VALUES
+('aboutus', 'aboutus_ab', 'About Us', 'เกี่ยวกับเรา', '关于我们', 'О нас', NOW(), NOW()),
+('aboutus', 'home_ab', 'Home / About Us', 'หน้าแรก / เกี่ยวกับเรา', '首页 / 关于我们', 'домашняя страница / О нас', NOW(), NOW()),
+('aboutus', 'aboutdluck_ab', 'About D-LUCK PROPERTY', 'เกี่ยวกับ D-LUCK PROPERTY', '关于 D-LUCK PROPERTY', 'О компании D-LUCK PROPERTY', NOW(), NOW()),
+('aboutus', 'best_realestateab', 'Best Real Estate Agent in Pattaya Thailand', 'นายหน้าอสังหาริมทรัพย์ที่ดีที่สุดในพัทยา ประเทศไทย', '泰国芭堤雅最佳房地产经纪人', 'Лучший агент по недвижимости в Паттайе Таиланд', NOW(), NOW()),
+('aboutus', 'text_ab', 'Pattaya Condo for Sales | Pattaya Real Estate Agent | D-LUCK PROPERTY
+
+Pattaya Real Estate Specialists - Comprehensive Services for All Locations
+D-LUCK PROPERTY specializes in Pattaya condo sales, Pattaya condo rentals, and Pattaya real estate investment. We cover all popular locations with professional services.
+
+Service Areas
+
+Central Pattaya Condos | Jomtien Condos | North Pattaya Condos | Khao Phra Tamnak Condos | Bang Saray Condos | Na Kluea Condos | Sattahip Condos | Ban Amphoe Condos
+
+Our Services
+
+Buy-Sell-Rent Real Estate
+Pattaya condo sales in all price ranges
+Pattaya condo rentals - short and long term
+Condo rental management with guaranteed returns
+Investment consultation and market analysis
+
+Our Strengths
+
+10+ years of experience in the Pattaya market
+Professional team with complete licensing
+Complete database of all projects in Pattaya
+Transparent service with no hidden fees
+
+Contact Us Today
+
+Start investing in Pattaya condos with specialists you can trust
+Free consultation for Pattaya condo sales, Pattaya condo rentals, Pattaya real estate investment in all locations in Pattaya, Jomtien, Khao Phra Tamnak, and nearby areas', 'ขายคอนโดพัทยา | ตัวแทนอสังหาริมทรัพย์พัทยา | D-LUCK PROPERTY
+
+ผู้เชี่ยวชาญด้านอสังหาริมทรัพย์พัทยา - บริการครบวงจรทุกทำเล
+D-LUCK PROPERTY เชี่ยวชาญขายคอนโดพัทยา เช่าคอนโดพัทยา และลงทุนอสังหาริมทรัพย์พัทยา ครอบคลุมทุกทำเลยอดนิยม พร้อมบริการแบบมืออาชีพ
+
+พื้นที่ให้บริการ
+
+คอนโดพัทยากลาง | คอนโดจอมเทียน | คอนโดพัทยาเหนือ | คอนโดเขาพระตำหนัก | คอนโดบางเสร่ | คอนโดนาเกลือ | คอนโดสัตหีบ | คอนโดบ้านอำเภอ
+
+บริการของเรา
+
+ซื้อ-ขาย-เช่า อสังหาริมทรัพย์
+ขายคอนโดพัทยา ทุกช่วงราคา
+เช่าคอนโดพัทยา ระยะสั้น-ยาว
+บริหารคอนโดให้เช่า รับประกันผลตอบแทน
+คำปรึกษาการลงทุนและวิเคราะห์ตลาด
+
+จุดเด่นของเรา
+
+ประสบการณ์ 10+ ปี ในตลาดพัทยา
+ทีมงานมืออาชีพ ใบอนุญาตครบถ้วน
+ฐานข้อมูลครบ ทุกโครงการในพัทยา
+บริการโปร่งใส ไม่มีค่าใช้จ้ายแอบแฝง
+
+ติดต่อเราวันนี้
+
+เริ่มลงทุนคอนโดพัทยากับผู้เชี่ยวชาญที่คุณไว้วางใจ
+คำปรึกษาฟรีขายคอนโดพัทยา เช่าคอนโดพัทยา ลงทุนอสังหาริมทรัพย์พัทยา ทุกทำเลในพัทยา จอมเทียน เขาพระตำหนัก และพื้นที่ใกล้เคียง', '芭堤雅公寓出售 | 芭堤雅房地产经纪人 | D-LUCK PROPERTY
+
+芭堤雅房地产专家 - 全方位服务，覆盖所有地区
+D-LUCK PROPERTY 专注于芭堤雅公寓销售、租赁和房地产投资。我们提供覆盖所有热门地区的专业服务。
+
+服务区域
+
+芭堤雅中心区公寓 | 中天区公寓 | 芭堤雅北部区公寓 | 考帕塔纳克区公寓 | 邦萨拉区公寓 | 纳克鲁亚区公寓 | 梭桃邑区公寓 | Ban Amphoe 公寓
+
+我们的服务
+
+买卖租赁房地产
+芭堤雅各价位公寓出售
+芭堤雅公寓租赁 - 短期和长期
+保障回报的公寓租赁管理
+投资咨询和市场分析
+
+我们的优势
+
+芭堤雅市场10年以上经验
+拥有完整执照的专业团队
+芭堤雅所有项目的完整数据库
+透明服务，无隐藏费用
+
+立即联系我们
+
+开始投资芭堤雅公寓，与我们值得信赖的专家合作
+芭堤雅公寓出售、公寓租赁、房地产投资，芭堤雅、宗滴恩、考帕塔纳克及周边地区均提供免费咨询', 'Продажа кондоминиумов в Паттайе | Агент по недвижимости в Паттайе | D-LUCK PROPERTY
+
+Специалисты по недвижимости в Паттайе — комплексные услуги для всех локаций
+D-LUCK PROPERTY специализируется на продаже кондоминиумов в Паттайе, аренде кондоминиумов в Паттайе и инвестициях в недвижимость в Паттайе. Мы предоставляем профессиональные услуги во всех популярных локациях.
+
+Области обслуживания
+
+Кондоминиумы в центральной Паттайе | Кондоминиумы в Джомтьене | Кондоминиумы в Северной Паттайе | Кондоминиумы в Кхао Пра Тамнак | Кондоминиумы в Банг Сарай | Кондоминиумы в На Клуеа | Кондоминиумы в Саттахип | Ban Amphoe Condos
+
+Наши услуги
+
+Купля-продажа-аренда недвижимости
+Продажа квартир в Паттайе во всех ценовых диапазонах
+Аренда квартир в Паттайе — краткосрочная и долгосрочная
+Управление арендой квартир с гарантированной прибылью
+Инвестиционные консультации и анализ рынка
+
+Наши сильные стороны
+
+10+ лет опыта на рынке Паттайи
+Профессиональная команда с полным лицензированием
+Полная база данных всех проектов в Паттайе
+Прозрачное обслуживание без скрытых платежей
+
+Свяжитесь с нами сегодня
+
+Начните инвестировать в квартиры в Паттайе со специалистами, которым вы можете доверять
+Бесплатная консультация по продаже квартир в Паттайе, аренде квартир в Паттайе, инвестициям в недвижимость в Паттайе во всех местах в Паттайе, Джомтьене, Као Пра Тамнаке и близлежащих районах', NOW(), NOW()),
+('aboutus', 'rental_management_service', 'Rental Management', 'การจัดการให้เช่า', '租赁管理', 'Управление арендой', NOW(), NOW()),
+('aboutus', 'rental_management_desc', 'Our expert management services protect your investment and optimize your revenue through strategic pricing efficient operations and tenant retention.', 'บริการจัดการผู้เชี่ยวชาญของเราปกป้องการลงทุนของคุณและเพิ่มรายได้ผ่านการกำหนดราคาเชิงกลยุทธ์ การดำเนินงานที่มีประสิทธิภาพ และการรักษาผู้เช่า', '我们的专业管理服务通过战略定价、高效运营和租户保留来保护您的投资并优化您的收入。', 'Наши экспертные услуги управления защищают ваши инвестиции и оптимизируют доходы за счет стратегического ценообразования эффективных операций и удержания арендаторов.', NOW(), NOW()),
+('aboutus', 'property_management_service', 'Property Management', 'การจัดการทรัพย์สิน', '物业管理', 'Управление недвижимостью', NOW(), NOW()),
+('aboutus', 'property_management_desc', 'Reliable and efficient management for your valuable assets.', 'การจัดการที่เชื่อถือได้และมีประสิทธิภาพสำหรับทรัพย์สินอันมีค่าของคุณ', '为您的宝贵资产提供可靠高效的管理。', 'Надежное и эффективное управление вашими ценными активами.', NOW(), NOW()),
+('aboutus', 'finance_realestate_service', 'Finance Realestate with Bank', 'การเงินอสังหาริมทรัพย์กับธนาคาร', '银行房地产融资', 'Финансирование недвижимости с банком', NOW(), NOW()),
+('aboutus', 'finance_realestate_desc', 'Navigate property financing with trusted banking partners.', 'นำทางการจัดหาเงินทุนอสังหาริมทรัพย์กับพันธมิตรธนาคารที่เชื่อถือได้', '与值得信赖的银行合作伙伴导航房产融资。', 'Навигация по финансированию недвижимости с надежными банковскими партнерами.', NOW(), NOW()),
+('aboutus', 'online_marketing_service', 'Online Marketing', 'การตลาดออนไลน์', '在线营销', 'Онлайн-маркетинг', NOW(), NOW()),
+('aboutus', 'online_marketing_desc', 'Maximize your property''s visibility and reach the right audience online.', 'เพิ่มการมองเห็นทรัพย์สินของคุณให้สูงสุดและเข้าถึงกลุ่มเป้าหมายที่เหมาะสมออนไลน์', '最大化您房产的可见度并在线触达正确的受众。', 'Максимизируйте видимость вашей недвижимости и достигните правильной аудитории онлайн.', NOW(), NOW()),
+('aboutus', 'buildin_decorate_service', 'Build-in & Decorate', 'ก่อสร้างและตกแต่ง', '建造和装饰', 'Строительство и декорирование', NOW(), NOW()),
+('aboutus', 'buildin_decorate_desc', 'Create your ideal space with our talented construction and interior design services.', 'สร้างพื้นที่ในอุดมคติของคุณด้วยบริการก่อสร้างและออกแบบตกแต่งภายในที่มีความสามารถของเรา', '通过我们才华横溢的建筑和室内设计服务创造您的理想空间。', 'Создайте свое идеальное пространство с нашими талантливыми услугами строительства и дизайна интерьера.', NOW(), NOW()),
+('aboutus', 'meetourdeam_ab', 'Meet Our Team', 'พบกับทีมงานของเรา', '认识我们的团队', 'Познакомьтесь с нашей командой', NOW(), NOW()),
+('aboutus', 'ourexperienced_ab', 'Our experienced consultants are ready to make your property dreams come true.', 'ที่ปรึกษาผู้เชี่ยวชาญของเรายินดีที่จะทำให้ความฝันด้านอสังหาริมทรัพย์ของคุณเป็นจริง', '我们经验丰富的顾问随时准备助您实现置业梦想。', 'Наши опытные консультанты готовы воплотить ваши мечты о недвижимости в реальность.', NOW(), NOW()),
+('aboutus', 'oat_supakornab', 'Oat - Supakorn', 'โอ๊ต - ศุภกร', 'Oat - Supakorn', 'Oat - Supakorn', NOW(), NOW()),
+('aboutus', 'ceo_founderab', 'CEO & Founder', 'CEO & Founder', '首席执行官兼创始人', 'Генеральный директор и основатель', NOW(), NOW()),
+('aboutus', 'amy_thannareeab', 'Amy - Thannaree', 'เอมี่ - ธัญญ์นรี', 'Amy - Thannaree', 'Amy - Thannaree', NOW(), NOW()),
+('aboutus', 'sale_directorab', 'Sale Director', 'Sale Director', '销售总监', 'Директор по продажам', NOW(), NOW()),
+('aboutus', 'ize_chanyapakab', 'Ize - Chanyapak', 'ไอซ์ - ชัญญาภัค', 'Ize - Chanyapak', 'Ize - Chanyapak', NOW(), NOW()),
+('aboutus', 'sale_managerab', 'Sale Manager', 'Sale Manager', '销售经理', 'Менеджер по продажам', NOW(), NOW()),
+('aboutus', 'bamboo_kunyalukab', 'Bamboo - Kunyaluk', 'แบมบู - กุญญลักษณ์', 'Bamboo - Kunyaluk', 'Bamboo - Kunyaluk', NOW(), NOW()),
+('aboutus', 'onlinemedia_designab', 'Online Media Design', 'ออนไลน์มีเดียดีไซน์', '在线媒体设计', 'Дизайн онлайн-медиа', NOW(), NOW()),
+('aboutus', 'min_wanvisaab', 'Min - Wanvisa', 'มิน - วันวิสา', 'Min - Wanvisa', 'Min - Wanvisa', NOW(), NOW()),
+('aboutus', 'rental_managementab', 'Rental Management', 'การจัดการให้เช่า', '租赁管理', 'Управление арендой', NOW(), NOW())
+ON DUPLICATE KEY UPDATE
+  en = VALUES(en),
+  th = VALUES(th),
+  zhCN = VALUES(zhCN),
+  ru = VALUES(ru),
+  updated_at = NOW();

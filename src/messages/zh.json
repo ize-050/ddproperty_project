@@ -49,15 +49,21 @@
     "translationSuccess": "翻译成功！"
   },
   "home": {
-    "welcome": "欢迎来到",
-    "d_luck": "D-LUCK PROPERTY",
     "title": "泰国芭堤雅最佳房地产网站",
+    "d_luck": "D-LUCK PROPERTY",
     "buy": "购买",
     "rent": "租赁",
     "price": "价格",
     "select_area": "选择区域",
     "advance_search": "高级搜索",
     "developer": "房地产开发商",
+    "welcome": {
+      "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et risus dapibus erat pellentesque molestie. Morbi malesuada congue sem. Quisque sagittis in eros vel vehicula. Quisque arcu augue, pellentesque placerat pharetra non, ultricies vitae libero. Nam quis lacus condimentum, lobortis mauris ut, sodales libero. Sed sed b",
+      "section1Title": "芭提雅房产买卖租赁服务",
+      "section1Description": "Fusce feugiat at velit vitae interdum. Ut non commodo justo, at amet pulvinar est. Pellentesque ornare velit non urna bibendum mattis. Nullam vel turpis ex. Praesent sodales sem in erat placerat, bibendum ullamcorper ac sit amet tellus. Etiam vel sodales turpis, ut convallis tellus. Integer vitae tellus a felis semper elementum vel sed metus. Donec pellentesque turpis id nibh elementum bibendum.",
+      "section2Title": "芭提雅房产投资机会",
+      "section2Description": "Cras at augue et ex euismod ullamcorper ac sit amet tellus. Nam arcu lacus, tincidunt et aliquam at, facilisis eget velit. Maecenas fermentum erat vel quam interdum, vitae maximus sem convallis. Mauris lobortis justo sed sapien ultrices, id mattis eros tincidunt. Integer accumsan arcu id est interdum, at sodales dolor eleifend. Suspendisse lorem tortor, posuere a fringilla quis, suscipit vel augue. Vestibulum pretium vel orci in venenatis."
+    },
     "featured": {
       "title": "发现我们的精选房源",
       "subtitle": "在芭堤雅寻找您的房产",

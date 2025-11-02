@@ -1,14 +1,14 @@
 
 
-import CallToActions from "@/components/common/CallToActions";
-import Mission from "@/components/pages/about/Mission";
-import Image from "next/image";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import Features from "@/components/pages/about/Features";
-import AboutContent from "@/components/about/AboutContent";
-
-const Agents = dynamic(() => import("@/components/about/Agents"), { ssr: false });
+import HeaderTwo from "@/layouts/headers/HeaderTwo";
+import BreadcrumbTwo from "@/components/common/breadcrumb/BreadcrumbTwo";
+import BLockFeatureOne from "@/components/about/about-us-two/BLockFeatureOne";
+import BLockFeatureTwo from "@/components/about/about-us-two/BLockFeatureTwo";
+import Feedback from "@/components/homes/home-six/Feedback";
+import FaqSection from "@/components/about/about-us-two/FaqSection";
+import MeetOurTeam from "@/components/about/about-us-two/MeetOurTeam";
+import FancyBanner from "@/components/about/about-us-two/FancyBanner";
+import FooterHomeThree from "@/components/homes/home-three/FooterHomeThree";
 
 
 // Dynamic metadata generation for About page
@@ -86,7 +86,13 @@ export async function generateMetadata({ params: { locale } }) {
 const About = () => {
   return (
     <>
-      <AboutContent />
+      <HeaderTwo style_1={true} style_2={false} />
+      <BreadcrumbTwo title="Get to Know about Us"  />
+      <BLockFeatureOne />
+      <FaqSection />
+       <MeetOurTeam />
+      <BLockFeatureTwo />
+      <FooterHomeThree />
     </>
   );
 };

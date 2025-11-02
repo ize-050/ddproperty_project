@@ -91,15 +91,27 @@ export default function HeroSearchBar({
 
   return (
     <>
-      <div className="inner-banner-style1 text-center">
-        <h2 className="hero-title animate-up-1 ">{t('find-your-dream-home', 'Find Your Dream Home')}</h2>
-        <p className="hero-text fz15 animate-up-2">
+      {/* Title Section */}
+      <div className="text-center mb-40">
+        <h2 className="hero-title" style={{ 
+          fontSize: '48px', 
+          fontWeight: '700', 
+          color: 'white',
+          marginBottom: '15px',
+          textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+        }}>
+          {t('find-your-property', 'Find Your Property')}
+        </h2>
+        <p className="hero-text" style={{ 
+          fontSize: '16px', 
+          color: 'rgba(255,255,255,0.9)',
+          textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+        }}>
           {t('apartments-available-text', "We've more than 745,000 apartments, place & plot.")}
         </p> 
       </div>
 
-
-
+      {/* Advanced Filter Modal */}
       {advancedSearchVisible && (
         <div className="advance-feature-modal">
           <div
@@ -124,80 +136,223 @@ export default function HeroSearchBar({
         </div>
       )}
 
-   
-
-      <div className="advance-search-tab mt30  mx-auto animate-up-3">
-        <ul className="nav nav-tabs p-0 m-0">
+      {/* Filter Box - Custom Style */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Buy/Rent Tabs - Separate from filter box */}
+        <div style={{ 
+          display: 'inline-flex',
+          gap: '0',
+          marginBottom: '0',
+          backgroundColor: 'white',
+          borderRadius: '8px 8px 0 0',
+          padding: '0',
+          overflow: 'hidden'
+        }}>
           {tabs.map((tab) => (
-            <li className="nav-item" key={tab.id}>
-              <button
-                className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
-                onClick={() => handleTabClick(tab.id)}
-              >
-                {tab.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <div className="tab-content">
-          {tabs.map((tab) => (
-            <div
-              className={`${activeTab === tab.id ? "active" : ""} tab-pane`}
+            <button
               key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              style={{
+                backgroundColor: 'transparent',
+                color: activeTab === tab.id ? '#1a1a1a' : '#999',
+                border: 'none',
+                borderBottom: activeTab === tab.id ? '3px solid #1a1a1a' : '3px solid transparent',
+                padding: '12px 24px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
             >
-              <div className="advance-content-style1">
-                <div className="row">
-                  <div className="col-md-8 col-lg-9">
-                    <div className="advance-search-field position-relative text-start">
-                      <form className="form-search position-relative">
-                        <div className="box-search">
-                          <span className="icon flaticon-home-1" />
-                          <input
-                            className="form-control bgc-f7 bdrs12"
-                            type="text"
-                            name="search"
-                            placeholder={tab.id === 'buy' ? t('search-for-buy', 'Search for Buy...') : t('search-for-rent', 'Search for Rent...')}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                          />
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  {/* End .col-md-8 */}
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-                  <div className="col-md-4 col-lg-3">
-                    <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-3 mt-md-0">
-                      <button
-                        className="advance-search-btn"
-                        type="button"
-                        onClick={() => setAdvancedSearchVisible(true)}
-                      >
-                        <span className="flaticon-settings" /> {t('advanced', 'Advanced')}
-                      </button>
-                      <button
-                        className="advance-search-icon ud-btn btn-dark ms-4"
-                        type="button"
-                        onClick={handleSearch}
-                      >
-                        <span className="flaticon-search" />
-                      </button>
-                    </div>
+        {/* Filter Content */}
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '0 12px 12px 12px',
+          padding: '25px 30px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.1)'
+        }}>
+          {tabs.map((tab) => activeTab === tab.id && (
+            <form key={tab.id} onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
+              <div className="row gx-3 align-items-end">
+                {/* Property Type */}
+                <div className="col-lg-2 col-md-6 mb-3 mb-lg-0" style={{ maxWidth: '200px' }}>
+                  <label style={{ 
+                    display: 'block', 
+                    fontSize: '12px', 
+                    color: '#aaa', 
+                    marginBottom: '8px',
+                    fontWeight: '400'
+                  }}>
+                    Property Type
+                  </label>
+                  <select 
+                    className="form-select"
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{
+                      border: 'none',
+                      borderBottom: '1px solid #e0e0e0',
+                      borderRadius: '0',
+                      padding: '10px 0',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#1a1a1a',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    <option value="">Condominium</option>
+                    <option value="condo">Condominium</option>
+                    <option value="villa">Villa</option>
+                    <option value="house">House</option>
+                    <option value="land">Land</option>
+                  </select>
+                </div>
+                
+                {/* Price */}
+                <div className="col-lg-2 col-md-6 mb-3 mb-lg-0" style={{ maxWidth: '200px' }}>
+                  <label style={{ 
+                    display: 'block', 
+                    fontSize: '12px', 
+                    color: '#aaa', 
+                    marginBottom: '8px',
+                    fontWeight: '400'
+                  }}>
+                    Price
+                  </label>
+                  <select 
+                    className="form-select"
+                    style={{
+                      border: 'none',
+                      borderBottom: '1px solid #e0e0e0',
+                      borderRadius: '0',
+                      padding: '10px 0',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#1a1a1a',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    <option value="">Select Price</option>
+                    <option value="0-1000000">Under 1M</option>
+                    <option value="1000000-5000000">1M - 5M</option>
+                    <option value="5000000-10000000">5M - 10M</option>
+                    <option value="10000000-999999999">Above 10M</option>
+                  </select>
+                </div>
+                
+                {/* Location */}
+                <div className="col-lg-2 col-md-6 mb-3 mb-lg-0" style={{ maxWidth: '200px' }}>
+                  <label style={{ 
+                    display: 'block', 
+                    fontSize: '12px', 
+                    color: '#aaa', 
+                    marginBottom: '8px',
+                    fontWeight: '400'
+                  }}>
+                    Location
+                  </label>
+                  <select 
+                    className="form-select"
+                    style={{
+                      border: 'none',
+                      borderBottom: '1px solid #e0e0e0',
+                      borderRadius: '0',
+                      padding: '10px 0',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#1a1a1a',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    <option value="">Jomtien</option>
+                    <option value="jomtien">Jomtien</option>
+                    <option value="wongamat">Wongamat</option>
+                    <option value="naklua">Naklua</option>
+                    <option value="pratumnak">Pratumnak</option>
+                    <option value="central-pattaya">Central Pattaya</option>
+                  </select>
+                </div>
+                
+                {/* Property Quota */}
+                <div className="col-lg-2 col-md-6 mb-3 mb-lg-0" style={{ maxWidth: '200px' }}>
+                  <label style={{ 
+                    display: 'block', 
+                    fontSize: '12px', 
+                    color: '#aaa', 
+                    marginBottom: '8px',
+                    fontWeight: '400'
+                  }}>
+                    Property Quaota
+                  </label>
+                  <select 
+                    className="form-select"
+                    style={{
+                      border: 'none',
+                      borderBottom: '1px solid #e0e0e0',
+                      borderRadius: '0',
+                      padding: '10px 0',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#1a1a1a',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    <option value="">Thai Quaota</option>
+                    <option value="thai">Thai Quaota</option>
+                    <option value="foreign">Foreign Quaota</option>
+                  </select>
+                </div>
+                
+                {/* Buttons */}
+                <div className="col-lg-4">
+                  <div className="d-flex align-items-center justify-content-end" style={{ gap: '12px' }}>
+                    <button 
+                      type="button"
+                      onClick={() => setAdvancedSearchVisible(true)}
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        border: '1px solid #e0e0e0',
+                        backgroundColor: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        fontSize: '18px',
+                        color: '#666'
+                      }}
+                    >
+                      <i className="fa-light fa-sliders-up"></i>
+                    </button>
+                    <button 
+                      type="submit"
+                      style={{
+                        backgroundColor: '#AF1A1E',
+                        color: 'white',
+                        border: 'none',
+                        padding: '14px 45px',
+                        borderRadius: '25px',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        letterSpacing: '0.5px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      SEARCH
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-            
+            </form>
           ))}
-          
         </div>
-
-
-      
-
       </div>
-
-
     </>
   );
 }

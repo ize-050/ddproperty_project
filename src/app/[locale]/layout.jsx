@@ -18,18 +18,20 @@ const HeaderBackoffice = dynamic(() => import('@/components/backoffice/layout/He
 import Script from 'next/script';
 import React from 'react';
 
+// Import CSS ตามลำดับ priority (ต่ำไปสูง)
 import "../../../node_modules/react-modal-video/scss/modal-video.scss";
-import "@/styles/scss/main.scss";
 import "rc-slider/assets/index.css";
-import "../../styles/main.scss"; // Import backoffice styles
-import "@/styles/components/TopLoadingBar.scss"; // Import loading bar styles
+import "@/styles/components/TopLoadingBar.scss";
+import "@/styles/scss/main.scss"; // Backoffice styles (ไม่มี Bootstrap แล้ว)
+import "../../styles/main.scss"; // Backoffice additional styles
+import "../../styles/index.scss"; // Homy theme styles (มี Bootstrap + Homy components)
 
 import { DM_Sans, Poppins } from "next/font/google";
 import { supportedLocales } from '../../i18n';
 // const Header = lazy(() => import("@/components/home/home/Header"));
 // const Header = lazy(() => import("@/components/common/DefaultHeader"));
-const Header = lazy(() => import("@/components/home/home/Header"));
-const HeaderSSR = lazy(() => import("@/components/home/home/HeaderSSR"))
+// const Header = lazy(() => import("@/components/home/home/Header"));
+// const HeaderSSR = lazy(() => import("@/components/home/home/HeaderSSR"))
 const MobileMenu = lazy(() => import("@/components/common/mobile-menu"));
 const Footer = lazy(() => import("@/components/common/DynamicFooter"));
 const ScrollToTop = lazy(() => import("@/components/common/ScrollTop"));
@@ -109,7 +111,7 @@ export default async function LocaleLayout({ children, params }) {
         <meta name="description" content="D&#39;LuckProperty - Thailand Real Estate Portal" />
         <link rel="icon" type="image/x-icon" href="/images/dluckfav.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/images/dluckfav.ico" />
-        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+        {/* <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" /> */}
         
         {/* Schema.org markup สำหรับ SEO */}
         <script
@@ -151,10 +153,12 @@ export default async function LocaleLayout({ children, params }) {
                   </>
                 ) : (
                   <>
-                    <HeaderSSR />
-                    <MobileMenu />
-                    {children}
-                    <Footer />
+                    {/* <HeaderSSR /> */}
+                    {/* <MobileMenu /> */}
+                            <div className="main-page-wrapper">
+                            {children}
+                            </div>
+                    {/* <Footer /> */}
                     <ScrollToTop />
                     <MobileContactButtons />
                   </>
@@ -163,11 +167,11 @@ export default async function LocaleLayout({ children, params }) {
           </NextIntlClientProvider>
         </React.Fragment>
 
-        <Script id="aos-script" src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" />
+        {/* <Script id="aos-script" src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" />
         <Script id="jquery-script" src="https://code.jquery.com/jquery-3.6.0.min.js" />
         <Script id="bootstrap-script" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />
 
-        {/* <Script id="init-scripts">
+        <Script id="init-scripts">
           {`
            
               window.addEventListener('load', function() {
@@ -185,3 +189,6 @@ export default async function LocaleLayout({ children, params }) {
     </html>
   );
 }
+
+
+

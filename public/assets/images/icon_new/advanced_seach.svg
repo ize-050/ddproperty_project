@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="icon_advance_" data-name="icon advance ">
+    <g id="Ellipse_27" data-name="Ellipse 27">
+      <circle class="cls-2" cx="53.01" cy="50" r="31"/>
+      <circle class="cls-1" cx="53.01" cy="50" r="30.5"/>
+    </g>
+    <line id="Line_4" data-name="Line 4" class="cls-1" x1="61.44" y1="37.5" x2="61.44" y2="61.5"/>
+    <g id="Ellipse_4" data-name="Ellipse 4">
+      <circle class="cls-2" cx="61.44" cy="46.52" r="2.98"/>
+      <circle class="cls-1" cx="61.44" cy="46.52" r="2.48"/>
+    </g>
+    <line id="Line_5" data-name="Line 5" class="cls-1" x1="45.44" y1="37.5" x2="45.44" y2="61.5"/>
+    <g id="Ellipse_5" data-name="Ellipse 5">
+      <circle class="cls-2" cx="45.44" cy="44.74" r="2.98"/>
+      <circle class="cls-1" cx="45.44" cy="44.74" r="2.48"/>
+    </g>
+    <line id="Line_6" data-name="Line 6" class="cls-1" x1="53.44" y1="37.5" x2="53.44" y2="61.5"/>
+    <g id="Ellipse_6" data-name="Ellipse 6">
+      <circle class="cls-2" cx="53.44" cy="52.48" r="2.98"/>
+      <circle class="cls-1" cx="53.44" cy="52.48" r="2.48"/>
+    </g>
+  </g>
+</svg>
