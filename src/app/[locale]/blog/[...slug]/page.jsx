@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getTranslations, getLocale } from 'next-intl/server';
 import MobileMenu from '@/components/common/mobile-menu';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher';
-import { getFetchDispatcher } from '@/utils/httpsAgent';
+import serverApi from '@/utils/serverApi';
 import './page.scss';
 
 // ฟังก์ชันสำหรับแสดงข้อมูลตามภาษา
@@ -55,32 +55,35 @@ const formatDate = (dateString) => {
 };
 
 async function fetchBlogDetail(slug) {
+  const endpoint = `/blogs/slug/${slug}`;
+  const target = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
+
+  console.log('[BLOG-DETAIL] ▶ fetching', { slug, target });
+
   try {
-    console.log('Fetching blog with slug:', slug);
-    console.log('API URL:', `${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${slug}`);
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${slug}`, {
-      headers: {
-        'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
-      },
-      cache: 'no-store',
-      // ยอมรับ self-signed cert เฉพาะฝั่ง server (เหมือน serverApi.js)
-      dispatcher: getFetchDispatcher(),
+    // ใช้ serverApi (axios) เหมือนหน้า home -> ได้ httpsAgent + error interceptor เชิงลึก
+    const data = await serverApi.get(endpoint);
+
+    // serverApi interceptor คืน response.data ให้แล้ว (ดู serverApi.js)
+    const blog = data?.data ?? null;
+
+    console.log('[BLOG-DETAIL] ✅ success', {
+      slug,
+      found: Boolean(blog),
+      blogId: blog?.id,
     });
-    
-    console.log('Response status:', response.status);
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('API Error Response:', errorText);
-      throw new Error(`Failed to fetch blog detail: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    console.log('Blog detail data:', data.data);
-    return data.data;
+
+    return blog;
   } catch (error) {
-    console.error('Error fetching blog detail:', error);
+    // error ที่ผ่าน serverApi interceptor = { status, message, data }
+    // และ interceptor ได้ log '[serverApi] ❌ request failed' เชิงลึกไว้แล้ว
+    console.error('[BLOG-DETAIL] ❌ failed', {
+      slug,
+      target,
+      status: error?.status,
+      message: error?.message,
+      data: error?.data,
+    });
     return null;
   }
 }
