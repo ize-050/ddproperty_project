@@ -109,10 +109,16 @@ export async function generateMetadata({ params }) {
 async function getRandomProperties() {
   try {
     // เรียกใช้ serverApi เพื่อดึงข้อมูลจาก API
+
+     console.log("before get random")
+
+
     const response = await serverApi.get('/properties/random', {
       params: { count: 4 },
       headers: { 'x-api-key': 'dd-property-api-key-2025' } // ใส่ API key สำหรับการเรียก API
     });
+
+    console.log("after get random")
     // ตรวจสอบข้อมูลที่ได้รับจาก API
     if (response && response.data) {
       return Array.isArray(response.data) ? response.data : (response.data.data || []);
