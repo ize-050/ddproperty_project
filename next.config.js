@@ -3,6 +3,17 @@ const createNextIntlPlugin = require('next-intl/plugin');
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.js');
 
+// ⚠️ ชั่วคราว: backend (Cloudways) ยังไม่ได้ผูก domain/SSL จริง ใบ cert เป็น self-signed
+// ทำให้ทุก request ฝั่ง SSR (blog, zones, properties ฯลฯ) ที่ยิงผ่าน axios/fetch
+// เจอ error SELF_SIGNED_CERT_IN_CHAIN. ตั้งค่านี้ที่ระดับ process เพื่อยอมรับ cert
+// ครอบคลุมทุก service โดยไม่ต้องแก้ทีละไฟล์.
+// จำกัดเฉพาะ non-production เท่านั้น
+// TODO: เมื่อผูก domain + Let's Encrypt เรียบร้อยแล้ว ให้ลบบล็อกนี้ออก
+//       และลบ httpsAgent ใน src/utils/serverApi.js ด้วย
+if (process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
