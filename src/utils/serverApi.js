@@ -1,5 +1,6 @@
 
 import { AXIOS_SSR_CONFIG } from '@/config/api.config';
+import { getHttpsAgent } from '@/utils/httpsAgent';
 
 import axios from 'axios';
 
@@ -10,16 +11,8 @@ import axios from 'axios';
 
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// ⚠️ ชั่วคราว: backend (Cloudways) ยังไม่ได้ผูก domain/SSL จริง ใบ cert เป็น self-signed
-// Node ฝั่ง SSR จะ reject ด้วย error SELF_SIGNED_CERT_IN_CHAIN
-// จึงยอมรับ cert นี้เฉพาะ "ฝั่ง server" เท่านั้น (โค้ดนี้ไม่ถูก bundle ไป browser)
-// TODO: เมื่อผูก domain + Let's Encrypt เรียบร้อยแล้ว ให้ลบ httpsAgent ตัวนี้ออก
-let httpsAgent;
-if (typeof window === 'undefined') {
-  // require แบบ dynamic เพื่อไม่ให้ https ถูกดึงเข้า client bundle
-  const https = require('https');
-  httpsAgent = new https.Agent({ rejectUnauthorized: false });
-}
+// ⚠️ ชั่วคราว: ยอมรับ self-signed cert เฉพาะฝั่ง server (ดู src/utils/httpsAgent.js)
+const httpsAgent = getHttpsAgent();
 
 // Create axios instance with server-side config
 const serverApi = axios.create({

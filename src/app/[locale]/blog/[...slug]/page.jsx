@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getTranslations, getLocale } from 'next-intl/server';
 import MobileMenu from '@/components/common/mobile-menu';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher';
+import { getFetchDispatcher } from '@/utils/httpsAgent';
 import './page.scss';
 
 // ฟังก์ชันสำหรับแสดงข้อมูลตามภาษา
@@ -62,7 +63,9 @@ async function fetchBlogDetail(slug) {
       headers: {
         'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
       },
-      cache: 'no-store'
+      cache: 'no-store',
+      // ยอมรับ self-signed cert เฉพาะฝั่ง server (เหมือน serverApi.js)
+      dispatcher: getFetchDispatcher(),
     });
     
     console.log('Response status:', response.status);

@@ -4,6 +4,7 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import MobileMenu from '@/components/common/mobile-menu';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher';
 import DynamicBlogContent from '@/components/blog/DynamicBlogContent';
+import { getFetchDispatcher } from '@/utils/httpsAgent';
 import '@/styles/blog.scss';
 
 export const metadata = {
@@ -16,7 +17,9 @@ async function fetchBlogs() {
       headers: {
         'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
       },
-      cache: 'no-store'
+      cache: 'no-store',
+      // ยอมรับ self-signed cert เฉพาะฝั่ง server (เหมือน serverApi.js)
+      dispatcher: getFetchDispatcher(),
     });
 
     if (!response.ok) {
