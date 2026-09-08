@@ -40,6 +40,26 @@ serverApi.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    // ---- DEEP LOG: ให้เห็นว่ายิงไปที่ไหนและติดอะไรจริง ๆ ----
+    const cfg = error.config || {};
+    const fullUrl = cfg.baseURL
+      ? `${cfg.baseURL}${cfg.url || ''}`
+      : (cfg.url || 'unknown');
+
+    console.error('[serverApi] ❌ request failed', {
+      method: cfg.method,
+      url: fullUrl,
+      params: cfg.params,
+      // axios error code: ECONNREFUSED / ETIMEDOUT / ENOTFOUND = ยิงไม่ถึง backend
+      code: error.code,
+      message: error.message,
+      // ถ้ามี response แปลว่าถึง backend แล้ว (ดู status + body จริงของ backend)
+      responseStatus: error.response?.status,
+      responseData: error.response?.data,
+      reachedBackend: Boolean(error.response),
+    });
+    // ---------------------------------------------------------
+
     // Handle errors
     const customError = {
       status: error.response?.status || 500,
