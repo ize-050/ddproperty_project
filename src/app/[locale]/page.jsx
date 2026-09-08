@@ -223,8 +223,12 @@ export default async function HomeContent({ params }) {
   let propertyTypes = [];
 
   try {
+
+    console.log("BeforegetallRamdom")
     // ดึงข้อมูล properties แบบสุ่มจาก API
     randomProperties = await getRandomProperties();
+
+     console.log("afterGetallRandom")
   } catch (error) {
     console.error('Failed to fetch random properties:', error);
   }
